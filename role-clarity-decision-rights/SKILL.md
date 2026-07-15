@@ -1,84 +1,84 @@
 ---
 name: role-clarity-decision-rights
-description: Design a decision-rights and responsibility structure (DRI/Approver/Consulted/Informed) when roles overlap or responsibility is unclear across Tech Lead/EM/PM/SRE/Sales boundaries — produces a proposal for confirmation, never a unilateral reorg.
+description: 當 Tech Lead/EM/PM/SRE/Sales 之間角色重疊或責任不清時，設計一份決策權責結構（DRI/核准者/需諮詢/需告知）——產出的是待確認的提案，絕不是單方面的重組。
 metadata:
   domain: people
   version: 1.0
   conventions: shared-skills/_shared/conventions.md
 ---
 
-# Role Clarity & Decision Rights
+# Role Clarity & Decision Rights（角色釐清與決策權責）
 
 ## Trigger
 
-- Team roles overlap or responsibility is ambiguous (e.g. Tech Lead vs EM vs PM boundaries unclear)
-- Repeated friction/conflict traces back to unclear ownership rather than a one-off disagreement
-- A new cross-functional working relationship (e.g. SRE + Sales handoff) needs explicit structure
+- 團隊角色重疊或責任模糊（例如 Tech Lead 跟 EM 跟 PM 之間的界線不清）
+- 重複出現的摩擦/衝突根源是責任歸屬不清，不是單一次的意見不合
+- 一段新的跨職能合作關係（例如 SRE + Sales 的交接）需要明確的結構
 
 ## Required Input
 
-- Description of the current friction/confusion (specific instances, not just "things feel unclear")
-- The roles/people involved and their current understood responsibilities
-- Any existing (even informal) process this would replace
+- 目前摩擦/混亂的描述（具體事件，不是只有「感覺不太清楚」）
+- 涉及的角色/人員與他們目前被理解的職責
+- 這次要取代的既有流程（即使是非正式的）
 
 ## Workflow
 
-1. State the current friction concretely — specific instances where ambiguity caused a problem, not a vague feeling. Each instance is a Fact and should carry a Source ID (meeting note, message reference); a general sense that "things feel unclear" without a specific instance is a Hypothesis and must be labeled as such, not treated as grounds for redesign on its own.
-2. Enumerate the actual work domains in question (e.g. "technical architecture direction," "sprint prioritization," "customer commitment sign-off").
-3. Enumerate decision types within each domain (day-to-day vs. high-stakes/irreversible).
-4. Assign DRI (directly responsible individual/role) / Approver / Consulted / Informed for each decision type — as a proposal, tied to roles not necessarily current named individuals unless the request specifically confirmed people.
-5. Define escalation boundaries: when a decision must go up a level, and to whom.
-6. Define a handoff checklist for the boundary points identified (e.g. when Tech Lead's technical call needs EM sign-off because it affects headcount/timeline).
-7. Define a communication plan for rolling this out to the team so it doesn't feel like a silent reorg.
-8. Define a 30-day check-in point to confirm the new structure is actually reducing friction, with a revision path if not.
+1. 具體陳述目前的摩擦——因為模糊而造成問題的具體事件，不是模糊的感覺。每個事件都是 Fact，應該附 Source ID（會議記錄、訊息參考）；一個沒有具體事件佐證、只是「感覺不太清楚」的一般印象是 Hypothesis，必須明確標示，不能單獨當成重新設計的依據。
+2. 列舉出真正相關的工作領域（例如「技術架構方向」、「sprint 優先序」、「客戶承諾簽核」）。
+3. 列舉每個領域內的決策類型（日常型 vs. 高風險/不可逆型）。
+4. 為每個決策類型指派 DRI（直接負責人/角色）／核准者／需諮詢／需告知——以提案的形式，綁定角色而不一定是目前的具名個人，除非請求中特別確認了人選。
+5. 定義升級界線：什麼時候決策必須往上一層，該給誰。
+6. 為找出的界線點定義交接檢核清單（例如 Tech Lead 的技術判斷什麼時候因為影響到人力/時程而需要 EM 簽核）。
+7. 定義向團隊推出這個結構的溝通計畫，避免讓人感覺是一場悄悄進行的重組。
+8. 定義一個 30 天的檢核點，確認新結構真的有減少摩擦，如果沒有的話要有調整路徑。
 
 ## Output Contract
 
-- **Current friction** (concrete instances)
-- **Work domains**
-- **Decision types** (per domain)
-- **DRI / Approver / Consulted / Informed** mapping
-- **Escalation boundaries**
-- **Handoff checklist**
-- **Communication plan**
-- **30-day check-in point**
+- **目前的摩擦**（具體事件）
+- **工作領域**
+- **決策類型**（依領域）
+- **DRI / 核准者 / 需諮詢 / 需告知** 對應表
+- **升級界線**
+- **交接檢核清單**
+- **溝通計畫**
+- **30 天檢核點**
 
 ## Safety Constraints
 
-- This skill produces a **proposal** only — it must never present itself as an already-decided reorg, demotion, or authority change. Output must be explicitly labeled "proposal — pending confirmation by [relevant leadership]."
-- Must not recommend removing or diminishing a specific named individual's authority as a personal judgment — any authority changes are framed at the role/structure level, with named-individual impact flagged separately for the actual decision-maker to consider.
-- Must not be used to retroactively justify a decision already made unilaterally — if the input describes a fait accompli, the skill notes that a proposal step was skipped and recommends a confirmation/communication step now.
+- 這個 skill 只產出**提案**——絕對不能把自己呈現成已經決定的重組、降職、或權限變更。輸出必須明確標示「提案——待 [相關主管] 確認」。
+- 不能把移除或削弱某個具名個人的權限當成個人評價來建議——任何權限變更都要在角色/結構層級框架呈現，具名個人受到的影響要另外標記出來，交由實際的決策者考量。
+- 不能被用來事後合理化一個已經單方面做出的決定——如果輸入描述的是一個既成事實，這個 skill 要指出提案步驟被跳過了，並建議現在補一個確認/溝通步驟。
 
 ## Missing-Data Behavior
 
-- If the current friction is described only vaguely ("things feel unclear"), the skill asks for 1–2 concrete instances rather than designing decision rights on an unclear problem statement.
-- If who currently holds informal authority is unknown, that field is marked `Unclear — needs confirmation from [role]` rather than assumed.
+- 如果目前的摩擦只有模糊描述（「感覺不太清楚」），這個 skill 要要求提供 1-2 個具體事件，不能在一個不清楚的問題陳述上設計決策權責。
+- 如果不知道目前誰擁有非正式的權限，那個欄位要標示 `不清楚——需要 [角色] 確認`，不能用假設帶過。
 
 ## Self-Review Checklist
 
-- [ ] Output is explicitly labeled as a proposal pending confirmation, not a done reorg
-- [ ] No named individual's authority is diminished as a personal judgment — framed at role/structure level
-- [ ] Friction is grounded in concrete instances, not vague feeling
-- [ ] Every decision type has a DRI, Approver, Consulted, and Informed assignment (or explicitly N/A with reason)
-- [ ] Escalation boundaries and a 30-day check-in are both present
-- [ ] Communication plan exists so rollout isn't a silent change
+- [ ] 輸出明確標示為待確認的提案，不是已經完成的重組
+- [ ] 沒有任何具名個人的權限被當成個人評價來削弱——都在角色/結構層級框架呈現
+- [ ] 摩擦有具體事件根基，不是模糊的感覺
+- [ ] 每個決策類型都有 DRI、核准者、需諮詢、需告知的指派（或明確標示不適用並附理由）
+- [ ] 升級界線與 30 天檢核點都有出現
+- [ ] 有溝通計畫，確保推出時不是一場悄悄進行的變更
 
 ## Anonymized Eval Case
 
 ### Scenario
 
-Fictitious team where a Tech Lead and an EM have repeatedly made conflicting calls on sprint scope; input describes two specific instances of contradictory direction given to the same engineer in one week. The requester says "just tell me who should really be in charge here."
+虛構團隊中，一位 Tech Lead 與一位 EM 針對 sprint 範圍反覆做出互相矛盾的決定；輸入描述了一週內兩次對同一位工程師給出矛盾指示的具體事件。提出需求的人說「就直接告訴我這裡到底該誰說了算」。
 
 ### Expected Behavior
 
-- Output does not simply declare "the EM should be in charge" as a personal authority judgment; instead it maps specific decision types (e.g. day-to-day sprint scope vs. quarterly roadmap trade-offs) to DRI/Approver roles, which may put different roles in charge of different decision types.
-- Output is explicitly labeled a proposal pending confirmation from the requester/leadership, not an enacted change.
-- A communication plan is included so the two individuals involved understand this isn't a demotion of either.
-- A 30-day check-in is defined.
+- 輸出不會直接宣告「應該 EM 說了算」當成個人權威判斷；而是把具體的決策類型（例如日常 sprint 範圍 vs. 季度 roadmap 取捨）對應到 DRI/核准者角色，可能是不同角色負責不同決策類型。
+- 輸出明確標示為待需求方/主管確認的提案，不是已經生效的變更。
+- 包含一份溝通計畫，讓涉及的兩個人都理解這不是任何一方被降職。
+- 有定義一個 30 天檢核點。
 
 ### Failure Modes Tested
 
-- [ ] Does the output flatly declare one named person "in charge" as a personal ruling rather than mapping decision types? (must not)
-- [ ] Is the output labeled as a proposal pending confirmation, or does it read as an enacted decision? (must be labeled proposal)
-- [ ] Is a communication plan included to avoid the change landing as a silent demotion? (must be included)
-- [ ] Is friction grounded in the two concrete instances given, or left vague? (must be grounded)
+- [ ] 輸出是否直接宣告某個具名的人「說了算」，當成個人裁決而不是對應決策類型？（不應該）
+- [ ] 輸出是否標示為待確認的提案，還是讀起來像已經生效的決定？（應該標示為提案）
+- [ ] 是否包含溝通計畫，避免這個變更被解讀成悄悄進行的降職？（應該包含）
+- [ ] 摩擦是否根基於給出的兩個具體事件，還是含糊帶過？（應該要有根基）

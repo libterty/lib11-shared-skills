@@ -1,48 +1,48 @@
-# Shared Conventions for `shared-skills/`
+# `shared-skills/` 的共用慣例
 
-All skills in this directory are authored under these repository-wide rules. Every skill file must comply; this document is the single normative reference — individual skills should link back here rather than restate it.
+`shared-skills/` 底下所有的 skill 都要遵守這些規則；本文件是唯一的權威來源——個別 skill 應該連結回這裡，而不是重複陳述內容。
 
-## 1. Source of truth
+## 1. 唯一來源
 
-`shared-skills/` is the only place skill definitions are edited. Do not fork copies elsewhere in the repo.
+`shared-skills/` 是唯一編輯 skill 定義的地方。不要在別處複製一份。
 
-## 2. Source ID traceability
+## 2. Source ID 可追溯性
 
-Every factual claim in a skill's output must carry a `Source ID` — a short reference the user or a downstream reviewer can trace back to where the fact came from (e.g. `SRC-JIRA-1234`, `SRC-SLACK-2026-07-01`, `SRC-INTERVIEW-emp014`, `SRC-DASH-costexplorer`). If no source exists, the output must say so explicitly rather than omit the field.
+Skill 輸出中每個事實性主張都必須附一個 `Source ID`——一個讓使用者或後續審閱者可以追溯回原始出處的簡短參考（例如 `SRC-JIRA-1234`、`SRC-SLACK-2026-07-01`、`SRC-INTERVIEW-emp014`、`SRC-DASH-costexplorer`）。如果沒有來源，輸出必須明確說明，而不是省略這個欄位。
 
-## 3. Fact / Pattern / Hypothesis labeling
+## 3. Fact / Pattern / Hypothesis 標記
 
-Every output line that asserts something must be tagged as one of:
+輸出中每一句斷言性的話都必須標記為以下其中一種：
 
-- **Fact** — directly observed/reported, has a Source ID.
-- **Pattern** — a recurring trend inferred across multiple Facts (must cite the Facts it's built from).
-- **Hypothesis** — an unconfirmed explanation or prediction. Must be labeled as such and never presented as a Fact.
+- **Fact（事實）**——直接觀察/回報到的，附有 Source ID。
+- **Pattern（模式）**——跨多個 Fact 歸納出的重複趨勢（必須引用它根基的那些 Fact）。
+- **Hypothesis（推測）**——未確認的解釋或預測。必須明確標示，絕不能當成 Fact 呈現。
 
-## 4. Prohibited fabrication
+## 4. 禁止捏造
 
-Skills must never invent, or allow their output to imply without evidence:
+Skill 絕對不能捏造、或讓輸出暗示（在沒有證據的情況下）：
 
-- Customer commitments or promises
-- Incident root causes before investigation is complete
-- Individual performance judgments not tied to observed behavior
-- Delivery dates or cost/benefit figures not derived from stated assumptions or real data
+- 客戶承諾或保證
+- 調查完成前的 incident 根本原因
+- 沒有連結到觀察行為的個人績效判斷
+- 沒有根基於陳述過的假設或真實資料的交付日期/成本效益數字
 
-## 5. Draft-only external and people content
+## 5. 對外與對人內容僅限草案
 
-Any customer-facing message, legal/commercial statement, or people-related communication (feedback, performance content, org changes) produced by a skill is a **draft**. Output must label it as a draft requiring human review and sign-off before it is sent or acted on.
+任何由 skill 產出的客戶對外訊息、法律/商業聲明、或人事相關溝通（回饋、績效內容、組織變動），都是**草案**。輸出必須標示這是需要人工審閱簽核之後才能送出/採取行動的草案。
 
-## 6. No unauthorized action
+## 6. 不得未經授權採取行動
 
-Skills only produce analysis, drafts, and recommendations. They must never claim to have performed, authorized, or committed the org to:
+Skill 只產出分析、草案、與建議。絕對不能宣稱自己已經執行、授權、或代表組織承諾了：
 
-- Destructive infrastructure or data operations
-- Cloud environment changes
-- Contractual or commercial commitments
-- Admissions of customer liability
+- 破壞性的基礎設施或資料操作
+- 雲端環境變更
+- 合約或商業性承諾
+- 承認客戶端的法律責任
 
-## 7. Required skill sections
+## 7. Skill 必要區塊
 
-Every `SKILL.md` under `shared-skills/` must contain these sections, in this order:
+`shared-skills/` 底下每個 `SKILL.md` 都必須依序包含這些區塊：
 
 1. `## Trigger`
 2. `## Required Input`
@@ -53,16 +53,16 @@ Every `SKILL.md` under `shared-skills/` must contain these sections, in this ord
 7. `## Self-Review Checklist`
 8. `## Anonymized Eval Case`
 
-`scripts/validate-skills.sh` checks structurally for these sections and for a set of prohibited absolute-commitment phrases used outside of a prohibition context.
+`scripts/validate-skills.sh` 會做結構性檢查，確認這些區塊都存在，並檢查是否出現一組被禁止在非否定脈絡下使用的絕對承諾用語。
 
-## 8. Missing-data default behavior
+## 8. 資料不足時的預設行為
 
-When required input is not provided or evidence is insufficient, a skill must:
+當必要輸入沒有被提供、或證據不足時，skill 必須：
 
-- Explicitly output `Insufficient evidence` (or the local-language equivalent) for the affected field, not a best guess dressed as fact
-- Avoid defaulting a status/severity/health indicator to a "safe-looking" value (e.g. never default an unknown project to a green light)
-- List what input is missing and how to obtain it
+- 針對受影響的欄位明確輸出 `證據不足`（或當地語言的對應說法），而不是給一個包裝成事實的最佳猜測
+- 避免把狀態/嚴重程度/健康指標預設成「看起來安全」的數值（例如絕對不能把一個未知的專案預設成綠燈）
+- 列出缺少哪些輸入、以及該怎麼取得
 
-## 9. Anonymization in eval cases
+## 9. Eval Case 中的匿名化
 
-Eval cases must use fictitious names, companies, and projects. Do not use real customer names, real employee names, or real incident identifiers copied from production systems.
+Eval case 必須使用虛構的姓名、公司、與專案。不能使用真實客戶名稱、真實員工姓名、或從正式環境系統複製過來的真實 incident 識別碼。

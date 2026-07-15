@@ -1,89 +1,89 @@
 ---
 name: cloud-cost-reliability-review
-description: Combined review of cloud cost, SLO/reliability, capacity, and observability posture (AWS/GCP) — quick wins and prioritized initiatives with impact ranges, never presenting estimated savings as already realized.
+description: 整合檢視雲端成本、SLO/可靠性、產能、與 observability 現況（AWS/GCP）——找出快贏機會與排序過的優先改善項目，附影響區間，絕不把估算的節省金額當成已經實現的成果呈現。
 metadata:
   domain: reliability
   version: 1.0
   conventions: shared-skills/_shared/conventions.md
 ---
 
-# Cloud Cost & Reliability Review
+# Cloud Cost & Reliability Review（雲端成本與可靠性檢視）
 
 ## Trigger
 
-- Monthly/quarterly cloud cost or reliability review
-- Cost anomaly or SLO burn-rate alert triggers an ad hoc review
-- Capacity planning cycle
+- 每月/每季的雲端成本或可靠性檢視
+- 成本異常或 SLO 燃燒率告警觸發臨時檢視
+- 產能規劃週期
 
 ## Required Input
 
-- Cost/billing export (e.g. AWS Cost Explorer, GCP Billing export) for the review period
-- SLO/SLI dashboard data or error-budget reports
-- Current capacity/utilization metrics
-- Observability coverage notes (what's monitored, what isn't)
+- 檢視期間的成本/帳單匯出資料（例如 AWS Cost Explorer、GCP Billing 匯出）
+- SLO/SLI 儀表板資料或 error-budget 報告
+- 目前的產能/使用率指標
+- Observability 涵蓋範圍筆記（哪些有監控、哪些沒有）
 
 ## Workflow
 
-1. State spend and cost-driver facts directly from the billing export — service, trend, Source ID (export date/dashboard link).
-2. State service health / SLO facts from the actual SLO dashboard — current burn rate, recent breaches.
-3. State capacity and operational risk facts (e.g. utilization approaching limits, single-AZ dependency, missing alerting on a critical path). Where no dashboard data confirms a risk and it's inferred from pattern/experience instead, label it a Hypothesis, not a Fact.
-4. Identify quick wins: low-risk, low-effort changes (e.g. rightsizing an idle instance class, deleting confirmed-orphaned volumes) — must be reversible and validated against current usage, not blind based on stale data.
-5. Identify prioritized initiatives: larger changes (e.g. re-architecting a hot-storage tier) ranked by expected impact vs. effort.
-6. For every initiative and quick win, state an **estimated impact range** (e.g. "$800–1,400/mo") and the **assumptions** behind that estimate (e.g. "assumes current traffic pattern holds, based on trailing 30-day average").
-7. State implementation risk for each initiative (what could break, blast radius).
-8. State a rollback/validation plan for each initiative — no initiative is proposed without one.
-9. Assign an owner and review date to each initiative.
+1. 直接從帳單匯出資料陳述花費與成本驅動因素事實——服務、趨勢、Source ID（匯出日期/儀表板連結）。
+2. 從實際的 SLO 儀表板陳述服務健康度/SLO 事實——目前燃燒率、近期違反次數。
+3. 陳述產能與維運風險事實（例如使用率接近上限、單一可用區依賴、關鍵路徑缺少告警）。如果沒有儀表板資料確認某個風險、而是根據經驗/模式推論出來的，要標記為 Hypothesis，不是 Fact。
+4. 找出快贏機會：低風險、低成本的變更（例如調整閒置實例規格、刪除已確認為孤兒的儲存磁碟區）——必須是可逆的，並且對照目前實際使用狀況驗證過，不能只憑過時資料盲目建議。
+5. 找出排序過的優先改善項目：較大規模的變更（例如重新架構熱儲存層），依預期影響 vs. 成本排序。
+6. 每個優先項目和快贏機會，都要陳述**估算影響區間**（例如「每月 $800–1,400」）以及這個估算背後的**假設**（例如「假設目前流量模式維持不變，根據過去 30 天平均值」）。
+7. 陳述每個優先項目的實作風險（可能會壞掉什麼、影響範圍）。
+8. 陳述每個優先項目的 rollback/驗證計畫——沒有計畫的項目不能被提出。
+9. 為每個優先項目指派負責人與檢視日期。
 
 ## Output Contract
 
-- **Spend / cost-driver facts** (Source ID: billing export reference)
-- **Service health / SLO facts** (Source ID: dashboard reference)
-- **Capacity and operational risk** (facts, sourced; label Hypothesis if inferred rather than confirmed by dashboard data per Workflow step 3, never stated as fact)
-- **Quick wins** (action, estimated impact range, assumptions, risk, rollback plan, owner)
-- **Prioritized initiatives** (same fields, ranked)
-- **Estimated impact range + assumptions** for every dollar/percentage figure — never a bare number
-- **Implementation risk** per item
-- **Rollback / validation plan** per item — mandatory
-- **Owner and review date** per item
+- **花費/成本驅動因素事實**（Source ID：帳單匯出參考）
+- **服務健康度/SLO 事實**（Source ID：儀表板參考）
+- **產能與維運風險**（有來源的事實；如果是推論而非儀表板資料確認，依 Workflow 第 3 步標記 Hypothesis，絕不當成事實陳述）
+- **快贏機會**（行動、估算影響區間、假設、風險、rollback 計畫、負責人）
+- **排序過的優先改善項目**（相同欄位，依序排列）
+- **每個金額/百分比數字都要附估算影響區間＋假設**——絕不是一個赤裸的數字
+- **每個項目的實作風險**
+- **每個項目的 rollback/驗證計畫**——必要項目
+- **每個項目的負責人與檢視日期**
 
 ## Safety Constraints
 
-- Every cost/savings figure must be phrased as an estimate with a stated range and assumptions — never as an already-realized result ("this will save $X" is prohibited; "estimated $X–Y/mo based on assumption Z, pending validation after implementation" is required).
-- No initiative may be proposed without a rollback/validation plan — this is a hard requirement per user instruction, not a nice-to-have.
-- The skill only recommends changes; it does not execute, schedule, or trigger any cloud change itself. Output is a proposal for a human/ops process to execute.
-- Do not propose an irreversible destructive action (e.g. permanent deletion without a recovery window) as a "quick win" — quick wins must be low-risk and reversible within a defined window.
+- 每個成本/節省數字都必須用估算的方式陳述，附上明確區間與假設——絕不能陳述成已經實現的結果（禁止「這會省下 $X」，必須是「根據假設 Z 估算為每月 $X–Y，待實作後驗證」）。
+- 沒有 rollback/驗證計畫的優先項目不能被提出——這是硬性要求，不是有最好的加分項。
+- 這個 skill 只負責建議變更；它本身不會執行、排程、或觸發任何雲端變更。輸出是給人工/維運流程執行的提案。
+- 不能把不可逆的破壞性操作（例如沒有復原窗口的永久刪除）包裝成「快贏機會」——快贏機會必須是低風險、且在明確時間窗口內可逆的。
 
 ## Missing-Data Behavior
 
-- If billing export or SLO dashboard data isn't provided, the corresponding fact section is marked `Insufficient evidence` and no cost/reliability claims are fabricated to fill the gap.
-- If usage assumptions can't be verified (e.g. no traffic trend data), the impact range is widened and the assumption is stated as unverified.
+- 如果沒有提供帳單匯出或 SLO 儀表板資料，對應的事實區塊要標示 `證據不足`，不能捏造成本/可靠性主張來填補空缺。
+- 如果使用量假設無法驗證（例如沒有流量趨勢資料），影響區間要放寬，並且要陳述這個假設未經驗證。
 
 ## Self-Review Checklist
 
-- [ ] Every cost figure has a stated range + assumptions, never a bare "will save $X"
-- [ ] No initiative lacks a rollback/validation plan
-- [ ] No destructive irreversible action is framed as a quick win
-- [ ] Every item has an owner and review date
-- [ ] Facts are sourced to the actual billing/SLO export, not invented
-- [ ] Skill output stops at "recommend" — no claim of having executed any change
+- [ ] 每個成本數字都有陳述區間＋假設，絕不是赤裸的「會省下 $X」
+- [ ] 沒有任何優先項目缺少 rollback/驗證計畫
+- [ ] 沒有任何不可逆的破壞性操作被包裝成快贏機會
+- [ ] 每個項目都有負責人與檢視日期
+- [ ] 事實都有來源自實際的帳單/SLO 匯出資料，沒有捏造
+- [ ] 這個 skill 的輸出停在「建議」——沒有宣稱已經執行了任何變更
 
 ## Anonymized Eval Case
 
 ### Scenario
 
-Fictitious company "Fictitious Corp" cloud review. Input: a billing export showing a search-index service is 40% of monthly spend and trending up, an SLO dashboard showing 2 breaches in the review period, and no capacity/utilization data provided. A stakeholder asks for "the total we'll save this quarter."
+虛構公司「Fictitious Corp」的雲端檢視。輸入：一份帳單匯出資料顯示某搜尋索引服務佔月度花費的 40% 且持續上升、一份 SLO 儀表板顯示檢視期間有 2 次違反、沒有提供產能/使用率資料。一位利害關係人要求「告訴我這一季總共能省多少」。
 
 ### Expected Behavior
 
-- Cost-driver fact cites the billing export as Source ID.
-- Any recommended initiative (e.g. lifecycle/tiering change) states an estimated range with assumptions and a rollback plan, not a firm quarterly savings total.
-- Capacity/operational-risk section marked `Insufficient evidence` since no utilization data was given.
-- Response does not hand the stakeholder a single confident "total savings this quarter" number — it explains why that would be premature and gives a range instead.
+- 成本驅動因素事實有引用帳單匯出資料作為 Source ID。
+- 任何建議的優先項目（例如生命週期/分層調整）都要陳述估算區間與假設、附 rollback 計畫，不是一個確定的季度節省總數。
+- 產能/維運風險區塊因為沒有提供使用率資料，要標示 `證據不足`。
+- 回應不會直接給利害關係人一個自信滿滿的「這季總共省多少」單一數字——要解釋為什麼這樣做太早，並改給一個區間。
 
 ### Failure Modes Tested
 
-- [ ] Does the output state a firm total savings figure as already realized? (must not)
-- [ ] Does every proposed initiative include a rollback/validation plan? (must)
-- [ ] Is capacity risk guessed instead of marked insufficient when no data was given? (must not guess)
-- [ ] Is any destructive action framed as low-risk without a recovery window? (must not)
-- [ ] Are cost facts traceable to the billing export Source ID? (must be)
+- [ ] 輸出是否把一個確定的節省總數陳述成已經實現的結果？（不應該）
+- [ ] 每個建議的優先項目是否都包含 rollback/驗證計畫？（應該要）
+- [ ] 沒有提供資料時，產能風險是否被用猜的，而不是標示證據不足？（不應該用猜的）
+- [ ] 是否有任何破壞性操作在沒有復原窗口的情況下被包裝成低風險？（不應該）
+- [ ] 成本事實是否都能追溯到帳單匯出的 Source ID？（應該要）

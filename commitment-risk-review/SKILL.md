@@ -1,92 +1,92 @@
 ---
 name: commitment-risk-review
-description: Review a proposed commitment (SOW, timeline, custom feature) from Sales/PM/customer before it's made, checking delivery and operational risk from an Engineering Manager's perspective — to prevent engineering being forced to backfill a commitment made without their input.
+description: 在 Sales/PM/客戶提出的承諾（SOW、時程、客製功能）定案之前先審查，從 Engineering Manager 的角度檢查交付與維運風險——避免工程被迫幫沒有徵詢過工程意見就做出的承諾擦屁股。
 metadata:
   domain: customer
   version: 1.0
   conventions: shared-skills/_shared/conventions.md
 ---
 
-# Commitment Risk Review
+# Commitment Risk Review（承諾風險審查）
 
 ## Trigger
 
-- Sales, PM, or a customer-facing team proposes a commitment (SOW clause, delivery date, custom feature, integration) before it's finalized
-- An EM is asked to "just confirm we can do this" on short notice
+- Sales、PM、或客戶端團隊在定案前提出一個承諾（SOW 條款、交付日期、客製功能、整合需求）
+- EM 被要求在很短的時間內「就確認一下我們做得到」
 
 ## Required Input
 
-- The proposed commitment text (or a description of it)
-- Any technical context already known about feasibility
-- Current team capacity/roadmap state (reuse `capacity-roadmap-scenarios` output if available)
+- 提議中的承諾文字內容（或描述）
+- 目前已知的任何可行性技術脈絡
+- 目前團隊產能/roadmap 狀態（如果有的話，沿用 `capacity-roadmap-scenarios` 的輸出）
 
 ## Workflow
 
-1. Restate the requested commitment precisely, so there's no ambiguity about what's being reviewed.
-2. List the assumptions embedded in the commitment (e.g. "assumes existing API supports X," "assumes customer provides Y data format").
-3. Assess technical feasibility given current architecture — cite a Source ID for any system-behavior claim (design doc, past incident, code reference). A feasibility judgment not backed by a source is a Hypothesis and must be labeled as such, not stated as a Fact.
-4. List dependencies (internal teams, vendors, customer-side deliverables) required to meet the commitment.
-5. Identify capacity/skill gaps against current roster (reuse capacity data where available; otherwise mark unknown).
-6. Assess security/compliance/operations impact (e.g. new data residency requirement, new on-call burden).
-7. State acceptance criteria: what "done" concretely means for this commitment, to prevent scope ambiguity later.
-8. Flag red flags explicitly (e.g. "commitment implies architecture change not yet scoped," "no rollback if customer data format differs from assumption").
-9. Present decision options (accept as-is / accept with modified scope-date / decline / needs further scoping) with the trade-off of each.
-10. Draft approved wording — the actual sentence(s) Sales/PM could safely use — marked as a draft requiring EM/exec sign-off before it's sent to the customer.
+1. 精確地重述這個承諾請求，確保審查的對象沒有歧義。
+2. 列出這個承諾內含的假設（例如「假設現有 API 支援 X」、「假設客戶提供 Y 資料格式」）。
+3. 依目前架構評估技術可行性——任何系統行為的主張都要引用 Source ID（設計文件、過去 incident、程式碼參考）。沒有來源佐證的可行性判斷是 Hypothesis，必須明確標示，不能陳述成 Fact。
+4. 列出達成這個承諾所需的依賴（內部團隊、供應商、客戶端交付物）。
+5. 對照目前團隊名單找出產能/技能缺口（如果有產能資料就沿用；否則標示未知）。
+6. 評估安全性/法規遵循/維運影響（例如新的資料落地要求、新的 on-call 負擔）。
+7. 陳述驗收標準：這個承諾具體來說「完成」代表什麼，避免之後範圍模糊。
+8. 明確標出紅旗警訊（例如「這個承諾暗示了一個還沒被 scope 過的架構變更」、「如果客戶資料格式跟假設不同就沒有 rollback 方案」）。
+9. 呈現決策選項（照原樣接受／修改範圍或日期後接受／拒絕／需要進一步 scope），並附上各自的取捨。
+10. 草擬核准過的措辭——Sales/PM 可以安全使用的實際句子——標示為草案，需要 EM/主管簽核後才能送給客戶。
 
 ## Output Contract
 
-- **Requested commitment** (restated precisely)
-- **Assumptions** (explicit list)
-- **Technical feasibility** (assessment + reasoning, Source ID if evidence-backed — else explicitly labeled Hypothesis/unconfirmed per Workflow step 3)
-- **Dependencies** (owner responsible for tracking/resolving each)
-- **Capacity / skill gap** (owner responsible for tracking/resolving)
-- **Security / compliance / operations impact**
-- **Acceptance criteria**
-- **Red flags** (issue, owner responsible for tracking/resolving, urgency)
-- **Decision options** (with trade-offs)
-- **Approved wording draft** (marked DRAFT — PENDING EM/EXEC SIGN-OFF)
+- **請求的承諾**（精確重述）
+- **假設**（明確列出）
+- **技術可行性**（評估＋理由，如果有證據佐證附 Source ID——否則依 Workflow 第 3 步明確標示 Hypothesis/未確認）
+- **依賴**（每項的追蹤/解決負責人）
+- **產能/技能缺口**（追蹤/解決負責人）
+- **安全性/法規遵循/維運影響**
+- **驗收標準**
+- **紅旗警訊**（問題、追蹤/解決負責人、急迫程度）
+- **決策選項**（附取捨）
+- **核准措辭草案**（標示「草案——待 EM/主管簽核」）
 
 ## Safety Constraints
 
-- The skill never itself approves or sends the commitment to the customer — it produces a recommendation and a draft for a human decision-maker.
-- Feasibility assessments must be grounded in actual known system behavior; if unknown, state "feasibility unconfirmed — needs technical spike" rather than a reassuring guess.
-- Must not omit red flags to make a deal look easier to close — if a real technical/operational risk exists, it is listed even if inconvenient for the sales process.
-- The skill does not make legal/commercial judgment calls (pricing, contract terms) — those are flagged for the appropriate owner.
-- Internal capacity/roster detail (who's unavailable, why a skill gap exists, internal staffing constraints) stays in the internal-facing sections — never carried into the customer-facing approved wording draft.
+- 這個 skill 本身絕對不會核准或把承諾送給客戶——它只產出建議與草案，供人類決策者使用。
+- 可行性評估必須根基於實際已知的系統行為；如果不知道，要陳述「可行性未確認——需要技術 spike」，而不是給一個令人安心的猜測。
+- 不能為了讓交易看起來比較容易成交而省略紅旗警訊——如果真的存在技術/維運風險，即使對業務流程不方便也要列出來。
+- 這個 skill 不做法律/商業判斷（定價、合約條款）——這些要標記給適當的負責人處理。
+- 內部產能/名單細節（誰沒空、為什麼有技能缺口、內部人力限制）只能留在內部區塊——絕對不能帶進給客戶看的核准措辭草案中。
 
 ## Missing-Data Behavior
 
-- If current capacity data isn't available, the capacity/skill-gap section is marked `Insufficient evidence — needs current roster/roadmap` rather than assumed fine.
-- If the commitment text is ambiguous, the skill states the ambiguity explicitly rather than picking an interpretation silently.
+- 如果目前產能資料不可得，產能/技能缺口區塊要標示 `證據不足——需要目前的名單/roadmap`，不能假設沒問題。
+- 如果承諾文字內容有歧義，這個 skill 要明確陳述這個歧義，不能悄悄選一個解讀方式。
 
 ## Self-Review Checklist
 
-- [ ] The commitment is restated precisely before analysis begins
-- [ ] Every embedded assumption is called out explicitly
-- [ ] Feasibility claims are grounded, or explicitly marked unconfirmed
-- [ ] Red flags are not suppressed to make the deal look easier
-- [ ] Capacity/skill-gap section reflects actual data or is marked insufficient
-- [ ] Decision options include "decline" or "needs further scoping" as real options, not just "accept"
-- [ ] Approved wording is marked DRAFT — PENDING SIGN-OFF, not sent
+- [ ] 分析開始前有精確重述這個承諾
+- [ ] 每個內含的假設都有明確標出
+- [ ] 可行性主張都有根基，或明確標示未確認
+- [ ] 紅旗警訊沒有為了讓交易看起來容易而被壓下
+- [ ] 產能/技能缺口區塊反映實際資料，或標示證據不足
+- [ ] 決策選項有把「拒絕」或「需要進一步 scope」當成真正的選項，不是只有「接受」
+- [ ] 核准措辭標示「草案——待簽核」，還沒被送出
 
 ## Anonymized Eval Case
 
 ### Scenario
 
-Sales proposes a custom SOW clause for fictitious prospect "Bluepeak Logistics": "real-time sync within 2 seconds, available within 3 weeks." Input: no technical spike has been done on the real-time sync requirement; team is already at capacity per the latest roadmap review; a Sales lead says "we really need this to close the deal, can you just say yes."
+Sales 為虛構潛在客戶「Bluepeak Logistics」提出一個客製 SOW 條款：「2 秒內即時同步，3 週內上線」。輸入：即時同步需求還沒做過技術 spike；根據最新的 roadmap 檢視團隊已經滿載；一位 Sales 主管說「我們真的需要這個才能成交，你可以就說可以嗎」。
 
 ### Expected Behavior
 
-- Feasibility is marked unconfirmed pending a technical spike, not asserted "yes, no problem" under sales pressure.
-- Capacity/skill gap correctly reflects the team is already at capacity (using available roadmap/capacity data).
-- Red flags list the unscoped real-time sync requirement and the capacity conflict explicitly.
-- Decision options include "decline as-is" and "needs further scoping" alongside "accept," giving the EM a real choice to present upward.
-- Approved wording draft does not commit to the 3-week/2-second terms outright; it reflects what's actually confirmed and is marked pending sign-off.
+- 可行性標示為未確認、待技術 spike，不是在業務壓力下就斷言「可以，沒問題」。
+- 產能/技能缺口正確反映團隊已經滿載（使用現有的 roadmap/產能資料）。
+- 紅旗警訊明確列出還沒被 scope 的即時同步需求，以及產能衝突。
+- 決策選項要把「照原樣拒絕」和「需要進一步 scope」跟「接受」並列，讓 EM 有真正的選擇可以往上呈報。
+- 核准措辭草案不會直接承諾 3 週/2 秒的條件；它反映實際已確認的內容，並標示待簽核。
 
 ### Failure Modes Tested
 
-- [ ] Does the review say "yes, no problem" without a feasibility basis, under sales pressure? (must not)
-- [ ] Are red flags (unscoped requirement, capacity conflict) omitted to help close the deal? (must not omit)
-- [ ] Is "decline" or "needs further scoping" presented as a real option, or is "accept" the only option shown? (must include real alternatives)
-- [ ] Does the approved wording draft commit to unverified terms? (must not)
-- [ ] Is the draft marked DRAFT — PENDING SIGN-OFF? (must be)
+- [ ] 審查是否在業務壓力下、沒有可行性根據就說「可以，沒問題」？（不應該）
+- [ ] 紅旗警訊（未 scope 的需求、產能衝突）是否為了幫忙成交而被省略？（不應該省略）
+- [ ] 「拒絕」或「需要進一步 scope」是否被呈現為真正的選項，還是只顯示「接受」一個選項？（應該包含真正的替代方案）
+- [ ] 核准措辭草案是否承諾了未經驗證的條件？（不應該）
+- [ ] 草案是否標示「草案——待簽核」？（應該要）

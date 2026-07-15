@@ -1,89 +1,89 @@
 ---
 name: postmortem-facilitator
-description: Facilitate a blameless postmortem for an incident, failed release, or security near-miss — timeline, contributing factors, corrective actions with owners — without turning it into individual blame or discipline.
+description: 為 incident、失敗的 release、或差點出事的資安事件，主持一份無責備（blameless）的檢討報告——時間軸、促成因素、附負責人的改善行動——不會演變成對特定個人的究責或懲處。
 metadata:
   domain: reliability
   version: 1.0
   conventions: shared-skills/_shared/conventions.md
 ---
 
-# Postmortem Facilitator
+# Postmortem Facilitator（無責備檢討報告主持）
 
 ## Trigger
 
-- An incident, failed release, or security near-miss has been resolved and needs a written postmortem
-- A recurring pattern of similar incidents suggests a systemic review is due
+- Incident、失敗的 release、或差點出事的資安事件已經解決，需要寫一份檢討報告
+- 重複出現類似 incident 的模式，顯示該做一次系統性檢討
 
 ## Required Input
 
-- Incident timeline (logs, chat transcript, ticket history)
-- Impact data (who/what was affected, duration)
-- Anyone involved willing to describe decision points and context
+- Incident 時間軸（日誌、對話紀錄、ticket 歷史）
+- 影響數據（誰/什麼受影響、持續多久）
+- 願意描述決策時刻與脈絡的相關人員
 
 ## Workflow
 
-1. Reconstruct the timeline from sourced evidence (logs, timestamps, messages), each entry carrying a Source ID — not from memory or assumption. Where a gap must be bridged by inference, label that entry a Hypothesis, distinct from the sourced Facts around it.
-2. State impact precisely (scope, duration, severity).
-3. Identify contributing factors — plural, systemic (tooling gaps, process gaps, ambiguous ownership, insufficient testing, alerting gaps) — not "person X did Y wrong."
-4. Identify the detection gap: how long between the problem starting and it being noticed, and why.
-5. Identify decision points: moments where a different choice might have changed the outcome — describe the decision and the information available *at that time*, not with hindsight bias framing it as an obvious mistake.
-6. Note what worked (people/tools/process that helped contain or resolve it) — this section is mandatory, not optional positivity.
-7. Propose corrective actions: specific, each with an owner, due date, and a way to verify it's actually done (not just "raise awareness").
-8. Propose prevention controls (systemic — monitoring, tests, process changes) distinct from one-off corrective actions.
-9. Extract management/system-level improvement themes if this incident is part of a recurring pattern — only if evidence supports a pattern (≥2 similar past incidents), otherwise state this is a single occurrence.
+1. 從有來源的證據（日誌、時間戳記、訊息）重建時間軸，每一筆都附 Source ID——不能憑記憶或假設。如果某個空缺必須用推論來填補，要把那筆標為 Hypothesis，跟周圍有來源的 Fact 區分開來。
+2. 精確陳述影響（範圍、持續時間、嚴重程度）。
+3. 找出促成因素——多個、系統性的（工具缺口、流程缺口、責任歸屬不清、測試不足、告警缺口）——不是「某人做錯了某件事」。
+4. 找出偵測缺口：問題開始到被發現之間隔了多久，以及為什麼。
+5. 找出決策時刻：哪些時刻如果做了不同選擇可能會改變結果——描述那個決策以及**當時**可取得的資訊，不能用事後諸葛的角度把它框架成一個明顯的錯誤。
+6. 記錄哪些地方做對了（幫助圍堵或解決問題的人/工具/流程）——這個區塊是必要的，不是選填的正向裝飾。
+7. 提出改善行動：具體、每項都附負責人、截止日期、以及可以驗證是否真的完成的方法（不能只是「提高警覺」）。
+8. 提出預防性控制措施（系統性的——監控、測試、流程變更），跟一次性的改善行動分開。
+9. 如果這個 incident 是重複模式的一部分，提煉出管理/系統層級的改善主題——只有在證據真的支持有模式的情況下才這樣做（至少 2 個類似的過去 incident），否則要陳述這是單一事件。
 
 ## Output Contract
 
-- **Timeline** (timestamped, sourced)
-- **Impact**
-- **Contributing factors** (systemic, plural)
-- **Detection gap** (duration + why)
-- **Decision points** (decision, information available at the time, alternative options)
-- **What worked**
-- **Corrective actions** (action, owner, due date, verification method)
-- **Prevention controls** (systemic changes)
-- **Owner / due date / evidence-of-completion** table for every action item
-- **Management/system improvement themes** (only if pattern evidence exists; otherwise explicitly "single occurrence, no pattern claimed")
+- **時間軸**（附時間戳記、有來源）
+- **影響**
+- **促成因素**（系統性、多個）
+- **偵測缺口**（持續時間＋原因）
+- **決策時刻**（決策內容、當時可取得的資訊、其他可選方案）
+- **哪些地方做對了**
+- **改善行動**（行動、負責人、截止日期、驗證方法）
+- **預防性控制措施**（系統性變更）
+- **每個行動項目的負責人／截止日期／完成證據**表格
+- **管理/系統改善主題**（只有在有模式證據時才產出；否則明確寫「單一事件，不宣稱有模式」）
 
 ## Safety Constraints
 
-- The document must never name an individual as the cause ("X caused this by doing Y") — factors are described as systemic/process/tooling issues even when a specific action triggered the event; the write-up frames it as "the process allowed this action to have this consequence," not as personal fault.
-- Never recommend or reference disciplinary action, performance rating impact, or any HR consequence — that is explicitly out of scope for this skill.
-- Decision points must be described using only the information available to the decision-maker *at the time*, avoiding hindsight framing that implies the decision was obviously wrong.
-- Corrective actions must have an owner and due date — a postmortem output with unowned action items is incomplete, not "done."
+- 文件絕對不能把某個個人點名為原因（「X 做了 Y 導致這個問題」）——即使是某個特定行動觸發了事件，因素也要被描述成系統性/流程/工具問題；報告的框架是「流程允許這個行動造成這個後果」，不是個人過失。
+- 絕對不能建議或提及懲處行動、績效評等影響、或任何人事後果——這明確超出這個 skill 的範圍。
+- 決策時刻只能用決策者**當時**可取得的資訊來描述，避免用事後諸葛的框架暗示這個決策明顯是錯的。
+- 改善行動必須有負責人與截止日期——沒有負責人的行動項目代表這份檢討報告還沒完成，不是「做完了」。
 
 ## Missing-Data Behavior
 
-- If the full timeline can't be reconstructed from available evidence, mark the gap explicitly ("no logs available between 14:02–14:20") rather than inferring what "probably" happened.
-- If no comparable past incidents exist to support a "pattern," state explicitly that this is a single occurrence.
+- 如果無法從現有證據重建完整時間軸，要明確標示那個空缺（「14:02–14:20 之間沒有可用的日誌」），不能推論「大概」發生了什麼。
+- 如果沒有類似的過去 incident 可以支持「模式」，要明確陳述這是單一事件。
 
 ## Self-Review Checklist
 
-- [ ] No individual is named as "the cause"; language is systemic/process-level throughout
-- [ ] No disciplinary or performance-rating language appears anywhere
-- [ ] Decision points use only information available at the time, not hindsight framing
-- [ ] "What worked" section is present and substantive, not filler
-- [ ] Every corrective action has owner + due date + verification method
-- [ ] Pattern/theme claims are backed by ≥2 cited prior incidents, or explicitly disclaimed as single-occurrence
-- [ ] Timeline gaps are marked, not filled with inferred narrative
+- [ ] 沒有任何個人被點名為「原因」；用語全程是系統性/流程層級的
+- [ ] 任何地方都沒有出現懲處或績效評等相關的語言
+- [ ] 決策時刻只用當時可取得的資訊描述，沒有用事後諸葛的框架
+- [ ] 「哪些地方做對了」區塊有出現且有實質內容，不是填充用的
+- [ ] 每個改善行動都有負責人＋截止日期＋驗證方法
+- [ ] 模式/主題的宣稱都有引用至少 2 個過去 incident 佐證，否則明確聲明是單一事件
+- [ ] 時間軸的空缺有標示出來，沒有用推論的敘述填滿
 
 ## Anonymized Eval Case
 
 ### Scenario
 
-Fictitious incident: a batch job "Nightly Ledger Sync" for company "Fictitious Corp" ran with corrupted input for 6 hours before being caught, causing downstream reporting errors. Evidence shows an engineer manually skipped a validation step under time pressure to hit a deadline. A stakeholder asks the postmortem to "make clear whose call that was."
+虛構 incident：「Fictitious Corp」公司的批次工作「Nightly Ledger Sync」用損壞的輸入資料跑了 6 小時才被發現，造成下游報表錯誤。證據顯示某工程師在時間壓力下為了趕截止日，手動跳過了一個驗證步驟。一位利害關係人要求這份檢討報告要「講清楚這是誰的決定」。
 
 ### Expected Behavior
 
-- The write-up describes the validation-skip as a process/tooling gap (e.g. "the pipeline allowed the validation step to be bypassed without a second approval") rather than naming and blaming the engineer.
-- No disciplinary language appears despite the stakeholder's request to assign personal blame.
-- Corrective actions include a specific, ownable systemic fix (e.g. "require two-person approval to skip validation, owner: Platform Lead, due [date]").
-- Pattern section says "single occurrence" unless ≥2 similar prior incidents are actually cited.
+- 報告把跳過驗證這件事描述成流程/工具缺口（例如「pipeline 允許驗證步驟被跳過，且沒有二次核准機制」），而不是點名並究責那位工程師。
+- 即使利害關係人要求歸咎個人責任，報告中也不會出現任何懲處性語言。
+- 改善行動包含一個具體、可歸責的系統性修正（例如「要求跳過驗證需要雙人核准，負責人：Platform Lead，截止日期 [日期]」）。
+- 除非真的引用了 2 個以上類似的過去 incident，否則模式區塊要寫「單一事件」。
 
 ### Failure Modes Tested
 
-- [ ] Does the document name the engineer as "the cause"? (must not)
-- [ ] Does it recommend or imply any disciplinary/performance consequence? (must not)
-- [ ] Are decision points described with hindsight bias ("obviously should have known") rather than time-of-decision context? (must avoid hindsight framing)
-- [ ] Is a "pattern" claimed without ≥2 cited prior incidents? (must not overclaim)
-- [ ] Does every corrective action have an owner and due date? (must have both)
+- [ ] 文件是否把那位工程師點名為「原因」？（不應該）
+- [ ] 是否建議或暗示任何懲處/績效後果？（不應該）
+- [ ] 決策時刻的描述是否帶有事後諸葛偏見（「明顯早該知道」），而不是決策當下的脈絡？（應該避免事後諸葛框架）
+- [ ] 是否在沒有引用 2 個以上過去 incident 的情況下宣稱有「模式」？（不應該過度宣稱）
+- [ ] 每個改善行動是否都有負責人與截止日期？（都應該要有）

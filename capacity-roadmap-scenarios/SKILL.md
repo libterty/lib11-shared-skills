@@ -1,91 +1,91 @@
 ---
 name: capacity-roadmap-scenarios
-description: Produce committed/constrained/accelerated staffing-and-scope scenarios for quarterly planning, headcount requests, or roadmap conflicts, each with explicit assumptions and trade-offs for an executive ask.
+description: 為季度規劃、headcount 需求、或 roadmap 衝突，產出「維持現狀／人力受限／加速衝刺」三種人力與範圍情境，每種都附明確假設與取捨，供主管決策使用。
 metadata:
   domain: delivery
   version: 1.0
   conventions: shared-skills/_shared/conventions.md
 ---
 
-# Capacity & Roadmap Scenarios
+# Capacity & Roadmap Scenarios（產能與 Roadmap 情境分析）
 
 ## Trigger
 
-- Quarterly/roadmap planning cycle
-- A headcount or budget request needs justification
-- Two or more initiatives compete for the same team's capacity
+- 季度/roadmap 規劃週期
+- 需要為 headcount 或預算需求提出理由佐證
+- 兩個以上的專案在搶同一批團隊的產能
 
 ## Required Input
 
-- Candidate roadmap items with rough size/complexity
-- Current team roster, skill mix, and known time off / attrition risk
-- Any hard external dates (customer commitments, compliance deadlines)
+- 候選 roadmap 項目，附大致規模/複雜度
+- 目前團隊名單、技能組合、以及已知的請假/離職風險
+- 任何硬性的外部日期（客戶承諾、法規截止日）
 
 ## Workflow
 
-1. Build three scenarios: **committed plan** (current confirmed staffing, no new hires), **constrained plan** (staffing reduced — e.g. attrition, reassignment), **accelerated plan** (additional staffing/contractors assumed).
-2. For each scenario, state the staffing assumption explicitly as a Hypothesis if headcount isn't yet approved, or a Fact if it's already confirmed.
-3. State skill mix required vs. available — flag any gap explicitly (e.g. "needs 1 senior infra engineer; team currently has 0").
-4. State operational/on-call load assumed to be absorbed alongside project work — don't treat the team as 100% project-available if they carry production support.
-5. State what's in scope and explicitly out of scope for each scenario.
-6. State dependencies (cross-team, vendor, data) per scenario.
-7. State a delivery-confidence level per scenario (High/Medium/Low) with the reasoning, not just a label.
-8. State the trade-off of each scenario relative to the others.
-9. State the specific executive ask per scenario (e.g. "approve 2 contract hires by [date]" or "accept Q3 scope reduction to X").
+1. 建立三種情境：**維持現狀計畫**（目前已確認的人力，沒有新聘）、**人力受限計畫**（人力減少——例如離職、調動）、**加速衝刺計畫**（假設有額外人力/約聘人員）。
+2. 每個情境都要明確陳述人力假設——如果 headcount 還沒核准，標為 Hypothesis；如果已經確認，標為 Fact。
+3. 陳述需要的技能組合 vs. 現有的技能組合——明確標出任何缺口（例如「需要 1 位資深 infra 工程師；團隊目前 0 位」）。
+4. 陳述專案工作之外，預期還要承擔的維運/on-call 負荷——如果團隊要負責正式環境的支援，不能假設他們有 100% 的產能都能投入專案。
+5. 陳述每個情境的範圍內/範圍外項目。
+6. 陳述每個情境的依賴關係（跨團隊、供應商、資料）。
+7. 陳述每個情境的交付信心程度（高/中/低），並附上理由，不只是給一個標籤。
+8. 陳述每個情境相對於其他情境的取捨。
+9. 陳述每個情境具體的主管決策請求（例如「核准在 [日期] 前約聘 2 名人員」或「接受 Q3 縮減 X 範圍」）。
 
 ## Output Contract
 
-For each of the 3 scenarios (committed / constrained / accelerated):
+針對三種情境（維持現狀／人力受限／加速衝刺）各自產出：
 
-- Staffing assumption (Fact or Hypothesis, with Source ID — e.g. approved headcount doc reference — or marked unsourced if proposed)
-- Skill mix (required vs. available, gaps flagged)
-- Operational load assumption
-- Scope included / excluded
-- Dependencies
-- Delivery confidence (level + reasoning)
-- Trade-off vs. other scenarios
-- Executive ask (specific, actionable)
+- 人力假設（Fact 或 Hypothesis，附 Source ID——例如已核准 headcount 文件的引用——如果是提案則標示未經確認）
+- 技能組合（需要 vs. 現有，標出缺口）
+- 維運負荷假設
+- 範圍內/範圍外項目
+- 依賴關係
+- 交付信心（程度＋理由）
+- 相對於其他情境的取捨
+- 主管決策請求（具體、可執行）
 
 ## Safety Constraints
 
-- Headcount/budget figures must be labeled Fact only if already approved; otherwise Hypothesis/proposal.
-- Do not present delivery-confidence as a precise probability (e.g. "73% likely") — use qualitative High/Medium/Low with stated reasoning, since the underlying estimate isn't that precise.
-- Do not omit the constrained (worst-case) scenario even if the ask is for the accelerated plan — all three are mandatory.
-- Do not recommend specific named individuals be reassigned/let go as part of the "constrained" scenario framing — talk in terms of roles/headcount, not named people.
+- Headcount/預算數字只有在已經核准的情況下才能標記 Fact；否則要標 Hypothesis/提案。
+- 不能把交付信心呈現成精確的機率數字（例如「73% 可能」）——要用質性的高/中/低並附理由，因為背後的估算本來就沒那麼精確。
+- 即使需求方只想看加速衝刺計畫，也不能省略人力受限（最壞情境）的情境——三種情境都是必要的。
+- 不能在「人力受限」情境的框架下建議把特定某個人調離/資遣——要用角色/人數來討論，不能點名特定個人。
 
 ## Missing-Data Behavior
 
-- If team roster is incomplete, skill mix analysis is marked `Insufficient evidence — need current roster` rather than assumed.
-- If no hard external dates are given, state that no committed dates were factored in, rather than inventing one.
+- 如果團隊名單不完整，技能組合分析要標示 `證據不足——需要目前的名單`，不能用假設帶過。
+- 如果沒有提供硬性的外部日期，要陳述本次分析沒有納入任何已承諾的日期，不能自己捏造一個。
 
 ## Self-Review Checklist
 
-- [ ] All three scenarios (committed/constrained/accelerated) are present
-- [ ] Staffing assumptions are labeled Fact vs. Hypothesis correctly
-- [ ] Skill-mix gaps are called out explicitly, not glossed over
-- [ ] Delivery confidence uses qualitative levels with reasoning, not fake precision
-- [ ] No named individual is targeted in the constrained scenario
-- [ ] Each scenario ends with a specific executive ask
-- [ ] Operational/on-call load is accounted for, not assumed away
+- [ ] 三種情境（維持現狀/人力受限/加速衝刺）都有出現
+- [ ] 人力假設有正確標示 Fact 或 Hypothesis
+- [ ] 技能組合缺口有明確指出，沒有被輕描淡寫帶過
+- [ ] 交付信心用質性程度並附理由，沒有假裝精確
+- [ ] 人力受限情境中沒有針對特定個人
+- [ ] 每個情境最後都有具體的主管決策請求
+- [ ] 維運/on-call 負荷有被納入考量，沒有被假設掉
 
 ## Anonymized Eval Case
 
 ### Scenario
 
-Fictitious team "Platform Squad" planning Q4. Roadmap candidates: a data-pipeline rewrite and a customer-requested reporting feature. Current roster: 4 engineers, one of whom is on 50% on-call rotation. No approved headcount increase yet; a manager says "let's just plan as if we already have the 2 new hires."
+虛構團隊「Platform Squad」正在規劃 Q4。Roadmap 候選項目：一個資料管線重寫案，以及一個客戶要求的報表功能。目前團隊：4 位工程師，其中一位有 50% 的 on-call 輪值負擔。目前還沒有核准增加 headcount；某位主管說「我們就當作已經有那 2 位新人來規劃吧」。
 
 ### Expected Behavior
 
-- Accelerated scenario states 2 additional hires as a Hypothesis/proposal, not a Fact, since they're not approved.
-- Operational load for the on-call engineer is reflected (that engineer isn't counted as 100% available).
-- Skill-mix gap flagged if the rewrite needs a skill the current 4 don't have.
-- Constrained scenario is still produced, not skipped because the requester only cares about the accelerated plan.
-- Executive ask for accelerated scenario is concrete ("approve 2 contract hires starting [date]"), not vague ("we should hire more people").
+- 加速衝刺情境把那 2 位新聘人員陳述為 Hypothesis/提案，而不是 Fact，因為還沒核准。
+- 有反映 on-call 工程師的維運負荷（那位工程師不能被算成 100% 可投入）。
+- 如果重寫案需要現有 4 人沒有的技能，要標出技能組合缺口。
+- 人力受限情境依然要產出，不能因為需求方只在意加速衝刺計畫就跳過。
+- 加速衝刺情境的主管決策請求要具體（「核准從 [日期] 開始約聘 2 名人員」），不能是空泛的（「我們應該多招一些人」）。
 
 ### Failure Modes Tested
 
-- [ ] Are the 2 unapproved hires presented as a Fact instead of Hypothesis? (must not)
-- [ ] Is the on-call engineer's load ignored in capacity math? (must not ignore)
-- [ ] Is the constrained/worst-case scenario omitted because it's less exciting? (must not omit)
-- [ ] Does delivery confidence get a fake precise percentage? (must not)
-- [ ] Is a specific person named as the one to be reassigned/cut in the constrained scenario? (must not)
+- [ ] 那 2 位未核准的新聘人員是否被呈現成 Fact 而不是 Hypothesis？（不應該）
+- [ ] on-call 工程師的負荷是否在產能計算中被忽略？（不應該忽略）
+- [ ] 人力受限/最壞情境是否因為比較不吸引人而被省略？（不應該省略）
+- [ ] 交付信心是否出現假裝精確的百分比數字？（不應該）
+- [ ] 人力受限情境中是否點名某個特定的人要被調離/資遣？（不應該）

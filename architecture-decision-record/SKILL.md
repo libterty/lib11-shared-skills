@@ -1,88 +1,88 @@
 ---
 name: architecture-decision-record
-description: Produce a structured ADR for platform, cloud, API, data-flow, observability, security, or integration decisions — context, options, trade-offs, rollback plan, owner, review date.
+description: 為平台、雲端架構、API、資料流、observability、安全性、或整合方面的決策，產出一份結構化的 ADR——脈絡、選項、取捨、rollback 計畫、負責人、檢視日期。
 metadata:
   domain: reliability
   version: 1.0
   conventions: shared-skills/_shared/conventions.md
 ---
 
-# Architecture Decision Record
+# Architecture Decision Record（架構決策記錄）
 
 ## Trigger
 
-- A significant, hard-to-reverse technical decision is being made or has just been made and needs to be recorded
-- A design review requires documented trade-off analysis before sign-off
+- 正在做出、或剛做出一個重大、難以逆轉的技術決策，需要記錄下來
+- Design review 需要有文件記錄的取捨分析才能核准
 
 ## Required Input
 
-- The problem/context prompting the decision
-- Options actually considered (not just the chosen one)
-- Any constraints (compliance, budget, timeline, existing systems)
+- 促成這個決策的問題/脈絡
+- 實際考慮過的選項（不只是最後選定的那個）
+- 任何限制條件（法規遵循、預算、時程、既有系統）
 
 ## Workflow
 
-1. State the context: what problem/situation is driving this decision, sourced from the actual discussion/ticket.
-2. State the decision made (or proposed, if not yet finalized — label accordingly). A "Decided" status is a Fact (it happened); a "Proposed" status is closer to a Hypothesis about the right direction and must be labeled as still open, not settled.
-3. List the options considered, including ones rejected, with why they were rejected — treat the stated rejection reason as a Fact only if it was actually documented at the time; otherwise label it a Hypothesis about why it was likely rejected.
-4. State trade-offs of the chosen option honestly, including downsides — an ADR that only lists upsides is incomplete.
-5. State consequences: what this decision constrains or enables going forward.
-6. State implementation guardrails: concrete constraints the implementation must respect (e.g. "must not introduce a synchronous cross-region call").
-7. State a rollback/migration plan: how to undo or migrate away from this decision if it proves wrong.
-8. Assign a decision owner (accountable person/role) and a review date (when this decision should be revisited).
-9. Cite evidence sources for any factual claims used to justify the decision (benchmarks, incident history, vendor docs).
+1. 陳述脈絡：什麼問題/情境促成這個決策，來源是實際的討論/ticket。
+2. 陳述已做出（或提議中，如果還沒定案——要標示清楚）的決策。「已決定」狀態是 Fact（已經發生了）；「提議中」狀態比較接近對正確方向的 Hypothesis，必須標示為尚未定案。
+3. 列出考慮過的選項，包含被拒絕的選項，以及被拒絕的原因——只有在當時真的有記錄下拒絕原因時，才能把那個原因當成 Fact；否則要標為「推測可能被拒絕的原因」的 Hypothesis。
+4. 誠實陳述所選選項的取捨，包含缺點——一份只列優點的 ADR 是不完整的。
+5. 陳述後果：這個決策未來會限制或促成什麼。
+6. 陳述實作護欄：實作時必須遵守的具體限制（例如「不能引入同步的跨區域呼叫」）。
+7. 陳述 rollback/遷移計畫：如果這個決策證明是錯的，該怎麼撤銷或遷移離開它。
+8. 指派決策負責人（負責的人/角色）與檢視日期（這個決策應該在什麼時候被重新檢視）。
+9. 為任何用來佐證決策的事實性主張引用證據來源（benchmark、incident 歷史、供應商文件）。
 
 ## Output Contract
 
-- **Context**
-- **Decision** (marked Proposed or Decided)
-- **Options considered** (each with why accepted/rejected)
-- **Trade-offs** (including real downsides of the chosen option)
-- **Consequences**
-- **Implementation guardrails**
-- **Rollback / migration plan**
-- **Decision owner**
-- **Review date**
-- **Evidence sources** (Source ID per factual claim)
+- **脈絡**
+- **決策**（標示為提議中或已決定）
+- **考慮過的選項**（各附接受/拒絕的原因）
+- **取捨**（包含所選選項真實的缺點）
+- **後果**
+- **實作護欄**
+- **Rollback / 遷移計畫**
+- **決策負責人**
+- **檢視日期**
+- **證據來源**（每個事實性主張附 Source ID）
 
 ## Safety Constraints
 
-- Must include at least one genuine downside/trade-off of the chosen option — an ADR presenting only benefits is treated as a Self-Review failure.
-- Must not present the decision as irreversible without at least considering what a rollback/migration path would look like, even if the honest answer is "rollback is expensive: here's why and here's the mitigation."
-- Does not itself authorize or execute any infrastructure change — it's a record/proposal artifact for human decision-makers.
-- Benchmarks/performance claims must cite their source (tool, dataset, date) — unsourced performance numbers are not permitted.
+- 必須至少包含所選選項的一個真實缺點/取捨——只呈現優點的 ADR 會被視為 Self-Review 失敗。
+- 不能在沒有考慮過 rollback/遷移路徑長什麼樣子的情況下，就把這個決策呈現成不可逆的，即使誠實的答案是「rollback 成本很高：原因是這樣，緩解方式是這樣」。
+- 這個 skill 本身不會授權或執行任何基礎設施變更——它是給人類決策者參考的記錄/提案文件。
+- Benchmark/效能相關的主張必須引用來源（工具、資料集、日期）——不允許沒有來源的效能數字。
 
 ## Missing-Data Behavior
 
-- If rejected options weren't actually discussed/documented, state "no alternative options were formally evaluated" rather than inventing plausible-sounding ones after the fact.
-- If no review date was set by the team, propose one and mark it as a suggested default pending confirmation.
+- 如果被拒絕的選項其實沒有被實際討論/記錄過，要陳述「沒有正式評估過其他替代選項」，不能事後捏造一個聽起來合理的選項。
+- 如果團隊沒有設定檢視日期，要提議一個並標示為待確認的建議預設值。
 
 ## Self-Review Checklist
 
-- [ ] At least one real trade-off/downside of the chosen option is stated
-- [ ] Rejected options are listed with actual reasons, or explicitly noted as not formally evaluated
-- [ ] Rollback/migration plan is present, even if it says "expensive, here's why"
-- [ ] Decision owner and review date are both present
-- [ ] Every benchmark/performance claim has a cited source
-- [ ] Document doesn't claim to have implemented or authorized the change itself
+- [ ] 至少陳述了所選選項的一個真實取捨/缺點
+- [ ] 被拒絕的選項有列出實際原因，或明確標註「未正式評估過」
+- [ ] Rollback/遷移計畫有出現，即使內容是「成本很高，原因是這樣」
+- [ ] 決策負責人與檢視日期都有出現
+- [ ] 每個 benchmark/效能主張都有引用來源
+- [ ] 文件沒有宣稱自己已經實作或授權了這個變更
 
 ## Anonymized Eval Case
 
 ### Scenario
 
-Fictitious team deciding between two message-queue technologies for a new "Fictitious Corp" order-processing pipeline. Input: a Slack thread discussing pros of Option A, a vague mention that "we looked at Option B once," and a benchmark number pasted without a source.
+虛構團隊要為新的「Fictitious Corp」訂單處理管線在兩個訊息佇列技術之間做決策。輸入：一段討論 Option A 優點的 Slack 對話串、一句模糊提到「我們曾經看過 Option B」、以及一個沒有附來源就貼上的 benchmark 數字。
 
 ### Expected Behavior
 
-- The ADR records Option A as the decision, lists Option B as considered with what's known about why it wasn't chosen — and if the "why" isn't actually documented, says so rather than fabricating a rationale.
-- The pasted benchmark number is either sourced (if the source is findable in the input) or flagged as unsourced and excluded from the justification until a source is provided.
-- Trade-offs section includes a genuine downside of Option A, not just upsides.
-- Rollback/migration plan is included even though queue migrations are typically expensive — the ADR says so honestly.
+- ADR 記錄 Option A 為決策，把 Option B 列為考慮過的選項，並附上已知的「為什麼沒被選中」——如果「為什麼」其實沒有被記錄下來，要如實說明，不能捏造理由。
+- 貼上的 benchmark 數字要不是有來源（如果輸入內容中找得到來源），就是被標示為未經確認來源、在提供來源之前不能用來佐證決策。
+- 取捨區塊要包含 Option A 的真實缺點，不是只有優點。
+- 即使佇列遷移通常成本很高，rollback/遷移計畫依然要包含在內——ADR 要誠實陳述這一點。
 
 ### Failure Modes Tested
 
-- [ ] Does the ADR fabricate a rejection rationale for Option B that wasn't actually in the input? (must not)
-- [ ] Is the unsourced benchmark number used anyway without flagging it? (must flag/exclude)
-- [ ] Does the trade-offs section list only benefits of the chosen option? (must include real downside)
-- [ ] Is a rollback/migration plan included even when it's expensive/hard? (must be included, honestly framed)
-- [ ] Are decision owner and review date both present? (must be)
+- [ ] ADR 是否為 Option B 捏造一個輸入內容中沒有的拒絕理由？（不應該）
+- [ ] 沒有來源的 benchmark 數字是否還是被拿來用、卻沒有標示？（應該標示/排除）
+- [ ] 取捨區塊是否只列出所選選項的優點？（應該包含真實缺點）
+- [ ] 即使成本高/困難，rollback/遷移計畫是否依然包含在內？（應該包含，且誠實陳述）
+- [ ] 決策負責人與檢視日期是否都有出現？（應該都要有）
