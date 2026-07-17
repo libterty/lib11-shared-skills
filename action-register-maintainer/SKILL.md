@@ -1,6 +1,6 @@
 ---
 name: action-register-maintainer
-description: 讀取會議記錄與目前的 Action Register（action-raci-tracker/docs/action-register.md）內容，提出新增/更新/逾期標記的建議異動，讓使用者自己決定要不要採用並手動套用到那份活文件上——這個 skill 本身不會改動檔案。
+description: 讀取會議記錄與目前的 Action Register（shared-skills/docs/action-register.md）內容，提出新增/更新/逾期標記的建議異動，讓使用者自己決定要不要採用並手動套用到那份活文件上——這個 skill 本身不會改動檔案。
 metadata:
   domain: delivery
   version: 1.0
@@ -11,7 +11,7 @@ metadata:
 
 ## Trigger
 
-- 開完會，想知道這次的內容該讓 `action-raci-tracker/docs/action-register.md` 新增哪些列、或更新哪些既有列的狀態
+- 開完會，想知道這次的內容該讓 `shared-skills/docs/action-register.md` 新增哪些列、或更新哪些既有列的狀態
 - 定期（例如每週）想檢查 Action Register 裡有沒有已經超過截止日期、卻還沒被更新狀態的項目
 
 ## Required Input
