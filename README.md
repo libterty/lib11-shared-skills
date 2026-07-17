@@ -17,14 +17,16 @@ shared-skills/
 │   ├── ar.template.md          # Action Register 範本（公開，追蹤進 git）
 │   ├── raci.template.md        # RACI Matrix 範本（公開，追蹤進 git）
 │   ├── adr.template.md         # ADR 範本，一個決策一個檔案（公開，追蹤進 git）
+│   ├── mn.template.md          # 單次會議原始紀錄範本，選用（公開，追蹤進 git）
 │   ├── ar/                     # 實際的 Action Register 內容（.gitignore 排除，只留 .gitkeep）
 │   ├── raci/                   # 實際的 RACI Matrix 內容（.gitignore 排除，只留 .gitkeep）
-│   └── adr/                    # 實際的 ADR 內容（.gitignore 排除，只留 .gitkeep）
+│   ├── adr/                    # 實際的 ADR 內容（.gitignore 排除，只留 .gitkeep）
+│   └── mn/                     # 實際的會議原始紀錄（.gitignore 排除，只留 .gitkeep）
 ├── validate-skills.sh          # 結構與安全啟發式驗證腳本
 └── <skill-name>/SKILL.md       # 每個 skill 一個資料夾
 ```
 
-`_shared/` 和 `docs/` 不是 skill，`validate-skills.sh` 掃描每個子目錄時會跳過這兩個。`docs/ar/`、`docs/raci/`、`docs/adr/` 底下會累積真實的內部資訊（實際 action item、實際責任分配、實際架構決策），所以整個被 `.gitignore` 排除——複製對應的 `*.template.md` 到這些資料夾底下開始用，不會不小心把內部內容提交進這個公開 repo。細節見 `docs/README.md`。
+`_shared/` 和 `docs/` 不是 skill，`validate-skills.sh` 掃描每個子目錄時會跳過這兩個。`docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/mn/` 底下會累積真實的內部資訊（實際 action item、實際責任分配、實際架構決策、實際會議記錄），所以整個被 `.gitignore` 排除——複製對應的 `*.template.md` 到這些資料夾底下開始用，不會不小心把內部內容提交進這個公開 repo。細節見 `docs/README.md`。
 
 ---
 
