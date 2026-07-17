@@ -137,6 +137,98 @@ bash validate-skills.sh
 
 ---
 
+## Day-to-day / 每週工作節奏怎麼用
+
+### 每天
+
+| 時機 | Skill | 範例呼叫 |
+|---|---|---|
+| 上班前 | `daily-priority-briefing` | 「請照 `shared-skills/daily-priority-briefing/SKILL.md` 的定義，幫我盤點今天的優先序。今天的行事曆是：……，未處理的信件/ticket 有：……」 |
+| 開完任何會議（不限形式） | `notes-to-action-digest` | 「請照 `shared-skills/notes-to-action-digest/SKILL.md` 的定義，幫我拆解這段會議記錄。逐字稿如下：……」 |
+| 1-1 開始前幾分鐘 | `one-on-one-prep-briefing` | 「請照 `shared-skills/one-on-one-prep-briefing/SKILL.md` 的定義，幫我準備跟 [對象] 的 1-1。上次的 1-1 筆記是：……」 |
+| 查看團隊 async standup 回報 | `team-standup-digest` | 「請照 `shared-skills/team-standup-digest/SKILL.md` 的定義，幫我彙整今天的站會回報：……」 |
+
+### 每週
+
+| 時機 | Skill | 範例呼叫 |
+|---|---|---|
+| 週五收尾 | `weekly-wrapup-focus` | 「請照 `shared-skills/weekly-wrapup-focus/SKILL.md` 的定義，幫我總結這週完成的事，並建議下週 focus。這週完成的項目：……」 |
+| Retro 結束後 | `retro-synthesis` | 「請照 `shared-skills/retro-synthesis/SKILL.md` 的定義，幫我整理這次 retro 的 sticky note：……」 |
+| 定期專案健康度檢視 | `delivery-health-review` | 「請照 `shared-skills/delivery-health-review/SKILL.md` 的定義，幫我檢視 [專案] 這兩週的交付健康度。ticket 匯出如下：……」 |
+| 跨團隊依賴檢查 | `cross-team-dependency-log` | 「請照 `shared-skills/cross-team-dependency-log/SKILL.md` 的定義，幫我彙整目前跨團隊的依賴狀態：……」 |
+
+### 串連使用的情境
+
+單一 skill 通常只處理一段輸入到一份輸出；下面是實際工作中常見的「上一個 skill 的輸出，餵給下一個 skill 當輸入」的串接場景。
+
+#### 1. 會議 → 拆待辦 → 跨週期追蹤
+
+```text
+1) 「請照 notes-to-action-digest/SKILL.md 的定義，幫我拆解這場會議的逐字稿：……」
+   → 得到待辦事項清單（含負責人/截止日期）
+
+2) 「請照 action-register-maintainer/SKILL.md 的定義，讀取以下目前的 Action Register，
+   跟這次會議拆出來的待辦事項比對，建議新增/更新哪些列：
+   [貼上 docs/action-register.md 目前內容] + [步驟 1 的待辦事項清單]」
+   → 得到建議的異動清單，自己確認後手動套用到 docs/action-register.md
+```
+
+#### 2. Retro → Action item → 追蹤
+
+```text
+1) 「請照 retro-synthesis/SKILL.md 的定義，幫我整理這次 retro 的 sticky note：……」
+   → 得到主題分群與排序過的 action item 草案
+
+2) 團隊確認負責人/截止日期後，用同一批 action item 呼叫 action-register-maintainer
+   → 建議加進 docs/action-register.md
+```
+
+#### 3. 專案出狀況 → 健康度檢視 → 復原計畫
+
+```text
+1) 「請照 delivery-health-review/SKILL.md 的定義，幫我檢視 [專案] 的交付健康度：……」
+   → 得到事實表格與各維度狀態
+
+2) 如果狀態明顯偏紅：「請照 project-recovery-plan/SKILL.md 的定義，
+   沿用上面 delivery-health-review 的事實表格，幫我做一份復原計畫」
+   → project-recovery-plan 的 Required Input 會直接沿用步驟 1 的事實，不用重新蒐集
+```
+
+#### 4. 責任歸屬不清 → 提案 → 定案維護
+
+```text
+1) 「請照 role-clarity-decision-rights/SKILL.md 的定義，
+   幫我針對 [角色重疊的具體事件] 設計一份決策權責提案：……」
+   → 得到待確認的 DRI/Approver/Consulted/Informed 提案
+
+2) 跟相關人員確認過後，手動把定案結果填進 docs/raci-matrix.md 長期維護
+   （不是每次都重跑 skill，那份表格是給你自己更新的）
+```
+
+#### 5. 多次零散會議 → 主題演變／知識文件
+
+```text
+情境 A（同一主題被反覆討論，想知道現在講到哪）：
+「請照 cross-meeting-topic-tracker/SKILL.md 的定義，幫我整理 [主題] 在這幾場會議中的演變：
+ [會議1摘要 + 日期] [會議2摘要 + 日期] [會議3摘要 + 日期]」
+
+情境 B（想要一份長期可查的知識文件，不只是時間軸）：
+「請照 meeting-notes-to-structured-doc/SKILL.md 的定義，
+ 把這幾次會議記錄整合成一份 [主題] 的知識文件草稿：……」
+```
+
+#### 6. Incident 結束 → Postmortem → 改善行動追蹤
+
+```text
+1) 「請照 postmortem-facilitator/SKILL.md 的定義，幫我主持這次 incident 的檢討：……」
+   → 得到時間軸、促成因素、改善行動（附負責人/截止日期）
+
+2) 把改善行動清單餵給 action-register-maintainer，比對 docs/action-register.md
+   → 建議新增，跨週期追蹤到真正完成，不會開完會就忘記
+```
+
+---
+
 ## Skill 之間的相互依賴
 
 大部分 skill 是獨立的，可以單獨呼叫。以下是有明確依賴/串接關係的部分：
