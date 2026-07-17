@@ -7,7 +7,7 @@
 - `shared-skills/docs/action-register.md` — 行動追蹤表，記錄每個 action item 的負責人/來源/截止日期/狀態，跨會議持續維護
 - `shared-skills/docs/raci-matrix.md` — 責任分配表，定義每個決策/任務類型誰是 R/A/C/I
 
-這兩份都是純 markdown 表格，直接用編輯器打開改就好，不需要任何工具或 skill 才能使用。`shared-skills/docs/` 底下放的是非 skill 的參考資料/範本，`scripts/validate-skills.sh` 會跳過這個目錄，不會把它當成一個缺 SKILL.md 的 skill 來報錯。
+這兩份都是純 markdown 表格，直接用編輯器打開改就好，不需要任何工具或 skill 才能使用。`shared-skills/docs/` 底下放的是非 skill 的參考資料/範本，`shared-skills/validate-skills.sh` 會跳過這個目錄，不會把它當成一個缺 SKILL.md 的 skill 來報錯。
 
 ## 跟 skill 的關係
 
