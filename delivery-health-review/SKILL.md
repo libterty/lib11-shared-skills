@@ -42,6 +42,7 @@ metadata:
 - **風險**：風險陳述、觸發條件、影響、負責人
 - **這週需要的決策**：決策內容、選項、建議的預設方案、決策負責人、截止日期
 - **復原/升級建議**（或明確寫「本週期不需要」）
+- **延伸追蹤**（選填）：「這週需要的決策」如果需要跨週期持續追蹤到定案，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在 `shared-skills/docs/action-register.md`；如果決策負責人本身反覆不清楚，先用 `shared-skills/role-clarity-decision-rights/SKILL.md` 產出提案，確認後維護在 `shared-skills/docs/raci-matrix.md`
 
 ## Safety Constraints
 

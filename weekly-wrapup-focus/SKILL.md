@@ -38,6 +38,7 @@ metadata:
 - **上週 focus 的執行狀況**（如果有提供上週清單；否則寫 `未提供上週 focus 清單`）
 - **下週 focus**（排序，3-5 項，各附一行理由）
 - **下週的風險**（標記 Fact 或 Hypothesis）
+- **延伸追蹤**（選填）：下週 focus 與 carryover 項目如果需要跨週期持續追蹤，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在 `shared-skills/docs/action-register.md`
 
 ## Safety Constraints
 

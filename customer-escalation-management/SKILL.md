@@ -43,6 +43,7 @@ metadata:
 - **商業或法律界線標示**（明確列出任何需要法律/商業/主管簽核的事項）
 - **下次更新頻率**（具體）
 - **內部與外部訊息草案**（標示「草案——待核准」）
+- **延伸追蹤**（選填）：「需要的決策/核准」項目如果需要跨週期持續追蹤到定案，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在 `shared-skills/docs/action-register.md`；如果內部負責歸屬本身反覆不清楚，先用 `shared-skills/role-clarity-decision-rights/SKILL.md` 產出提案，確認後維護在 `shared-skills/docs/raci-matrix.md`
 
 ## Safety Constraints
 

@@ -34,7 +34,7 @@ metadata:
 - **文件草稿**（依主題設計的標題階層，內文每個關鍵陳述附 Source ID）
 - **資訊更新註記**（哪些段落取代了較早的記錄，附新舊 Source ID）
 - **矛盾陳述標示**（如果有，列出雙方 Source ID，不做仲裁）
-- **相關待追蹤事項**（簡短提示，並建議改用 `notes-to-action-digest` 產出完整清單）
+- **相關待追蹤事項**（簡短提示，並建議改用 `notes-to-action-digest` 產出完整清單，需要跨週期持續追蹤的話再用 `shared-skills/action-register-maintainer/SKILL.md` 維護在 `shared-skills/docs/action-register.md`）
 - **與既有文件的差異**（如果有提供既有文件；否則寫 `本次為全新文件，無既有版本比對`）
 
 ## Safety Constraints

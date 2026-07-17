@@ -37,6 +37,7 @@ metadata:
 - **行事曆衝突／風險**（重疊會議、無緩衝的背靠背會議、截止日期與會議時間衝突）
 - **昨天的 carryover**（明確標示，不要悄悄併入今天的新項目）
 - **待釐清**（模糊到無法自信排序的項目）
+- **延伸追蹤**（選填）：反覆出現在 carryover 裡、遲遲沒完成的項目，可以考慮改用 `shared-skills/action-register-maintainer/SKILL.md` 統一維護在 `shared-skills/docs/action-register.md`，而不是每天手動搬運
 
 ## Safety Constraints
 

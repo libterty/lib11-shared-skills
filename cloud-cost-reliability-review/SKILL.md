@@ -45,6 +45,7 @@ metadata:
 - **每個項目的實作風險**
 - **每個項目的 rollback/驗證計畫**——必要項目
 - **每個項目的負責人與檢視日期**
+- **延伸追蹤**（選填）：快贏機會與優先改善項目如果需要跨週期持續追蹤到完成，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在 `shared-skills/docs/action-register.md`
 
 ## Safety Constraints
 

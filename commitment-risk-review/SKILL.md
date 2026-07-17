@@ -45,6 +45,7 @@ metadata:
 - **紅旗警訊**（問題、追蹤/解決負責人、急迫程度）
 - **決策選項**（附取捨）
 - **核准措辭草案**（標示「草案——待 EM/主管簽核」）
+- **延伸追蹤**（選填）：紅旗警訊與依賴項目如果需要跨週期持續追蹤到解決，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在 `shared-skills/docs/action-register.md`；如果追蹤/解決負責人本身反覆不清楚，先用 `shared-skills/role-clarity-decision-rights/SKILL.md` 產出提案，確認後維護在 `shared-skills/docs/raci-matrix.md`
 
 ## Safety Constraints
 

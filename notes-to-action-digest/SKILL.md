@@ -35,6 +35,7 @@ metadata:
 - **待釐清問題**（尚未解決，附 Source ID）
 - **純資訊／無需行動**
 - **重複出現／升溫中的模式**（如果有的話，並引用具體訊息）
+- **延伸追蹤**（選填）：如果拆出來的待辦事項需要跨會議/跨週期持續追蹤，不只是這次的快照，可以把它們餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在 `shared-skills/docs/action-register.md`
 
 ## Safety Constraints
 

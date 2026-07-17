@@ -44,6 +44,7 @@ metadata:
 - **預防性控制措施**（系統性變更）
 - **每個行動項目的負責人／截止日期／完成證據**表格
 - **管理/系統改善主題**（只有在有模式證據時才產出；否則明確寫「單一事件，不宣稱有模式」）
+- **延伸追蹤**（選填）：改善行動如果需要跨週期持續追蹤到完成，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在 `shared-skills/docs/action-register.md`
 
 ## Safety Constraints
 

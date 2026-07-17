@@ -35,6 +35,7 @@ metadata:
 - **循環或連鎖依賴警示**（如果有偵測到，列出完整鏈路）
 - **沒有明確負責人／下一步的項目**
 - **雙方描述矛盾的項目**（明確標示矛盾內容，不做仲裁）
+- **延伸追蹤**（選填）：「沒有明確負責人/下一步」的項目如果反覆出現，代表責任歸屬本身有問題，可以先用 `shared-skills/role-clarity-decision-rights/SKILL.md` 產出提案，確認後維護在 `shared-skills/docs/raci-matrix.md`；依賴清單本身如果要跨週期追蹤到解決，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在 `shared-skills/docs/action-register.md`
 
 ## Safety Constraints
 

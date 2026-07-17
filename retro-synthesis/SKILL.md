@@ -36,6 +36,7 @@ metadata:
 - **建議 action item**（排序，草案性質，需團隊指派負責人／截止日期）
 - **未歸類／單獨 note**（不能被捨棄，需完整呈現）
 - **敏感內容標示**（如果有 note 點名特定人做負面評價）
+- **延伸追蹤**（選填）：建議的 action item 一旦團隊確認負責人/截止日期，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在 `shared-skills/docs/action-register.md`
 
 ## Safety Constraints
 
