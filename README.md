@@ -227,6 +227,32 @@ bash validate-skills.sh
    → 建議新增，跨週期追蹤到真正完成，不會開完會就忘記
 ```
 
+#### 7. Fireflies.ai（或任何會議轉錄工具）→ 多個 skill
+
+Fireflies.ai 這類工具通常一次會產出好幾種不同的輸出（逐字稿/AI 摘要、Action Items、Analytics 參與度數據、跨會議關鍵字搜尋結果），對應到不同的 skill，不是只有一種用法：
+
+```text
+情境 A（逐字稿/AI 摘要 → 拆待辦 → 持續追蹤）：
+1) 把 Fireflies 產出的逐字稿或 AI 摘要貼給：
+   「請照 notes-to-action-digest/SKILL.md 的定義，幫我拆解這份會議摘要：……」
+   → 得到決策事項/待辦/待釐清問題
+
+2) 「請照 action-register-maintainer/SKILL.md 的定義，讀取以下目前的 Action Register，
+   跟步驟 1 的待辦事項比對，建議新增/更新哪些列：
+   [docs/action-register.md 目前內容] + [步驟 1 的待辦清單]」
+
+情境 B（Analytics 參與度數據 → 自我檢視）：
+「請照 meeting-participation-balance-review/SKILL.md 的定義，
+ 幫我檢視這場 1-1 的參與度。talk-to-listen ratio：……，最長獨白時間：……」
+
+情境 C（跨會議關鍵字搜尋結果 → 主題演變時間軸）：
+「請照 cross-meeting-topic-tracker/SKILL.md 的定義，
+ 幫我整理 [主題] 在這幾場會議中的討論演變：
+ [搜尋結果片段1 + 日期] [搜尋結果片段2 + 日期] [搜尋結果片段3 + 日期]」
+```
+
+情境 A 和情境 C 可以再串起來：如果同一個主題橫跨多場會議、且每場都拆出了新的 action item，先跑情境 C 搞清楚「現在講到哪」，再針對最新一場用情境 A 更新 Action Register，避免針對已經過時的舊結論重複開待辦。
+
 ---
 
 ## Skill 之間的相互依賴
