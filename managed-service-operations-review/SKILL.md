@@ -42,7 +42,7 @@ metadata:
 - **單點故障清單**（人/系統/供應商）
 - **重點維運投資項目**（排序過，附理由）
 - **每個投資項目的負責人/時程/主管決策請求**
-- **延伸追蹤**（選填）：重點維運投資項目如果需要跨週期持續追蹤到完成，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在 `shared-skills/docs/action-register.md`
+- **延伸追蹤**（選填）：重點維運投資項目如果需要跨週期持續追蹤到完成，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在你自己從 `shared-skills/docs/ar.template.md` 複製建立、存放在 `shared-skills/docs/ar/` 底下的檔案
 
 ## Safety Constraints
 

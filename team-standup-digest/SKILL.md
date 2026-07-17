@@ -34,7 +34,7 @@ metadata:
 - **需要 EM 介入的項目**（明確請求協助，或重複出現的 blocker）
 - **重複出現的阻塞 Pattern**（引用具體是誰的回報）
 - **未回報成員名單**（純事實陳述，不附評價）
-- **延伸追蹤**（選填）：需要 EM 介入的項目如果需要跨天持續追蹤到解決，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在 `shared-skills/docs/action-register.md`
+- **延伸追蹤**（選填）：需要 EM 介入的項目如果需要跨天持續追蹤到解決，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在你自己從 `shared-skills/docs/ar.template.md` 複製建立、存放在 `shared-skills/docs/ar/` 底下的檔案
 
 ## Safety Constraints
 

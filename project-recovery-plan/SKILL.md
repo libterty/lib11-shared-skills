@@ -46,7 +46,7 @@ metadata:
 - **利害關係人溝通草案**（標示為「草案——待審閱」）
 - **成功驗證標準**（可衡量、有日期）
 - **退場/縮減範圍計畫**（萬一復原失敗——要明確寫出來，不能留白）
-- **延伸追蹤**（選填）：先止血行動與 7 天/30 天計畫裡的項目，如果需要跨週期持續追蹤到完成，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在 `shared-skills/docs/action-register.md`
+- **延伸追蹤**（選填）：先止血行動與 7 天/30 天計畫裡的項目，如果需要跨週期持續追蹤到完成，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在你自己從 `shared-skills/docs/ar.template.md` 複製建立、存放在 `shared-skills/docs/ar/` 底下的檔案
 
 ## Safety Constraints
 

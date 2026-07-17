@@ -44,7 +44,7 @@ metadata:
 - **決策負責人**
 - **檢視日期**
 - **證據來源**（每個事實性主張附 Source ID）
-- **延伸追蹤**（選填）：如果「決策負責人」這個角色本身在團隊裡反覆不清楚，先用 `shared-skills/role-clarity-decision-rights/SKILL.md` 產出提案，確認後維護在 `shared-skills/docs/raci-matrix.md`
+- **延伸追蹤**（選填）：如果「決策負責人」這個角色本身在團隊裡反覆不清楚，先用 `shared-skills/role-clarity-decision-rights/SKILL.md` 產出提案，確認後維護在你自己從 `shared-skills/docs/raci.template.md` 複製建立、存放在 `shared-skills/docs/raci/` 底下的檔案
 
 ## Safety Constraints
 

@@ -35,7 +35,7 @@ metadata:
 - **還沒完成／逾期的項目**（另外凸顯，不要埋在清單裡）
 - **談話重點建議**（2-4 個，標示為可調整的建議）
 - **敏感情境標示**（如果有的話；並註明可考慮改用 `feedback-growth-plan` skill）
-- **延伸追蹤**（選填）：還沒完成／逾期的承諾事項如果需要跨 1-1 週期持續追蹤，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在 `shared-skills/docs/action-register.md`——敏感人事內容不要放進去，只放事務性的行動項目
+- **延伸追蹤**（選填）：還沒完成／逾期的承諾事項如果需要跨 1-1 週期持續追蹤，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在你自己從 `shared-skills/docs/ar.template.md` 複製建立、存放在 `shared-skills/docs/ar/` 底下的檔案——敏感人事內容不要放進去，只放事務性的行動項目
 
 ## Safety Constraints
 
