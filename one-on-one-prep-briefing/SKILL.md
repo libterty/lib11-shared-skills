@@ -36,6 +36,7 @@ metadata:
 - **談話重點建議**（2-4 個，標示為可調整的建議）
 - **敏感情境標示**（如果有的話；並註明可考慮改用 `feedback-growth-plan` skill）
 - **延伸追蹤**（選填）：還沒完成／逾期的承諾事項如果需要跨 1-1 週期持續追蹤，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在你自己從 `shared-skills/docs/ar.template.md` 複製建立、存放在 `shared-skills/docs/ar/` 底下的檔案——敏感人事內容不要放進去，只放事務性的行動項目
+- **替代方案**：如果不方便用 AI CLI，`shared-skills/docs/1on1/` 底下有兩個不依賴 CLI、單機瀏覽器就能用的 1:1 工具（議程/筆記模板、AI prep prompt 產生器），跟這個 skill 目的相同，擇一使用即可
 
 ## Safety Constraints
 

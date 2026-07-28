@@ -57,3 +57,7 @@ cp docs/mn.template.md docs/mn/2026-07-15-weekly.md
 ## 想幫多個團隊/專案分開追蹤？
 
 `docs/ar/`、`docs/raci/`、`docs/adr/` 都是資料夾，不是單一檔案，可以依團隊/專案各自複製一份範本、取不同檔名（例如 `docs/ar/platform-team.md`、`docs/ar/mobile-team.md`），彼此獨立維護，不用共用同一份表格。
+
+## `docs/1on1/`：獨立的 1:1 工具
+
+跟上面的 AR/RACI/ADR/MN 範本系統無關，是另外兩個不需要範本/實際內容區分、可以直接使用的 1:1 工具（單機瀏覽器打開即可，見 `docs/1on1/README.md`）。跟 `one-on-one-prep-briefing/SKILL.md` 目的相同，屬於同一件事的兩種介面：一個是 CLI/skill 版本，一個是離線瀏覽器版本。

@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1:1 Meeting Agenda & Notes Template</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
+        .description {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .meeting-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 5px solid #3498db;
+        }
+
+        .header-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .field {
+            margin-bottom: 15px;
+        }
+
+        .field-label {
+            font-weight: 600;
+            color: #2d3748;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .field-input, .field-select {
+            border: 2px solid #e2e8f0;
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .field-input:focus, .field-select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        .agenda-section {
+            margin-bottom: 30px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #495057 0%, #343a40 100%);
+            color: white;
+            padding: 18px 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-time {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        .section-content {
+            padding: 25px;
+        }
+
+        .topic-item {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: box-shadow 0.2s;
+        }
+
+        .topic-item:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .topic-title {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+
+        .priority-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .high-priority { background: #fed7d7; color: #c53030; }
+        .medium-priority { background: #fef5e7; color: #dd6b20; }
+        .low-priority { background: #e6fffa; color: #2c7a7b; }
+
+        .topic-notes {
+            width: 100%;
+            min-height: 60px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 10px;
+            resize: vertical;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .quick-questions {
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #17a2b8;
+            margin: 20px 0;
+        }
+
+        .question-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .question-item {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border-left: 3px solid #17a2b8;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .question-item:hover {
+            background: #f8f9fa;
+        }
+
+        .question-item.selected {
+            background: #d1ecf1;
+            border-left-color: #0c5460;
+        }
+
+        .action-items-section {
+            background: #fff3cd;
+            border: 2px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            border: 1px solid #e9ecef;
+        }
+
+        .action-checkbox {
+            margin-top: 4px;
+            transform: scale(1.2);
+        }
+
+        .action-content {
+            flex: 1;
+        }
+
+        .action-text {
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .action-details {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .action-owner, .action-due {
+            font-size: 13px;
+            color: #6c757d;
+        }
+
+        .action-owner::before {
+            content: "\1F464 ";
+        }
+
+        .action-due::before {
+            content: "\1F4C5 ";
+        }
+
+        .mood-tracker {
+            background: #f0fff4;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #38a169;
+            margin: 20px 0;
+        }
+
+        .mood-scale {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            gap: 10px;
+        }
+
+        .mood-option {
+            text-align: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            flex: 1;
+        }
+
+        .mood-option:hover {
+            background: rgba(56, 161, 105, 0.1);
+        }
+
+        .mood-option.selected {
+            background: #c6f6d5;
+            border: 2px solid #38a169;
+        }
+
+        .mood-emoji {
+            font-size: 2em;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .mood-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .notes-section {
+            margin-top: 20px;
+        }
+
+        .notes-textarea {
+            width: 100%;
+            min-height: 100px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 12px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .meeting-summary {
+            background: #e3f2fd;
+            border: 2px solid #bbdefb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid #e3f2fd;
+        }
+
+        .summary-number {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #1976d2;
+            margin-bottom: 5px;
+        }
+
+        .summary-label {
+            color: #424242;
+            font-size: 0.9em;
+        }
+
+        .next-meeting {
+            background: #f3e5f5;
+            border: 2px solid #e1bee7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #dee2e6;
+        }
+
+        .btn {
+            background: #3498db;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .template-chooser {
+            background: #fff9c4;
+            border: 2px solid #f9e79f;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .template-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .template-btn {
+            background: white;
+            border: 2px solid #f39c12;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .template-btn:hover, .template-btn.active {
+            background: #f39c12;
+            color: white;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; padding: 0; }
+            .actions, .template-chooser { display: none; }
+            .agenda-section { break-inside: avoid; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            .header-grid { grid-template-columns: 1fr; }
+            .summary-grid { grid-template-columns: repeat(2, 1fr); }
+            .template-options { flex-direction: column; }
+            .mood-scale { flex-direction: column; gap: 5px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤝 1:1 Meeting Agenda & Notes</h1>
+
+        <div class="description">
+            <strong>Purpose:</strong> This template helps engineering managers conduct structured, productive 1:1 meetings with team members. Use it to track discussions, document action items, monitor team member wellbeing, and maintain consistent meeting quality. Each section guides conversation flow and ensures important topics are covered.
+        </div>
+
+        <!-- Template Chooser -->
+        <div class="template-chooser">
+            <h4>📋 Quick Templates</h4>
+            <p>Choose a pre-filled template or start with a blank agenda:</p>
+            <div class="template-options">
+                <button class="template-btn" onclick="loadTemplate('weekly')">Weekly Check-in</button>
+                <button class="template-btn" onclick="loadTemplate('career')">Career Development</button>
+                <button class="template-btn" onclick="loadTemplate('performance')">Performance Review</button>
+                <button class="template-btn" onclick="loadTemplate('project')">Project Focus</button>
+                <button class="template-btn" onclick="loadTemplate('wellbeing')">Wellbeing Check</button>
+                <button class="template-btn active" onclick="loadTemplate('blank')">Blank Template</button>
+            </div>
+        </div>
+
+        <!-- Meeting Header -->
+        <div class="meeting-header">
+            <h3>Meeting Information</h3>
+            <div class="header-grid">
+                <div class="field">
+                    <span class="field-label">Team Member:</span>
+                    <input type="text" class="field-input" id="team-member" placeholder="Employee name">
+                </div>
+                <div class="field">
+                    <span class="field-label">Manager:</span>
+                    <input type="text" class="field-input" id="manager" placeholder="Your name">
+                </div>
+                <div class="field">
+                    <span class="field-label">Date:</span>
+                    <input type="date" class="field-input" id="meeting-date">
+                </div>
+                <div class="field">
+                    <span class="field-label">Duration:</span>
+                    <select class="field-select" id="duration">
+                        <option value="30 min">30 minutes</option>
+                        <option value="45 min">45 minutes</option>
+                        <option value="60 min">60 minutes</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <span class="field-label">Meeting Type:</span>
+                    <select class="field-select" id="meeting-type">
+                        <option value="Regular 1:1">Regular 1:1</option>
+                        <option value="Career Development">Career Development</option>
+                        <option value="Performance Review">Performance Review</option>
+                        <option value="Project Review">Project Review</option>
+                        <option value="Check-in">Informal Check-in</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <span class="field-label">Location:</span>
+                    <select class="field-select" id="location">
+                        <option value="Video Call">Video Call</option>
+                        <option value="Office">In Office</option>
+                        <option value="Coffee Shop">Coffee Shop</option>
+                        <option value="Walking Meeting">Walking Meeting</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employee Topics (First) -->
+        <div class="agenda-section">
+            <div class="section-header">
+                <span>💬 Employee Topics & Updates</span>
+                <span class="section-time">15-20 min</span>
+            </div>
+            <div class="section-content">
+                <p><strong>Note:</strong> Always start with the team member's topics. This ensures their priorities are heard and addressed first.</p>
+
+                <div class="topic-item">
+                    <div class="topic-header">
+                        <div class="topic-title">What's on your mind this week?</div>
+                        <span class="priority-badge high-priority">Employee-Led</span>
+                    </div>
+                    <textarea class="topic-notes" placeholder="Let them share what's important to them - current challenges, successes, concerns, or questions..."></textarea>
+                </div>
+
+                <div class="topic-item">
+                    <div class="topic-header">
+                        <div class="topic-title">Current project status and blockers</div>
+                        <span class="priority-badge medium-priority">Work Focus</span>
+                    </div>
+                    <textarea class="topic-notes" placeholder="What projects are they working on? Any blockers or support needed?"></textarea>
+                </div>
+
+                <div class="topic-item">
+                    <div class="topic-header">
+                        <div class="topic-title">Team dynamics and collaboration</div>
+                        <span class="priority-badge medium-priority">Team Health</span>
+                    </div>
+                    <textarea class="topic-notes" placeholder="How are they feeling about team interactions, communication, and collaboration?"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manager Topics -->
+        <div class="agenda-section">
+            <div class="section-header">
+                <span>📣 Manager Topics & Feedback</span>
+                <span class="section-time">10-15 min</span>
+            </div>
+            <div class="section-content">
+                <div class="topic-item">
+                    <div class="topic-header">
+                        <div class="topic-title">Performance feedback and recognition</div>
+                        <span class="priority-badge high-priority">Feedback</span>
+                    </div>
+                    <textarea class="topic-notes" placeholder="Specific feedback on recent work, achievements to recognize, areas for improvement..."></textarea>
+                </div>
+
+                <div class="topic-item">
+                    <div class="topic-header">
+                        <div class="topic-title">Organizational updates and context</div>
+                        <span class="priority-badge medium-priority">Information</span>
+                    </div>
+                    <textarea class="topic-notes" placeholder="Company updates, team changes, strategic direction that affects their work..."></textarea>
+                </div>
+
+                <div class="topic-item">
+                    <div class="topic-header">
+                        <div class="topic-title">Goals and priorities alignment</div>
+                        <span class="priority-badge high-priority">Goals</span>
+                    </div>
+                    <textarea class="topic-notes" placeholder="Are current priorities clear? Any adjustments needed to goals or expectations?"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Career Development -->
+        <div class="agenda-section">
+            <div class="section-header">
+                <span>🚀 Career Development & Growth</span>
+                <span class="section-time">10 min</span>
+            </div>
+            <div class="section-content">
+                <div class="topic-item">
+                    <div class="topic-header">
+                        <div class="topic-title">Learning and skill development</div>
+                        <span class="priority-badge medium-priority">Growth</span>
+                    </div>
+                    <textarea class="topic-notes" placeholder="What skills are they interested in developing? Any courses, certifications, or learning opportunities?"></textarea>
+                </div>
+
+                <div class="topic-item">
+                    <div class="topic-header">
+                        <div class="topic-title">Career aspirations and next steps</div>
+                        <span class="priority-badge medium-priority">Future</span>
+                    </div>
+                    <textarea class="topic-notes" placeholder="Where do they see their career going? How can you help them get there?"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Check-in Questions -->
+        <div class="quick-questions">
+            <h4>💡 Quick Check-in Questions (Choose 1-2)</h4>
+            <p>Select questions to spark deeper conversations when needed:</p>
+            <ul class="question-list">
+                <li class="question-item" onclick="toggleQuestion(this)">What's energizing you most about your work right now?</li>
+                <li class="question-item" onclick="toggleQuestion(this)">What's been your biggest challenge this week?</li>
+                <li class="question-item" onclick="toggleQuestion(this)">Is there anything I should be doing differently as your manager?</li>
+                <li class="question-item" onclick="toggleQuestion(this)">What would make your job easier or more enjoyable?</li>
+                <li class="question-item" onclick="toggleQuestion(this)">How connected do you feel to the team's mission and goals?</li>
+                <li class="question-item" onclick="toggleQuestion(this)">What's one thing you'd like to improve about our team?</li>
+                <li class="question-item" onclick="toggleQuestion(this)">Is there anyone on the team you'd like to work with more?</li>
+                <li class="question-item" onclick="toggleQuestion(this)">What's been the highlight of your month so far?</li>
+            </ul>
+        </div>
+
+        <!-- Mood & Wellbeing Tracker -->
+        <div class="mood-tracker">
+            <h4>🙂 Wellbeing Check</h4>
+            <p>How are you feeling overall this week?</p>
+            <div class="mood-scale">
+                <div class="mood-option" data-mood="1" onclick="selectMood(1)">
+                    <span class="mood-emoji">😰</span>
+                    <div class="mood-label">Stressed</div>
+                </div>
+                <div class="mood-option" data-mood="2" onclick="selectMood(2)">
+                    <span class="mood-emoji">😔</span>
+                    <div class="mood-label">Struggling</div>
+                </div>
+                <div class="mood-option" data-mood="3" onclick="selectMood(3)">
+                    <span class="mood-emoji">😐</span>
+                    <div class="mood-label">Neutral</div>
+                </div>
+                <div class="mood-option" data-mood="4" onclick="selectMood(4)">
+                    <span class="mood-emoji">🙂</span>
+                    <div class="mood-label">Good</div>
+                </div>
+                <div class="mood-option" data-mood="5" onclick="selectMood(5)">
+                    <span class="mood-emoji">😄</span>
+                    <div class="mood-label">Thriving</div>
+                </div>
+            </div>
+            <div class="notes-section">
+                <textarea class="notes-textarea" placeholder="Any context about their mood or wellbeing? Work-life balance concerns? Stress factors?"></textarea>
+            </div>
+        </div>
+
+        <!-- Action Items -->
+        <div class="action-items-section">
+            <h4>✅ Action Items & Follow-ups</h4>
+            <p>Document specific commitments and next steps:</p>
+
+            <div class="action-item">
+                <input type="checkbox" class="action-checkbox">
+                <div class="action-content">
+                    <div class="action-text">
+                        <input type="text" class="field-input" placeholder="What needs to be done? Be specific...">
+                    </div>
+                    <div class="action-details">
+                        <input type="text" class="field-input action-owner" placeholder="Owner" style="width: 150px;">
+                        <input type="date" class="field-input action-due" style="width: 150px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-item">
+                <input type="checkbox" class="action-checkbox">
+                <div class="action-content">
+                    <div class="action-text">
+                        <input type="text" class="field-input" placeholder="Add another action item...">
+                    </div>
+                    <div class="action-details">
+                        <input type="text" class="field-input action-owner" placeholder="Owner" style="width: 150px;">
+                        <input type="date" class="field-input action-due" style="width: 150px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-item">
+                <input type="checkbox" class="action-checkbox">
+                <div class="action-content">
+                    <div class="action-text">
+                        <input type="text" class="field-input" placeholder="Add another action item...">
+                    </div>
+                    <div class="action-details">
+                        <input type="text" class="field-input action-owner" placeholder="Owner" style="width: 150px;">
+                        <input type="date" class="field-input action-due" style="width: 150px;">
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-secondary" onclick="addActionItem()" style="margin-top: 15px;">+ Add Action Item</button>
+        </div>
+
+        <!-- Meeting Summary -->
+        <div class="meeting-summary">
+            <h4>📊 Meeting Summary</h4>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="summary-number" id="mood-score">-</div>
+                    <div class="summary-label">Mood Score</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number" id="action-count">0</div>
+                    <div class="summary-label">Action Items</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number" id="questions-selected">0</div>
+                    <div class="summary-label">Topics Covered</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number" id="meeting-quality">-</div>
+                    <div class="summary-label">Meeting Rating</div>
+                </div>
+            </div>
+
+            <div class="notes-section">
+                <h5>Key Takeaways & Overall Notes</h5>
+                <textarea class="notes-textarea" placeholder="Summarize the most important insights, themes, or concerns from this meeting. What should you remember for next time?"></textarea>
+            </div>
+        </div>
+
+        <!-- Next Meeting Planning -->
+        <div class="next-meeting">
+            <h4>📅 Next Meeting Planning</h4>
+            <div class="header-grid">
+                <div class="field">
+                    <span class="field-label">Next Meeting Date:</span>
+                    <input type="date" class="field-input" id="next-date">
+                </div>
+                <div class="field">
+                    <span class="field-label">Topics to Prepare:</span>
+                    <input type="text" class="field-input" placeholder="What should you both prepare for next time?">
+                </div>
+            </div>
+            <div class="notes-section">
+                <textarea class="notes-textarea" placeholder="Any follow-up items to check on? Commitments to review? Topics to explore further?"></textarea>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-success" onclick="updateSummary()">Update Summary</button>
+            <button class="btn" onclick="window.print()">Print Notes</button>
+            <button class="btn btn-secondary" onclick="downloadNotes()">Download Notes</button>
+            <button class="btn btn-secondary" onclick="resetForm()">New Meeting</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedMood = null;
+
+        function loadTemplate(templateType) {
+            // Clear current content first
+            resetForm();
+
+            // Update active template button
+            document.querySelectorAll('.template-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const templates = {
+                weekly: {
+                    meetingType: 'Regular 1:1',
+                    topics: [
+                        'Current sprint progress and any blockers',
+                        'Team collaboration and communication feedback',
+                        'Upcoming priorities and workload balance'
+                    ]
+                },
+                career: {
+                    meetingType: 'Career Development',
+                    topics: [
+                        'Progress on career goals and development plan',
+                        'Skills they want to develop this quarter',
+                        'Feedback on recent projects and growth areas'
+                    ]
+                },
+                performance: {
+                    meetingType: 'Performance Review',
+                    topics: [
+                        'Review of recent performance and achievements',
+                        'Areas of strength and improvement opportunities',
+                        'Goal setting for next review period'
+                    ]
+                },
+                project: {
+                    meetingType: 'Project Review',
+                    topics: [
+                        'Current project status and milestones',
+                        'Technical challenges and learning opportunities',
+                        'Cross-team collaboration and dependencies'
+                    ]
+                },
+                wellbeing: {
+                    meetingType: 'Check-in',
+                    topics: [
+                        'How they\'re feeling about work-life balance',
+                        'Any stress factors or support needed',
+                        'What\'s energizing them vs. draining them'
+                    ]
+                }
+            };
+
+            if (templates[templateType]) {
+                document.getElementById('meeting-type').value = templates[templateType].meetingType;
+            }
+        }
+
+        function toggleQuestion(questionElement) {
+            questionElement.classList.toggle('selected');
+            updateSummary();
+        }
+
+        function selectMood(moodValue) {
+            // Clear previous selection
+            document.querySelectorAll('.mood-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+
+            // Select current mood
+            event.target.closest('.mood-option').classList.add('selected');
+            selectedMood = moodValue;
+            updateSummary();
+        }
+
+        function addActionItem() {
+            const actionItemsSection = document.querySelector('.action-items-section');
+            const newActionItem = document.createElement('div');
+            newActionItem.className = 'action-item';
+            newActionItem.innerHTML = `
+                <input type="checkbox" class="action-checkbox">
+                <div class="action-content">
+                    <div class="action-text">
+                        <input type="text" class="field-input" placeholder="Add another action item...">
+                    </div>
+                    <div class="action-details">
+                        <input type="text" class="field-input action-owner" placeholder="Owner" style="width: 150px;">
+                        <input type="date" class="field-input action-due" style="width: 150px;">
+                    </div>
+                </div>
+            `;
+
+            // Insert before the "Add Action Item" button
+            const addButton = actionItemsSection.querySelector('button');
+            actionItemsSection.insertBefore(newActionItem, addButton);
+        }
+
+        function updateSummary() {
+            // Update mood score
+            document.getElementById('mood-score').textContent = selectedMood || '-';
+
+            // Count action items with text
+            const actionItems = document.querySelectorAll('.action-item .action-text input');
+            const filledActions = Array.from(actionItems).filter(input => input.value.trim() !== '').length;
+            document.getElementById('action-count').textContent = filledActions;
+
+            // Count selected questions
+            const selectedQuestions = document.querySelectorAll('.question-item.selected').length;
+            document.getElementById('questions-selected').textContent = selectedQuestions;
+
+            // Simple meeting quality calculation
+            let quality = 0;
+            if (selectedMood && selectedMood >= 3) quality += 2;
+            if (filledActions > 0) quality += 2;
+            if (selectedQuestions > 0) quality += 1;
+            document.getElementById('meeting-quality').textContent = Math.min(5, quality) || '-';
+
+            autoSave();
+        }
+
+        function autoSave() {
+            const data = {
+                teamMember: document.getElementById('team-member').value,
+                manager: document.getElementById('manager').value,
+                meetingDate: document.getElementById('meeting-date').value,
+                duration: document.getElementById('duration').value,
+                meetingType: document.getElementById('meeting-type').value,
+                location: document.getElementById('location').value,
+                selectedMood: selectedMood,
+                nextDate: document.getElementById('next-date').value
+            };
+
+            // Save all text areas and inputs
+            document.querySelectorAll('textarea, input[type="text"]').forEach((input, index) => {
+                data[`field_${index}`] = input.value;
+            });
+
+            // Save selected questions
+            data.selectedQuestions = Array.from(document.querySelectorAll('.question-item.selected')).map(q => q.textContent);
+
+            localStorage.setItem('oneOnOneMeeting', JSON.stringify(data));
+        }
+
+        function loadSaved() {
+            const saved = localStorage.getItem('oneOnOneMeeting');
+            if (saved) {
+                const data = JSON.parse(saved);
+
+                // Load basic fields
+                Object.keys(data).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element && data[key]) {
+                        element.value = data[key];
+                    }
+                });
+
+                // Load text areas and inputs
+                document.querySelectorAll('textarea, input[type="text"]').forEach((input, index) => {
+                    if (data[`field_${index}`]) {
+                        input.value = data[`field_${index}`];
+                    }
+                });
+
+                // Restore selected mood
+                if (data.selectedMood) {
+                    selectedMood = data.selectedMood;
+                    document.querySelector(`[data-mood="${data.selectedMood}"]`).classList.add('selected');
+                }
+
+                // Restore selected questions
+                if (data.selectedQuestions) {
+                    data.selectedQuestions.forEach(questionText => {
+                        const questionElement = Array.from(document.querySelectorAll('.question-item')).find(q => q.textContent === questionText);
+                        if (questionElement) {
+                            questionElement.classList.add('selected');
+                        }
+                    });
+                }
+
+                updateSummary();
+            }
+        }
+
+        function downloadNotes() {
+            const teamMember = document.getElementById('team-member').value || 'team_member';
+            const date = document.getElementById('meeting-date').value || new Date().toISOString().split('T')[0];
+            const fileName = `1on1_${teamMember.replace(/\s+/g, '_').toLowerCase()}_${date}.html`;
+
+            const element = document.createElement('a');
+            const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function resetForm() {
+            if (confirm('Start a new meeting? This will clear all current data.')) {
+                localStorage.removeItem('oneOnOneMeeting');
+                location.reload();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('meeting-date').value = today;
+
+            // Set next meeting date to one week from today
+            const nextWeek = new Date();
+            nextWeek.setDate(nextWeek.getDate() + 7);
+            document.getElementById('next-date').value = nextWeek.toISOString().split('T')[0];
+
+            loadSaved();
+
+            // Auto-save on input changes
+            document.addEventListener('input', autoSave);
+            document.addEventListener('change', autoSave);
+        });
+    </script>
+</body>
+</html>
