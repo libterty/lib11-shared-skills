@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Growth & Development Plan - Engineering Management Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #2c5aa0;
+        }
+
+        .header h1 {
+            color: #2c5aa0;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            font-weight: 300;
+        }
+
+        .description {
+            background-color: #e8f4f8;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #2c5aa0;
+            margin-bottom: 30px;
+        }
+
+        .description h2 {
+            color: #2c5aa0;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .employee-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, #2c5aa0, #3d6bb0);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: #2c5aa0;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .goals-container {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .goal-item {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .goal-header {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            margin-bottom: 15px;
+        }
+
+        .goal-type {
+            background: #2c5aa0;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .goal-priority {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .remove-goal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+
+        .remove-goal:hover {
+            background: #c82333;
+        }
+
+        .goal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .milestones {
+            background: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 0 4px 4px 0;
+            margin-top: 15px;
+        }
+
+        .milestone-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+        }
+
+        .milestone-item input[type="checkbox"] {
+            margin-right: 10px;
+            width: auto;
+        }
+
+        .milestone-item.completed {
+            text-decoration: line-through;
+            color: #666;
+            background: #f8f9fa;
+        }
+
+        .add-goal-btn, .add-milestone-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+
+        .add-goal-btn:hover, .add-milestone-btn:hover {
+            background: #218838;
+        }
+
+        .skills-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .skill-category {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+        }
+
+        .skill-category h4 {
+            color: #2c5aa0;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            margin-bottom: 12px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .skill-name {
+            flex-grow: 1;
+            font-weight: 500;
+        }
+
+        .skill-levels {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-level {
+            font-size: 0.8em;
+            padding: 2px 6px;
+            border-radius: 3px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .current-level {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .target-level {
+            background: #28a745;
+            color: white;
+        }
+
+        .review-schedule {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            border-radius: 0 6px 6px 0;
+            margin: 20px 0;
+        }
+
+        .review-schedule h4 {
+            color: #155724;
+            margin-bottom: 15px;
+        }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .review-item {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .review-date {
+            font-weight: 600;
+            color: #155724;
+            margin-bottom: 5px;
+        }
+
+        .review-type {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .summary-section {
+            background: #f1f8ff;
+            border: 2px solid #2c5aa0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .action-buttons {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .btn {
+            background: #2c5aa0;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background: #1e3d72;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            .action-buttons, .remove-goal, .add-goal-btn, .add-milestone-btn {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+            .header h1 {
+                font-size: 1.8em;
+            }
+            .employee-info {
+                grid-template-columns: 1fr;
+            }
+            .goal-grid {
+                grid-template-columns: 1fr;
+            }
+            .skills-matrix {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📈 Career Growth & Development Plan</h1>
+            <div class="subtitle">Structured Professional Development Planning Tool</div>
+        </div>
+
+        <div class="description">
+            <h2>📋 What is this tool?</h2>
+            <p>This comprehensive template helps engineering managers create detailed, actionable career development plans for their direct reports. It provides a structured approach to setting goals, tracking progress, identifying skill gaps, and planning growth activities that align with both individual aspirations and business needs.</p>
+
+            <p><strong>Why use this:</strong> Creates clear development roadmaps, tracks progress objectively, ensures alignment between personal and company goals, facilitates meaningful career conversations, and provides documentation for performance reviews and promotions.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">👤 Employee Information</div>
+
+            <div class="employee-info">
+                <div class="form-group">
+                    <label for="employee-name">Employee Name:</label>
+                    <input type="text" id="employee-name" placeholder="e.g., Alex Chen">
+                </div>
+
+                <div class="form-group">
+                    <label for="current-role">Current Role & Level:</label>
+                    <input type="text" id="current-role" placeholder="e.g., Senior Software Engineer, Level 5">
+                </div>
+
+                <div class="form-group">
+                    <label for="manager-name">Manager:</label>
+                    <input type="text" id="manager-name" placeholder="Your name">
+                </div>
+
+                <div class="form-group">
+                    <label for="plan-period">Plan Period:</label>
+                    <select id="plan-period">
+                        <option value="">Select period</option>
+                        <option value="6-months">6 Months</option>
+                        <option value="1-year">1 Year</option>
+                        <option value="18-months">18 Months</option>
+                        <option value="2-years">2 Years</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="start-date">Plan Start Date:</label>
+                    <input type="date" id="start-date">
+                </div>
+
+                <div class="form-group">
+                    <label for="next-review">Next Review Date:</label>
+                    <input type="date" id="next-review">
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🎯 Career Aspirations & Vision</div>
+
+            <div class="form-group">
+                <label for="career-vision">Long-term Career Vision (3-5 years):</label>
+                <textarea id="career-vision" placeholder="e.g., Become a Staff Engineer leading architecture decisions for distributed systems, or transition to Engineering Management leading a team of 8-10 engineers"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="motivations">Key Motivations & Interests:</label>
+                <textarea id="motivations" placeholder="e.g., Passionate about system scalability, enjoys mentoring junior developers, interested in machine learning applications, wants more strategic impact on product direction"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="preferred-path">Preferred Growth Path:</label>
+                <select id="preferred-path">
+                    <option value="">Select path</option>
+                    <option value="technical">Technical Leadership (Staff/Principal Engineer)</option>
+                    <option value="management">People Management (Engineering Manager)</option>
+                    <option value="product">Product-Technical Hybrid (Technical Product Manager)</option>
+                    <option value="architecture">Systems Architecture (Solutions Architect)</option>
+                    <option value="consulting">Technical Consulting (Internal/External)</option>
+                    <option value="entrepreneurship">Entrepreneurship/Startup</option>
+                    <option value="exploring">Still Exploring Options</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">📊 Current State Assessment</div>
+
+            <div class="form-group">
+                <label for="current-strengths">Key Strengths & Achievements:</label>
+                <textarea id="current-strengths" placeholder="e.g., Excellent code quality with 95%+ test coverage, led migration reducing API response time by 60%, strong mentor to 3 junior engineers, domain expert in payment processing systems"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="development-areas">Areas for Development:</label>
+                <textarea id="development-areas" placeholder="e.g., System design for large-scale distributed systems, public speaking and technical presentations, cross-functional collaboration with product and design teams"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="feedback-summary">Recent Feedback Summary:</label>
+                <textarea id="feedback-summary" placeholder="e.g., Consistently exceeds technical expectations, should work on influencing without authority, peers appreciate collaborative approach, could benefit from more strategic thinking"></textarea>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">📝 Development Goals</div>
+
+            <div class="goals-container">
+                <button class="add-goal-btn" onclick="addGoal()">➕ Add Development Goal</button>
+                <div id="goals-list">
+                    <!-- Goals will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🛠️ Skills Development Matrix</div>
+
+            <div class="skills-matrix">
+                <div class="skill-category">
+                    <h4>Technical Skills</h4>
+                    <div class="skill-item">
+                        <div class="skill-name">System Architecture & Design</div>
+                        <div class="skill-levels">
+                            <div class="skill-level current-level">Current: 3</div>
+                            <div class="skill-level target-level">Target: 4</div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">Distributed Systems</div>
+                        <div class="skill-levels">
+                            <div class="skill-level current-level">Current: 2</div>
+                            <div class="skill-level target-level">Target: 4</div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">Cloud Platforms (AWS/GCP)</div>
+                        <div class="skill-levels">
+                            <div class="skill-level current-level">Current: 3</div>
+                            <div class="skill-level target-level">Target: 4</div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">Performance Optimization</div>
+                        <div class="skill-levels">
+                            <div class="skill-level current-level">Current: 4</div>
+                            <div class="skill-level target-level">Target: 4</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4>Leadership & Communication</h4>
+                    <div class="skill-item">
+                        <div class="skill-name">Technical Mentoring</div>
+                        <div class="skill-levels">
+                            <div class="skill-level current-level">Current: 4</div>
+                            <div class="skill-level target-level">Target: 5</div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">Cross-team Collaboration</div>
+                        <div class="skill-levels">
+                            <div class="skill-level current-level">Current: 2</div>
+                            <div class="skill-level target-level">Target: 4</div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">Technical Presentations</div>
+                        <div class="skill-levels">
+                            <div class="skill-level current-level">Current: 2</div>
+                            <div class="skill-level target-level">Target: 3</div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">Project Leadership</div>
+                        <div class="skill-levels">
+                            <div class="skill-level current-level">Current: 3</div>
+                            <div class="skill-level target-level">Target: 4</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4>Business & Strategy</h4>
+                    <div class="skill-item">
+                        <div class="skill-name">Product Strategy Understanding</div>
+                        <div class="skill-levels">
+                            <div class="skill-level current-level">Current: 2</div>
+                            <div class="skill-level target-level">Target: 3</div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">Technical Decision Making</div>
+                        <div class="skill-levels">
+                            <div class="skill-level current-level">Current: 3</div>
+                            <div class="skill-level target-level">Target: 4</div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">Stakeholder Communication</div>
+                        <div class="skill-levels">
+                            <div class="skill-level current-level">Current: 2</div>
+                            <div class="skill-level target-level">Target: 4</div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">Industry Knowledge</div>
+                        <div class="skill-levels">
+                            <div class="skill-level current-level">Current: 3</div>
+                            <div class="skill-level target-level">Target: 4</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">📅 Review & Check-in Schedule</div>
+
+            <div class="review-schedule">
+                <h4>🔄 Planned Review Cadence</h4>
+                <div class="review-grid">
+                    <div class="review-item">
+                        <div class="review-date">Weekly 1:1s</div>
+                        <div class="review-type">Progress updates & blockers</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-date">Monthly Check-ins</div>
+                        <div class="review-type">Goal progress & adjustments</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-date">Quarterly Reviews</div>
+                        <div class="review-type">Comprehensive plan review</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-date">Annual Planning</div>
+                        <div class="review-type">Career trajectory & new goals</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="success-metrics">Success Metrics & Tracking:</label>
+                <textarea id="success-metrics" placeholder="e.g., Complete AWS Solutions Architect certification by Q2, Lead architecture review for 2 major features, Deliver technical presentation to engineering all-hands, Receive promotion to Staff Engineer level by end of plan period"></textarea>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">💼 Manager Support & Resources</div>
+
+            <div class="form-group">
+                <label for="manager-commitment">Manager Commitments:</label>
+                <textarea id="manager-commitment" placeholder="e.g., Provide architecture review opportunities, Nominate for technical conference speaking, Connect with Staff Engineers for mentoring, Advocate for promotion when ready, Support conference attendance and training budget allocation"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="resources-needed">Resources & Budget Needed:</label>
+                <textarea id="resources-needed" placeholder="e.g., $2000 training budget for AWS certification and courses, Time allocation for conference presentations, Access to architecture review meetings, Mentorship connection with external senior engineer"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="potential-obstacles">Potential Obstacles & Mitigation:</label>
+                <textarea id="potential-obstacles" placeholder="e.g., Heavy project workload may limit learning time - will protect 2 hours weekly for development activities, Limited public speaking opportunities - will create internal tech talk series, Imposter syndrome with architecture decisions - will pair with senior architect for first 3 months"></textarea>
+            </div>
+        </div>
+
+        <div class="summary-section">
+            <h3>📋 Plan Summary</h3>
+            <div class="form-group">
+                <label for="key-commitments">Key Commitments (Employee):</label>
+                <textarea id="key-commitments" placeholder="This will be auto-populated based on goals and development activities above..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="manager-commitments-summary">Key Commitments (Manager):</label>
+                <textarea id="manager-commitments-summary" placeholder="This will be auto-populated based on support commitments above..."></textarea>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn" onclick="generateSummary()">✨ Generate Plan Summary</button>
+            <button class="btn btn-secondary" onclick="window.print()">🖨️ Print Plan</button>
+            <button class="btn btn-secondary" onclick="exportPlan()">💾 Export to Text</button>
+            <button class="btn btn-secondary" onclick="clearPlan()">🗑️ Clear Plan</button>
+        </div>
+    </div>
+
+    <script>
+        let goalCount = 0;
+
+        const goalTypes = [
+            'Technical Skill',
+            'Leadership',
+            'Communication',
+            'Project/Delivery',
+            'Learning/Certification',
+            'Career Milestone',
+            'Business Impact',
+            'Mentoring/Coaching'
+        ];
+
+        function addGoal() {
+            goalCount++;
+            const goalsContainer = document.getElementById('goals-list');
+
+            const goalDiv = document.createElement('div');
+            goalDiv.className = 'goal-item';
+            goalDiv.id = `goal-${goalCount}`;
+
+            goalDiv.innerHTML = `
+                <button class="remove-goal" onclick="removeGoal(${goalCount})">Remove</button>
+
+                <div class="goal-header">
+                    <select class="goal-type" onchange="updateGoalType(${goalCount})">
+                        <option value="">Select Goal Type</option>
+                        ${goalTypes.map(type => `<option value="${type}">${type}</option>`).join('')}
+                    </select>
+                    <select class="goal-priority">
+                        <option value="">Priority</option>
+                        <option value="high">High Priority</option>
+                        <option value="medium">Medium Priority</option>
+                        <option value="low">Low Priority</option>
+                    </select>
+                </div>
+
+                <div class="goal-grid">
+                    <div class="form-group">
+                        <label>Goal Description:</label>
+                        <textarea placeholder="e.g., Become proficient in system architecture design for distributed systems handling 100k+ requests/second"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Success Criteria:</label>
+                        <textarea placeholder="e.g., Successfully design and implement architecture for 2 high-scale features, pass AWS Solutions Architect certification, receive positive feedback from senior architects"></textarea>
+                    </div>
+                </div>
+
+                <div class="goal-grid">
+                    <div class="form-group">
+                        <label>Target Completion Date:</label>
+                        <input type="date">
+                    </div>
+                    <div class="form-group">
+                        <label>Progress Status:</label>
+                        <select onchange="updateProgress(${goalCount})">
+                            <option value="0">Not Started (0%)</option>
+                            <option value="25">Getting Started (25%)</option>
+                            <option value="50">In Progress (50%)</option>
+                            <option value="75">Nearly Complete (75%)</option>
+                            <option value="100">Completed (100%)</option>
+                        </select>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-${goalCount}"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Action Steps & Activities:</label>
+                    <textarea placeholder="e.g., 1) Complete 'Designing Data-Intensive Applications' book study, 2) Attend AWS architecture training, 3) Shadow senior architect in design reviews, 4) Lead architecture design for next major project, 5) Present architecture proposal to engineering team"></textarea>
+                </div>
+
+                <div class="milestones">
+                    <h5>🎯 Key Milestones:</h5>
+                    <button class="add-milestone-btn" onclick="addMilestone(${goalCount})">+ Add Milestone</button>
+                    <div id="milestones-${goalCount}">
+                        <!-- Milestones will be added here -->
+                    </div>
+                </div>
+            `;
+
+            goalsContainer.appendChild(goalDiv);
+
+            // Add default milestone
+            addMilestone(goalCount);
+        }
+
+        function removeGoal(id) {
+            const element = document.getElementById(`goal-${id}`);
+            if (element) {
+                element.remove();
+            }
+        }
+
+        function updateGoalType(goalId) {
+            // Update visual styling based on goal type if needed
+        }
+
+        function updateProgress(goalId) {
+            const select = document.querySelector(`#goal-${goalId} select[onchange*="updateProgress"]`);
+            const progressBar = document.getElementById(`progress-${goalId}`);
+            if (select && progressBar) {
+                progressBar.style.width = select.value + '%';
+            }
+        }
+
+        function addMilestone(goalId) {
+            const milestonesContainer = document.getElementById(`milestones-${goalId}`);
+            const milestoneCount = milestonesContainer.children.length;
+
+            const milestoneDiv = document.createElement('div');
+            milestoneDiv.className = 'milestone-item';
+
+            milestoneDiv.innerHTML = `
+                <input type="checkbox" onchange="toggleMilestone(this)">
+                <input type="text" placeholder="e.g., Complete AWS certification exam" style="flex-grow: 1; border: none; background: transparent;">
+                <input type="date" style="width: auto; border: none; background: transparent;">
+            `;
+
+            milestonesContainer.appendChild(milestoneDiv);
+        }
+
+        function toggleMilestone(checkbox) {
+            const milestoneItem = checkbox.parentElement;
+            if (checkbox.checked) {
+                milestoneItem.classList.add('completed');
+            } else {
+                milestoneItem.classList.remove('completed');
+            }
+        }
+
+        function generateSummary() {
+            // Collect all goal information and generate summary
+            const goals = document.querySelectorAll('.goal-item');
+            let employeeCommitments = "Key Development Commitments:\n";
+            let managerCommitments = "Manager Support Commitments:\n";
+
+            goals.forEach((goal, index) => {
+                const description = goal.querySelector('textarea[placeholder*="Goal Description"]')?.value;
+                const type = goal.querySelector('.goal-type')?.value;
+                if (description && type) {
+                    employeeCommitments += `• ${type}: ${description}\n`;
+                }
+            });
+
+            const managerSupport = document.getElementById('manager-commitment').value;
+            if (managerSupport) {
+                managerCommitments += managerSupport;
+            }
+
+            document.getElementById('key-commitments').value = employeeCommitments;
+            document.getElementById('manager-commitments-summary').value = managerCommitments;
+
+            alert('✅ Plan summary generated! Review the summary section at the bottom.');
+        }
+
+        function exportPlan() {
+            const employeeName = document.getElementById('employee-name').value || 'Employee';
+            const planContent = document.querySelector('.container').innerText;
+
+            const blob = new Blob([planContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${employeeName.replace(' ', '_')}_Development_Plan.txt`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function clearPlan() {
+            if (confirm('Are you sure you want to clear all plan data? This action cannot be undone.')) {
+                // Clear all inputs
+                document.querySelectorAll('input, textarea, select').forEach(element => {
+                    if (element.type === 'checkbox') {
+                        element.checked = false;
+                    } else {
+                        element.value = '';
+                    }
+                });
+
+                // Remove all goals
+                document.getElementById('goals-list').innerHTML = '';
+                goalCount = 0;
+
+                alert('Development plan cleared successfully.');
+            }
+        }
+
+        // Add first goal by default
+        window.onload = function() {
+            addGoal();
+
+            // Set default dates
+            const today = new Date();
+            document.getElementById('start-date').value = today.toISOString().split('T')[0];
+
+            const reviewDate = new Date();
+            reviewDate.setMonth(reviewDate.getMonth() + 1);
+            document.getElementById('next-review').value = reviewDate.toISOString().split('T')[0];
+        };
+    </script>
+</body>
+</html>

@@ -26,7 +26,7 @@ shared-skills/
 └── <skill-name>/SKILL.md       # 每個 skill 一個資料夾
 ```
 
-`_shared/` 和 `docs/` 不是 skill，`validate-skills.sh` 掃描每個子目錄時會跳過這兩個。`docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/mn/`、`docs/1on1/`、`docs/updates/` 底下會累積真實的內部資訊（實際 action item、實際責任分配、實際架構決策、實際會議記錄、實際 1:1 紀錄、實際 async/team update/stakeholder report 紀錄），所以整個被 `.gitignore` 排除——AR/RACI/ADR/MN 複製對應的 `*.template.md`、其他都直接打開 `docs/*.html` 工具下載填寫結果到這些資料夾底下開始用，不會不小心把內部內容提交進這個公開 repo。細節見 `docs/README.md`。
+`_shared/` 和 `docs/` 不是 skill，`validate-skills.sh` 掃描每個子目錄時會跳過這兩個。`docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/mn/`、`docs/1on1/`、`docs/updates/`、`docs/coaching/` 底下會累積真實的內部資訊（實際 action item、實際責任分配、實際架構決策、實際會議記錄、實際 1:1 紀錄、實際 async/team update/stakeholder report 紀錄、實際教練/職涯發展計畫），所以整個被 `.gitignore` 排除——AR/RACI/ADR/MN 複製對應的 `*.template.md`、其他都直接打開 `docs/*.html` 工具下載填寫結果到這些資料夾底下開始用，不會不小心把內部內容提交進這個公開 repo。細節見 `docs/README.md`。
 
 ---
 

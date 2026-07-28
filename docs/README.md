@@ -1,6 +1,6 @@
-# Action Register、RACI、ADR、Meeting Notes、1:1、Async/Team Update、Stakeholder Report、Coaching/Skill Gap — 範本與活文件
+# Action Register、RACI、ADR、Meeting Notes、1:1、Async/Team Update、Stakeholder Report、Coaching/Skill Gap、Career Development — 範本與活文件
 
-七組你直接管控、手動編輯（或手動填寫）的活文件，加上輔助更新的 skill。
+八組你直接管控、手動編輯（或手動填寫）的活文件，加上輔助更新的 skill。
 
 ## 結構：範本 vs 實際內容
 
@@ -19,12 +19,15 @@ docs/
 ├── ai_coaching_prompt_template.html   # 產生下屬成長/教練建議的 AI prompt 工具（公開，追蹤進 git）
 ├── coaching_plan_tracker.html         # 單一下屬的長期教練計畫追蹤工具（目標/技能矩陣/session log），單機瀏覽器打開即可（公開，追蹤進 git）
 ├── skill_gap_analysis_template.html   # 團隊技能矩陣 → 產生技能缺口分析 AI prompt 的工具（公開，追蹤進 git）
+├── career_development_plan_template.html  # 單一下屬的長期職涯發展計畫工具（願景/目標/技能矩陣/里程碑），單機瀏覽器打開即可（公開，追蹤進 git）
+├── ai_career_path_prompt_template.html    # 產生職涯路徑/晉升準備建議的 AI prompt 工具（公開，追蹤進 git）
 ├── ar/                                 # 實際的 Action Register 內容（.gitignore 排除，只留 .gitkeep）
 ├── raci/                               # 實際的 RACI Matrix 內容（.gitignore 排除，只留 .gitkeep）
 ├── adr/                                 # 實際的 ADR 內容，一個決策一個檔案（.gitignore 排除，只留 .gitkeep）
 ├── mn/                                  # 實際的會議原始紀錄，一次會議一個檔案（.gitignore 排除，只留 .gitkeep；也存放 ai_meeting_summary_template.html 的填寫結果）
 ├── 1on1/                                # 實際的 1:1 紀錄，兩個工具下載出來的填寫檔案存這裡（.gitignore 排除，只留 .gitkeep）
-└── updates/                             # 實際的 async/team update/stakeholder report 紀錄，三個工具下載出來的填寫檔案存這裡（.gitignore 排除，只留 .gitkeep）
+├── updates/                             # 實際的 async/team update/stakeholder report 紀錄，三個工具下載出來的填寫檔案存這裡（.gitignore 排除，只留 .gitkeep）
+└── coaching/                            # 實際的教練/職涯發展計畫內容，career_development_plan_template.html 下載出來的填寫檔案存這裡（.gitignore 排除，只留 .gitkeep）
 ```
 
 這個 repo 是公開共用的 skill 庫，`docs/*.template.md` 和 `docs/*.html` 只放結構、範例與工具本身，不會有真實的專案/人名/決策內容。你實際使用時：
@@ -43,8 +46,9 @@ cp docs/mn.template.md docs/mn/2026-07-15-weekly.md
 - 會議摘要：`docs/ai_meeting_summary_template.html` 會議中先記原始筆記，會後用工具內建的 4 組 AI prompt（摘要/決議/action item/洞察）分別複製貼給 AI 助理，貼回輸出後下載存進 `docs/mn/`（跟 `mn.template.md` 手動版本共用同一個資料夾）。
 - 週期性向上報告草稿：手上有一份填好的 `stakeholder_update_template.html` 加上這個週期累積的多份 `ai_meeting_summary_template.html`，想收斂成一份精簡、固定骨架的向上報告草稿，用 `shared-skills/weekly-upward-report-draft/SKILL.md`。
 - Coaching/Skill Gap：`docs/ai_coaching_prompt_template.html`（產生下屬成長建議的 AI prompt）、`docs/coaching_plan_tracker.html`（長期教練計畫追蹤）、`docs/skill_gap_analysis_template.html`（團隊技能矩陣 → 缺口分析 prompt）都只提供瀏覽器內填寫/列印/複製，沒有下載填寫結果的功能——填完直接列印存 PDF、或複製產生的 prompt，不會留下自動命名的匯出檔案。
+- Career Development：`docs/career_development_plan_template.html`（單一下屬的長期職涯發展計畫）填完可以用工具內建的「下載」按鈕存成 `.txt`，存進 `docs/coaching/`；`docs/ai_career_path_prompt_template.html`（產生職涯路徑/晉升準備建議的 AI prompt）跟其他 AI prompt 工具一樣沒有下載功能，只能複製。
 
-`docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/mn/`、`docs/1on1/`、`docs/updates/` 底下的檔案（`.gitkeep` 除外）都被 `.gitignore` 排除，不會被提交進這個 repo，因為裡面通常會累積真實的內部資訊。`shared-skills/validate-skills.sh` 掃描每個子目錄時也會跳過整個 `docs/`，不會把它當成缺 SKILL.md 的 skill 來報錯。
+`docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/mn/`、`docs/1on1/`、`docs/updates/`、`docs/coaching/` 底下的檔案（`.gitkeep` 除外）都被 `.gitignore` 排除，不會被提交進這個 repo，因為裡面通常會累積真實的內部資訊。`shared-skills/validate-skills.sh` 掃描每個子目錄時也會跳過整個 `docs/`，不會把它當成缺 SKILL.md 的 skill 來報錯。
 
 `docs/mn/` 是選用的：如果你想讓 `docs/ar/`、`docs/raci/` 的「來源」欄位能真的連到一份可回溯的原始會議記錄，就用它存每次會議的逐字稿/筆記；如果只需要一句話描述來源（例如「2026-07-15 週會」），不用建立這份檔案也沒關係，細節見 `docs/mn.template.md`。
 
@@ -68,6 +72,8 @@ cp docs/mn.template.md docs/mn/2026-07-15-weekly.md
 | 針對某位下屬產生開放式的成長/教練建議 AI prompt（不是針對特定事件的回饋） | `docs/ai_coaching_prompt_template.html`；如果是要針對具體觀察到的行為給回饋，改用 `shared-skills/feedback-growth-plan/SKILL.md` |
 | 追蹤某位下屬的長期教練計畫（目標、技能矩陣、歷次 session 記錄） | 用瀏覽器打開 `docs/coaching_plan_tracker.html` 填寫，列印/存 PDF 留存 |
 | 分析團隊技能缺口，產出招募/訓練優先順序建議 | 用瀏覽器打開 `docs/skill_gap_analysis_template.html`，填每位工程師的技能矩陣後產生 AI prompt；缺口分析結果如果要拿來規劃季度 headcount，可接 `shared-skills/capacity-roadmap-scenarios/SKILL.md`；如果要據此設計面試流程，可接 `shared-skills/hiring-interview-calibration/SKILL.md` |
+| 追蹤某位下屬的長期職涯發展計畫（願景、目標、里程碑、技能矩陣、主管支持承諾） | 用瀏覽器打開 `docs/career_development_plan_template.html` 填寫，下載後存進 `docs/coaching/`；跟 `docs/coaching_plan_tracker.html` 用途重疊——這個偏重「長期職涯路徑規劃」，`coaching_plan_tracker.html` 偏重「逐次教練 session 記錄」，依需要擇一或搭配使用 |
+| 針對某位下屬產生職涯路徑/晉升準備建議的 AI prompt | `docs/ai_career_path_prompt_template.html`；產出內容是給主管自己參考的建議，不是正式的晉升決定 |
 
 `action-register-maintainer` 只會**提出建議的異動**（新增哪些列、哪些該標記逾期、哪些該移到已完成），不會自己動手改你的 `docs/ar/<檔名>.md`——實際要不要採用建議、要不要真的修改檔案，由你決定並自己動手改。`architecture-decision-record` 沒有對應的「維護建議」skill，因為 ADR 本來就是一次性產出、之後偶爾手動更新狀態，不需要跨會議持續比對。所有 `docs/*.html` 工具也都沒有對應的「維護建議」skill——這些都是一次一份、獨立存檔的紀錄，不需要跨會議/跨週期比對。
 
@@ -99,10 +105,12 @@ cp docs/mn.template.md docs/mn/2026-07-15-weekly.md
 
 ## 想幫多個團隊/專案分開追蹤？
 
-`docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/1on1/`、`docs/updates/` 都是資料夾，不是單一檔案，可以依團隊/專案（或依人）各自複製一份範本、取不同檔名（例如 `docs/ar/platform-team.md`、`docs/1on1/1on1_alice_2026-07-15.html`），彼此獨立維護，不用共用同一份表格。
+`docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/1on1/`、`docs/updates/`、`docs/coaching/` 都是資料夾，不是單一檔案，可以依團隊/專案（或依人）各自複製一份範本、取不同檔名（例如 `docs/ar/platform-team.md`、`docs/1on1/1on1_alice_2026-07-15.html`），彼此獨立維護，不用共用同一份表格。
 
 ## 隱私提醒
 
-`docs/1on1/`、`docs/updates/`、`docs/mn/` 底下的檔案會包含真實姓名、筆記或專案內部資訊，屬於機密/內部資料，跟 `docs/ar/`、`docs/raci/`、`docs/adr/` 一樣被 `.gitignore` 排除，不會被提交進這個公開 repo。`ai_one_on_one_prep_prompt.html`、`team_update_email_prompt.html`、`ai_meeting_summary_template.html`、`ai_coaching_prompt_template.html`、`skill_gap_analysis_template.html` 產生的 prompt 在貼給第三方 AI 工具前，也要先檢查是否包含不該外流的機密資訊。
+`docs/1on1/`、`docs/updates/`、`docs/mn/`、`docs/coaching/` 底下的檔案會包含真實姓名、筆記或專案內部資訊，屬於機密/內部資料，跟 `docs/ar/`、`docs/raci/`、`docs/adr/` 一樣被 `.gitignore` 排除，不會被提交進這個公開 repo。`ai_one_on_one_prep_prompt.html`、`team_update_email_prompt.html`、`ai_meeting_summary_template.html`、`ai_coaching_prompt_template.html`、`skill_gap_analysis_template.html`、`ai_career_path_prompt_template.html` 產生的 prompt 在貼給第三方 AI 工具前，也要先檢查是否包含不該外流的機密資訊。
 
-`coaching_plan_tracker.html`、`skill_gap_analysis_template.html` 填寫後通常會包含真實姓名、技能評分、教練筆記，屬於敏感人事內容——這兩個工具沒有「下載」按鈕，只能列印/存 PDF 或截圖，存檔時不要存進任何會被提交進版控的位置（不論是這個 repo 還是你自己使用的專案 repo）。
+`coaching_plan_tracker.html`、`skill_gap_analysis_template.html` 填寫後通常會包含真實姓名、技能評分、教練筆記，屬於敏感人事內容——這兩個工具沒有「下載」按鈕，只能列印/存 PDF 或截圖，存檔時不要存進任何會被提交進版控的位置（不論是這個 repo 還是你自己使用的專案 repo）。`career_development_plan_template.html` 有下載按鈕，填寫後的 `.txt` 檔同樣屬於敏感人事內容，只能存進 `docs/coaching/`（已被 `.gitignore` 排除）。
+
+`ai_career_path_prompt_template.html` 產生的 prompt 內建一段提醒：AI 給的「晉升準備評估」只是給主管自己參考的建議，不是正式的晉升決定——正式的晉升判斷仍然要走公司自己的 calibration 流程，不能把 AI 輸出直接當成依據。
