@@ -11,3 +11,8 @@ docs/adr/*
 !docs/adr/.gitkeep
 docs/mn/*
 !docs/mn/.gitkeep
+
+# docs/1on1/ tools download filled-in exports with real names/notes —
+# never commit those to this public repo, only the tool templates.
+docs/1on1/1on1_*.html
+docs/1on1/ai_1on1_prep_*.html
