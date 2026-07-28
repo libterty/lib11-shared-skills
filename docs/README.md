@@ -1,22 +1,27 @@
-# Action Register、RACI、ADR、Meeting Notes — 範本與活文件
+# Action Register、RACI、ADR、Meeting Notes、1:1 — 範本與活文件
 
-四組你直接管控、手動編輯的活文件，加上輔助更新的 skill。
+五組你直接管控、手動編輯（或手動填寫）的活文件，加上輔助更新的 skill。
 
 ## 結構：範本 vs 實際內容
 
 ```text
 docs/
-├── ar.template.md      # Action Register 範本（公開，追蹤進 git）
-├── raci.template.md     # RACI Matrix 範本（公開，追蹤進 git）
-├── adr.template.md      # ADR 範本，一個決策一個檔案（公開，追蹤進 git）
-├── mn.template.md       # 單次會議原始紀錄範本（公開，追蹤進 git）
-├── ar/                   # 實際的 Action Register 內容（.gitignore 排除，只留 .gitkeep）
-├── raci/                 # 實際的 RACI Matrix 內容（.gitignore 排除，只留 .gitkeep）
-├── adr/                  # 實際的 ADR 內容，一個決策一個檔案（.gitignore 排除，只留 .gitkeep）
-└── mn/                   # 實際的會議原始紀錄，一次會議一個檔案（.gitignore 排除，只留 .gitkeep）
+├── ar.template.md                 # Action Register 範本（公開，追蹤進 git）
+├── raci.template.md                # RACI Matrix 範本（公開，追蹤進 git）
+├── adr.template.md                 # ADR 範本，一個決策一個檔案（公開，追蹤進 git）
+├── mn.template.md                  # 單次會議原始紀錄範本（公開，追蹤進 git）
+├── one_on_one_meeting_template.html   # 1:1 議程/筆記工具，單機瀏覽器打開即可（公開，追蹤進 git）
+├── ai_one_on_one_prep_prompt.html     # 產生 AI 1:1 prep prompt 的工具（公開，追蹤進 git）
+├── ar/                               # 實際的 Action Register 內容（.gitignore 排除，只留 .gitkeep）
+├── raci/                             # 實際的 RACI Matrix 內容（.gitignore 排除，只留 .gitkeep）
+├── adr/                              # 實際的 ADR 內容，一個決策一個檔案（.gitignore 排除，只留 .gitkeep）
+├── mn/                               # 實際的會議原始紀錄，一次會議一個檔案（.gitignore 排除，只留 .gitkeep）
+└── 1on1/                             # 實際的 1:1 紀錄，兩個工具下載出來的填寫檔案存這裡（.gitignore 排除，只留 .gitkeep）
 ```
 
-這個 repo 是公開共用的 skill 庫，`docs/*.template.md` 只放結構與範例，不會有真實的專案/人名/決策內容。你實際使用時，**複製範本到對應資料夾底下、自己命名**，例如：
+這個 repo 是公開共用的 skill 庫，`docs/*.template.md` 和 `docs/*.html` 只放結構、範例與工具本身，不會有真實的專案/人名/決策內容。你實際使用時：
+
+- AR/RACI/ADR/MN：**複製範本到對應資料夾底下、自己命名**，例如：
 
 ```bash
 cp docs/ar.template.md docs/ar/my-team.md
@@ -25,7 +30,9 @@ cp docs/adr.template.md docs/adr/0001-message-queue-choice.md
 cp docs/mn.template.md docs/mn/2026-07-15-weekly.md
 ```
 
-`docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/mn/` 底下的檔案（`.gitkeep` 除外）都被 `.gitignore` 排除，不會被提交進這個 repo，因為裡面通常會累積真實的內部資訊。`shared-skills/validate-skills.sh` 掃描每個子目錄時也會跳過整個 `docs/`，不會把它當成缺 SKILL.md 的 skill 來報錯。
+- 1:1：直接用瀏覽器打開 `docs/one_on_one_meeting_template.html` 或 `docs/ai_one_on_one_prep_prompt.html` 填寫，填完用工具內建的「下載」按鈕，把產出的 HTML 檔存進 `docs/1on1/`（檔名自帶姓名/日期，例如 `1on1_<姓名>_<日期>.html`、`ai_1on1_prep_<姓名>.html`）。
+
+`docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/mn/`、`docs/1on1/` 底下的檔案（`.gitkeep` 除外）都被 `.gitignore` 排除，不會被提交進這個 repo，因為裡面通常會累積真實的內部資訊。`shared-skills/validate-skills.sh` 掃描每個子目錄時也會跳過整個 `docs/`，不會把它當成缺 SKILL.md 的 skill 來報錯。
 
 `docs/mn/` 是選用的：如果你想讓 `docs/ar/`、`docs/raci/` 的「來源」欄位能真的連到一份可回溯的原始會議記錄，就用它存每次會議的逐字稿/筆記；如果只需要一句話描述來源（例如「2026-07-15 週會」），不用建立這份檔案也沒關係，細節見 `docs/mn.template.md`。
 
@@ -39,8 +46,10 @@ cp docs/mn.template.md docs/mn/2026-07-15-weekly.md
 | 直接調整 Action Register 內容 | 手動編輯 `docs/ar/<你的檔名>.md`（範本：`docs/ar.template.md`） |
 | 記錄一個架構/技術決策 | `shared-skills/architecture-decision-record/SKILL.md`，產出內容存進 `docs/adr/<流水號>-<簡述>.md`（範本：`docs/adr.template.md`） |
 | 保留一份會議的原始逐字稿/筆記，讓 AR/RACI 的「來源」欄位可以回溯 | 手動存進 `docs/mn/<日期>-<會議簡稱>.md`（範本：`docs/mn.template.md`），選用，不存也不影響 AR/RACI 運作 |
+| 1-1 會前用 AI 產生談話重點 | `shared-skills/one-on-one-prep-briefing/SKILL.md`（AI CLI 版本），或不方便用 CLI 時改用 `docs/ai_one_on_one_prep_prompt.html`（離線瀏覽器版本，產生的 prompt 自己貼給 AI 助理） |
+| 記錄一次 1-1 的議程/筆記 | 用瀏覽器打開 `docs/one_on_one_meeting_template.html` 填寫，下載後存進 `docs/1on1/<檔名>.html` |
 
-`action-register-maintainer` 只會**提出建議的異動**（新增哪些列、哪些該標記逾期、哪些該移到已完成），不會自己動手改你的 `docs/ar/<檔名>.md`——實際要不要採用建議、要不要真的修改檔案，由你決定並自己動手改。`architecture-decision-record` 沒有對應的「維護建議」skill，因為 ADR 本來就是一次性產出、之後偶爾手動更新狀態，不需要跨會議持續比對。
+`action-register-maintainer` 只會**提出建議的異動**（新增哪些列、哪些該標記逾期、哪些該移到已完成），不會自己動手改你的 `docs/ar/<檔名>.md`——實際要不要採用建議、要不要真的修改檔案，由你決定並自己動手改。`architecture-decision-record` 沒有對應的「維護建議」skill，因為 ADR 本來就是一次性產出、之後偶爾手動更新狀態，不需要跨會議持續比對。`one_on_one_meeting_template.html`、`ai_one_on_one_prep_prompt.html` 也沒有對應的「維護建議」skill——1:1 紀錄本來就是一次一份、獨立存檔，不需要跨會議比對。
 
 ## 哪些 skill 會指過來這裡
 
@@ -54,10 +63,12 @@ cp docs/mn.template.md docs/mn/2026-07-15-weekly.md
 
 `feedback-growth-plan` 刻意沒有接進來——它的輸出屬於敏感人事內容，不適合跟其他事務性 action item 混在同一份共用追蹤表裡。
 
+`one-on-one-prep-briefing` 的 Output Contract 加了一條「替代方案」，指向 `docs/one_on_one_meeting_template.html`、`docs/ai_one_on_one_prep_prompt.html` 這兩個離線瀏覽器工具。
+
 ## 想幫多個團隊/專案分開追蹤？
 
-`docs/ar/`、`docs/raci/`、`docs/adr/` 都是資料夾，不是單一檔案，可以依團隊/專案各自複製一份範本、取不同檔名（例如 `docs/ar/platform-team.md`、`docs/ar/mobile-team.md`），彼此獨立維護，不用共用同一份表格。
+`docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/1on1/` 都是資料夾，不是單一檔案，可以依團隊/專案（或依人）各自複製一份範本、取不同檔名（例如 `docs/ar/platform-team.md`、`docs/1on1/1on1_alice_2026-07-15.html`），彼此獨立維護，不用共用同一份表格。
 
-## `docs/1on1/`：獨立的 1:1 工具
+## 隱私提醒
 
-跟上面的 AR/RACI/ADR/MN 範本系統無關，是另外兩個不需要範本/實際內容區分、可以直接使用的 1:1 工具（單機瀏覽器打開即可，見 `docs/1on1/README.md`）。跟 `one-on-one-prep-briefing/SKILL.md` 目的相同，屬於同一件事的兩種介面：一個是 CLI/skill 版本，一個是離線瀏覽器版本。
+`docs/1on1/` 底下的檔案會包含真實姓名與筆記內容，屬於機密個資，跟 `docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/mn/` 一樣被 `.gitignore` 排除，不會被提交進這個公開 repo。`ai_one_on_one_prep_prompt.html` 產生的 prompt 在貼給第三方 AI 工具前，也要先檢查是否包含不該外流的機密資訊。

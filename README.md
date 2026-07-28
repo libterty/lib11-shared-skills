@@ -26,7 +26,7 @@ shared-skills/
 └── <skill-name>/SKILL.md       # 每個 skill 一個資料夾
 ```
 
-`_shared/` 和 `docs/` 不是 skill，`validate-skills.sh` 掃描每個子目錄時會跳過這兩個。`docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/mn/` 底下會累積真實的內部資訊（實際 action item、實際責任分配、實際架構決策、實際會議記錄），所以整個被 `.gitignore` 排除——複製對應的 `*.template.md` 到這些資料夾底下開始用，不會不小心把內部內容提交進這個公開 repo。細節見 `docs/README.md`。`docs/1on1/` 則是另外兩個不需要範本/實際內容區分、單機瀏覽器直接可用的 1:1 工具，細節見 `docs/1on1/README.md`。
+`_shared/` 和 `docs/` 不是 skill，`validate-skills.sh` 掃描每個子目錄時會跳過這兩個。`docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/mn/`、`docs/1on1/` 底下會累積真實的內部資訊（實際 action item、實際責任分配、實際架構決策、實際會議記錄、實際 1:1 紀錄），所以整個被 `.gitignore` 排除——AR/RACI/ADR/MN 複製對應的 `*.template.md`、1:1 直接打開 `docs/*.html` 工具下載填寫結果到這些資料夾底下開始用，不會不小心把內部內容提交進這個公開 repo。細節見 `docs/README.md`。
 
 ---
 
@@ -131,7 +131,7 @@ bash validate-skills.sh
 | `daily-priority-briefing` | 每天上班前，把行事曆＋信件/ticket＋昨天沒做完的事整理成優先序清單 |
 | `weekly-wrapup-focus` | 每週五收尾本週完成事項＋建議下週 focus |
 | `notes-to-action-digest` | Email/會議/Slack 內容拆成決策事項/待辦/待釐清問題/純資訊 |
-| `one-on-one-prep-briefing` | 1-1 會前根據歷史記錄/上次 action items 做 briefing（不方便用 AI CLI 時，可改用 `docs/1on1/` 底下的離線瀏覽器工具） |
+| `one-on-one-prep-briefing` | 1-1 會前根據歷史記錄/上次 action items 做 briefing（不方便用 AI CLI 時，可改用 `docs/one_on_one_meeting_template.html`、`docs/ai_one_on_one_prep_prompt.html`） |
 | `team-standup-digest` | Async 站會回報彙整成「誰卡住/需要介入」摘要 |
 | `retro-synthesis` | Retro 白板零散 note 歸納成主題＋排序過的 action item |
 | `cross-team-dependency-log` | 跨團隊依賴/RAID 追蹤 |

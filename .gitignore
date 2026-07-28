@@ -1,8 +1,9 @@
-# docs/ar/, docs/raci/, docs/adr/, docs/mn/ hold real, potentially
-# confidential instance data (actual action items, RACI assignments,
-# ADR content, raw meeting notes) copied from the docs/*.template.md
-# files. Never commit the instances to this public repo — keep only
-# the folder structure via .gitkeep.
+# docs/ar/, docs/raci/, docs/adr/, docs/mn/, docs/1on1/ hold real,
+# potentially confidential instance data (actual action items, RACI
+# assignments, ADR content, raw meeting notes, real 1:1 records)
+# produced from the docs/*.template.md files or docs/*.html tools.
+# Never commit the instances to this public repo — keep only the
+# folder structure via .gitkeep.
 docs/ar/*
 !docs/ar/.gitkeep
 docs/raci/*
@@ -11,8 +12,5 @@ docs/adr/*
 !docs/adr/.gitkeep
 docs/mn/*
 !docs/mn/.gitkeep
-
-# docs/1on1/ tools download filled-in exports with real names/notes —
-# never commit those to this public repo, only the tool templates.
-docs/1on1/1on1_*.html
-docs/1on1/ai_1on1_prep_*.html
+docs/1on1/*
+!docs/1on1/.gitkeep
