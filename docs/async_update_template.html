@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async Update Template</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            color: #2d3748;
+            text-align: center;
+            border-bottom: 4px solid #4299e1;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
+        .description {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .frequency-selector {
+            background: #ebf8ff;
+            padding: 18px;
+            border-radius: 8px;
+            border-left: 5px solid #4299e1;
+            margin-bottom: 25px;
+        }
+
+        .frequency-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .frequency-btn {
+            background: white;
+            border: 2px solid #4299e1;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .frequency-btn:hover, .frequency-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+
+        .update-header {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .header-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .field {
+            margin-bottom: 15px;
+        }
+
+        .field-label {
+            font-weight: 600;
+            color: #2d3748;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .field-input, .field-select {
+            border: 2px solid #e2e8f0;
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .field-input:focus, .field-select:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 5px rgba(66, 153, 225, 0.3);
+        }
+
+        .update-section {
+            margin-bottom: 30px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            color: white;
+            padding: 18px 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress-header {
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+        }
+
+        .blockers-header {
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+        }
+
+        .upcoming-header {
+            background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+        }
+
+        .team-header {
+            background: linear-gradient(135deg, #805ad5 0%, #6b46c1 100%);
+        }
+
+        .metrics-header {
+            background: linear-gradient(135deg, #d69e2e 0%, #b7791f 100%);
+        }
+
+        .section-icon {
+            font-size: 1.3em;
+            margin-right: 8px;
+        }
+
+        .section-content {
+            padding: 25px;
+        }
+
+        .update-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 10px;
+            gap: 15px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: #2d3748;
+            flex: 1;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .on-track { background: #c6f6d5; color: #22543d; }
+        .at-risk { background: #fef5e7; color: #c05621; }
+        .blocked { background: #fed7d7; color: #c53030; }
+        .completed { background: #bee3f8; color: #2a4365; }
+
+        .progress-bar {
+            background: #e2e8f0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: #38a169;
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: #718096;
+            text-align: right;
+            margin-top: 5px;
+        }
+
+        .item-details {
+            margin-top: 10px;
+        }
+
+        .item-textarea {
+            width: 100%;
+            min-height: 60px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            padding: 10px;
+            resize: vertical;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .blocker-item {
+            background: #fff5f5;
+            border-left: 4px solid #e53e3e;
+        }
+
+        .blocker-severity {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .severity-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .severity-option input[type="radio"] {
+            margin: 0;
+        }
+
+        .high-severity { color: #c53030; }
+        .medium-severity { color: #d69e2e; }
+        .low-severity { color: #38a169; }
+
+        .team-mentions {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .mention-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .mention-tag {
+            background: #bee3f8;
+            color: #2a4365;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .metric-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+        }
+
+        .metric-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .metric-trend {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .trend-up { color: #38a169; }
+        .trend-down { color: #e53e3e; }
+        .trend-stable { color: #718096; }
+
+        .quick-actions {
+            background: #fffbf0;
+            border: 2px solid #f6e05e;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .action-btn {
+            background: white;
+            border: 2px solid #d69e2e;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #d69e2e;
+            color: white;
+        }
+
+        .template-tips {
+            background: #f0fff4;
+            border-left: 4px solid #38a169;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .tip-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .tip-icon {
+            background: #38a169;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .btn {
+            background: #4299e1;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background: #3182ce;
+        }
+
+        .btn-secondary {
+            background: #718096;
+        }
+
+        .btn-secondary:hover {
+            background: #4a5568;
+        }
+
+        .btn-success {
+            background: #38a169;
+        }
+
+        .btn-success:hover {
+            background: #2f855a;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; padding: 0; }
+            .actions, .frequency-selector, .quick-actions { display: none; }
+            .update-section { break-inside: avoid; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            .header-grid { grid-template-columns: 1fr; }
+            .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+            .frequency-options, .action-buttons { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Async Update Template</h1>
+
+        <div class="description">
+            <strong>Purpose:</strong> This template enables engineering teams to share progress, blockers, and updates asynchronously, reducing meeting overhead while keeping everyone informed. Use it for daily/weekly standups, sprint updates, or project status reports that can be shared via Slack, email, or team communication tools.
+        </div>
+
+        <!-- Update Frequency Selector -->
+        <div class="frequency-selector">
+            <h4>⏰ Update Frequency</h4>
+            <p>Choose your update cadence (affects template suggestions):</p>
+            <div class="frequency-options">
+                <button class="frequency-btn active" onclick="setFrequency('daily')">Daily Standup</button>
+                <button class="frequency-btn" onclick="setFrequency('weekly')">Weekly Update</button>
+                <button class="frequency-btn" onclick="setFrequency('sprint')">Sprint Report</button>
+                <button class="frequency-btn" onclick="setFrequency('monthly')">Monthly Summary</button>
+                <button class="frequency-btn" onclick="setFrequency('project')">Project Milestone</button>
+            </div>
+        </div>
+
+        <!-- Update Header -->
+        <div class="update-header">
+            <h3>Update Information</h3>
+            <div class="header-grid">
+                <div class="field">
+                    <span class="field-label">Team Member:</span>
+                    <input type="text" class="field-input" id="team-member" placeholder="Your name">
+                </div>
+                <div class="field">
+                    <span class="field-label">Date:</span>
+                    <input type="date" class="field-input" id="update-date">
+                </div>
+                <div class="field">
+                    <span class="field-label">Update Type:</span>
+                    <select class="field-select" id="update-type">
+                        <option value="Daily Standup">Daily Standup</option>
+                        <option value="Weekly Update">Weekly Update</option>
+                        <option value="Sprint Report">Sprint Report</option>
+                        <option value="Project Update">Project Update</option>
+                        <option value="Monthly Summary">Monthly Summary</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <span class="field-label">Team/Project:</span>
+                    <input type="text" class="field-input" id="team-project" placeholder="e.g., Platform Team, Project Apollo">
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress & Completed Work -->
+        <div class="update-section">
+            <div class="section-header progress-header">
+                <span><span class="section-icon">✅</span>Progress & Completed Work</span>
+            </div>
+            <div class="section-content">
+                <p><em>What have you accomplished since your last update?</em></p>
+
+                <div class="update-item">
+                    <div class="item-header">
+                        <input type="text" class="field-input item-title" placeholder="Task/Project name">
+                        <select class="field-select status-badge" style="width: auto;">
+                            <option value="completed" class="completed">Completed</option>
+                            <option value="on-track" class="on-track">On Track</option>
+                            <option value="at-risk" class="at-risk">At Risk</option>
+                            <option value="blocked" class="blocked">Blocked</option>
+                        </select>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%"></div>
+                    </div>
+                    <div class="progress-text">100% Complete</div>
+                    <div class="item-details">
+                        <textarea class="item-textarea" placeholder="Describe what was accomplished, key decisions made, or milestones reached..."></textarea>
+                    </div>
+                </div>
+
+                <div class="update-item">
+                    <div class="item-header">
+                        <input type="text" class="field-input item-title" placeholder="Another task or project">
+                        <select class="field-select status-badge" style="width: auto;">
+                            <option value="on-track" class="on-track">On Track</option>
+                            <option value="completed" class="completed">Completed</option>
+                            <option value="at-risk" class="at-risk">At Risk</option>
+                            <option value="blocked" class="blocked">Blocked</option>
+                        </select>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                    <div class="progress-text">75% Complete</div>
+                    <div class="item-details">
+                        <textarea class="item-textarea" placeholder="Progress details, challenges overcome, next steps..."></textarea>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" onclick="addProgressItem()">+ Add Progress Item</button>
+            </div>
+        </div>
+
+        <!-- Blockers & Issues -->
+        <div class="update-section">
+            <div class="section-header blockers-header">
+                <span><span class="section-icon">🚫</span>Blockers & Issues</span>
+            </div>
+            <div class="section-content">
+                <p><em>What's blocking your progress? What help do you need?</em></p>
+
+                <div class="update-item blocker-item">
+                    <div class="item-header">
+                        <input type="text" class="field-input item-title" placeholder="Describe the blocker or issue">
+                        <div class="blocker-severity">
+                            <label class="severity-option high-severity">
+                                <input type="radio" name="blocker1-severity" value="high">
+                                <span>High</span>
+                            </label>
+                            <label class="severity-option medium-severity">
+                                <input type="radio" name="blocker1-severity" value="medium" checked>
+                                <span>Medium</span>
+                            </label>
+                            <label class="severity-option low-severity">
+                                <input type="radio" name="blocker1-severity" value="low">
+                                <span>Low</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <textarea class="item-textarea" placeholder="Explain the blocker, impact on timeline, who can help resolve it, what you've tried..."></textarea>
+                    </div>
+                </div>
+
+                <div class="update-item blocker-item">
+                    <div class="item-header">
+                        <input type="text" class="field-input item-title" placeholder="Another blocker (if any)">
+                        <div class="blocker-severity">
+                            <label class="severity-option high-severity">
+                                <input type="radio" name="blocker2-severity" value="high">
+                                <span>High</span>
+                            </label>
+                            <label class="severity-option medium-severity">
+                                <input type="radio" name="blocker2-severity" value="medium">
+                                <span>Medium</span>
+                            </label>
+                            <label class="severity-option low-severity">
+                                <input type="radio" name="blocker2-severity" value="low">
+                                <span>Low</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <textarea class="item-textarea" placeholder="Additional blocker details..."></textarea>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" onclick="addBlockerItem()">+ Add Blocker</button>
+            </div>
+        </div>
+
+        <!-- Upcoming Work & Priorities -->
+        <div class="update-section">
+            <div class="section-header upcoming-header">
+                <span><span class="section-icon">📅</span>Upcoming Work & Priorities</span>
+            </div>
+            <div class="section-content">
+                <p><em>What are you planning to work on next? What are your priorities?</em></p>
+
+                <div class="update-item">
+                    <div class="item-header">
+                        <input type="text" class="field-input item-title" placeholder="Next priority or task">
+                        <select class="field-select status-badge" style="width: auto;">
+                            <option value="high-priority" class="at-risk">High Priority</option>
+                            <option value="medium-priority" class="on-track">Medium Priority</option>
+                            <option value="low-priority" class="completed">Low Priority</option>
+                        </select>
+                    </div>
+                    <div class="item-details">
+                        <textarea class="item-textarea" placeholder="Describe the upcoming work, expected timeline, dependencies, or resources needed..."></textarea>
+                    </div>
+                </div>
+
+                <div class="update-item">
+                    <div class="item-header">
+                        <input type="text" class="field-input item-title" placeholder="Additional upcoming work">
+                        <select class="field-select status-badge" style="width: auto;">
+                            <option value="medium-priority" class="on-track">Medium Priority</option>
+                            <option value="high-priority" class="at-risk">High Priority</option>
+                            <option value="low-priority" class="completed">Low Priority</option>
+                        </select>
+                    </div>
+                    <div class="item-details">
+                        <textarea class="item-textarea" placeholder="More upcoming work details..."></textarea>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" onclick="addUpcomingItem()">+ Add Upcoming Work</button>
+            </div>
+        </div>
+
+        <!-- Team Collaboration & Mentions -->
+        <div class="update-section">
+            <div class="section-header team-header">
+                <span><span class="section-icon">👥</span>Team Collaboration & Mentions</span>
+            </div>
+            <div class="section-content">
+                <p><em>Who did you collaborate with? Who should be aware of your updates?</em></p>
+
+                <div class="team-mentions">
+                    <div class="field">
+                        <span class="field-label">Collaboration Highlights:</span>
+                        <textarea class="item-textarea" placeholder="Mention key collaborations, pair programming sessions, design reviews, or cross-team work..."></textarea>
+                    </div>
+
+                    <div class="field">
+                        <span class="field-label">Team Members to Tag/Notify:</span>
+                        <input type="text" class="field-input" placeholder="@alice, @bob, @charlie - who should see this update?">
+                    </div>
+
+                    <div class="mention-tags">
+                        <span class="mention-tag">@alice</span>
+                        <span class="mention-tag">@bob</span>
+                        <span class="mention-tag">@charlie</span>
+                    </div>
+
+                    <div class="field" style="margin-top: 15px;">
+                        <span class="field-label">Knowledge Sharing:</span>
+                        <textarea class="item-textarea" placeholder="Any learnings, solutions, or insights worth sharing with the team?"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metrics & KPIs (Optional) -->
+        <div class="update-section">
+            <div class="section-header metrics-header">
+                <span><span class="section-icon">📊</span>Metrics & KPIs (Optional)</span>
+            </div>
+            <div class="section-content">
+                <p><em>Track relevant metrics for your work or team goals:</em></p>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: #38a169;">
+                            <input type="text" class="field-input" placeholder="85%" style="border: none; background: transparent; text-align: center; font-size: 1.8em; font-weight: bold;">
+                        </div>
+                        <div class="metric-label">
+                            <input type="text" class="field-input" placeholder="Test Coverage" style="border: none; background: transparent; text-align: center; font-size: 0.9em;">
+                        </div>
+                        <div class="metric-trend trend-up">↑ +2% from last week</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: #3182ce;">
+                            <input type="text" class="field-input" placeholder="12" style="border: none; background: transparent; text-align: center; font-size: 1.8em; font-weight: bold;">
+                        </div>
+                        <div class="metric-label">
+                            <input type="text" class="field-input" placeholder="Stories Completed" style="border: none; background: transparent; text-align: center; font-size: 0.9em;">
+                        </div>
+                        <div class="metric-trend trend-stable">→ On track</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: #d69e2e;">
+                            <input type="text" class="field-input" placeholder="3" style="border: none; background: transparent; text-align: center; font-size: 1.8em; font-weight: bold;">
+                        </div>
+                        <div class="metric-label">
+                            <input type="text" class="field-input" placeholder="Open Issues" style="border: none; background: transparent; text-align: center; font-size: 0.9em;">
+                        </div>
+                        <div class="metric-trend trend-down">↓ -2 from last week</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h4>⚡ Quick Actions</h4>
+            <p>Make your update more effective:</p>
+            <div class="action-buttons">
+                <button class="action-btn" onclick="copyForSlack()">📱 Copy for Slack</button>
+                <button class="action-btn" onclick="copyForEmail()">📧 Copy for Email</button>
+                <button class="action-btn" onclick="generateSummary()">📝 Generate Summary</button>
+                <button class="action-btn" onclick="checkCompleteness()">✔️ Check Completeness</button>
+            </div>
+        </div>
+
+        <!-- Usage Tips -->
+        <div class="template-tips">
+            <h4>💡 Tips for Effective Async Updates</h4>
+            <ul class="tip-list">
+                <li class="tip-item">
+                    <div class="tip-icon">1</div>
+                    <div><strong>Be Specific:</strong> Use concrete details, numbers, and outcomes rather than vague statements like "made progress."</div>
+                </li>
+                <li class="tip-item">
+                    <div class="tip-icon">2</div>
+                    <div><strong>Context Matters:</strong> Explain the "why" behind your work and how it connects to team/company goals.</div>
+                </li>
+                <li class="tip-item">
+                    <div class="tip-icon">3</div>
+                    <div><strong>Call for Help:</strong> Be explicit about what kind of help you need and who can provide it.</div>
+                </li>
+                <li class="tip-item">
+                    <div class="tip-icon">4</div>
+                    <div><strong>Consistent Timing:</strong> Share updates at the same time each day/week so teammates know when to expect them.</div>
+                </li>
+                <li class="tip-item">
+                    <div class="tip-icon">5</div>
+                    <div><strong>Use @mentions:</strong> Tag relevant team members to ensure important updates reach the right people.</div>
+                </li>
+                <li class="tip-item">
+                    <div class="tip-icon">6</div>
+                    <div><strong>Link Resources:</strong> Include links to PRs, tickets, documents, or demos to provide more context.</div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-success" onclick="validateUpdate()">✅ Validate Update</button>
+            <button class="btn" onclick="window.print()">Print Update</button>
+            <button class="btn btn-secondary" onclick="downloadUpdate()">Download Template</button>
+            <button class="btn btn-secondary" onclick="resetTemplate()">New Update</button>
+        </div>
+    </div>
+
+    <script>
+        let currentFrequency = 'daily';
+
+        function setFrequency(frequency) {
+            // Update active button
+            document.querySelectorAll('.frequency-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            currentFrequency = frequency;
+
+            // Update update type dropdown
+            const updateTypeSelect = document.getElementById('update-type');
+            const frequencyMap = {
+                'daily': 'Daily Standup',
+                'weekly': 'Weekly Update',
+                'sprint': 'Sprint Report',
+                'monthly': 'Monthly Summary',
+                'project': 'Project Update'
+            };
+            updateTypeSelect.value = frequencyMap[frequency] || 'Daily Standup';
+        }
+
+        function addProgressItem() {
+            const progressSection = document.querySelector('.progress-header').parentElement.querySelector('.section-content');
+            const newItem = createUpdateItem('progress');
+            const addButton = progressSection.querySelector('button');
+            progressSection.insertBefore(newItem, addButton);
+        }
+
+        function addBlockerItem() {
+            const blockersSection = document.querySelector('.blockers-header').parentElement.querySelector('.section-content');
+            const newItem = createBlockerItem();
+            const addButton = blockersSection.querySelector('button');
+            blockersSection.insertBefore(newItem, addButton);
+        }
+
+        function addUpcomingItem() {
+            const upcomingSection = document.querySelector('.upcoming-header').parentElement.querySelector('.section-content');
+            const newItem = createUpdateItem('upcoming');
+            const addButton = upcomingSection.querySelector('button');
+            upcomingSection.insertBefore(newItem, addButton);
+        }
+
+        function createUpdateItem(type) {
+            const item = document.createElement('div');
+            item.className = 'update-item';
+
+            let statusOptions = '';
+            if (type === 'progress') {
+                statusOptions = `
+                    <option value="completed" class="completed">Completed</option>
+                    <option value="on-track" class="on-track">On Track</option>
+                    <option value="at-risk" class="at-risk">At Risk</option>
+                    <option value="blocked" class="blocked">Blocked</option>
+                `;
+            } else if (type === 'upcoming') {
+                statusOptions = `
+                    <option value="high-priority" class="at-risk">High Priority</option>
+                    <option value="medium-priority" class="on-track">Medium Priority</option>
+                    <option value="low-priority" class="completed">Low Priority</option>
+                `;
+            }
+
+            item.innerHTML = `
+                <div class="item-header">
+                    <input type="text" class="field-input item-title" placeholder="Task/Project name">
+                    <select class="field-select status-badge" style="width: auto;">
+                        ${statusOptions}
+                    </select>
+                </div>
+                ${type === 'progress' ? `
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 50%"></div>
+                    </div>
+                    <div class="progress-text">50% Complete</div>
+                ` : ''}
+                <div class="item-details">
+                    <textarea class="item-textarea" placeholder="Details..."></textarea>
+                </div>
+            `;
+
+            return item;
+        }
+
+        function createBlockerItem() {
+            const item = document.createElement('div');
+            item.className = 'update-item blocker-item';
+            const randomId = Math.random().toString(36).substr(2, 9);
+
+            item.innerHTML = `
+                <div class="item-header">
+                    <input type="text" class="field-input item-title" placeholder="Describe the blocker or issue">
+                    <div class="blocker-severity">
+                        <label class="severity-option high-severity">
+                            <input type="radio" name="blocker-${randomId}-severity" value="high">
+                            <span>High</span>
+                        </label>
+                        <label class="severity-option medium-severity">
+                            <input type="radio" name="blocker-${randomId}-severity" value="medium" checked>
+                            <span>Medium</span>
+                        </label>
+                        <label class="severity-option low-severity">
+                            <input type="radio" name="blocker-${randomId}-severity" value="low">
+                            <span>Low</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="item-details">
+                    <textarea class="item-textarea" placeholder="Explain the blocker, impact, and what help you need..."></textarea>
+                </div>
+            `;
+
+            return item;
+        }
+
+        function copyForSlack() {
+            const text = generateUpdateText('slack');
+            copyToClipboard(text);
+            showNotification('Update copied for Slack! 📱');
+        }
+
+        function copyForEmail() {
+            const text = generateUpdateText('email');
+            copyToClipboard(text);
+            showNotification('Update copied for email! 📧');
+        }
+
+        function generateUpdateText(format) {
+            const teamMember = document.getElementById('team-member').value || 'Team Member';
+            const date = document.getElementById('update-date').value || new Date().toISOString().split('T')[0];
+            const updateType = document.getElementById('update-type').value;
+
+            let text = '';
+
+            if (format === 'slack') {
+                text = `*${updateType} - ${date}*\n\n`;
+                text += `*✅ Progress & Completed:*\n`;
+                // Add progress items
+                text += `\n*🚫 Blockers:*\n`;
+                // Add blocker items
+                text += `\n*📅 Upcoming Work:*\n`;
+                // Add upcoming items
+                text += `\n*👥 Collaboration:*\n`;
+                // Add collaboration notes
+            } else {
+                text = `Subject: ${updateType} - ${teamMember} - ${date}\n\n`;
+                text += `Hi team,\n\nHere's my ${updateType.toLowerCase()} for ${date}:\n\n`;
+                text += `Progress & Completed Work:\n`;
+                text += `• [Add items here]\n\n`;
+                text += `Blockers & Issues:\n`;
+                text += `• [Add blockers here]\n\n`;
+                text += `Upcoming Work:\n`;
+                text += `• [Add upcoming work here]\n\n`;
+                text += `Best regards,\n${teamMember}`;
+            }
+
+            return text;
+        }
+
+        function generateSummary() {
+            const progressItems = document.querySelectorAll('.progress-header + .section-content .update-item').length;
+            const blockerItems = document.querySelectorAll('.blockers-header + .section-content .update-item').length;
+            const upcomingItems = document.querySelectorAll('.upcoming-header + .section-content .update-item').length;
+
+            const summary = `Update Summary:\n• ${progressItems} progress items\n• ${blockerItems} blockers\n• ${upcomingItems} upcoming tasks`;
+
+            alert(summary);
+        }
+
+        function checkCompleteness() {
+            let missing = [];
+
+            if (!document.getElementById('team-member').value) missing.push('Team Member name');
+            if (!document.getElementById('update-date').value) missing.push('Update date');
+
+            const progressFilled = Array.from(document.querySelectorAll('.progress-header + .section-content .item-title')).some(input => input.value.trim());
+            if (!progressFilled) missing.push('At least one progress item');
+
+            if (missing.length > 0) {
+                alert(`Missing information:\n• ${missing.join('\n• ')}`);
+            } else {
+                showNotification('Update is complete! ✅');
+            }
+        }
+
+        function validateUpdate() {
+            checkCompleteness();
+            autoSave();
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text);
+            } else {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                } catch (err) {
+                    console.error('Failed to copy text: ', err);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed; top: 20px; right: 20px; background: #38a169; color: white;
+                padding: 12px 20px; border-radius: 6px; z-index: 1000; font-weight: 600;
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        function autoSave() {
+            const data = {
+                teamMember: document.getElementById('team-member').value,
+                updateDate: document.getElementById('update-date').value,
+                updateType: document.getElementById('update-type').value,
+                teamProject: document.getElementById('team-project').value,
+                currentFrequency: currentFrequency
+            };
+
+            // Save all input fields
+            document.querySelectorAll('input, textarea, select').forEach((input, index) => {
+                if (input.type === 'radio') {
+                    if (input.checked) data[`radio_${input.name}`] = input.value;
+                } else {
+                    data[`field_${index}`] = input.value;
+                }
+            });
+
+            localStorage.setItem('asyncUpdate', JSON.stringify(data));
+        }
+
+        function loadSaved() {
+            const saved = localStorage.getItem('asyncUpdate');
+            if (saved) {
+                const data = JSON.parse(saved);
+
+                // Load basic fields
+                Object.keys(data).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element && data[key] !== undefined) {
+                        element.value = data[key];
+                    }
+                });
+
+                // Load all inputs
+                document.querySelectorAll('input, textarea, select').forEach((input, index) => {
+                    if (input.type === 'radio') {
+                        const radioValue = data[`radio_${input.name}`];
+                        if (radioValue === input.value) {
+                            input.checked = true;
+                        }
+                    } else if (data[`field_${index}`] !== undefined) {
+                        input.value = data[`field_${index}`];
+                    }
+                });
+
+                // Restore frequency
+                if (data.currentFrequency) {
+                    currentFrequency = data.currentFrequency;
+                    document.querySelectorAll('.frequency-btn').forEach(btn => btn.classList.remove('active'));
+                    document.querySelector(`[onclick="setFrequency('${data.currentFrequency}')"]`)?.classList.add('active');
+                }
+            }
+        }
+
+        function downloadUpdate() {
+            const teamMember = document.getElementById('team-member').value || 'team_member';
+            const date = document.getElementById('update-date').value || new Date().toISOString().split('T')[0];
+            const fileName = `async_update_${teamMember.replace(/\s+/g, '_').toLowerCase()}_${date}.html`;
+
+            const element = document.createElement('a');
+            const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function resetTemplate() {
+            if (confirm('Start a new update? This will clear all current data.')) {
+                localStorage.removeItem('asyncUpdate');
+                location.reload();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default date to today
+            document.getElementById('update-date').value = new Date().toISOString().split('T')[0];
+
+            loadSaved();
+
+            // Auto-save on input changes
+            document.addEventListener('input', autoSave);
+            document.addEventListener('change', autoSave);
+        });
+    </script>
+</body>
+</html>

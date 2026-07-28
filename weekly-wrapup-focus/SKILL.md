@@ -39,6 +39,7 @@ metadata:
 - **下週 focus**（排序，3-5 項，各附一行理由）
 - **下週的風險**（標記 Fact 或 Hypothesis）
 - **延伸追蹤**（選填）：下週 focus 與 carryover 項目如果需要跨週期持續追蹤，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在你自己從 `shared-skills/docs/ar.template.md` 複製建立、存放在 `shared-skills/docs/ar/` 底下的檔案
+- **延伸應用**（選填）：如果這份輸出還要轉成給利害關係人的週報 email，可以把「這週完成」「進行中/被阻擋」「下週 focus」餵給 `shared-skills/docs/team_update_email_prompt.html`（離線瀏覽器工具），產生給對應對象的 AI email 草稿 prompt
 
 ## Safety Constraints
 

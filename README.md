@@ -26,7 +26,7 @@ shared-skills/
 └── <skill-name>/SKILL.md       # 每個 skill 一個資料夾
 ```
 
-`_shared/` 和 `docs/` 不是 skill，`validate-skills.sh` 掃描每個子目錄時會跳過這兩個。`docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/mn/`、`docs/1on1/` 底下會累積真實的內部資訊（實際 action item、實際責任分配、實際架構決策、實際會議記錄、實際 1:1 紀錄），所以整個被 `.gitignore` 排除——AR/RACI/ADR/MN 複製對應的 `*.template.md`、1:1 直接打開 `docs/*.html` 工具下載填寫結果到這些資料夾底下開始用，不會不小心把內部內容提交進這個公開 repo。細節見 `docs/README.md`。
+`_shared/` 和 `docs/` 不是 skill，`validate-skills.sh` 掃描每個子目錄時會跳過這兩個。`docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/mn/`、`docs/1on1/`、`docs/updates/` 底下會累積真實的內部資訊（實際 action item、實際責任分配、實際架構決策、實際會議記錄、實際 1:1 紀錄、實際 async/team update 紀錄），所以整個被 `.gitignore` 排除——AR/RACI/ADR/MN 複製對應的 `*.template.md`、1:1/Async Update/Team Update Email 直接打開 `docs/*.html` 工具下載填寫結果到這些資料夾底下開始用，不會不小心把內部內容提交進這個公開 repo。細節見 `docs/README.md`。
 
 ---
 
@@ -129,10 +129,10 @@ bash validate-skills.sh
 | Skill | 什麼時候用 |
 |---|---|
 | `daily-priority-briefing` | 每天上班前，把行事曆＋信件/ticket＋昨天沒做完的事整理成優先序清單 |
-| `weekly-wrapup-focus` | 每週五收尾本週完成事項＋建議下週 focus |
+| `weekly-wrapup-focus` | 每週五收尾本週完成事項＋建議下週 focus（想轉成給利害關係人的週報 email，可改用 `docs/team_update_email_prompt.html`） |
 | `notes-to-action-digest` | Email/會議/Slack 內容拆成決策事項/待辦/待釐清問題/純資訊 |
 | `one-on-one-prep-briefing` | 1-1 會前根據歷史記錄/上次 action items 做 briefing（不方便用 AI CLI 時，可改用 `docs/one_on_one_meeting_template.html`、`docs/ai_one_on_one_prep_prompt.html`） |
-| `team-standup-digest` | Async 站會回報彙整成「誰卡住/需要介入」摘要 |
+| `team-standup-digest` | Async 站會回報彙整成「誰卡住/需要介入」摘要（成員還沒有固定撰寫習慣時，可先用 `docs/async_update_template.html` 寫） |
 | `retro-synthesis` | Retro 白板零散 note 歸納成主題＋排序過的 action item |
 | `cross-team-dependency-log` | 跨團隊依賴/RAID 追蹤 |
 | `meeting-agenda-draft` | 依會議目的/參與者/時長草擬議程，附必要性提醒/會議類型判定/48小時前置期檢查/Parking Lot |

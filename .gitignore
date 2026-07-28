@@ -1,9 +1,10 @@
-# docs/ar/, docs/raci/, docs/adr/, docs/mn/, docs/1on1/ hold real,
-# potentially confidential instance data (actual action items, RACI
-# assignments, ADR content, raw meeting notes, real 1:1 records)
-# produced from the docs/*.template.md files or docs/*.html tools.
-# Never commit the instances to this public repo — keep only the
-# folder structure via .gitkeep.
+# docs/ar/, docs/raci/, docs/adr/, docs/mn/, docs/1on1/, docs/updates/
+# hold real, potentially confidential instance data (actual action
+# items, RACI assignments, ADR content, raw meeting notes, real 1:1
+# records, real async/team updates) produced from the
+# docs/*.template.md files or docs/*.html tools. Never commit the
+# instances to this public repo — keep only the folder structure via
+# .gitkeep.
 docs/ar/*
 !docs/ar/.gitkeep
 docs/raci/*
@@ -14,3 +15,5 @@ docs/mn/*
 !docs/mn/.gitkeep
 docs/1on1/*
 !docs/1on1/.gitkeep
+docs/updates/*
+!docs/updates/.gitkeep

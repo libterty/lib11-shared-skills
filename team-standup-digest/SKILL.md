@@ -18,6 +18,7 @@ metadata:
 
 - 團隊成員的 standup 回報原始文字（每人各自的更新，含日期／頻道來源）
 - （選填）團隊完整名單，用來比對誰沒有回報
+- 如果團隊成員手上還沒有固定的更新撰寫習慣，可以先請他們用 `shared-skills/docs/async_update_template.html`（離線瀏覽器工具）寫，再把多份輸出彙整成這個 skill 的輸入
 
 ## Workflow
 

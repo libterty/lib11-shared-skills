@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Update Email Draft Prompt Template</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f7fafc;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            color: #1a202c;
+            text-align: center;
+            border-bottom: 4px solid #3182ce;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
+        .description {
+            background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .audience-selector {
+            background: #ebf4ff;
+            border: 2px solid #bee3f8;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .audience-tabs {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .audience-tab {
+            background: white;
+            border: 2px solid #3182ce;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .audience-tab:hover, .audience-tab.active {
+            background: #3182ce;
+            color: white;
+        }
+
+        .update-header {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 5px solid #3182ce;
+        }
+
+        .header-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .field {
+            margin-bottom: 15px;
+        }
+
+        .field-label {
+            font-weight: 600;
+            color: #2d3748;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .field-input, .field-select, .field-textarea {
+            border: 2px solid #e2e8f0;
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+
+        .field-input:focus, .field-select:focus, .field-textarea:focus {
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 5px rgba(49, 130, 206, 0.3);
+        }
+
+        .field-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .large-textarea {
+            min-height: 120px;
+        }
+
+        .content-section {
+            margin-bottom: 30px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            color: white;
+            padding: 18px 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress-header {
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+        }
+
+        .challenges-header {
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+        }
+
+        .upcoming-header {
+            background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+        }
+
+        .metrics-header {
+            background: linear-gradient(135deg, #805ad5 0%, #6b46c1 100%);
+        }
+
+        .section-icon {
+            font-size: 1.3em;
+            margin-right: 8px;
+        }
+
+        .section-content {
+            padding: 25px;
+        }
+
+        .content-item {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .item-priority {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .priority-label {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .priority-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .priority-option input[type="radio"] {
+            margin: 0;
+        }
+
+        .high-priority { color: #e53e3e; }
+        .medium-priority { color: #d69e2e; }
+        .low-priority { color: #38a169; }
+
+        .item-details {
+            margin-top: 10px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .metric-input-group {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .metric-input {
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            width: 80px;
+        }
+
+        .metric-label {
+            margin-top: 8px;
+        }
+
+        .metric-label input {
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+
+        .email-style-selector {
+            background: #fff5f5;
+            border: 2px solid #fed7d7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .style-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .style-option {
+            background: white;
+            border: 2px solid #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .style-option:hover {
+            border-color: #e53e3e;
+            background: #fef5f5;
+        }
+
+        .style-option.selected {
+            border-color: #e53e3e;
+            background: #fed7d7;
+        }
+
+        .style-title {
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .style-description {
+            font-size: 13px;
+            color: #718096;
+        }
+
+        .prompt-section {
+            margin-bottom: 30px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .prompt-header {
+            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+            color: white;
+            padding: 18px 25px;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .prompt-content {
+            padding: 25px;
+        }
+
+        .usage-steps {
+            background: #e6fffa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #38b2ac;
+            margin: 20px 0;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .step-number {
+            background: #38b2ac;
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .prompt-box {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            border: 1px solid #4a5568;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            position: relative;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #3182ce;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .copy-button:hover {
+            background: #2c5282;
+        }
+
+        .example-section {
+            background: #f0fff4;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #38a169;
+            margin-top: 20px;
+        }
+
+        .example-email {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 15px;
+            border: 1px solid #c6f6d5;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .email-header {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            margin: -20px -20px 20px -20px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .email-subject {
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .email-body h4 {
+            color: #2d3748;
+            margin: 20px 0 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+
+        .email-body ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .email-body li {
+            margin: 5px 0;
+        }
+
+        .tips-section {
+            background: #fffaf0;
+            border: 2px solid #feb2b2;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .tip-icon {
+            background: #d69e2e;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .btn {
+            background: #3182ce;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background: #2c5282;
+        }
+
+        .btn-secondary {
+            background: #718096;
+        }
+
+        .btn-secondary:hover {
+            background: #4a5568;
+        }
+
+        .btn-success {
+            background: #38a169;
+        }
+
+        .btn-success:hover {
+            background: #2f855a;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; padding: 0; }
+            .actions { display: none; }
+            .copy-button { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            .header-grid { grid-template-columns: 1fr; }
+            .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+            .audience-tabs { flex-direction: column; }
+            .style-options { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📧 Team Update Email Draft Generator</h1>
+
+        <div class="description">
+            <strong>Purpose:</strong> This template generates AI prompts that create professional, concise weekly team updates for stakeholders. Transform scattered project notes and metrics into polished email communications that keep leadership, product teams, and other stakeholders informed about your team's progress, challenges, and priorities.
+        </div>
+
+        <!-- Audience Selector -->
+        <div class="audience-selector">
+            <h4>🎯 Target Audience</h4>
+            <p>Choose your primary audience (affects tone and detail level):</p>
+            <div class="audience-tabs">
+                <button class="audience-tab active" onclick="setAudience('leadership')">Executive Leadership</button>
+                <button class="audience-tab" onclick="setAudience('product')">Product Teams</button>
+                <button class="audience-tab" onclick="setAudience('engineering')">Engineering Teams</button>
+                <button class="audience-tab" onclick="setAudience('cross-functional')">Cross-functional Teams</button>
+                <button class="audience-tab" onclick="setAudience('stakeholders')">General Stakeholders</button>
+            </div>
+        </div>
+
+        <!-- Update Header Information -->
+        <div class="update-header">
+            <h3>📋 Update Information</h3>
+            <div class="header-grid">
+                <div class="field">
+                    <span class="field-label">Team Name:</span>
+                    <input type="text" class="field-input" id="team-name" placeholder="e.g., Platform Engineering Team">
+                </div>
+                <div class="field">
+                    <span class="field-label">Update Period:</span>
+                    <input type="text" class="field-input" id="update-period" placeholder="e.g., Week of March 4-8, 2024">
+                </div>
+                <div class="field">
+                    <span class="field-label">Your Name/Role:</span>
+                    <input type="text" class="field-input" id="sender-info" placeholder="e.g., Sarah Chen, Engineering Manager">
+                </div>
+                <div class="field">
+                    <span class="field-label">Update Frequency:</span>
+                    <select class="field-select" id="update-frequency">
+                        <option value="Weekly">Weekly</option>
+                        <option value="Bi-weekly">Bi-weekly</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Sprint-based">Sprint-based</option>
+                        <option value="Ad-hoc">Ad-hoc</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress & Accomplishments -->
+        <div class="content-section">
+            <div class="section-header progress-header">
+                <span><span class="section-icon">✅</span>Progress & Key Accomplishments</span>
+            </div>
+            <div class="section-content">
+                <p><em>What did your team accomplish this period? Focus on outcomes and impact.</em></p>
+
+                <div class="content-item">
+                    <div class="item-header">
+                        <input type="text" class="field-input" placeholder="Achievement or milestone completed" style="flex: 1; margin-right: 15px;">
+                        <div class="item-priority">
+                            <span class="priority-label">Priority:</span>
+                            <label class="priority-option high-priority">
+                                <input type="radio" name="accomplishment1-priority" value="high">
+                                <span>High</span>
+                            </label>
+                            <label class="priority-option medium-priority">
+                                <input type="radio" name="accomplishment1-priority" value="medium" checked>
+                                <span>Med</span>
+                            </label>
+                            <label class="priority-option low-priority">
+                                <input type="radio" name="accomplishment1-priority" value="low">
+                                <span>Low</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <textarea class="field-textarea" placeholder="Describe the impact, metrics, or significance of this accomplishment..."></textarea>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="item-header">
+                        <input type="text" class="field-input" placeholder="Another key accomplishment" style="flex: 1; margin-right: 15px;">
+                        <div class="item-priority">
+                            <span class="priority-label">Priority:</span>
+                            <label class="priority-option high-priority">
+                                <input type="radio" name="accomplishment2-priority" value="high">
+                                <span>High</span>
+                            </label>
+                            <label class="priority-option medium-priority">
+                                <input type="radio" name="accomplishment2-priority" value="medium" checked>
+                                <span>Med</span>
+                            </label>
+                            <label class="priority-option low-priority">
+                                <input type="radio" name="accomplishment2-priority" value="low">
+                                <span>Low</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <textarea class="field-textarea" placeholder="Impact and details..."></textarea>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" onclick="addAccomplishmentItem()">+ Add Accomplishment</button>
+            </div>
+        </div>
+
+        <!-- Challenges & Blockers -->
+        <div class="content-section">
+            <div class="section-header challenges-header">
+                <span><span class="section-icon">🚧</span>Challenges & Blockers</span>
+            </div>
+            <div class="section-content">
+                <p><em>What challenges is your team facing? What support or decisions are needed?</em></p>
+
+                <div class="content-item">
+                    <div class="item-header">
+                        <input type="text" class="field-input" placeholder="Challenge or blocker description" style="flex: 1; margin-right: 15px;">
+                        <div class="item-priority">
+                            <span class="priority-label">Severity:</span>
+                            <label class="priority-option high-priority">
+                                <input type="radio" name="challenge1-priority" value="high" checked>
+                                <span>High</span>
+                            </label>
+                            <label class="priority-option medium-priority">
+                                <input type="radio" name="challenge1-priority" value="medium">
+                                <span>Med</span>
+                            </label>
+                            <label class="priority-option low-priority">
+                                <input type="radio" name="challenge1-priority" value="low">
+                                <span>Low</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <textarea class="field-textarea" placeholder="Explain the challenge, impact on timeline/goals, and what help is needed..."></textarea>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="item-header">
+                        <input type="text" class="field-input" placeholder="Another challenge (if any)" style="flex: 1; margin-right: 15px;">
+                        <div class="item-priority">
+                            <span class="priority-label">Severity:</span>
+                            <label class="priority-option high-priority">
+                                <input type="radio" name="challenge2-priority" value="high">
+                                <span>High</span>
+                            </label>
+                            <label class="priority-option medium-priority">
+                                <input type="radio" name="challenge2-priority" value="medium" checked>
+                                <span>Med</span>
+                            </label>
+                            <label class="priority-option low-priority">
+                                <input type="radio" name="challenge2-priority" value="low">
+                                <span>Low</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <textarea class="field-textarea" placeholder="Challenge details and support needed..."></textarea>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" onclick="addChallengeItem()">+ Add Challenge</button>
+            </div>
+        </div>
+
+        <!-- Upcoming Work & Priorities -->
+        <div class="content-section">
+            <div class="section-header upcoming-header">
+                <span><span class="section-icon">📅</span>Upcoming Work & Priorities</span>
+            </div>
+            <div class="section-content">
+                <p><em>What is your team focusing on in the next period? What are the key priorities?</em></p>
+
+                <div class="content-item">
+                    <div class="item-header">
+                        <input type="text" class="field-input" placeholder="Upcoming project or priority" style="flex: 1; margin-right: 15px;">
+                        <div class="item-priority">
+                            <span class="priority-label">Priority:</span>
+                            <label class="priority-option high-priority">
+                                <input type="radio" name="upcoming1-priority" value="high" checked>
+                                <span>High</span>
+                            </label>
+                            <label class="priority-option medium-priority">
+                                <input type="radio" name="upcoming1-priority" value="medium">
+                                <span>Med</span>
+                            </label>
+                            <label class="priority-option low-priority">
+                                <input type="radio" name="upcoming1-priority" value="low">
+                                <span>Low</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <textarea class="field-textarea" placeholder="Describe the upcoming work, timeline, and expected outcomes..."></textarea>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="item-header">
+                        <input type="text" class="field-input" placeholder="Additional upcoming work" style="flex: 1; margin-right: 15px;">
+                        <div class="item-priority">
+                            <span class="priority-label">Priority:</span>
+                            <label class="priority-option high-priority">
+                                <input type="radio" name="upcoming2-priority" value="high">
+                                <span>High</span>
+                            </label>
+                            <label class="priority-option medium-priority">
+                                <input type="radio" name="upcoming2-priority" value="medium" checked>
+                                <span>Med</span>
+                            </label>
+                            <label class="priority-option low-priority">
+                                <input type="radio" name="upcoming2-priority" value="low">
+                                <span>Low</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <textarea class="field-textarea" placeholder="Upcoming work details..."></textarea>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" onclick="addUpcomingItem()">+ Add Upcoming Work</button>
+            </div>
+        </div>
+
+        <!-- Metrics & KPIs -->
+        <div class="content-section">
+            <div class="section-header metrics-header">
+                <span><span class="section-icon">📊</span>Key Metrics & Performance</span>
+            </div>
+            <div class="section-content">
+                <p><em>Include relevant metrics that matter to your audience. Customize based on what your stakeholders track.</em></p>
+
+                <div class="metrics-grid">
+                    <div class="metric-input-group">
+                        <div class="metric-value">
+                            <input type="text" class="metric-input" placeholder="85%" style="color: #38a169;">
+                        </div>
+                        <div class="metric-label">
+                            <input type="text" class="field-input" placeholder="Sprint Completion Rate" style="color: #6c757d;">
+                        </div>
+                    </div>
+
+                    <div class="metric-input-group">
+                        <div class="metric-value">
+                            <input type="text" class="metric-input" placeholder="12" style="color: #3182ce;">
+                        </div>
+                        <div class="metric-label">
+                            <input type="text" class="field-input" placeholder="Features Delivered" style="color: #6c757d;">
+                        </div>
+                    </div>
+
+                    <div class="metric-input-group">
+                        <div class="metric-value">
+                            <input type="text" class="metric-input" placeholder="2.1 days" style="color: #805ad5;">
+                        </div>
+                        <div class="metric-label">
+                            <input type="text" class="field-input" placeholder="Avg Bug Fix Time" style="color: #6c757d;">
+                        </div>
+                    </div>
+
+                    <div class="metric-input-group">
+                        <div class="metric-value">
+                            <input type="text" class="metric-input" placeholder="98.9%" style="color: #d69e2e;">
+                        </div>
+                        <div class="metric-label">
+                            <input type="text" class="field-input" placeholder="System Uptime" style="color: #6c757d;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field" style="margin-top: 20px;">
+                    <span class="field-label">Metrics Context & Trends:</span>
+                    <textarea class="field-textarea" placeholder="Explain what the metrics mean, any trends, or context stakeholders should understand..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Email Style Selector -->
+        <div class="email-style-selector">
+            <h4>✏️ Email Style & Tone</h4>
+            <p>Choose the communication style that fits your organization:</p>
+            <div class="style-options">
+                <div class="style-option active" onclick="setEmailStyle('executive')" data-style="executive">
+                    <div class="style-title">Executive Summary</div>
+                    <div class="style-description">Concise, high-level, focused on business impact</div>
+                </div>
+                <div class="style-option" onclick="setEmailStyle('detailed')" data-style="detailed">
+                    <div class="style-title">Detailed Technical</div>
+                    <div class="style-description">Comprehensive with technical context and details</div>
+                </div>
+                <div class="style-option" onclick="setEmailStyle('collaborative')" data-style="collaborative">
+                    <div class="style-title">Collaborative Update</div>
+                    <div class="style-description">Friendly tone, emphasizes teamwork and partnerships</div>
+                </div>
+                <div class="style-option" onclick="setEmailStyle('data-driven')" data-style="data-driven">
+                    <div class="style-title">Data-Driven Report</div>
+                    <div class="style-description">Metrics-focused, analytical, with clear trends</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage Instructions -->
+        <div class="usage-steps">
+            <h4>How to Generate Your Update Email</h4>
+            <div class="step-item">
+                <span class="step-number">1</span>
+                <span>Fill in your team information and update content above</span>
+            </div>
+            <div class="step-item">
+                <span class="step-number">2</span>
+                <span>Select your target audience and preferred email style</span>
+            </div>
+            <div class="step-item">
+                <span class="step-number">3</span>
+                <span>Click "Generate Email Prompt" to create your AI prompt</span>
+            </div>
+            <div class="step-item">
+                <span class="step-number">4</span>
+                <span>Copy and paste the prompt into ChatGPT, Claude, or your AI tool</span>
+            </div>
+            <div class="step-item">
+                <span class="step-number">5</span>
+                <span>Review and customize the generated email before sending</span>
+            </div>
+        </div>
+
+        <!-- Generated Prompt -->
+        <div class="prompt-section">
+            <div class="prompt-header">
+                <span>Generated AI Email Prompt</span>
+            </div>
+            <div class="prompt-content">
+                <div class="prompt-box" id="generated-prompt">
+Fill out the team update information above and click "Generate Email Prompt" to create your customized AI prompt.
+                </div>
+                <button class="copy-button" onclick="copyPrompt()">Copy Prompt</button>
+            </div>
+        </div>
+
+        <!-- Example Output -->
+        <div class="example-section">
+            <h4>📧 Example AI-Generated Email</h4>
+            <p>Here's what the AI might generate for a Platform Engineering team update:</p>
+
+            <div class="example-email">
+                <div class="email-header">
+                    <div class="email-subject">Weekly Update: Platform Engineering Team - March 4-8, 2024</div>
+                    <div>From: Sarah Chen, Engineering Manager | To: Engineering Leadership, Product Teams</div>
+                </div>
+
+                <div class="email-body">
+                    <p>Hi team,</p>
+                    <p>Here's our weekly update for the Platform Engineering team covering March 4-8, 2024.</p>
+
+                    <h4>✅ Key Accomplishments</h4>
+                    <ul>
+                        <li><strong>API Gateway Migration Completed:</strong> Successfully migrated all services to the new API gateway, reducing latency by 35% and improving reliability</li>
+                        <li><strong>Database Performance Optimization:</strong> Implemented query optimizations that reduced average response time from 200ms to 75ms</li>
+                        <li><strong>Security Compliance Milestone:</strong> Completed SOC2 compliance requirements for our authentication service</li>
+                    </ul>
+
+                    <h4>🚧 Current Challenges</h4>
+                    <ul>
+                        <li><strong>Third-party Integration Delays:</strong> Waiting on vendor API changes for payment processing integration (Medium priority - may impact Q2 timeline by 1-2 weeks)</li>
+                        <li><strong>Infrastructure Scaling:</strong> Need decision on AWS capacity planning for Q2 growth projections (High priority - affects budget planning)</li>
+                    </ul>
+
+                    <h4>🎯 Next Week Priorities</h4>
+                    <ul>
+                        <li><strong>Mobile App Performance:</strong> Focus on reducing app startup time by 40% through caching improvements</li>
+                        <li><strong>Monitoring Enhancement:</strong> Deploy new alerting system to improve incident response time</li>
+                        <li><strong>Team Onboarding:</strong> Complete setup for two new engineers joining next week</li>
+                    </ul>
+
+                    <h4>📊 Key Metrics</h4>
+                    <ul>
+                        <li>Sprint Completion: 85% (up from 78% last week)</li>
+                        <li>System Uptime: 99.2% (exceeding our 99% SLA)</li>
+                        <li>Average Bug Resolution: 2.1 days (target: &lt;3 days)</li>
+                        <li>Features Delivered: 12 features completed this sprint</li>
+                    </ul>
+
+                    <p>Questions or need clarification on anything? Feel free to reach out.</p>
+
+                    <p>Best regards,<br>Sarah Chen<br>Engineering Manager, Platform Team</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tips Section -->
+        <div class="tips-section">
+            <h4>💡 Tips for Effective Team Update Emails</h4>
+
+            <div class="tip-item">
+                <div class="tip-icon">1</div>
+                <div>
+                    <strong>Keep it Scannable:</strong> Use bullet points, clear headers, and concise language. Busy stakeholders should get key info quickly.
+                </div>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-icon">2</div>
+                <div>
+                    <strong>Lead with Impact:</strong> Start with outcomes and business value, not just activities. Show how work connects to company goals.
+                </div>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-icon">3</div>
+                <div>
+                    <strong>Be Transparent about Challenges:</strong> Don't hide problems. Share challenges early with context and proposed solutions.
+                </div>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-icon">4</div>
+                <div>
+                    <strong>Include Relevant Metrics:</strong> Choose 3-5 metrics that matter to your audience. Provide context for trends and changes.
+                </div>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-icon">5</div>
+                <div>
+                    <strong>Call Out Dependencies:</strong> Highlight where you need decisions, resources, or support from other teams or leadership.
+                </div>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-icon">6</div>
+                <div>
+                    <strong>Maintain Consistent Timing:</strong> Send updates on the same day/time each week so stakeholders know when to expect them.
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-success" onclick="generatePrompt()">Generate Email Prompt</button>
+            <button class="btn" onclick="window.print()">Print Template</button>
+            <button class="btn btn-secondary" onclick="downloadTemplate()">Download Template</button>
+            <button class="btn btn-secondary" onclick="resetForm()">Reset Form</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedAudience = 'leadership';
+        let selectedEmailStyle = 'executive';
+
+        function setAudience(audience) {
+            document.querySelectorAll('.audience-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            selectedAudience = audience;
+        }
+
+        function setEmailStyle(style) {
+            document.querySelectorAll('.style-option').forEach(option => option.classList.remove('selected'));
+            event.target.classList.add('selected');
+            selectedEmailStyle = style;
+        }
+
+        function addAccomplishmentItem() {
+            const section = document.querySelector('.progress-header').parentElement.querySelector('.section-content');
+            const newItem = createContentItem('accomplishment');
+            const addButton = section.querySelector('button');
+            section.insertBefore(newItem, addButton);
+        }
+
+        function addChallengeItem() {
+            const section = document.querySelector('.challenges-header').parentElement.querySelector('.section-content');
+            const newItem = createContentItem('challenge');
+            const addButton = section.querySelector('button');
+            section.insertBefore(newItem, addButton);
+        }
+
+        function addUpcomingItem() {
+            const section = document.querySelector('.upcoming-header').parentElement.querySelector('.section-content');
+            const newItem = createContentItem('upcoming');
+            const addButton = section.querySelector('button');
+            section.insertBefore(newItem, addButton);
+        }
+
+        function createContentItem(type) {
+            const item = document.createElement('div');
+            item.className = 'content-item';
+            const randomId = Math.random().toString(36).substr(2, 9);
+
+            let priorityLabel = 'Priority';
+            let defaultPriority = 'medium';
+
+            if (type === 'challenge') {
+                priorityLabel = 'Severity';
+                defaultPriority = 'high';
+            } else if (type === 'upcoming') {
+                priorityLabel = 'Priority';
+                defaultPriority = 'high';
+            }
+
+            item.innerHTML = `
+                <div class="item-header">
+                    <input type="text" class="field-input" placeholder="${type === 'accomplishment' ? 'Achievement or milestone' : type === 'challenge' ? 'Challenge description' : 'Upcoming work item'}" style="flex: 1; margin-right: 15px;">
+                    <div class="item-priority">
+                        <span class="priority-label">${priorityLabel}:</span>
+                        <label class="priority-option high-priority">
+                            <input type="radio" name="${type}-${randomId}-priority" value="high" ${defaultPriority === 'high' ? 'checked' : ''}>
+                            <span>High</span>
+                        </label>
+                        <label class="priority-option medium-priority">
+                            <input type="radio" name="${type}-${randomId}-priority" value="medium" ${defaultPriority === 'medium' ? 'checked' : ''}>
+                            <span>Med</span>
+                        </label>
+                        <label class="priority-option low-priority">
+                            <input type="radio" name="${type}-${randomId}-priority" value="low" ${defaultPriority === 'low' ? 'checked' : ''}>
+                            <span>Low</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="item-details">
+                    <textarea class="field-textarea" placeholder="Details and context..."></textarea>
+                </div>
+            `;
+
+            return item;
+        }
+
+        function generatePrompt() {
+            const teamName = document.getElementById('team-name').value || '[TEAM_NAME]';
+            const updatePeriod = document.getElementById('update-period').value || '[UPDATE_PERIOD]';
+            const senderInfo = document.getElementById('sender-info').value || '[YOUR_NAME_ROLE]';
+            const updateFrequency = document.getElementById('update-frequency').value || 'Weekly';
+
+            // Collect accomplishments
+            const accomplishments = [];
+            document.querySelectorAll('.progress-header + .section-content .content-item').forEach(item => {
+                const title = item.querySelector('input').value;
+                const details = item.querySelector('textarea').value;
+                const priority = item.querySelector('input[type="radio"]:checked')?.value || 'medium';
+                if (title) {
+                    accomplishments.push(`${title} (${priority} priority): ${details}`);
+                }
+            });
+
+            // Collect challenges
+            const challenges = [];
+            document.querySelectorAll('.challenges-header + .section-content .content-item').forEach(item => {
+                const title = item.querySelector('input').value;
+                const details = item.querySelector('textarea').value;
+                const severity = item.querySelector('input[type="radio"]:checked')?.value || 'medium';
+                if (title) {
+                    challenges.push(`${title} (${severity} severity): ${details}`);
+                }
+            });
+
+            // Collect upcoming work
+            const upcomingWork = [];
+            document.querySelectorAll('.upcoming-header + .section-content .content-item').forEach(item => {
+                const title = item.querySelector('input').value;
+                const details = item.querySelector('textarea').value;
+                const priority = item.querySelector('input[type="radio"]:checked')?.value || 'medium';
+                if (title) {
+                    upcomingWork.push(`${title} (${priority} priority): ${details}`);
+                }
+            });
+
+            // Collect metrics
+            const metrics = [];
+            document.querySelectorAll('.metric-input-group').forEach(group => {
+                const value = group.querySelector('.metric-input').value;
+                const label = group.querySelector('.metric-label input').value;
+                if (value && label) {
+                    metrics.push(`${label}: ${value}`);
+                }
+            });
+
+            const metricsContext = document.querySelector('#metrics-header + .section-content .field-textarea')?.value || '';
+
+            const audienceDescriptions = {
+                'leadership': 'executive leadership (focus on business impact, high-level outcomes, and strategic alignment)',
+                'product': 'product teams (emphasize feature delivery, user impact, and cross-team collaboration)',
+                'engineering': 'other engineering teams (include technical details, architecture decisions, and engineering metrics)',
+                'cross-functional': 'cross-functional teams (balance technical and business context, highlight dependencies)',
+                'stakeholders': 'general stakeholders (clear, accessible language with business context)'
+            };
+
+            const styleDescriptions = {
+                'executive': 'concise executive summary style - bullet points, business impact focus, minimal technical jargon',
+                'detailed': 'comprehensive technical style - detailed explanations, technical context, thorough coverage',
+                'collaborative': 'friendly collaborative tone - emphasize teamwork, partnerships, and shared goals',
+                'data-driven': 'analytical report style - metrics-focused, trend analysis, data-driven insights'
+            };
+
+            const prompt = `You are writing a professional team update email for ${audienceDescriptions[selectedAudience]}. Create a well-structured, clear, and engaging email using a ${styleDescriptions[selectedEmailStyle]}.
+
+**Email Details:**
+- Team: ${teamName}
+- Update Period: ${updatePeriod}
+- From: ${senderInfo}
+- Frequency: ${updateFrequency} update
+- Audience: ${selectedAudience}
+- Style: ${selectedEmailStyle}
+
+**Content to Include:**
+
+**Accomplishments & Progress:**
+${accomplishments.length > 0 ? accomplishments.map(item => `• ${item}`).join('\n') : '• [No accomplishments listed]'}
+
+**Challenges & Blockers:**
+${challenges.length > 0 ? challenges.map(item => `• ${item}`).join('\n') : '• [No challenges listed]'}
+
+**Upcoming Work & Priorities:**
+${upcomingWork.length > 0 ? upcomingWork.map(item => `• ${item}`).join('\n') : '• [No upcoming work listed]'}
+
+**Key Metrics:**
+${metrics.length > 0 ? metrics.map(item => `• ${item}`).join('\n') : '• [No metrics provided]'}
+
+**Metrics Context:** ${metricsContext}
+
+**Email Requirements:**
+1. **Professional subject line** appropriate for ${selectedAudience}
+2. **Clear structure** with distinct sections using headers or formatting
+3. **Engaging opening** that sets context for the update period
+4. **Impact-focused content** showing outcomes, not just activities
+5. **Clear call-outs** for challenges that need attention or decisions
+6. **Professional closing** with next steps or contact information
+7. **Appropriate length** - concise but comprehensive (aim for skimmable in 2-3 minutes)
+
+**Tone Guidelines:**
+- Professional but approachable
+- Confident about accomplishments, transparent about challenges
+- Action-oriented with clear next steps
+- Appropriate technical depth for ${selectedAudience}
+- ${selectedEmailStyle} communication style
+
+**Formatting:**
+- Use clear headers/sections
+- Bullet points for easy scanning
+- Bold key information
+- Keep paragraphs short and focused
+
+Please generate a complete, ready-to-send email that ${senderInfo} can send to ${selectedAudience} as their ${updateFrequency.toLowerCase()} team update.`;
+
+            document.getElementById('generated-prompt').textContent = prompt;
+            autoSave();
+        }
+
+        function copyPrompt() {
+            const promptText = document.getElementById('generated-prompt').textContent;
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(promptText).then(() => {
+                    const button = document.querySelector('.copy-button');
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.style.background = '#38a169';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '#3182ce';
+                    }, 2000);
+                });
+            } else {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = promptText;
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    const button = document.querySelector('.copy-button');
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.style.background = '#38a169';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '#3182ce';
+                    }, 2000);
+                } catch (err) {
+                    console.error('Failed to copy text: ', err);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+        function autoSave() {
+            const data = {
+                selectedAudience: selectedAudience,
+                selectedEmailStyle: selectedEmailStyle
+            };
+
+            document.querySelectorAll('input, select, textarea').forEach((input, index) => {
+                if (input.type === 'radio') {
+                    if (input.checked) data[`radio_${input.name}`] = input.value;
+                } else {
+                    data[`field_${index}`] = input.value;
+                }
+            });
+
+            data['generated_prompt'] = document.getElementById('generated-prompt').textContent;
+            localStorage.setItem('teamUpdateEmail', JSON.stringify(data));
+        }
+
+        function loadSaved() {
+            const saved = localStorage.getItem('teamUpdateEmail');
+            if (saved) {
+                const data = JSON.parse(saved);
+
+                // Load basic fields
+                document.querySelectorAll('input, select, textarea').forEach((input, index) => {
+                    if (input.type === 'radio') {
+                        const radioValue = data[`radio_${input.name}`];
+                        if (radioValue === input.value) {
+                            input.checked = true;
+                        }
+                    } else if (data[`field_${index}`] !== undefined) {
+                        input.value = data[`field_${index}`];
+                    }
+                });
+
+                // Restore selections
+                if (data.selectedAudience) {
+                    selectedAudience = data.selectedAudience;
+                    document.querySelectorAll('.audience-tab').forEach(tab => tab.classList.remove('active'));
+                    document.querySelector(`[onclick="setAudience('${data.selectedAudience}')"]`)?.classList.add('active');
+                }
+
+                if (data.selectedEmailStyle) {
+                    selectedEmailStyle = data.selectedEmailStyle;
+                    document.querySelectorAll('.style-option').forEach(option => option.classList.remove('selected'));
+                    document.querySelector(`[data-style="${data.selectedEmailStyle}"]`)?.classList.add('selected');
+                }
+
+                if (data.generated_prompt) {
+                    document.getElementById('generated-prompt').textContent = data.generated_prompt;
+                }
+            }
+        }
+
+        function downloadTemplate() {
+            const teamName = document.getElementById('team-name').value || 'team_update';
+            const fileName = `team_update_email_${teamName.replace(/\s+/g, '_').toLowerCase()}.html`;
+
+            const element = document.createElement('a');
+            const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function resetForm() {
+            if (confirm('Are you sure you want to reset all fields? This will clear all your data.')) {
+                localStorage.removeItem('teamUpdateEmail');
+                location.reload();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSaved();
+
+            // Set default update period to current week
+            const today = new Date();
+            const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+            const endOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + 6));
+            const weekString = `Week of ${startOfWeek.toLocaleDateString()} - ${endOfWeek.toLocaleDateString()}`;
+
+            if (!document.getElementById('update-period').value) {
+                document.getElementById('update-period').value = weekString;
+            }
+
+            // Auto-save on input changes
+            document.addEventListener('input', autoSave);
+            document.addEventListener('change', autoSave);
+        });
+    </script>
+</body>
+</html>
