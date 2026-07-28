@@ -95,7 +95,7 @@ bash validate-skills.sh
 |---|---|
 | `delivery-health-review` | 定期檢視單一專案或整個 portfolio 的交付健康度，需要一份有證據支撐的狀態報告（想轉成完整的利害關係人報告，可改用 `docs/stakeholder_update_template.html`） |
 | `project-recovery-plan` | 專案延遲、失控、scope 跑掉、依賴卡住，或利害關係人信任下降，需要一份復原計畫 |
-| `capacity-roadmap-scenarios` | 季度規劃、要人、或多個專案搶產能時，需要維持現狀/人力受限/加速衝刺三種情境對比 |
+| `capacity-roadmap-scenarios` | 季度規劃、要人、或多個專案搶產能時，需要維持現狀/人力受限/加速衝刺三種情境對比（缺技能組合現況時，可先用 `docs/skill_gap_analysis_template.html`） |
 | `strategy-execution-mbto-check` | 拿到一個模糊策略方向，用 Market/Business/Technology/Organization 四面向檢查落地風險，尤其是常被忽略的組織/KPI/激勵面向 |
 | `strategy-execution-review` | 每週固定回顧一個策略/pilot：原始假設 vs. 本週新證據，區分第一線負面回饋是情緒/利益/事實層面，產出維持/調整/停止建議 |
 
@@ -120,8 +120,8 @@ bash validate-skills.sh
 
 | Skill | 什麼時候用 |
 |---|---|
-| `feedback-growth-plan` | 準備例行 1:1 回饋、角色成長對話、期待校準 |
-| `hiring-interview-calibration` | 設計工程職缺的面試流程、scorecard、debrief 框架 |
+| `feedback-growth-plan` | 準備例行 1:1 回饋、角色成長對話、期待校準（開放式成長/教練建議、不綁定具體事件時，改用 `docs/ai_coaching_prompt_template.html`） |
+| `hiring-interview-calibration` | 設計工程職缺的面試流程、scorecard、debrief 框架（為補技能缺口招募時，可先用 `docs/skill_gap_analysis_template.html`） |
 | `role-clarity-decision-rights` | 角色重疊、責任不清，需要設計 DRI/Approver/Consulted/Informed 提案 |
 
 ### E. 個人生產力與工作流自動化

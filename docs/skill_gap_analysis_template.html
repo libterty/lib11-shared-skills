@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Gap Analysis Prompt - Engineering Management Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #2c5aa0;
+        }
+
+        .header h1 {
+            color: #2c5aa0;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            font-weight: 300;
+        }
+
+        .description {
+            background-color: #e8f4f8;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #2c5aa0;
+            margin-bottom: 30px;
+        }
+
+        .description h2 {
+            color: #2c5aa0;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, #2c5aa0, #3d6bb0);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: #2c5aa0;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .engineer-card {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+        }
+
+        .engineer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .engineer-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #2c5aa0;
+        }
+
+        .remove-engineer {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .remove-engineer:hover {
+            background: #c82333;
+        }
+
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .skill-category {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+        }
+
+        .skill-category h4 {
+            color: #2c5aa0;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            margin-bottom: 8px;
+        }
+
+        .skill-item label {
+            flex-grow: 1;
+            margin: 0;
+            font-weight: normal;
+            font-size: 0.9em;
+        }
+
+        .skill-level {
+            width: 80px;
+            padding: 4px 8px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+
+        .add-engineer-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+
+        .add-engineer-btn:hover {
+            background: #218838;
+        }
+
+        .prompt-box {
+            background: #f1f8ff;
+            border: 2px solid #2c5aa0;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-line;
+            line-height: 1.8;
+            font-size: 0.95em;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .example-section {
+            background: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .example-section h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .tips h4 {
+            color: #155724;
+            margin-bottom: 10px;
+        }
+
+        .tips ul {
+            margin-left: 20px;
+            color: #155724;
+        }
+
+        .analysis-options {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .action-buttons {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .btn {
+            background: #2c5aa0;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background: #1e3d72;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            .action-buttons {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+            .header h1 {
+                font-size: 1.8em;
+            }
+            .skill-grid {
+                grid-template-columns: 1fr;
+            }
+            .engineer-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Skill Gap Analysis Prompt</h1>
+            <div class="subtitle">AI-Powered Team Skill Assessment & Development Planning</div>
+        </div>
+
+        <div class="description">
+            <h2>🎯 What is this tool?</h2>
+            <p>This template helps engineering managers systematically analyze skill gaps across their team using AI. By documenting each engineer's current skill levels against required competencies, you can generate comprehensive reports that identify missing skills, prioritize development areas, and create targeted learning plans.</p>
+
+            <p><strong>Why use this:</strong> Provides objective skill assessment, identifies team-wide capability gaps, enables data-driven hiring decisions, creates personalized development roadmaps, and ensures strategic alignment between team skills and business needs.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🏢 Team & Project Context</div>
+
+            <div class="form-group">
+                <label for="team-name">Team Name:</label>
+                <input type="text" id="team-name" placeholder="e.g., Backend Platform Team">
+            </div>
+
+            <div class="form-group">
+                <label for="project-context">Current Projects & Tech Stack:</label>
+                <textarea id="project-context" placeholder="e.g., Building microservices platform using Java/Spring Boot, AWS, Kubernetes. Focus on payment processing and user authentication systems."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="business-goals">Key Business Goals & Challenges:</label>
+                <textarea id="business-goals" placeholder="e.g., Scale to 10x traffic by Q4, improve system reliability to 99.9% uptime, reduce deployment time from 2 hours to 15 minutes"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="timeline">Analysis Timeframe:</label>
+                <select id="timeline">
+                    <option value="">Select timeframe</option>
+                    <option value="immediate">Immediate needs (0-3 months)</option>
+                    <option value="short-term">Short-term planning (3-6 months)</option>
+                    <option value="medium-term">Medium-term strategy (6-12 months)</option>
+                    <option value="long-term">Long-term vision (12+ months)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">👥 Team Members & Skills Assessment</div>
+
+            <button class="add-engineer-btn" onclick="addEngineer()">➕ Add Team Member</button>
+
+            <div id="engineers-container">
+                <!-- Engineers will be added here dynamically -->
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🔍 Analysis Focus Areas</div>
+
+            <div class="analysis-options">
+                <label><strong>Select what you want the AI to analyze:</strong></label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="critical-gaps" checked>
+                        <label for="critical-gaps">Critical skill gaps blocking current projects</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="individual-plans" checked>
+                        <label for="individual-plans">Individual development plans for each engineer</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="team-strengths">
+                        <label for="team-strengths">Team strengths and areas of expertise</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="hiring-needs">
+                        <label for="hiring-needs">Hiring priorities and role requirements</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="training-budget">
+                        <label for="training-budget">Training budget allocation recommendations</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="succession-planning">
+                        <label for="succession-planning">Succession planning and knowledge transfer risks</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="skill-matrix">
+                        <label for="skill-matrix">Detailed skill matrix and coverage analysis</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="growth-tracks">
+                        <label for="growth-tracks">Career growth tracks and promotion readiness</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🤖 Generated AI Prompt</div>
+
+            <div class="prompt-box" id="generated-prompt">
+Click "Generate Analysis Prompt" to create your customized AI prompt based on the team information above.
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h4>💡 Example Analysis Output</h4>
+            <p><strong>Critical Gaps Identified:</strong></p>
+            <ul>
+                <li><strong>System Design:</strong> 60% of senior engineers lack large-scale distributed systems experience</li>
+                <li><strong>DevOps:</strong> No team members proficient in Kubernetes troubleshooting</li>
+                <li><strong>Security:</strong> Only 1 engineer has experience with OAuth/OIDC implementation</li>
+            </ul>
+            <p><strong>Recommended Actions:</strong> Prioritize Kubernetes training for 2 engineers, hire senior engineer with distributed systems background, create internal security training program.</p>
+        </div>
+
+        <div class="tips">
+            <h4>💡 Pro Tips for Effective Analysis</h4>
+            <ul>
+                <li><strong>Be Honest:</strong> Accurate skill ratings lead to better recommendations - avoid inflating levels</li>
+                <li><strong>Include Context:</strong> Mention specific technologies, frameworks, and business requirements</li>
+                <li><strong>Update Regularly:</strong> Refresh skill assessments quarterly or after major project completions</li>
+                <li><strong>Focus on Outcomes:</strong> Link skill gaps to specific business impacts or project delays</li>
+                <li><strong>Consider Soft Skills:</strong> Don't forget leadership, communication, and mentoring capabilities</li>
+                <li><strong>Plan for Growth:</strong> Include aspirational skills needed for future projects and roles</li>
+            </ul>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn" onclick="generatePrompt()">✨ Generate Analysis Prompt</button>
+            <button class="btn btn-secondary" onclick="window.print()">🖨️ Print Assessment</button>
+            <button class="btn btn-secondary" onclick="clearAll()">🗑️ Clear All Data</button>
+        </div>
+    </div>
+
+    <script>
+        let engineerCount = 0;
+
+        const skillCategories = {
+            'Technical Skills': [
+                'Programming Languages (Primary)',
+                'Programming Languages (Secondary)',
+                'Database Design & Optimization',
+                'System Architecture & Design',
+                'API Design & Development',
+                'Testing & Quality Assurance',
+                'Performance Optimization',
+                'Security Best Practices'
+            ],
+            'Platform & Tools': [
+                'Cloud Platforms (AWS/GCP/Azure)',
+                'Containerization (Docker/Kubernetes)',
+                'CI/CD Pipelines',
+                'Monitoring & Observability',
+                'Infrastructure as Code',
+                'Version Control & Git Workflows',
+                'Development Tools & IDEs',
+                'Debugging & Troubleshooting'
+            ],
+            'Leadership & Communication': [
+                'Technical Leadership',
+                'Code Review & Mentoring',
+                'Cross-team Collaboration',
+                'Stakeholder Communication',
+                'Project Planning & Estimation',
+                'Documentation & Knowledge Sharing',
+                'Incident Response & Management',
+                'Team Building & Culture'
+            ],
+            'Domain Knowledge': [
+                'Business Domain Understanding',
+                'Product & User Experience',
+                'Data Analysis & Insights',
+                'Compliance & Regulations',
+                'Industry Best Practices',
+                'Competitive Landscape',
+                'Customer Needs & Pain Points',
+                'Market Trends & Technology'
+            ]
+        };
+
+        function addEngineer() {
+            engineerCount++;
+            const container = document.getElementById('engineers-container');
+
+            const engineerDiv = document.createElement('div');
+            engineerDiv.className = 'engineer-card';
+            engineerDiv.id = `engineer-${engineerCount}`;
+
+            let skillsHtml = '';
+            Object.keys(skillCategories).forEach(category => {
+                skillsHtml += `
+                    <div class="skill-category">
+                        <h4>${category}</h4>`;
+
+                skillCategories[category].forEach(skill => {
+                    const skillId = `engineer-${engineerCount}-${skill.replace(/[^a-zA-Z0-9]/g, '')}`;
+                    skillsHtml += `
+                        <div class="skill-item">
+                            <label for="${skillId}">${skill}</label>
+                            <select class="skill-level" id="${skillId}">
+                                <option value="">Rate</option>
+                                <option value="0">0 - None</option>
+                                <option value="1">1 - Basic</option>
+                                <option value="2">2 - Intermediate</option>
+                                <option value="3">3 - Advanced</option>
+                                <option value="4">4 - Expert</option>
+                                <option value="5">5 - Thought Leader</option>
+                            </select>
+                        </div>`;
+                });
+
+                skillsHtml += '</div>';
+            });
+
+            engineerDiv.innerHTML = `
+                <div class="engineer-header">
+                    <div>
+                        <input type="text" placeholder="Engineer Name" class="engineer-name" style="border: none; background: transparent; font-size: 1.2em; font-weight: 600; color: #2c5aa0; width: 250px;">
+                        <input type="text" placeholder="Role & Level (e.g., Senior Software Engineer)" style="display: block; margin-top: 5px; width: 100%; font-size: 0.9em; padding: 5px; border: 1px solid #ddd; border-radius: 3px;">
+                    </div>
+                    <button class="remove-engineer" onclick="removeEngineer(${engineerCount})">Remove</button>
+                </div>
+                <div class="form-group">
+                    <label>Additional Context:</label>
+                    <textarea placeholder="Recent projects, strengths, challenges, career goals..." style="min-height: 60px;"></textarea>
+                </div>
+                <div class="skill-grid">
+                    ${skillsHtml}
+                </div>
+            `;
+
+            container.appendChild(engineerDiv);
+        }
+
+        function removeEngineer(id) {
+            const element = document.getElementById(`engineer-${id}`);
+            if (element) {
+                element.remove();
+            }
+        }
+
+        function generatePrompt() {
+            const teamName = document.getElementById('team-name').value || '[Team Name]';
+            const projectContext = document.getElementById('project-context').value || '[Project Context & Tech Stack]';
+            const businessGoals = document.getElementById('business-goals').value || '[Business Goals & Challenges]';
+            const timeline = document.getElementById('timeline').value || '[Analysis Timeframe]';
+
+            // Get selected analysis focus areas
+            const focusAreas = [];
+            document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked').forEach(checkbox => {
+                focusAreas.push('• ' + checkbox.nextElementSibling.textContent);
+            });
+
+            // Build engineer profiles
+            const engineers = [];
+            document.querySelectorAll('.engineer-card').forEach((card, index) => {
+                const nameInput = card.querySelector('.engineer-name');
+                const roleInput = card.querySelector('input[placeholder*="Role"]');
+                const contextInput = card.querySelector('textarea');
+
+                const name = nameInput ? nameInput.value || `Engineer ${index + 1}` : `Engineer ${index + 1}`;
+                const role = roleInput ? roleInput.value || '[Role & Level]' : '[Role & Level]';
+                const context = contextInput ? contextInput.value || '[Additional context]' : '[Additional context]';
+
+                // Get skill ratings
+                const skills = {};
+                Object.keys(skillCategories).forEach(category => {
+                    skills[category] = {};
+                    skillCategories[category].forEach(skill => {
+                        const skillElement = card.querySelector(`#engineer-${card.id.split('-')[1]}-${skill.replace(/[^a-zA-Z0-9]/g, '')}`);
+                        if (skillElement && skillElement.value) {
+                            skills[category][skill] = skillElement.value;
+                        }
+                    });
+                });
+
+                engineers.push({ name, role, context, skills });
+            });
+
+            let engineerProfiles = '';
+            engineers.forEach((engineer, index) => {
+                engineerProfiles += `\n**${engineer.name}** - ${engineer.role}\n`;
+                engineerProfiles += `Context: ${engineer.context}\n`;
+                engineerProfiles += 'Skills Assessment:\n';
+
+                Object.keys(engineer.skills).forEach(category => {
+                    const categorySkills = engineer.skills[category];
+                    if (Object.keys(categorySkills).length > 0) {
+                        engineerProfiles += `  ${category}:\n`;
+                        Object.entries(categorySkills).forEach(([skill, level]) => {
+                            engineerProfiles += `    - ${skill}: ${level}/5\n`;
+                        });
+                    }
+                });
+                engineerProfiles += '\n';
+            });
+
+            const prompt = `You are an experienced engineering manager and talent development expert. Please analyze the following team skill assessment data and provide comprehensive insights and recommendations.
+
+**Team Overview:**
+Team: ${teamName}
+Project Context: ${projectContext}
+Business Goals: ${businessGoals}
+Analysis Timeframe: ${timeline}
+
+**Team Member Profiles:**${engineerProfiles}
+
+**Analysis Focus Areas:**
+${focusAreas.join('\n')}
+
+**Skill Rating Scale:**
+0 = No experience/knowledge
+1 = Basic understanding, requires guidance
+2 = Intermediate proficiency, can work independently on simple tasks
+3 = Advanced skills, can handle complex tasks and guide others
+4 = Expert level, can architect solutions and mentor team members
+5 = Thought leader, drives innovation and industry best practices
+
+Please provide a comprehensive analysis including:
+
+1. **Executive Summary** - Key findings and critical skill gaps in 3-4 bullet points
+
+2. **Critical Skill Gaps** - Missing or insufficient skills that are blocking current projects or business goals
+
+3. **Individual Development Recommendations** - Specific suggestions for each team member's growth
+
+4. **Team Capability Matrix** - Overall team strengths and coverage areas
+
+5. **Hiring Strategy** - What roles/skills should be prioritized for new hires
+
+6. **Training & Development Plan** - Recommended courses, certifications, or learning programs
+
+7. **Risk Assessment** - Knowledge transfer risks and succession planning concerns
+
+8. **Resource Allocation** - Budget priorities for maximum impact on team capability
+
+9. **Timeline & Milestones** - Suggested development timeline with checkpoints
+
+10. **Metrics & Tracking** - How to measure progress and success
+
+Make all recommendations specific, actionable, and aligned with the stated business goals and timeframe.`;
+
+            document.getElementById('generated-prompt').textContent = prompt;
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(prompt).then(() => {
+                alert('✅ Skill Gap Analysis Prompt generated and copied to clipboard! You can now paste it into your preferred AI tool.');
+            }).catch(() => {
+                alert('ℹ️ Skill Gap Analysis Prompt generated! You can copy it from the text box below.');
+            });
+        }
+
+        function clearAll() {
+            if (confirm('Are you sure you want to clear all data? This will remove all team members and reset the form.')) {
+                // Clear all form inputs
+                document.querySelectorAll('input, textarea, select').forEach(element => {
+                    if (element.type === 'checkbox') {
+                        element.checked = false;
+                        // Re-check default options
+                        if (element.id === 'critical-gaps' || element.id === 'individual-plans') {
+                            element.checked = true;
+                        }
+                    } else {
+                        element.value = '';
+                    }
+                });
+
+                // Remove all engineers
+                document.getElementById('engineers-container').innerHTML = '';
+                engineerCount = 0;
+
+                // Reset prompt
+                document.getElementById('generated-prompt').textContent = 'Click "Generate Analysis Prompt" to create your customized AI prompt based on the team information above.';
+            }
+        }
+
+        // Add first engineer by default
+        window.onload = function() {
+            addEngineer();
+        };
+    </script>
+</body>
+</html>

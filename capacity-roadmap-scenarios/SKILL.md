@@ -18,7 +18,7 @@ metadata:
 ## Required Input
 
 - 候選 roadmap 項目，附大致規模/複雜度
-- 目前團隊名單、技能組合、以及已知的請假/離職風險
+- 目前團隊名單、技能組合、以及已知的請假/離職風險——如果還沒有整理過團隊的技能缺口，可以先用 `shared-skills/docs/skill_gap_analysis_template.html` 產出分析，再把結果當作這裡的輸入
 - 任何硬性的外部日期（客戶承諾、法規截止日）
 
 ## Workflow

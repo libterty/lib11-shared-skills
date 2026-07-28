@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Coaching Suggestion Prompt - Engineering Management Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #2c5aa0;
+        }
+
+        .header h1 {
+            color: #2c5aa0;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            font-weight: 300;
+        }
+
+        .description {
+            background-color: #e8f4f8;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #2c5aa0;
+            margin-bottom: 30px;
+        }
+
+        .description h2 {
+            color: #2c5aa0;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, #2c5aa0, #3d6bb0);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: #2c5aa0;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .prompt-box {
+            background: #f1f8ff;
+            border: 2px solid #2c5aa0;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-line;
+            line-height: 1.8;
+            font-size: 0.95em;
+        }
+
+        .example-section {
+            background: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .example-section h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .tips h4 {
+            color: #155724;
+            margin-bottom: 10px;
+        }
+
+        .tips ul {
+            margin-left: 20px;
+            color: #155724;
+        }
+
+        .action-buttons {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .btn {
+            background: #2c5aa0;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background: #1e3d72;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            .action-buttons {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+            .header h1 {
+                font-size: 1.8em;
+            }
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 AI Coaching Suggestion Prompt</h1>
+            <div class="subtitle">Engineering Management Tool for Direct Report Growth Planning</div>
+        </div>
+
+        <div class="description">
+            <h2>📋 What is this tool?</h2>
+            <p>This template helps engineering managers create comprehensive AI prompts to generate personalized growth and development suggestions for their direct reports. By providing structured context about an engineer's current situation, performance, and career goals, you can leverage AI to identify specific coaching opportunities, skill development areas, and career advancement strategies.</p>
+
+            <p><strong>Why use this:</strong> Saves time in coaching preparation, ensures comprehensive coverage of growth areas, provides objective suggestions, and helps identify blind spots in development planning.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">👤 Employee Context</div>
+
+            <div class="form-group">
+                <label for="employee-name">Employee Name:</label>
+                <input type="text" id="employee-name" placeholder="e.g., Sarah Johnson">
+            </div>
+
+            <div class="form-group">
+                <label for="current-role">Current Role & Level:</label>
+                <input type="text" id="current-role" placeholder="e.g., Senior Software Engineer, Level 4">
+            </div>
+
+            <div class="form-group">
+                <label for="tenure">Time in Current Role:</label>
+                <input type="text" id="tenure" placeholder="e.g., 18 months">
+            </div>
+
+            <div class="form-group">
+                <label for="team-context">Team & Tech Stack:</label>
+                <textarea id="team-context" placeholder="e.g., Backend team working on microservices architecture using Java, Spring Boot, AWS, focusing on payment processing systems"></textarea>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">📊 Current Performance & Strengths</div>
+
+            <div class="form-group">
+                <label for="strengths">Key Strengths & Recent Achievements:</label>
+                <textarea id="strengths" placeholder="e.g., Excellent code quality, led migration project reducing latency by 40%, strong problem-solving skills, mentors junior developers effectively"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="performance-level">Current Performance Level:</label>
+                <select id="performance-level">
+                    <option value="">Select performance level</option>
+                    <option value="exceeds">Exceeds Expectations</option>
+                    <option value="meets">Meets Expectations</option>
+                    <option value="developing">Developing/Below Expectations</option>
+                    <option value="new">New to Role/Ramping Up</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🌱 Growth Areas & Challenges</div>
+
+            <div class="form-group">
+                <label for="growth-areas">Areas for Development:</label>
+                <textarea id="growth-areas" placeholder="e.g., System design skills for large-scale applications, communication with non-technical stakeholders, project management and planning"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="challenges">Current Challenges or Blockers:</label>
+                <textarea id="challenges" placeholder="e.g., Struggling with ambiguous requirements, tendency to over-engineer solutions, needs more confidence in technical decision-making"></textarea>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🚀 Career Aspirations & Context</div>
+
+            <div class="form-group">
+                <label for="career-goals">Career Goals (6-18 months):</label>
+                <textarea id="career-goals" placeholder="e.g., Promotion to Staff Engineer, transition to Tech Lead role, move into engineering management"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="interests">Professional Interests & Preferences:</label>
+                <textarea id="interests" placeholder="e.g., Interested in distributed systems, enjoys mentoring, prefers hands-on coding over meetings, wants to learn more about product strategy"></textarea>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🧭 Focus Areas for Coaching</div>
+
+            <div class="form-group">
+                <label>Select relevant coaching focus areas:</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="technical-skills">
+                        <label for="technical-skills">Technical Skills</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="system-design">
+                        <label for="system-design">System Design</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="leadership">
+                        <label for="leadership">Leadership & Influence</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="communication">
+                        <label for="communication">Communication</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="project-management">
+                        <label for="project-management">Project Management</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mentoring">
+                        <label for="mentoring">Mentoring Others</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="product-thinking">
+                        <label for="product-thinking">Product Thinking</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="strategic-thinking">
+                        <label for="strategic-thinking">Strategic Thinking</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🤖 Generated AI Prompt</div>
+
+            <div class="prompt-box" id="generated-prompt">
+You are an experienced engineering manager and career coach. Based on the following information about one of my direct reports, please provide specific, actionable coaching suggestions and growth opportunities.
+
+**Employee Profile:**
+Name: [Employee Name]
+Role: [Current Role & Level]
+Tenure: [Time in Current Role]
+Team Context: [Team & Tech Stack]
+
+**Current Performance:**
+Strengths & Achievements: [Key Strengths & Recent Achievements]
+Performance Level: [Current Performance Level]
+
+**Growth & Development:**
+Areas for Development: [Areas for Development]
+Current Challenges: [Current Challenges or Blockers]
+
+**Career Aspirations:**
+Goals (6-18 months): [Career Goals]
+Interests & Preferences: [Professional Interests & Preferences]
+
+**Focus Areas:** [Selected Focus Areas]
+
+Please provide:
+
+1. **Top 3 Growth Opportunities** - Specific areas where this person can develop, with concrete examples
+2. **Actionable Development Plan** - 3-5 specific actions they can take in the next 3 months
+3. **Skill-Building Resources** - Books, courses, projects, or experiences that align with their goals
+4. **Stretch Assignments** - Project ideas or responsibilities that would challenge them appropriately
+5. **Potential Blind Spots** - Areas they might not be aware they need to develop
+6. **Coaching Conversation Starters** - 3-4 thoughtful questions to use in your next 1:1
+
+Tailor all suggestions to their current level, team context, and career aspirations. Be specific and actionable rather than generic.
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h4>💡 Example Usage</h4>
+            <p><strong>Scenario:</strong> Mid-level engineer looking to become a tech lead</p>
+            <p><strong>Input:</strong> Strong technical skills but needs to develop system design thinking and cross-team communication</p>
+            <p><strong>AI Output:</strong> Specific recommendations like "Lead the next architecture review session," "Take the 'Designing Data-Intensive Applications' course," and "Shadow the current tech lead during stakeholder meetings"</p>
+        </div>
+
+        <div class="tips">
+            <h4>💡 Pro Tips for Best Results</h4>
+            <ul>
+                <li><strong>Be Specific:</strong> Include concrete examples of strengths and challenges rather than generic statements</li>
+                <li><strong>Context Matters:</strong> Mention team dynamics, current projects, and company culture when relevant</li>
+                <li><strong>Update Regularly:</strong> Refresh the prompt quarterly or after major projects/changes</li>
+                <li><strong>Follow Up:</strong> Use the AI suggestions as a starting point for deeper 1:1 conversations</li>
+                <li><strong>Personalize:</strong> Adapt the suggested focus areas based on what you know motivates this person</li>
+            </ul>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn" onclick="generatePrompt()">✨ Generate AI Prompt</button>
+            <button class="btn btn-secondary" onclick="window.print()">🖨️ Print Template</button>
+            <button class="btn btn-secondary" onclick="clearForm()">🗑️ Clear Form</button>
+        </div>
+    </div>
+
+    <script>
+        function generatePrompt() {
+            const employeeName = document.getElementById('employee-name').value || '[Employee Name]';
+            const currentRole = document.getElementById('current-role').value || '[Current Role & Level]';
+            const tenure = document.getElementById('tenure').value || '[Time in Current Role]';
+            const teamContext = document.getElementById('team-context').value || '[Team & Tech Stack]';
+            const strengths = document.getElementById('strengths').value || '[Key Strengths & Recent Achievements]';
+            const performanceLevel = document.getElementById('performance-level').value || '[Current Performance Level]';
+            const growthAreas = document.getElementById('growth-areas').value || '[Areas for Development]';
+            const challenges = document.getElementById('challenges').value || '[Current Challenges or Blockers]';
+            const careerGoals = document.getElementById('career-goals').value || '[Career Goals]';
+            const interests = document.getElementById('interests').value || '[Professional Interests & Preferences]';
+
+            // Get selected focus areas
+            const focusAreas = [];
+            const checkboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked');
+            checkboxes.forEach(checkbox => {
+                focusAreas.push(checkbox.nextElementSibling.textContent);
+            });
+            const focusAreasText = focusAreas.length > 0 ? focusAreas.join(', ') : '[Selected Focus Areas]';
+
+            const prompt = `You are an experienced engineering manager and career coach. Based on the following information about one of my direct reports, please provide specific, actionable coaching suggestions and growth opportunities.
+
+**Employee Profile:**
+Name: ${employeeName}
+Role: ${currentRole}
+Tenure: ${tenure}
+Team Context: ${teamContext}
+
+**Current Performance:**
+Strengths & Achievements: ${strengths}
+Performance Level: ${performanceLevel}
+
+**Growth & Development:**
+Areas for Development: ${growthAreas}
+Current Challenges: ${challenges}
+
+**Career Aspirations:**
+Goals (6-18 months): ${careerGoals}
+Interests & Preferences: ${interests}
+
+**Focus Areas:** ${focusAreasText}
+
+Please provide:
+
+1. **Top 3 Growth Opportunities** - Specific areas where this person can develop, with concrete examples
+2. **Actionable Development Plan** - 3-5 specific actions they can take in the next 3 months
+3. **Skill-Building Resources** - Books, courses, projects, or experiences that align with their goals
+4. **Stretch Assignments** - Project ideas or responsibilities that would challenge them appropriately
+5. **Potential Blind Spots** - Areas they might not be aware they need to develop
+6. **Coaching Conversation Starters** - 3-4 thoughtful questions to use in your next 1:1
+
+Tailor all suggestions to their current level, team context, and career aspirations. Be specific and actionable rather than generic.`;
+
+            document.getElementById('generated-prompt').textContent = prompt;
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(prompt).then(() => {
+                alert('✅ AI Prompt generated and copied to clipboard! You can now paste it into your preferred AI tool.');
+            }).catch(() => {
+                alert('ℹ️ AI Prompt generated! You can copy it from the text box below.');
+            });
+        }
+
+        function clearForm() {
+            if (confirm('Are you sure you want to clear all form data?')) {
+                document.querySelectorAll('input, textarea, select').forEach(element => {
+                    if (element.type === 'checkbox') {
+                        element.checked = false;
+                    } else {
+                        element.value = '';
+                    }
+                });
+
+                // Reset the generated prompt
+                document.getElementById('generated-prompt').textContent = `You are an experienced engineering manager and career coach. Based on the following information about one of my direct reports, please provide specific, actionable coaching suggestions and growth opportunities.
+
+**Employee Profile:**
+Name: [Employee Name]
+Role: [Current Role & Level]
+Tenure: [Time in Current Role]
+Team Context: [Team & Tech Stack]
+
+**Current Performance:**
+Strengths & Achievements: [Key Strengths & Recent Achievements]
+Performance Level: [Current Performance Level]
+
+**Growth & Development:**
+Areas for Development: [Areas for Development]
+Current Challenges: [Current Challenges or Blockers]
+
+**Career Aspirations:**
+Goals (6-18 months): [Career Goals]
+Interests & Preferences: [Professional Interests & Preferences]
+
+**Focus Areas:** [Selected Focus Areas]
+
+Please provide:
+
+1. **Top 3 Growth Opportunities** - Specific areas where this person can develop, with concrete examples
+2. **Actionable Development Plan** - 3-5 specific actions they can take in the next 3 months
+3. **Skill-Building Resources** - Books, courses, projects, or experiences that align with their goals
+4. **Stretch Assignments** - Project ideas or responsibilities that would challenge them appropriately
+5. **Potential Blind Spots** - Areas they might not be aware they need to develop
+6. **Coaching Conversation Starters** - 3-4 thoughtful questions to use in your next 1:1
+
+Tailor all suggestions to their current level, team context, and career aspirations. Be specific and actionable rather than generic.`;
+            }
+        }
+    </script>
+</body>
+</html>
