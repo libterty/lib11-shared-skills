@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Assisted Meeting Summary Template</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            color: #1a202c;
+            text-align: center;
+            border-bottom: 4px solid #9f7aea;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
+        .description {
+            background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .ai-workflow {
+            background: #e6fffa;
+            border: 2px solid #81e6d9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .workflow-step {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid #4fd1c7;
+        }
+
+        .step-number {
+            background: #4fd1c7;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 auto 10px auto;
+        }
+
+        .step-title {
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .step-desc {
+            font-size: 12px;
+            color: #4a5568;
+        }
+
+        .meeting-header {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 5px solid #9f7aea;
+        }
+
+        .header-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .field {
+            margin-bottom: 15px;
+        }
+
+        .field-label {
+            font-weight: 600;
+            color: #2d3748;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .field-input, .field-select, .field-textarea {
+            border: 2px solid #e2e8f0;
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+
+        .field-input:focus, .field-select:focus, .field-textarea:focus {
+            outline: none;
+            border-color: #9f7aea;
+            box-shadow: 0 0 5px rgba(159, 122, 234, 0.3);
+        }
+
+        .field-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .large-textarea {
+            min-height: 120px;
+        }
+
+        .raw-notes-section {
+            background: #fffbf0;
+            border: 2px solid #feb2b2;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            color: white;
+            padding: 18px 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notes-header {
+            background: linear-gradient(135deg, #d69e2e 0%, #b7791f 100%);
+        }
+
+        .summary-header {
+            background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+        }
+
+        .decisions-header {
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+        }
+
+        .actions-header {
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+        }
+
+        .ai-enhanced-header {
+            background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
+        }
+
+        .section-icon {
+            font-size: 1.3em;
+            margin-right: 8px;
+        }
+
+        .section-content {
+            padding: 25px;
+        }
+
+        .ai-prompt-box {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin: 15px 0;
+            position: relative;
+            border: 1px solid #4a5568;
+        }
+
+        .copy-prompt-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #9f7aea;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .copy-prompt-btn:hover {
+            background: #805ad5;
+        }
+
+        .ai-enhancement {
+            background: #f0f8ff;
+            border-left: 4px solid #3182ce;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+
+        .enhancement-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .action-item {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .action-checkbox {
+            margin-top: 4px;
+            transform: scale(1.2);
+        }
+
+        .action-content {
+            flex: 1;
+        }
+
+        .action-text {
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .action-details {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            color: #6c757d;
+        }
+
+        .action-owner::before {
+            content: "👤 ";
+        }
+
+        .action-due::before {
+            content: "📅 ";
+        }
+
+        .action-priority {
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .priority-high { background: #fed7d7; color: #c53030; }
+        .priority-medium { background: #fef5e7; color: #c05621; }
+        .priority-low { background: #c6f6d5; color: #22543d; }
+
+        .decision-item {
+            background: #f0fff4;
+            border: 1px solid #c6f6d5;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #38a169;
+        }
+
+        .decision-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .decision-details {
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        .attendee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .attendee-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+            text-align: center;
+        }
+
+        .attendee-name {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .attendee-role {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .ai-tools-note {
+            background: #edf2f7;
+            border: 2px solid #cbd5e0;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+
+        .tool-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tool-option {
+            background: white;
+            border: 1px solid #cbd5e0;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .quick-actions {
+            background: #fff3cd;
+            border: 2px solid #ffeaa7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .action-btn {
+            background: white;
+            border: 2px solid #d69e2e;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #d69e2e;
+            color: white;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .btn {
+            background: #9f7aea;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background: #805ad5;
+        }
+
+        .btn-secondary {
+            background: #718096;
+        }
+
+        .btn-secondary:hover {
+            background: #4a5568;
+        }
+
+        .btn-success {
+            background: #38a169;
+        }
+
+        .btn-success:hover {
+            background: #2f855a;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; padding: 0; }
+            .actions { display: none; }
+            .copy-prompt-btn { display: none; }
+            .quick-actions { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            .header-grid { grid-template-columns: 1fr; }
+            .workflow-steps { grid-template-columns: 1fr; }
+            .attendee-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 AI-Assisted Meeting Summary</h1>
+
+        <div class="description">
+            <strong>Purpose:</strong> This template combines traditional meeting documentation with AI assistance to create comprehensive, actionable meeting summaries. Capture raw notes during the meeting, then use AI tools to enhance, structure, and extract key insights for better follow-up and team communication.
+        </div>
+
+        <!-- AI Workflow Overview -->
+        <div class="ai-workflow">
+            <h4>🔄 AI-Enhanced Meeting Documentation Workflow</h4>
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Capture</div>
+                    <div class="step-desc">Take raw notes during meeting</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Structure</div>
+                    <div class="step-desc">Organize basic meeting info</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Enhance</div>
+                    <div class="step-desc">Use AI to extract insights</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Review</div>
+                    <div class="step-desc">Validate and customize AI output</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">5</div>
+                    <div class="step-title">Share</div>
+                    <div class="step-desc">Distribute final summary</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Meeting Header -->
+        <div class="meeting-header">
+            <h3>📋 Meeting Information</h3>
+            <div class="header-grid">
+                <div class="field">
+                    <span class="field-label">Meeting Title:</span>
+                    <input type="text" class="field-input" id="meeting-title" placeholder="e.g., Sprint Planning - Team Alpha">
+                </div>
+                <div class="field">
+                    <span class="field-label">Date & Time:</span>
+                    <input type="datetime-local" class="field-input" id="meeting-datetime">
+                </div>
+                <div class="field">
+                    <span class="field-label">Duration:</span>
+                    <input type="text" class="field-input" id="duration" placeholder="e.g., 60 minutes">
+                </div>
+                <div class="field">
+                    <span class="field-label">Meeting Type:</span>
+                    <select class="field-select" id="meeting-type">
+                        <option value="Team Meeting">Team Meeting</option>
+                        <option value="Sprint Planning">Sprint Planning</option>
+                        <option value="Sprint Review">Sprint Review</option>
+                        <option value="Retrospective">Retrospective</option>
+                        <option value="1:1 Meeting">1:1 Meeting</option>
+                        <option value="Stakeholder Update">Stakeholder Update</option>
+                        <option value="Technical Review">Technical Review</option>
+                        <option value="Project Kickoff">Project Kickoff</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <span class="field-label">Location/Platform:</span>
+                    <input type="text" class="field-input" id="location" placeholder="e.g., Conference Room A, Zoom">
+                </div>
+                <div class="field">
+                    <span class="field-label">Meeting Lead:</span>
+                    <input type="text" class="field-input" id="meeting-lead" placeholder="Your name">
+                </div>
+            </div>
+
+            <div class="field" style="margin-top: 15px;">
+                <span class="field-label">Meeting Purpose/Agenda:</span>
+                <textarea class="field-textarea" id="meeting-purpose" placeholder="Brief description of the meeting's main objectives and agenda items..."></textarea>
+            </div>
+
+            <div class="field">
+                <span class="field-label">Attendees:</span>
+                <div class="attendee-grid">
+                    <div class="attendee-item">
+                        <div class="attendee-name">
+                            <input type="text" class="field-input" placeholder="Name" style="border: none; background: transparent; text-align: center; font-weight: 600;">
+                        </div>
+                        <div class="attendee-role">
+                            <input type="text" class="field-input" placeholder="Role" style="border: none; background: transparent; text-align: center; font-size: 12px;">
+                        </div>
+                    </div>
+                    <div class="attendee-item">
+                        <div class="attendee-name">
+                            <input type="text" class="field-input" placeholder="Name" style="border: none; background: transparent; text-align: center; font-weight: 600;">
+                        </div>
+                        <div class="attendee-role">
+                            <input type="text" class="field-input" placeholder="Role" style="border: none; background: transparent; text-align: center; font-size: 12px;">
+                        </div>
+                    </div>
+                    <div class="attendee-item">
+                        <div class="attendee-name">
+                            <input type="text" class="field-input" placeholder="Name" style="border: none; background: transparent; text-align: center; font-weight: 600;">
+                        </div>
+                        <div class="attendee-role">
+                            <input type="text" class="field-input" placeholder="Role" style="border: none; background: transparent; text-align: center; font-size: 12px;">
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-secondary" onclick="addAttendee()" style="margin-top: 10px;">+ Add Attendee</button>
+            </div>
+        </div>
+
+        <!-- Raw Notes Section -->
+        <div class="raw-notes-section">
+            <h4>📝 Raw Meeting Notes</h4>
+            <p><strong>Instructions:</strong> Capture notes here during the meeting. Don't worry about structure - just document key points, discussions, and decisions as they happen. AI will help organize this later.</p>
+            <textarea class="field-textarea large-textarea" id="raw-notes" placeholder="Type or paste your raw meeting notes here...
+
+Examples:
+- John mentioned the API performance issue affecting mobile users
+- Decided to prioritize the authentication bug fix for next sprint
+- Sarah will coordinate with design team on new mockups
+- Need budget approval for additional server capacity
+- Discussion about moving stand-ups to async format
+- Mike raised concerns about technical debt in payment system"></textarea>
+        </div>
+
+        <!-- AI-Enhanced Sections -->
+        <div class="section">
+            <div class="section-header summary-header">
+                <span><span class="section-icon">📊</span>AI-Enhanced Meeting Summary</span>
+            </div>
+            <div class="section-content">
+                <div class="ai-enhancement">
+                    <div class="enhancement-title">🤖 AI Prompt for Meeting Summary</div>
+                    <p>Copy this prompt and your raw notes into ChatGPT, Claude, or your preferred AI tool:</p>
+                    <div class="ai-prompt-box" id="summary-prompt">
+Please analyze these meeting notes and create a professional meeting summary:
+
+**Meeting Context:**
+- Title: [MEETING_TITLE]
+- Date: [DATE]
+- Duration: [DURATION]
+- Attendees: [ATTENDEES]
+
+**Raw Notes:**
+[PASTE_RAW_NOTES_HERE]
+
+**Please provide:**
+1. **Executive Summary** (2-3 sentences)
+2. **Key Discussion Points** (main topics covered)
+3. **Decisions Made** (specific decisions with context)
+4. **Action Items** (what needs to be done, by whom, by when)
+5. **Important Insights** (key takeaways or concerns raised)
+6. **Follow-up Required** (what needs continued attention)
+
+Format for easy sharing with the team.
+                    </div>
+                    <button class="copy-prompt-btn" onclick="copySummaryPrompt()">Copy</button>
+                </div>
+
+                <div class="field">
+                    <span class="field-label">AI-Generated Summary (paste AI output here):</span>
+                    <textarea class="field-textarea large-textarea" id="ai-summary" placeholder="Paste the AI-generated meeting summary here, then review and customize as needed..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decisions Made -->
+        <div class="section">
+            <div class="section-header decisions-header">
+                <span><span class="section-icon">✅</span>Decisions Made</span>
+            </div>
+            <div class="section-content">
+                <div class="ai-enhancement">
+                    <div class="enhancement-title">🤖 AI Prompt for Decision Extraction</div>
+                    <div class="ai-prompt-box" id="decisions-prompt">
+From these meeting notes, extract and clearly list all decisions that were made:
+
+**Meeting Notes:**
+[PASTE_RAW_NOTES_HERE]
+
+**For each decision, provide:**
+1. **Decision**: What was decided
+2. **Context**: Why this decision was made
+3. **Impact**: Who/what this affects
+4. **Implementation**: When/how this will be executed
+
+Format as clear, actionable decision statements.
+                    </div>
+                    <button class="copy-prompt-btn" onclick="copyDecisionsPrompt()">Copy</button>
+                </div>
+
+                <div class="decision-item">
+                    <div class="decision-title">
+                        <input type="text" class="field-input" placeholder="Decision title or brief description" style="border: none; background: transparent; font-weight: 600;">
+                    </div>
+                    <div class="decision-details">
+                        <textarea class="field-textarea" placeholder="Decision details: What was decided, why, and what the impact/next steps are..."></textarea>
+                    </div>
+                </div>
+
+                <div class="decision-item">
+                    <div class="decision-title">
+                        <input type="text" class="field-input" placeholder="Another decision made" style="border: none; background: transparent; font-weight: 600;">
+                    </div>
+                    <div class="decision-details">
+                        <textarea class="field-textarea" placeholder="Decision details..."></textarea>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" onclick="addDecision()">+ Add Decision</button>
+            </div>
+        </div>
+
+        <!-- Action Items -->
+        <div class="section">
+            <div class="section-header actions-header">
+                <span><span class="section-icon">🎯</span>Action Items</span>
+            </div>
+            <div class="section-content">
+                <div class="ai-enhancement">
+                    <div class="enhancement-title">🤖 AI Prompt for Action Item Extraction</div>
+                    <div class="ai-prompt-box" id="actions-prompt">
+Extract all action items from these meeting notes:
+
+**Meeting Notes:**
+[PASTE_RAW_NOTES_HERE]
+
+**For each action item, identify:**
+1. **Task**: Specific action to be taken
+2. **Owner**: Person responsible (if mentioned)
+3. **Due Date**: Timeline or deadline (if mentioned)
+4. **Priority**: High/Medium/Low based on context
+5. **Dependencies**: What this task depends on or blocks
+
+Present as a clear, trackable action list with owners and deadlines.
+                    </div>
+                    <button class="copy-prompt-btn" onclick="copyActionsPrompt()">Copy</button>
+                </div>
+
+                <div class="action-item">
+                    <input type="checkbox" class="action-checkbox">
+                    <div class="action-content">
+                        <div class="action-text">
+                            <input type="text" class="field-input" placeholder="Action item description" style="border: none; background: transparent; font-weight: 500;">
+                        </div>
+                        <div class="action-details">
+                            <span class="action-owner">
+                                <input type="text" class="field-input" placeholder="Owner name" style="border: none; background: transparent; width: 120px;">
+                            </span>
+                            <span class="action-due">
+                                <input type="date" class="field-input" style="border: none; background: transparent; width: 130px;">
+                            </span>
+                            <span class="action-priority priority-medium">Medium Priority</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-item">
+                    <input type="checkbox" class="action-checkbox">
+                    <div class="action-content">
+                        <div class="action-text">
+                            <input type="text" class="field-input" placeholder="Another action item" style="border: none; background: transparent; font-weight: 500;">
+                        </div>
+                        <div class="action-details">
+                            <span class="action-owner">
+                                <input type="text" class="field-input" placeholder="Owner name" style="border: none; background: transparent; width: 120px;">
+                            </span>
+                            <span class="action-due">
+                                <input type="date" class="field-input" style="border: none; background: transparent; width: 130px;">
+                            </span>
+                            <span class="action-priority priority-high">High Priority</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" onclick="addActionItem()">+ Add Action Item</button>
+            </div>
+        </div>
+
+        <!-- Key Insights & Follow-up -->
+        <div class="section">
+            <div class="section-header ai-enhanced-header">
+                <span><span class="section-icon">💡</span>Key Insights & Follow-up</span>
+            </div>
+            <div class="section-content">
+                <div class="ai-enhancement">
+                    <div class="enhancement-title">🤖 AI Prompt for Insights & Analysis</div>
+                    <div class="ai-prompt-box" id="insights-prompt">
+Analyze these meeting notes for deeper insights and strategic implications:
+
+**Meeting Context:** [MEETING_TYPE] - [MEETING_TITLE]
+**Meeting Notes:**
+[PASTE_RAW_NOTES_HERE]
+
+**Please identify:**
+1. **Key Themes**: What were the main topics/concerns discussed?
+2. **Risks & Concerns**: Any risks, blockers, or concerns raised?
+3. **Opportunities**: Positive developments or opportunities mentioned?
+4. **Team Dynamics**: Any insights about team morale, collaboration, or communication?
+5. **Strategic Implications**: How do these discussions impact broader goals?
+6. **Recommended Follow-ups**: What conversations or actions should happen next?
+
+Provide strategic insights that help with team management and decision-making.
+                    </div>
+                    <button class="copy-prompt-btn" onclick="copyInsightsPrompt()">Copy</button>
+                </div>
+
+                <div class="field">
+                    <span class="field-label">Key Insights & Takeaways:</span>
+                    <textarea class="field-textarea large-textarea" id="key-insights" placeholder="AI-generated insights about team dynamics, risks, opportunities, and strategic implications..."></textarea>
+                </div>
+
+                <div class="field">
+                    <span class="field-label">Follow-up Items & Next Steps:</span>
+                    <textarea class="field-textarea" id="follow-up" placeholder="What follow-up meetings, conversations, or investigations are needed based on this discussion?"></textarea>
+                </div>
+
+                <div class="field">
+                    <span class="field-label">Questions for Next Meeting:</span>
+                    <textarea class="field-textarea" id="next-questions" placeholder="What questions should be prepared for follow-up discussions?"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Tools & Quick Actions -->
+        <div class="ai-tools-note">
+            <strong>🤖 Compatible AI Tools:</strong>
+            <div class="tool-options">
+                <span class="tool-option">ChatGPT</span>
+                <span class="tool-option">Claude</span>
+                <span class="tool-option">Bard</span>
+                <span class="tool-option">Copilot</span>
+                <span class="tool-option">Gemini</span>
+                <span class="tool-option">Otter.ai</span>
+                <span class="tool-option">Notion AI</span>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <h4>⚡ Quick Actions</h4>
+            <div class="action-buttons">
+                <button class="action-btn" onclick="generateAllPrompts()">🔄 Generate All AI Prompts</button>
+                <button class="action-btn" onclick="copyRawNotes()">📋 Copy Raw Notes</button>
+                <button class="action-btn" onclick="exportActionItems()">📤 Export Action Items</button>
+                <button class="action-btn" onclick="createFollowupEmail()">📧 Create Follow-up Email</button>
+                <button class="action-btn" onclick="validateCompleteness()">✅ Check Completeness</button>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-success" onclick="updateSummary()">Update Summary</button>
+            <button class="btn" onclick="window.print()">Print Summary</button>
+            <button class="btn btn-secondary" onclick="downloadSummary()">Download Summary</button>
+            <button class="btn btn-secondary" onclick="resetSummary()">New Meeting</button>
+        </div>
+    </div>
+
+    <script>
+        function addAttendee() {
+            const attendeeGrid = document.querySelector('.attendee-grid');
+            const newAttendee = document.createElement('div');
+            newAttendee.className = 'attendee-item';
+            newAttendee.innerHTML = `
+                <div class="attendee-name">
+                    <input type="text" class="field-input" placeholder="Name" style="border: none; background: transparent; text-align: center; font-weight: 600;">
+                </div>
+                <div class="attendee-role">
+                    <input type="text" class="field-input" placeholder="Role" style="border: none; background: transparent; text-align: center; font-size: 12px;">
+                </div>
+            `;
+            attendeeGrid.appendChild(newAttendee);
+        }
+
+        function addDecision() {
+            const decisionsSection = document.querySelector('.decisions-header + .section-content');
+            const newDecision = document.createElement('div');
+            newDecision.className = 'decision-item';
+            newDecision.innerHTML = `
+                <div class="decision-title">
+                    <input type="text" class="field-input" placeholder="Decision title" style="border: none; background: transparent; font-weight: 600;">
+                </div>
+                <div class="decision-details">
+                    <textarea class="field-textarea" placeholder="Decision details..."></textarea>
+                </div>
+            `;
+            const addButton = decisionsSection.querySelector('button');
+            decisionsSection.insertBefore(newDecision, addButton);
+        }
+
+        function addActionItem() {
+            const actionsSection = document.querySelector('.actions-header + .section-content');
+            const newAction = document.createElement('div');
+            newAction.className = 'action-item';
+            newAction.innerHTML = `
+                <input type="checkbox" class="action-checkbox">
+                <div class="action-content">
+                    <div class="action-text">
+                        <input type="text" class="field-input" placeholder="Action item description" style="border: none; background: transparent; font-weight: 500;">
+                    </div>
+                    <div class="action-details">
+                        <span class="action-owner">
+                            <input type="text" class="field-input" placeholder="Owner name" style="border: none; background: transparent; width: 120px;">
+                        </span>
+                        <span class="action-due">
+                            <input type="date" class="field-input" style="border: none; background: transparent; width: 130px;">
+                        </span>
+                        <span class="action-priority priority-medium">Medium Priority</span>
+                    </div>
+                </div>
+            `;
+            const addButton = actionsSection.querySelector('button');
+            actionsSection.insertBefore(newAction, addButton);
+        }
+
+        function copySummaryPrompt() {
+            const meetingTitle = document.getElementById('meeting-title').value || '[MEETING_TITLE]';
+            const meetingDate = document.getElementById('meeting-datetime').value || '[DATE]';
+            const duration = document.getElementById('duration').value || '[DURATION]';
+            const rawNotes = document.getElementById('raw-notes').value || '[PASTE_RAW_NOTES_HERE]';
+
+            // Get attendees
+            const attendeeNames = Array.from(document.querySelectorAll('.attendee-name input')).map(input => input.value).filter(name => name.trim()).join(', ') || '[ATTENDEES]';
+
+            const prompt = document.getElementById('summary-prompt').textContent
+                .replace('[MEETING_TITLE]', meetingTitle)
+                .replace('[DATE]', meetingDate)
+                .replace('[DURATION]', duration)
+                .replace('[ATTENDEES]', attendeeNames)
+                .replace('[PASTE_RAW_NOTES_HERE]', rawNotes);
+
+            copyToClipboard(prompt);
+            showNotification('Meeting summary prompt copied! 📋');
+        }
+
+        function copyDecisionsPrompt() {
+            const rawNotes = document.getElementById('raw-notes').value || '[PASTE_RAW_NOTES_HERE]';
+            const prompt = document.getElementById('decisions-prompt').textContent
+                .replace('[PASTE_RAW_NOTES_HERE]', rawNotes);
+
+            copyToClipboard(prompt);
+            showNotification('Decisions extraction prompt copied! ✅');
+        }
+
+        function copyActionsPrompt() {
+            const rawNotes = document.getElementById('raw-notes').value || '[PASTE_RAW_NOTES_HERE]';
+            const prompt = document.getElementById('actions-prompt').textContent
+                .replace('[PASTE_RAW_NOTES_HERE]', rawNotes);
+
+            copyToClipboard(prompt);
+            showNotification('Action items extraction prompt copied! 🎯');
+        }
+
+        function copyInsightsPrompt() {
+            const meetingType = document.getElementById('meeting-type').value || '[MEETING_TYPE]';
+            const meetingTitle = document.getElementById('meeting-title').value || '[MEETING_TITLE]';
+            const rawNotes = document.getElementById('raw-notes').value || '[PASTE_RAW_NOTES_HERE]';
+
+            const prompt = document.getElementById('insights-prompt').textContent
+                .replace('[MEETING_TYPE]', meetingType)
+                .replace('[MEETING_TITLE]', meetingTitle)
+                .replace('[PASTE_RAW_NOTES_HERE]', rawNotes);
+
+            copyToClipboard(prompt);
+            showNotification('Insights analysis prompt copied! 💡');
+        }
+
+        function generateAllPrompts() {
+            // This could open a modal or separate section with all prompts ready to copy
+            alert('All AI prompts are now populated with your meeting data. Use the copy buttons on each prompt to get the customized versions.');
+        }
+
+        function copyRawNotes() {
+            const rawNotes = document.getElementById('raw-notes').value;
+            if (!rawNotes.trim()) {
+                alert('No raw notes to copy. Please add some meeting notes first.');
+                return;
+            }
+            copyToClipboard(rawNotes);
+            showNotification('Raw notes copied to clipboard! 📋');
+        }
+
+        function exportActionItems() {
+            const actionItems = [];
+            document.querySelectorAll('.action-item').forEach(item => {
+                const task = item.querySelector('.action-text input').value;
+                const owner = item.querySelector('.action-owner input').value;
+                const due = item.querySelector('.action-due input').value;
+                if (task.trim()) {
+                    actionItems.push(`• ${task} (Owner: ${owner || 'TBD'}, Due: ${due || 'TBD'})`);
+                }
+            });
+
+            if (actionItems.length === 0) {
+                alert('No action items to export. Please add some action items first.');
+                return;
+            }
+
+            const exportText = `Action Items:\n${actionItems.join('\n')}`;
+            copyToClipboard(exportText);
+            showNotification('Action items exported to clipboard! 📤');
+        }
+
+        function createFollowupEmail() {
+            const meetingTitle = document.getElementById('meeting-title').value || 'Meeting';
+            const followupTemplate = `Subject: Follow-up: ${meetingTitle}
+
+Hi team,
+
+Thanks for a productive meeting. Here are the key outcomes and next steps:
+
+[PASTE AI-GENERATED SUMMARY HERE]
+
+Action Items:
+[PASTE ACTION ITEMS HERE]
+
+Let me know if you have any questions or if I missed anything important.
+
+Best regards,
+[YOUR NAME]`;
+
+            copyToClipboard(followupTemplate);
+            showNotification('Follow-up email template copied! 📧');
+        }
+
+        function validateCompleteness() {
+            const missing = [];
+
+            if (!document.getElementById('meeting-title').value.trim()) missing.push('Meeting title');
+            if (!document.getElementById('raw-notes').value.trim()) missing.push('Raw meeting notes');
+
+            const hasAttendees = Array.from(document.querySelectorAll('.attendee-name input')).some(input => input.value.trim());
+            if (!hasAttendees) missing.push('At least one attendee');
+
+            const hasActions = Array.from(document.querySelectorAll('.action-text input')).some(input => input.value.trim());
+            if (!hasActions) missing.push('At least one action item');
+
+            if (missing.length > 0) {
+                alert(`Missing information:\n• ${missing.join('\n• ')}`);
+            } else {
+                showNotification('Meeting summary is complete! ✅');
+            }
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text);
+            } else {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                } catch (err) {
+                    console.error('Failed to copy text: ', err);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed; top: 20px; right: 20px; background: #38a169; color: white;
+                padding: 12px 20px; border-radius: 6px; z-index: 1000; font-weight: 600;
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        function updateSummary() {
+            const completedActions = document.querySelectorAll('.action-checkbox:checked').length;
+            const totalActions = document.querySelectorAll('.action-checkbox').length;
+
+            if (totalActions > 0) {
+                console.log(`${completedActions}/${totalActions} action items completed`);
+            }
+
+            autoSave();
+        }
+
+        function autoSave() {
+            const data = {};
+            document.querySelectorAll('input, select, textarea').forEach((input, index) => {
+                if (input.type === 'checkbox') {
+                    data[`checkbox_${index}`] = input.checked;
+                } else {
+                    data[`field_${index}`] = input.value;
+                }
+            });
+            localStorage.setItem('aiMeetingSummary', JSON.stringify(data));
+        }
+
+        function loadSaved() {
+            const saved = localStorage.getItem('aiMeetingSummary');
+            if (saved) {
+                const data = JSON.parse(saved);
+                document.querySelectorAll('input, select, textarea').forEach((input, index) => {
+                    if (input.type === 'checkbox') {
+                        if (data[`checkbox_${index}`]) {
+                            input.checked = true;
+                        }
+                    } else if (data[`field_${index}`] !== undefined) {
+                        input.value = data[`field_${index}`];
+                    }
+                });
+            }
+        }
+
+        function downloadSummary() {
+            const meetingTitle = document.getElementById('meeting-title').value || 'meeting_summary';
+            const meetingDate = document.getElementById('meeting-datetime').value || new Date().toISOString();
+            const dateStr = new Date(meetingDate).toISOString().split('T')[0];
+            const fileName = `meeting_summary_${meetingTitle.replace(/\s+/g, '_').toLowerCase()}_${dateStr}.html`;
+
+            const element = document.createElement('a');
+            const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function resetSummary() {
+            if (confirm('Start a new meeting summary? This will clear all current data.')) {
+                localStorage.removeItem('aiMeetingSummary');
+                location.reload();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default datetime to now
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            document.getElementById('meeting-datetime').value = now.toISOString().slice(0, 16);
+
+            loadSaved();
+
+            // Auto-save on input changes
+            document.addEventListener('input', autoSave);
+            document.addEventListener('change', autoSave);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stakeholder Update / Status Report Template</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #2d3748;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #1a202c;
+            text-align: center;
+            border-bottom: 4px solid #e53e3e;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
+        .description {
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .report-header {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 5px solid #e53e3e;
+        }
+
+        .header-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .field {
+            margin-bottom: 15px;
+        }
+
+        .field-label {
+            font-weight: 600;
+            color: #2d3748;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .field-input, .field-select, .field-textarea {
+            border: 2px solid #e2e8f0;
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+
+        .field-input:focus, .field-select:focus, .field-textarea:focus {
+            outline: none;
+            border-color: #e53e3e;
+            box-shadow: 0 0 5px rgba(229, 62, 62, 0.3);
+        }
+
+        .field-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .executive-summary {
+            background: #f0f8ff;
+            border: 2px solid #bee3f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+        }
+
+        .summary-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .on-track { color: #38a169; }
+        .at-risk { color: #d69e2e; }
+        .off-track { color: #e53e3e; }
+        .completed { color: #3182ce; }
+
+        .summary-label {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            color: white;
+            padding: 18px 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress-header {
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+        }
+
+        .risks-header {
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+        }
+
+        .milestones-header {
+            background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+        }
+
+        .resources-header {
+            background: linear-gradient(135deg, #805ad5 0%, #6b46c1 100%);
+        }
+
+        .decisions-header {
+            background: linear-gradient(135deg, #d69e2e 0%, #b7791f 100%);
+        }
+
+        .section-icon {
+            font-size: 1.3em;
+            margin-right: 8px;
+        }
+
+        .section-content {
+            padding: 25px;
+        }
+
+        .status-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .status-table th,
+        .status-table td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .status-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .status-table tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .status-table tbody tr:hover {
+            background: #e2e8f0;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-on-track {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status-at-risk {
+            background: #fef5e7;
+            color: #c05621;
+        }
+
+        .status-off-track {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .status-completed {
+            background: #bee3f8;
+            color: #2a4365;
+        }
+
+        .status-not-started {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .priority-high {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .priority-medium {
+            background: #fef5e7;
+            color: #c05621;
+        }
+
+        .priority-low {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .timeline-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border-left: 4px solid #3182ce;
+        }
+
+        .timeline-date {
+            font-weight: 600;
+            color: #2d3748;
+            min-width: 100px;
+            margin-right: 15px;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-milestone {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .timeline-details {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .risk-item {
+            background: #fff5f5;
+            border: 1px solid #fed7d7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #e53e3e;
+        }
+
+        .risk-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .risk-title {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .risk-details {
+            margin-top: 10px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+        }
+
+        .metric-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .metric-trend {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .trend-up { color: #38a169; }
+        .trend-down { color: #e53e3e; }
+        .trend-stable { color: #718096; }
+
+        .next-steps {
+            background: #f0fff4;
+            border: 2px solid #c6f6d5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 12px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .step-checkbox {
+            margin-right: 12px;
+            margin-top: 4px;
+            transform: scale(1.2);
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-text {
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .step-owner {
+            font-size: 13px;
+            color: #6c757d;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .btn {
+            background: #e53e3e;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background: #c53030;
+        }
+
+        .btn-secondary {
+            background: #718096;
+        }
+
+        .btn-secondary:hover {
+            background: #4a5568;
+        }
+
+        .btn-success {
+            background: #38a169;
+        }
+
+        .btn-success:hover {
+            background: #2f855a;
+        }
+
+        .template-note {
+            background: #fff3cd;
+            border: 2px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #856404;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; padding: 0; }
+            .actions { display: none; }
+            .section { break-inside: avoid; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            .header-grid { grid-template-columns: 1fr; }
+            .summary-grid { grid-template-columns: repeat(2, 1fr); }
+            .metrics-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Stakeholder Update / Status Report</h1>
+
+        <div class="description">
+            <strong>Purpose:</strong> This template helps engineering managers create comprehensive status reports for stakeholders, including executives, product teams, and project sponsors. It provides a structured format to communicate project progress, risks, resource needs, and key decisions in a professional, easy-to-digest format that keeps everyone aligned and informed.
+        </div>
+
+        <div class="template-note">
+            <strong>📌 Template Guidance:</strong> Customize this template for your specific stakeholder audience. Focus on outcomes and business impact rather than technical details. Keep it concise but comprehensive - aim for clarity over completeness.
+        </div>
+
+        <!-- Report Header -->
+        <div class="report-header">
+            <h3>Report Information</h3>
+            <div class="header-grid">
+                <div class="field">
+                    <span class="field-label">Project/Initiative:</span>
+                    <input type="text" class="field-input" id="project-name" placeholder="e.g., Customer Portal Redesign">
+                </div>
+                <div class="field">
+                    <span class="field-label">Reporting Period:</span>
+                    <input type="text" class="field-input" id="reporting-period" placeholder="e.g., March 1-15, 2024">
+                </div>
+                <div class="field">
+                    <span class="field-label">Report Date:</span>
+                    <input type="date" class="field-input" id="report-date">
+                </div>
+                <div class="field">
+                    <span class="field-label">Prepared By:</span>
+                    <input type="text" class="field-input" id="prepared-by" placeholder="Your name and title">
+                </div>
+                <div class="field">
+                    <span class="field-label">Stakeholder Audience:</span>
+                    <select class="field-select" id="audience">
+                        <option value="Executive Leadership">Executive Leadership</option>
+                        <option value="Product Leadership">Product Leadership</option>
+                        <option value="Cross-functional Teams">Cross-functional Teams</option>
+                        <option value="Project Sponsors">Project Sponsors</option>
+                        <option value="Engineering Leadership">Engineering Leadership</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <span class="field-label">Next Report Date:</span>
+                    <input type="date" class="field-input" id="next-report-date">
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="executive-summary">
+            <h3>📋 Executive Summary</h3>
+            <div class="field">
+                <span class="field-label">Overall Project Status:</span>
+                <select class="field-select" id="overall-status">
+                    <option value="On Track">On Track</option>
+                    <option value="At Risk">At Risk</option>
+                    <option value="Off Track">Off Track</option>
+                    <option value="On Hold">On Hold</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="summary-value on-track" id="budget-status">85%</div>
+                    <div class="summary-label">Budget Utilized</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-value at-risk" id="timeline-status">12</div>
+                    <div class="summary-label">Days Behind Schedule</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-value completed" id="scope-status">78%</div>
+                    <div class="summary-label">Scope Completed</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-value on-track" id="quality-status">92%</div>
+                    <div class="summary-label">Quality Score</div>
+                </div>
+            </div>
+
+            <div class="field" style="margin-top: 20px;">
+                <span class="field-label">Key Highlights & Summary:</span>
+                <textarea class="field-textarea" id="executive-summary" placeholder="Provide a 2-3 sentence summary of the most important updates, achievements, or concerns that stakeholders need to know..."></textarea>
+            </div>
+        </div>
+
+        <!-- Progress & Accomplishments -->
+        <div class="section">
+            <div class="section-header progress-header">
+                <span><span class="section-icon">✅</span>Progress & Key Accomplishments</span>
+            </div>
+            <div class="section-content">
+                <div class="field">
+                    <span class="field-label">Major Achievements This Period:</span>
+                    <textarea class="field-textarea" placeholder="• Completed user authentication system
+• Successfully migrated 50% of legacy data
+• Achieved 99.5% uptime during migration window
+• Received stakeholder approval for Phase 2 design"></textarea>
+                </div>
+
+                <h4>Feature/Milestone Progress</h4>
+                <table class="status-table">
+                    <thead>
+                        <tr>
+                            <th>Feature/Milestone</th>
+                            <th>Status</th>
+                            <th>Progress</th>
+                            <th>Target Date</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="field-input" placeholder="User Dashboard" style="border: none; background: transparent;"></td>
+                            <td>
+                                <select class="field-select status-badge" style="width: auto; font-size: 12px;">
+                                    <option value="completed" class="status-completed">Completed</option>
+                                    <option value="on-track" class="status-on-track">On Track</option>
+                                    <option value="at-risk" class="status-at-risk">At Risk</option>
+                                    <option value="off-track" class="status-off-track">Off Track</option>
+                                    <option value="not-started" class="status-not-started">Not Started</option>
+                                </select>
+                            </td>
+                            <td><input type="text" class="field-input" placeholder="100%" style="border: none; background: transparent; width: 60px;"></td>
+                            <td><input type="date" class="field-input" style="border: none; background: transparent;"></td>
+                            <td><input type="text" class="field-input" placeholder="Delivered on schedule" style="border: none; background: transparent;"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="field-input" placeholder="API Integration" style="border: none; background: transparent;"></td>
+                            <td>
+                                <select class="field-select status-badge" style="width: auto; font-size: 12px;">
+                                    <option value="on-track" class="status-on-track">On Track</option>
+                                    <option value="completed" class="status-completed">Completed</option>
+                                    <option value="at-risk" class="status-at-risk">At Risk</option>
+                                    <option value="off-track" class="status-off-track">Off Track</option>
+                                    <option value="not-started" class="status-not-started">Not Started</option>
+                                </select>
+                            </td>
+                            <td><input type="text" class="field-input" placeholder="65%" style="border: none; background: transparent; width: 60px;"></td>
+                            <td><input type="date" class="field-input" style="border: none; background: transparent;"></td>
+                            <td><input type="text" class="field-input" placeholder="Ahead of schedule" style="border: none; background: transparent;"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="field-input" placeholder="Security Audit" style="border: none; background: transparent;"></td>
+                            <td>
+                                <select class="field-select status-badge" style="width: auto; font-size: 12px;">
+                                    <option value="at-risk" class="status-at-risk">At Risk</option>
+                                    <option value="completed" class="status-completed">Completed</option>
+                                    <option value="on-track" class="status-on-track">On Track</option>
+                                    <option value="off-track" class="status-off-track">Off Track</option>
+                                    <option value="not-started" class="status-not-started">Not Started</option>
+                                </select>
+                            </td>
+                            <td><input type="text" class="field-input" placeholder="30%" style="border: none; background: transparent; width: 60px;"></td>
+                            <td><input type="date" class="field-input" style="border: none; background: transparent;"></td>
+                            <td><input type="text" class="field-input" placeholder="Waiting on third-party vendor" style="border: none; background: transparent;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button class="btn btn-secondary" onclick="addTableRow()">+ Add Feature/Milestone</button>
+            </div>
+        </div>
+
+        <!-- Risks & Issues -->
+        <div class="section">
+            <div class="section-header risks-header">
+                <span><span class="section-icon">⚠️</span>Risks & Issues</span>
+            </div>
+            <div class="section-content">
+                <div class="risk-item">
+                    <div class="risk-header">
+                        <div class="risk-title">
+                            <input type="text" class="field-input" placeholder="Risk or Issue Title" style="border: none; background: transparent; font-weight: 600;">
+                        </div>
+                        <span class="status-badge priority-high">High Priority</span>
+                    </div>
+                    <div class="risk-details">
+                        <div class="field">
+                            <span class="field-label">Description & Impact:</span>
+                            <textarea class="field-textarea" placeholder="Describe the risk/issue and its potential impact on timeline, budget, or quality..."></textarea>
+                        </div>
+                        <div class="field">
+                            <span class="field-label">Mitigation Plan:</span>
+                            <textarea class="field-textarea" placeholder="What actions are being taken to address this risk? Who is responsible?"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="risk-item">
+                    <div class="risk-header">
+                        <div class="risk-title">
+                            <input type="text" class="field-input" placeholder="Another Risk/Issue" style="border: none; background: transparent; font-weight: 600;">
+                        </div>
+                        <span class="status-badge priority-medium">Medium Priority</span>
+                    </div>
+                    <div class="risk-details">
+                        <div class="field">
+                            <span class="field-label">Description & Impact:</span>
+                            <textarea class="field-textarea" placeholder="Risk description and impact..."></textarea>
+                        </div>
+                        <div class="field">
+                            <span class="field-label">Mitigation Plan:</span>
+                            <textarea class="field-textarea" placeholder="Mitigation strategy and owner..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" onclick="addRiskItem()">+ Add Risk/Issue</button>
+            </div>
+        </div>
+
+        <!-- Upcoming Milestones -->
+        <div class="section">
+            <div class="section-header milestones-header">
+                <span><span class="section-icon">📅</span>Upcoming Milestones & Timeline</span>
+            </div>
+            <div class="section-content">
+                <div class="timeline-section">
+                    <h4>Next 30 Days</h4>
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            <input type="date" class="field-input" style="border: none; background: transparent; font-weight: 600;">
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-milestone">
+                                <input type="text" class="field-input" placeholder="Milestone Name" style="border: none; background: transparent; font-weight: 600;">
+                            </div>
+                            <div class="timeline-details">
+                                <input type="text" class="field-input" placeholder="Milestone description and deliverables..." style="border: none; background: transparent; font-size: 14px; color: #6c757d;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            <input type="date" class="field-input" style="border: none; background: transparent; font-weight: 600;">
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-milestone">
+                                <input type="text" class="field-input" placeholder="Another Milestone" style="border: none; background: transparent; font-weight: 600;">
+                            </div>
+                            <div class="timeline-details">
+                                <input type="text" class="field-input" placeholder="Milestone details..." style="border: none; background: transparent; font-size: 14px; color: #6c757d;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-secondary" onclick="addTimelineItem()">+ Add Milestone</button>
+                </div>
+
+                <div class="field">
+                    <span class="field-label">Critical Path & Dependencies:</span>
+                    <textarea class="field-textarea" placeholder="Describe any critical path items, dependencies on other teams, or external factors that could impact the timeline..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources & Budget -->
+        <div class="section">
+            <div class="section-header resources-header">
+                <span><span class="section-icon">💰</span>Resources & Budget</span>
+            </div>
+            <div class="section-content">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value on-track">
+                            <input type="text" class="field-input" placeholder="$150K" style="border: none; background: transparent; text-align: center; font-size: 1.8em; font-weight: bold;">
+                        </div>
+                        <div class="metric-label">Budget Spent</div>
+                        <div class="metric-trend trend-stable">→ Within 5% of projection</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-value at-risk">
+                            <input type="text" class="field-input" placeholder="8" style="border: none; background: transparent; text-align: center; font-size: 1.8em; font-weight: bold;">
+                        </div>
+                        <div class="metric-label">Team Members</div>
+                        <div class="metric-trend trend-down">↓ 2 members rotating out</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-value completed">
+                            <input type="text" class="field-input" placeholder="320" style="border: none; background: transparent; text-align: center; font-size: 1.8em; font-weight: bold;">
+                        </div>
+                        <div class="metric-label">Hours Logged</div>
+                        <div class="metric-trend trend-up">↑ 15% increase this period</div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <span class="field-label">Resource Needs & Requests:</span>
+                    <textarea class="field-textarea" placeholder="• Need senior frontend developer for 6-week engagement
+• Requesting budget approval for additional cloud infrastructure
+• Seeking design support for user testing phase"></textarea>
+                </div>
+
+                <div class="field">
+                    <span class="field-label">Budget Variances & Explanations:</span>
+                    <textarea class="field-textarea" placeholder="Explain any significant budget variances, cost overruns, or savings opportunities..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decisions Needed -->
+        <div class="section">
+            <div class="section-header decisions-header">
+                <span><span class="section-icon">🤔</span>Decisions Needed</span>
+            </div>
+            <div class="section-content">
+                <div class="field">
+                    <span class="field-label">Pending Decisions & Approvals:</span>
+                    <textarea class="field-textarea" placeholder="• Approval needed for Phase 2 budget ($75K) - Decision needed by March 20
+• Choose between Option A (faster timeline) vs Option B (lower cost) for database migration
+• Approval required for third-party security audit vendor ($25K)
+• Go/no-go decision for mobile app feature based on user research results"></textarea>
+                </div>
+
+                <div class="field">
+                    <span class="field-label">Impact of Delayed Decisions:</span>
+                    <textarea class="field-textarea" placeholder="Explain the consequences if decisions are delayed beyond the requested timeline..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Next Steps -->
+        <div class="next-steps">
+            <h4>🎯 Next Steps & Action Items</h4>
+            <div class="step-item">
+                <input type="checkbox" class="step-checkbox">
+                <div class="step-content">
+                    <div class="step-text">
+                        <input type="text" class="field-input" placeholder="Complete security review with InfoSec team" style="border: none; background: transparent; font-weight: 500;">
+                    </div>
+                    <div class="step-owner">
+                        Owner: <input type="text" class="field-input" placeholder="Jane Smith" style="border: none; background: transparent; width: 100px; font-size: 13px;">
+                        | Due: <input type="date" class="field-input" style="border: none; background: transparent; width: 120px; font-size: 13px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <input type="checkbox" class="step-checkbox">
+                <div class="step-content">
+                    <div class="step-text">
+                        <input type="text" class="field-input" placeholder="Schedule stakeholder demo for MVP features" style="border: none; background: transparent; font-weight: 500;">
+                    </div>
+                    <div class="step-owner">
+                        Owner: <input type="text" class="field-input" placeholder="Mike Johnson" style="border: none; background: transparent; width: 100px; font-size: 13px;">
+                        | Due: <input type="date" class="field-input" style="border: none; background: transparent; width: 120px; font-size: 13px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <input type="checkbox" class="step-checkbox">
+                <div class="step-content">
+                    <div class="step-text">
+                        <input type="text" class="field-input" placeholder="Finalize vendor contracts for Q2 integrations" style="border: none; background: transparent; font-weight: 500;">
+                    </div>
+                    <div class="step-owner">
+                        Owner: <input type="text" class="field-input" placeholder="Sarah Chen" style="border: none; background: transparent; width: 100px; font-size: 13px;">
+                        | Due: <input type="date" class="field-input" style="border: none; background: transparent; width: 120px; font-size: 13px;">
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-secondary" onclick="addActionItem()">+ Add Action Item</button>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-success" onclick="updateSummary()">Update Summary</button>
+            <button class="btn" onclick="window.print()">Print Report</button>
+            <button class="btn btn-secondary" onclick="downloadReport()">Download Report</button>
+            <button class="btn btn-secondary" onclick="resetReport()">New Report</button>
+        </div>
+    </div>
+
+    <script>
+        function addTableRow() {
+            const table = document.querySelector('.status-table tbody');
+            const newRow = document.createElement('tr');
+
+            newRow.innerHTML = `
+                <td><input type="text" class="field-input" placeholder="Feature/Milestone name" style="border: none; background: transparent;"></td>
+                <td>
+                    <select class="field-select status-badge" style="width: auto; font-size: 12px;">
+                        <option value="not-started" class="status-not-started">Not Started</option>
+                        <option value="on-track" class="status-on-track">On Track</option>
+                        <option value="at-risk" class="status-at-risk">At Risk</option>
+                        <option value="off-track" class="status-off-track">Off Track</option>
+                        <option value="completed" class="status-completed">Completed</option>
+                    </select>
+                </td>
+                <td><input type="text" class="field-input" placeholder="0%" style="border: none; background: transparent; width: 60px;"></td>
+                <td><input type="date" class="field-input" style="border: none; background: transparent;"></td>
+                <td><input type="text" class="field-input" placeholder="Notes..." style="border: none; background: transparent;"></td>
+            `;
+
+            table.appendChild(newRow);
+        }
+
+        function addRiskItem() {
+            const risksSection = document.querySelector('.risks-header + .section-content');
+            const newRisk = document.createElement('div');
+            newRisk.className = 'risk-item';
+
+            newRisk.innerHTML = `
+                <div class="risk-header">
+                    <div class="risk-title">
+                        <input type="text" class="field-input" placeholder="Risk or Issue Title" style="border: none; background: transparent; font-weight: 600;">
+                    </div>
+                    <span class="status-badge priority-medium">Medium Priority</span>
+                </div>
+                <div class="risk-details">
+                    <div class="field">
+                        <span class="field-label">Description & Impact:</span>
+                        <textarea class="field-textarea" placeholder="Risk description and impact..."></textarea>
+                    </div>
+                    <div class="field">
+                        <span class="field-label">Mitigation Plan:</span>
+                        <textarea class="field-textarea" placeholder="Mitigation strategy and owner..."></textarea>
+                    </div>
+                </div>
+            `;
+
+            const addButton = risksSection.querySelector('button');
+            risksSection.insertBefore(newRisk, addButton);
+        }
+
+        function addTimelineItem() {
+            const timelineSection = document.querySelector('.timeline-section');
+            const newTimeline = document.createElement('div');
+            newTimeline.className = 'timeline-item';
+
+            newTimeline.innerHTML = `
+                <div class="timeline-date">
+                    <input type="date" class="field-input" style="border: none; background: transparent; font-weight: 600;">
+                </div>
+                <div class="timeline-content">
+                    <div class="timeline-milestone">
+                        <input type="text" class="field-input" placeholder="Milestone Name" style="border: none; background: transparent; font-weight: 600;">
+                    </div>
+                    <div class="timeline-details">
+                        <input type="text" class="field-input" placeholder="Milestone details..." style="border: none; background: transparent; font-size: 14px; color: #6c757d;">
+                    </div>
+                </div>
+            `;
+
+            const addButton = timelineSection.querySelector('button');
+            timelineSection.insertBefore(newTimeline, addButton);
+        }
+
+        function addActionItem() {
+            const nextStepsSection = document.querySelector('.next-steps');
+            const newStep = document.createElement('div');
+            newStep.className = 'step-item';
+
+            newStep.innerHTML = `
+                <input type="checkbox" class="step-checkbox">
+                <div class="step-content">
+                    <div class="step-text">
+                        <input type="text" class="field-input" placeholder="Action item description" style="border: none; background: transparent; font-weight: 500;">
+                    </div>
+                    <div class="step-owner">
+                        Owner: <input type="text" class="field-input" placeholder="Name" style="border: none; background: transparent; width: 100px; font-size: 13px;">
+                        | Due: <input type="date" class="field-input" style="border: none; background: transparent; width: 120px; font-size: 13px;">
+                    </div>
+                </div>
+            `;
+
+            const addButton = nextStepsSection.querySelector('button');
+            nextStepsSection.insertBefore(newStep, addButton);
+        }
+
+        function updateSummary() {
+            // Count completed items
+            const completedItems = document.querySelectorAll('.step-checkbox:checked').length;
+            const totalItems = document.querySelectorAll('.step-checkbox').length;
+
+            // Update summary cards with current data
+            const budgetInput = document.querySelector('#budget-status');
+            const timelineInput = document.querySelector('#timeline-status');
+            const scopeInput = document.querySelector('#scope-status');
+            const qualityInput = document.querySelector('#quality-status');
+
+            // Simple completion calculation
+            if (totalItems > 0) {
+                const completionRate = Math.round((completedItems / totalItems) * 100);
+                scopeInput.textContent = completionRate + '%';
+            }
+
+            autoSave();
+        }
+
+        function autoSave() {
+            const data = {};
+
+            // Save all input fields
+            document.querySelectorAll('input, select, textarea').forEach((input, index) => {
+                if (input.type === 'checkbox') {
+                    data[`checkbox_${index}`] = input.checked;
+                } else {
+                    data[`field_${index}`] = input.value;
+                }
+            });
+
+            localStorage.setItem('stakeholderUpdate', JSON.stringify(data));
+        }
+
+        function loadSaved() {
+            const saved = localStorage.getItem('stakeholderUpdate');
+            if (saved) {
+                const data = JSON.parse(saved);
+
+                document.querySelectorAll('input, select, textarea').forEach((input, index) => {
+                    if (input.type === 'checkbox') {
+                        if (data[`checkbox_${index}`]) {
+                            input.checked = true;
+                        }
+                    } else if (data[`field_${index}`] !== undefined) {
+                        input.value = data[`field_${index}`];
+                    }
+                });
+            }
+        }
+
+        function downloadReport() {
+            const projectName = document.getElementById('project-name').value || 'stakeholder_update';
+            const reportDate = document.getElementById('report-date').value || new Date().toISOString().split('T')[0];
+            const fileName = `stakeholder_update_${projectName.replace(/\s+/g, '_').toLowerCase()}_${reportDate}.html`;
+
+            const element = document.createElement('a');
+            const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function resetReport() {
+            if (confirm('Are you sure you want to start a new report? This will clear all current data.')) {
+                localStorage.removeItem('stakeholderUpdate');
+                location.reload();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default dates
+            const today = new Date();
+            const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+            document.getElementById('report-date').value = today.toISOString().split('T')[0];
+            document.getElementById('next-report-date').value = nextWeek.toISOString().split('T')[0];
+
+            loadSaved();
+
+            // Auto-save on input changes
+            document.addEventListener('input', autoSave);
+            document.addEventListener('change', function(e) {
+                if (e.target.type === 'checkbox') {
+                    updateSummary();
+                } else {
+                    autoSave();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

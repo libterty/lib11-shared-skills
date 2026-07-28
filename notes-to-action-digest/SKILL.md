@@ -36,6 +36,7 @@ metadata:
 - **純資訊／無需行動**
 - **重複出現／升溫中的模式**（如果有的話，並引用具體訊息）
 - **延伸追蹤**（選填）：如果拆出來的待辦事項需要跨會議/跨週期持續追蹤，不只是這次的快照，可以把它們餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在你自己從 `shared-skills/docs/ar.template.md` 複製建立、存放在 `shared-skills/docs/ar/` 底下的檔案
+- **替代方案**：如果不方便用 AI CLI，`shared-skills/docs/ai_meeting_summary_template.html` 是離線瀏覽器版本——會中先記原始筆記，會後用工具內建的 AI prompt 分別產生摘要/決議/action item/洞察，自己貼給 AI 助理
 
 ## Safety Constraints
 
