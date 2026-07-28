@@ -38,6 +38,7 @@ cp docs/mn.template.md docs/mn/2026-07-15-weekly.md
 - 1:1：直接用瀏覽器打開 `docs/one_on_one_meeting_template.html` 或 `docs/ai_one_on_one_prep_prompt.html` 填寫，填完用工具內建的「下載」按鈕，把產出的 HTML 檔存進 `docs/1on1/`（檔名自帶姓名/日期，例如 `1on1_<姓名>_<日期>.html`、`ai_1on1_prep_<姓名>.html`）。
 - Async/Team Update/Stakeholder Report：直接用瀏覽器打開 `docs/async_update_template.html`（個人每日/每週/每個 sprint 的狀態更新）、`docs/team_update_email_prompt.html`（產生給利害關係人的週報 email prompt）、或 `docs/stakeholder_update_template.html`（完整專案狀態報告，含進度表/風險/資源/待決事項），填完下載存進 `docs/updates/`（檔名例如 `async_update_<姓名>_<日期>.html`、`team_update_email_<team>.html`、`stakeholder_update_<專案>_<日期>.html`）。
 - 會議摘要：`docs/ai_meeting_summary_template.html` 會議中先記原始筆記，會後用工具內建的 4 組 AI prompt（摘要/決議/action item/洞察）分別複製貼給 AI 助理，貼回輸出後下載存進 `docs/mn/`（跟 `mn.template.md` 手動版本共用同一個資料夾）。
+- 週期性向上報告草稿：手上有一份填好的 `stakeholder_update_template.html` 加上這個週期累積的多份 `ai_meeting_summary_template.html`，想收斂成一份精簡、固定骨架的向上報告草稿，用 `shared-skills/weekly-upward-report-draft/SKILL.md`。
 
 `docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/mn/`、`docs/1on1/`、`docs/updates/` 底下的檔案（`.gitkeep` 除外）都被 `.gitignore` 排除，不會被提交進這個 repo，因為裡面通常會累積真實的內部資訊。`shared-skills/validate-skills.sh` 掃描每個子目錄時也會跳過整個 `docs/`，不會把它當成缺 SKILL.md 的 skill 來報錯。
 
@@ -59,6 +60,7 @@ cp docs/mn.template.md docs/mn/2026-07-15-weekly.md
 | 把零散進度/風險/指標整理成一封給利害關係人的週報 email | 用瀏覽器打開 `docs/team_update_email_prompt.html`，選對象與語氣後產生 AI prompt，自己貼給 AI 助理草擬 email；跟 `shared-skills/weekly-wrapup-focus/SKILL.md` 的輸出可以互補（後者先產出本週完成事項＋下週 focus，再用這個工具轉成給利害關係人的 email） |
 | 產出一份完整的專案狀態報告（進度表、風險、資源/預算、待決事項） | 用瀏覽器打開 `docs/stakeholder_update_template.html` 手動填寫；如果先跑過 `shared-skills/delivery-health-review/SKILL.md` 產出證據支持的狀態判斷，可以把結果填進這份報告的對應欄位 |
 | 開會時先記原始筆記，會後用 AI 整理成摘要/決議/action item/洞察 | 用瀏覽器打開 `docs/ai_meeting_summary_template.html`，會中記原始筆記，會後用工具內建的 4 組 AI prompt 分別產生摘要/決議/action item/洞察，貼回工具後下載存進 `docs/mn/`；跟 `shared-skills/notes-to-action-digest/SKILL.md` 是同一件事的兩種介面（一個是離線瀏覽器 + 你自己貼給 AI，一個是直接請 AI CLI 處理） |
+| 把這個週期填好的 `stakeholder_update_template.html`（現況）+ 多份 `ai_meeting_summary_template.html`（會議摘要）收斂成一份精簡的向上報告草稿 | `shared-skills/weekly-upward-report-draft/SKILL.md`——依固定上限篩選每個段落的項目數、去識別化組織觀察、跨來源重複項目只列一次 |
 
 `action-register-maintainer` 只會**提出建議的異動**（新增哪些列、哪些該標記逾期、哪些該移到已完成），不會自己動手改你的 `docs/ar/<檔名>.md`——實際要不要採用建議、要不要真的修改檔案，由你決定並自己動手改。`architecture-decision-record` 沒有對應的「維護建議」skill，因為 ADR 本來就是一次性產出、之後偶爾手動更新狀態，不需要跨會議持續比對。所有 `docs/*.html` 工具也都沒有對應的「維護建議」skill——這些都是一次一份、獨立存檔的紀錄，不需要跨會議/跨週期比對。
 
@@ -83,6 +85,8 @@ cp docs/mn.template.md docs/mn/2026-07-15-weekly.md
 `delivery-health-review` 的 Output Contract 加了一條「延伸應用」，指向 `docs/stakeholder_update_template.html`——把這個 skill 產出的證據支持狀態判斷，填進一份完整的利害關係人狀態報告。
 
 `notes-to-action-digest` 的 Output Contract 加了一條「替代方案」，指向 `docs/ai_meeting_summary_template.html`——不方便用 AI CLI 時，可以先用這個離線瀏覽器工具記筆記、產生 AI prompt，自己貼給 AI 助理。
+
+`weekly-upward-report-draft/SKILL.md` 是把 `docs/stakeholder_update_template.html`（現況）和 `docs/ai_meeting_summary_template.html`（會議摘要）這兩個工具的填寫結果收斂成精簡草稿的下游步驟——先分別填好這兩個工具，再把內容貼給這個 skill。
 
 ## 想幫多個團隊/專案分開追蹤？
 

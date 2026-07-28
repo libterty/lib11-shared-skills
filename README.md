@@ -144,6 +144,7 @@ bash validate-skills.sh
 | `meeting-participation-balance-review` | 貼上 talk-time/參與度分析數據，檢視自己有沒有講太多 |
 | `cross-meeting-topic-tracker` | 用跨會議關鍵字搜尋找到同一主題在多場會議的討論，整理成時間軸演變摘要 |
 | `action-register-maintainer` | 開完會，建議 `docs/ar/<檔名>.md` 該新增/更新哪些列（只建議，不自己動手改檔案） |
+| `weekly-upward-report-draft` | 把 `docs/stakeholder_update_template.html`（現況）+ 多份 `docs/ai_meeting_summary_template.html`（會議摘要）收斂成一份精簡、固定骨架的向上報告草稿 |
 
 ---
 
@@ -360,6 +361,23 @@ Fireflies.ai 這類工具通常一次會產出好幾種不同的輸出（逐字�
 ```
 
 這個組合對應「策略從制定到落地」整個循環：方向先精確化、落地風險先檢查，執行中每週用證據校正假設而不是只報完成度，真的要對外報告不理想結果時，也已經先有 MBTO 歸因可以正確溝通，不會臨場才在會議上把責任推到某個人身上。
+
+#### 11. 週期性狀態 + 多場會議摘要 → 收斂成向上報告草稿
+
+```text
+1) 這個週期用瀏覽器把 docs/stakeholder_update_template.html（專案現況）填好；
+   期間開的每場會議用 docs/ai_meeting_summary_template.html 記筆記、貼 AI prompt 產生摘要/決議/action item/洞察
+
+2) 「請照 weekly-upward-report-draft/SKILL.md 的定義，
+   幫我把這份現況和這幾場會議摘要收斂成向上報告草稿：
+   現況：[步驟 1 的 stakeholder_update_template.html 內容]
+   會議摘要：[步驟 1 的多份 ai_meeting_summary_template.html 輸出]
+   讀者/場合：[例如：向總經理做週報簡報]」
+   → 得到依固定上限篩選過的整體狀態/本週成果/風險/待決事項/組織觀察/下週承諾草稿，
+     超過上限的項目列在「本次未收錄項目」供自行決定要不要補回
+```
+
+這個組合解決的是「兩個工具各自都填得很完整，但沒有時間逐字讀完再自己收斂成幾分鐘能講完的版本」——工具負責蒐集細節，這個 skill 負責篩選、去識別化、跨來源去重。
 
 ---
 
