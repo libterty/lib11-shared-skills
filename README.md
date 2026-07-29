@@ -22,11 +22,15 @@ shared-skills/
 │   ├── raci/                   # 實際的 RACI Matrix 內容（.gitignore 排除，只留 .gitkeep）
 │   ├── adr/                    # 實際的 ADR 內容（.gitignore 排除，只留 .gitkeep）
 │   └── mn/                     # 實際的會議原始紀錄（.gitignore 排除，只留 .gitkeep）
+├── references/                 # skill 索引與練習用範例情境
+│   ├── skill-catalog.md        # 全部 skill 的分類索引（英文，路徑、使用時機）
+│   └── docs/
+│       └── example-scenarios.md   # 每個 skill 附一段可以直接貼給 Claude 的範例輸入
 ├── validate-skills.sh          # 結構與安全啟發式驗證腳本
 └── <skill-name>/SKILL.md       # 每個 skill 一個資料夾
 ```
 
-`_shared/` 和 `docs/` 不是 skill，`validate-skills.sh` 掃描每個子目錄時會跳過這兩個。`docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/mn/`、`docs/1on1/`、`docs/updates/`、`docs/coaching/` 底下會累積真實的內部資訊（實際 action item、實際責任分配、實際架構決策、實際會議記錄、實際 1:1 紀錄、實際 async/team update/stakeholder report 紀錄、實際教練/職涯發展計畫），所以整個被 `.gitignore` 排除——AR/RACI/ADR/MN 複製對應的 `*.template.md`、其他都直接打開 `docs/*.html` 工具下載填寫結果到這些資料夾底下開始用，不會不小心把內部內容提交進這個公開 repo。細節見 `docs/README.md`。
+`_shared/`、`docs/`、`references/` 都不是 skill，`validate-skills.sh` 掃描每個子目錄時會跳過這些。`docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/mn/`、`docs/1on1/`、`docs/updates/`、`docs/coaching/` 底下會累積真實的內部資訊（實際 action item、實際責任分配、實際架構決策、實際會議記錄、實際 1:1 紀錄、實際 async/team update/stakeholder report 紀錄、實際教練/職涯發展計畫），所以整個被 `.gitignore` 排除——AR/RACI/ADR/MN 複製對應的 `*.template.md`、其他都直接打開 `docs/*.html` 工具下載填寫結果到這些資料夾底下開始用，不會不小心把內部內容提交進這個公開 repo。細節見 `docs/README.md`。
 
 ---
 

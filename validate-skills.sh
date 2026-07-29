@@ -10,10 +10,12 @@
 #   5. No banned absolute-commitment phrase appears without a negation word
 #      on the same line (heuristic, not a proof)
 #
-# shared-skills/_shared/ and shared-skills/docs/ are not skills and are
-# skipped: _shared holds the shared conventions doc, docs/ holds non-skill
-# reference material (e.g. templates a skill reads/writes, like the
-# action-register-maintainer skill's Action Register and RACI tables).
+# shared-skills/_shared/, shared-skills/docs/, and shared-skills/references/
+# are not skills and are skipped: _shared holds the shared conventions doc,
+# docs/ holds non-skill reference material (e.g. templates a skill
+# reads/writes, like the action-register-maintainer skill's Action Register
+# and RACI tables), references/ holds the skill catalog index and example
+# scenarios.
 #
 # Usage: shared-skills/validate-skills.sh
 # Exit code: 0 if all skills pass, 1 if any skill fails.
@@ -57,6 +59,7 @@ for skill_dir in "$SKILLS_DIR"/*/; do
   skill_name="$(basename "$skill_dir")"
   [ "$skill_name" = "_shared" ] && continue
   [ "$skill_name" = "docs" ] && continue
+  [ "$skill_name" = "references" ] && continue
   skill_file="$skill_dir/SKILL.md"
   total=$((total + 1))
 
