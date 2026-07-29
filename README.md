@@ -140,7 +140,7 @@ bash validate-skills.sh
 | `retro-synthesis` | Retro 白板零散 note 歸納成主題＋排序過的 action item |
 | `cross-team-dependency-log` | 跨團隊依賴/RAID 追蹤 |
 | `problem-statement-framing` | 接到一個模糊任務/問題時，依 Basic Question/Context/Decision Makers/Success Criteria/Solution Scope/Constraints/Key Sources 七欄位收斂成可分析的問題定義，正式分析前先用 |
-| `meeting-agenda-draft` | 依會議目的/參與者/時長草擬議程，附必要性提醒/會議類型判定/48小時前置期檢查/Parking Lot |
+| `meeting-agenda-draft` | 依會議目的/參與者/時長草擬議程，附必要性提醒/會議類型判定/48小時前置期檢查/Parking Lot（不方便用 CLI 時，可改用 `docs/meeting_agenda_generator.html`，但沒有那幾層把關） |
 | `meeting-question-decomposer` | 把模糊的核心問題拆解成 issue tree 子問題，分類今天要討論/需要會前準備/該進 parking lot，餵給 `meeting-agenda-draft` |
 | `stakeholder-pre-brief-for-results-meeting` | 成果發表/檢討會議前，規劃要先跟哪些關鍵利害關係人單獨溝通，避免對方當眾第一次聽到不利結論 |
 | `engineering-metrics-review` | 貼上原始指標數字，產出趨勢分析與瓶頸識別 |

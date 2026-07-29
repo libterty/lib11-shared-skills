@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering Management Email Draft Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #495057;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+
+        .email-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .email-type {
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            padding: 20px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .email-type:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .email-type h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .prompt-section {
+            background: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .prompt-section h4 {
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+
+        .prompt-field {
+            margin-bottom: 15px;
+        }
+
+        .prompt-field label {
+            display: block;
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+
+        .prompt-field input, .prompt-field textarea, .prompt-field select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .prompt-field textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .template-card {
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .template-header {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+        }
+
+        .template-content {
+            padding: 20px;
+            background: white;
+        }
+
+        .template-example {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            margin-top: 15px;
+            border-left: 3px solid #667eea;
+        }
+
+        .tips {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tips h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .tips ul {
+            margin-left: 20px;
+        }
+
+        .tips li {
+            margin-bottom: 5px;
+            color: #856404;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(40,167,69,0.3);
+        }
+
+        .output-area {
+            background: #f8f9fa;
+            border: 2px dashed #ced4da;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 6px;
+            min-height: 200px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                max-width: none;
+            }
+
+            .generate-btn {
+                display: none;
+            }
+
+            .header {
+                background: #667eea !important;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .template-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📧 Engineering Management Email Draft Generator</h1>
+        <p>Professional email templates and AI prompts for stakeholder communication and team management</p>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h2>📋 Overview & Usage</h2>
+            <p>This tool provides structured prompts and templates for generating professional emails across common engineering management scenarios. Use the prompts below with AI assistants or as templates for manual drafting.</p>
+
+            <div class="tips">
+                <h4>💡 Best Practices</h4>
+                <ul>
+                    <li>Fill out the context fields thoroughly for better AI-generated results</li>
+                    <li>Customize tone and formality based on your audience</li>
+                    <li>Always review and personalize generated content before sending</li>
+                    <li>Save frequently used contexts as templates</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎯 Email Categories</h2>
+            <div class="email-types">
+                <div class="email-type">
+                    <h3>📊 Status Updates</h3>
+                    <p>Sprint progress, milestone updates, project status reports, roadmap changes</p>
+                </div>
+                <div class="email-type">
+                    <h3>🚨 Issue Communication</h3>
+                    <p>Incident reports, outages, delays, risk escalation, blocker notifications</p>
+                </div>
+                <div class="email-type">
+                    <h3>👥 Team Communication</h3>
+                    <p>All-hands updates, process changes, team announcements, recognition</p>
+                </div>
+                <div class="email-type">
+                    <h3>🤝 Stakeholder Relations</h3>
+                    <p>Executive updates, cross-team coordination, external partner communication</p>
+                </div>
+                <div class="email-type">
+                    <h3>📈 Performance & Reviews</h3>
+                    <p>Quarterly reviews, goal setting, feedback delivery, career discussions</p>
+                </div>
+                <div class="email-type">
+                    <h3>🔄 Process & Change</h3>
+                    <p>New procedures, tool rollouts, policy updates, retrospective outcomes</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🤖 AI Prompt Generator</h2>
+            <div class="prompt-section">
+                <h4>Context Input Form</h4>
+
+                <div class="prompt-field">
+                    <label for="emailType">Email Type:</label>
+                    <select id="emailType">
+                        <option>Status Update</option>
+                        <option>Issue Communication</option>
+                        <option>Team Announcement</option>
+                        <option>Stakeholder Update</option>
+                        <option>Performance Discussion</option>
+                        <option>Process Change</option>
+                        <option>Meeting Follow-up</option>
+                        <option>Resource Request</option>
+                    </select>
+                </div>
+
+                <div class="prompt-field">
+                    <label for="audience">Audience:</label>
+                    <input type="text" id="audience" placeholder="e.g., Engineering VP, Product Team, Direct Reports, Executive Leadership">
+                </div>
+
+                <div class="prompt-field">
+                    <label for="context">Situation/Context:</label>
+                    <textarea id="context" placeholder="Describe the situation, project, issue, or topic you're communicating about..."></textarea>
+                </div>
+
+                <div class="prompt-field">
+                    <label for="keyPoints">Key Points to Cover:</label>
+                    <textarea id="keyPoints" placeholder="List the main points, data, decisions, or actions you need to communicate..."></textarea>
+                </div>
+
+                <div class="prompt-field">
+                    <label for="tone">Tone/Formality:</label>
+                    <select id="tone">
+                        <option>Professional & Direct</option>
+                        <option>Formal & Executive</option>
+                        <option>Collaborative & Friendly</option>
+                        <option>Urgent & Decisive</option>
+                        <option>Reassuring & Confident</option>
+                        <option>Transparent & Honest</option>
+                    </select>
+                </div>
+
+                <div class="prompt-field">
+                    <label for="actionItems">Desired Actions/Next Steps:</label>
+                    <textarea id="actionItems" placeholder="What do you want recipients to do? Meetings to schedule? Decisions needed?"></textarea>
+                </div>
+
+                <button class="generate-btn" onclick="generatePrompt()">✨ Generate AI Prompt</button>
+                <button class="generate-btn" onclick="generateTemplate()">📝 Generate Template</button>
+            </div>
+
+            <div class="output-area" id="outputArea">
+                <p style="color: #6c757d; text-align: center; margin-top: 80px;">Generated content will appear here...</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📚 Email Templates</h2>
+            <div class="template-grid">
+                <div class="template-card">
+                    <div class="template-header">Sprint Status Update</div>
+                    <div class="template-content">
+                        <strong>Use Case:</strong> Weekly/bi-weekly sprint progress communication
+                        <div class="template-example">
+Subject: Sprint [X] Update - [Project Name]
+
+Hi [Team/Stakeholders],
+
+Here's our Sprint [X] status for [Project]:
+
+📊 PROGRESS
+• Completed: [X/Y] story points
+• On track: [Feature list]
+• At risk: [Issue list]
+
+🎯 NEXT SPRINT
+• Focus: [Primary objectives]
+• Delivery: [Expected outcomes]
+
+🚨 BLOCKERS & RISKS
+• [Issue]: [Impact & resolution plan]
+
+Let me know if you have questions.
+
+Best,
+[Name]</div>
+                    </div>
+                </div>
+
+                <div class="template-card">
+                    <div class="template-header">Incident Communication</div>
+                    <div class="template-content">
+                        <strong>Use Case:</strong> Outage or critical issue notification
+                        <div class="template-example">
+Subject: [RESOLVED/ONGOING] - [System] Issue
+
+Hi [Stakeholders],
+
+STATUS: [Resolved/Investigating]
+IMPACT: [User/system impact]
+TIMEFRAME: [Start - End time]
+
+SUMMARY:
+[Brief description of issue]
+
+RESOLUTION:
+[Actions taken/being taken]
+
+NEXT STEPS:
+• Post-mortem: [Date]
+• Prevention: [Measures]
+
+I'll provide updates as available.
+
+[Name]</div>
+                    </div>
+                </div>
+
+                <div class="template-card">
+                    <div class="template-header">Executive Summary</div>
+                    <div class="template-content">
+                        <strong>Use Case:</strong> High-level leadership updates
+                        <div class="template-example">
+Subject: Engineering Update - [Period]
+
+[Executive Team],
+
+KEY HIGHLIGHTS:
+✅ [Major achievement]
+✅ [Milestone reached]
+📈 [Metric improvement]
+
+PRIORITIES & PROGRESS:
+1. [Initiative]: [Status & impact]
+2. [Initiative]: [Status & impact]
+
+RISKS & MITIGATION:
+• [Risk]: [Action plan]
+
+RESOURCE NEEDS:
+• [Request]: [Justification]
+
+Happy to discuss details.
+
+[Name]</div>
+                    </div>
+                </div>
+
+                <div class="template-card">
+                    <div class="template-header">Team Announcement</div>
+                    <div class="template-content">
+                        <strong>Use Case:</strong> Process changes, new hires, policy updates
+                        <div class="template-example">
+Subject: [Team] Update - [Topic]
+
+Team,
+
+I wanted to share some important updates:
+
+📢 ANNOUNCEMENT:
+[Main news/change]
+
+💡 WHY THIS MATTERS:
+[Context and benefits]
+
+🔄 WHAT'S CHANGING:
+• [Change 1]
+• [Change 2]
+
+⏰ TIMELINE:
+• [Date]: [Milestone]
+• [Date]: [Implementation]
+
+QUESTIONS?
+Feel free to reach out or we'll discuss in our next team meeting.
+
+Thanks,
+[Name]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generatePrompt() {
+            const emailType = document.getElementById('emailType').value;
+            const audience = document.getElementById('audience').value;
+            const context = document.getElementById('context').value;
+            const keyPoints = document.getElementById('keyPoints').value;
+            const tone = document.getElementById('tone').value;
+            const actionItems = document.getElementById('actionItems').value;
+
+            const prompt = `Please write a professional ${emailType.toLowerCase()} email with the following details:
+
+AUDIENCE: ${audience || '[Not specified]'}
+TONE: ${tone}
+
+CONTEXT:
+${context || '[Please provide context]'}
+
+KEY POINTS TO COVER:
+${keyPoints || '[Please specify key points]'}
+
+DESIRED ACTIONS/NEXT STEPS:
+${actionItems || '[Please specify desired actions]'}
+
+Please format as a complete email with:
+- Appropriate subject line
+- Professional greeting
+- Clear, structured body with headings/bullets as needed
+- Specific call-to-action
+- Professional closing
+
+Make it concise, actionable, and appropriate for the specified audience and tone.`;
+
+            document.getElementById('outputArea').innerHTML = `
+                <h4 style="color: #28a745; margin-bottom: 15px;">🤖 AI Prompt Generated</h4>
+                <div style="background: white; padding: 15px; border-radius: 4px; border: 1px solid #dee2e6; font-family: monospace; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${prompt}</div>
+                <p style="margin-top: 15px; color: #6c757d; font-style: italic;">Copy this prompt and paste it into your AI assistant (Claude, ChatGPT, etc.) to generate your email.</p>
+            `;
+        }
+
+        function generateTemplate() {
+            const emailType = document.getElementById('emailType').value;
+            const audience = document.getElementById('audience').value;
+            const context = document.getElementById('context').value;
+            const keyPoints = document.getElementById('keyPoints').value;
+            const tone = document.getElementById('tone').value;
+            const actionItems = document.getElementById('actionItems').value;
+
+            let template = '';
+
+            if (emailType === 'Status Update') {
+                template = `Subject: ${context ? context + ' - ' : ''}Status Update
+
+Hi ${audience || '[Audience]'},
+
+📊 CURRENT STATUS:
+${keyPoints || '• [Key point 1]\n• [Key point 2]\n• [Key point 3]'}
+
+🎯 NEXT STEPS:
+${actionItems || '• [Action item 1]\n• [Action item 2]'}
+
+⏰ TIMELINE:
+• [Date]: [Milestone]
+
+Let me know if you have any questions.
+
+Best regards,
+[Your Name]`;
+            } else if (emailType === 'Issue Communication') {
+                template = `Subject: [URGENT] ${context || '[Issue Description]'}
+
+Hi ${audience || '[Audience]'},
+
+🚨 ISSUE SUMMARY:
+${context || '[Describe the issue and its impact]'}
+
+📊 CURRENT STATUS:
+${keyPoints || '• [What we know]\n• [What we\'re doing]\n• [Current impact]'}
+
+⚡ IMMEDIATE ACTIONS:
+${actionItems || '• [Action being taken]\n• [Timeline for resolution]\n• [Next update timing]'}
+
+I'll keep you updated as we learn more.
+
+[Your Name]`;
+            } else {
+                template = `Subject: ${context || '[Subject]'}
+
+Hi ${audience || '[Audience]'},
+
+${context || '[Opening context/purpose]'}
+
+KEY POINTS:
+${keyPoints || '• [Point 1]\n• [Point 2]\n• [Point 3]'}
+
+NEXT STEPS:
+${actionItems || '• [Action 1]\n• [Action 2]'}
+
+Please let me know if you have any questions.
+
+Best regards,
+[Your Name]`;
+            }
+
+            document.getElementById('outputArea').innerHTML = `
+                <h4 style="color: #667eea; margin-bottom: 15px;">📝 Email Template Generated</h4>
+                <div style="background: white; padding: 20px; border-radius: 4px; border: 1px solid #dee2e6; font-family: monospace; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${template}</div>
+                <p style="margin-top: 15px; color: #6c757d; font-style: italic;">Customize the bracketed placeholders with your specific information.</p>
+            `;
+        }
+    </script>
+</body>
+</html>
