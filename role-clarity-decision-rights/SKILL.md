@@ -20,6 +20,7 @@ metadata:
 - 目前摩擦/混亂的描述（具體事件，不是只有「感覺不太清楚」）
 - 涉及的角色/人員與他們目前被理解的職責
 - 這次要取代的既有流程（即使是非正式的）
+- 如果還沒釐清這個問題誰是決策者/可能否決者，可以先用 `shared-skills/problem-statement-framing/SKILL.md` 的 Decision Makers & Stakeholders 欄位釐清，再把結果當作這裡的輸入
 
 ## Workflow
 

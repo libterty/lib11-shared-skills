@@ -22,6 +22,7 @@ metadata:
 - （選填）Business 資訊：定價、通路、收費模式、採購流程
 - （選填）Technology 資訊：現有技術能力、開發速度、架構限制
 - （選填）Organization 資訊：人才現況、文化特性、KPI 設計、激勵制度、關鍵人才留任風險
+- 這個 skill 只精確化策略方向本身、只檢查 Market/Business/Technology/Organization 四面向；如果還需要釐清誰是決策者/可能否決者、時間預算等限制、或該找哪些資料/專家，可以搭配 `shared-skills/problem-statement-framing/SKILL.md` 補齊
 
 ## Workflow
 

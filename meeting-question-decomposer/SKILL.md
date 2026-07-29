@@ -20,6 +20,7 @@ metadata:
 - 這場會議要回答的核心問題／要做的決策（一句話描述）
 - （選填）已知的限制條件、背景脈絡、之前討論過的內容
 - （選填）會議總時長（用來判斷子問題數量是否合理）
+- 如果核心問題本身還很模糊、還沒確認過背景/決策者/範圍，建議先用 `shared-skills/problem-statement-framing/SKILL.md` 收斂成清楚的問題定義，再把 Basic Question 的結果當作這裡的核心問題輸入
 
 ## Workflow
 
