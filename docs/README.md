@@ -22,7 +22,7 @@ docs/
 ├── career_development_plan_template.html  # 單一下屬的長期職涯發展計畫工具（願景/目標/技能矩陣/里程碑），單機瀏覽器打開即可（公開，追蹤進 git）
 ├── ai_career_path_prompt_template.html    # 產生職涯路徑/晉升準備建議的 AI prompt 工具（公開，追蹤進 git）
 ├── email_draft_generator.html         # 產生各類 EM email（狀態更新/事故通報/團隊公告/主管摘要/績效對話/流程異動）AI prompt 的工具，附靜態範本（公開，追蹤進 git）
-├── meeting_agenda_generator.html      # 9 種會議類型的議程 AI prompt 產生器，附靜態範本，單機瀏覽器打開即可（公開，追蹤進 git）
+├── meeting_agenda_generator.html      # 9 種會議類型的議程 AI prompt 產生器，附靜態範本，支援英文/繁體中文切換（介面與產出內容都會切換），單機瀏覽器打開即可（公開，追蹤進 git）
 ├── ar/                                 # 實際的 Action Register 內容（.gitignore 排除，只留 .gitkeep）
 ├── raci/                               # 實際的 RACI Matrix 內容（.gitignore 排除，只留 .gitkeep）
 ├── adr/                                 # 實際的 ADR 內容，一個決策一個檔案（.gitignore 排除，只留 .gitkeep）
@@ -78,7 +78,7 @@ cp docs/mn.template.md docs/mn/2026-07-15-weekly.md
 | 追蹤某位下屬的長期職涯發展計畫（願景、目標、里程碑、技能矩陣、主管支持承諾） | 用瀏覽器打開 `docs/career_development_plan_template.html` 填寫，下載後存進 `docs/coaching/`；跟 `docs/coaching_plan_tracker.html` 用途重疊——這個偏重「長期職涯路徑規劃」，`coaching_plan_tracker.html` 偏重「逐次教練 session 記錄」，依需要擇一或搭配使用 |
 | 針對某位下屬產生職涯路徑/晉升準備建議的 AI prompt | `docs/ai_career_path_prompt_template.html`；產出內容是給主管自己參考的建議，不是正式的晉升決定 |
 | 產生各類 EM email（狀態更新、事故通報、團隊公告、主管摘要、績效對話、流程異動）的 AI prompt，或直接套用靜態範本 | `docs/email_draft_generator.html`；如果只是要固定的每週給利害關係人的狀態 email，`docs/team_update_email_prompt.html` 更聚焦、欄位也更貼合週報情境 |
-| 草擬會議議程 AI prompt（9 種常見會議類型：standup/sprint planning/retro/1:1/架構審查/事故檢討/專案 kickoff/all-hands/週報向上報告），附靜態範本 | 用瀏覽器打開 `docs/meeting_agenda_generator.html`；不方便用瀏覽器工具時改用 `shared-skills/meeting-agenda-draft/SKILL.md`（AI CLI 版本，附必要性提醒/會議類型判定/48 小時前置期檢查） |
+| 草擬會議議程 AI prompt（9 種常見會議類型：standup/sprint planning/retro/1:1/架構審查/事故檢討/專案 kickoff/all-hands/週報向上報告），附靜態範本，右上角可切換英文/繁體中文（介面與產出的 prompt/範本都會切換） | 用瀏覽器打開 `docs/meeting_agenda_generator.html`；不方便用瀏覽器工具時改用 `shared-skills/meeting-agenda-draft/SKILL.md`（AI CLI 版本，附必要性提醒/會議類型判定/48 小時前置期檢查） |
 
 `action-register-maintainer` 只會**提出建議的異動**（新增哪些列、哪些該標記逾期、哪些該移到已完成），不會自己動手改你的 `docs/ar/<檔名>.md`——實際要不要採用建議、要不要真的修改檔案，由你決定並自己動手改。`architecture-decision-record` 沒有對應的「維護建議」skill，因為 ADR 本來就是一次性產出、之後偶爾手動更新狀態，不需要跨會議持續比對。所有 `docs/*.html` 工具也都沒有對應的「維護建議」skill——這些都是一次一份、獨立存檔的紀錄，不需要跨會議/跨週期比對。
 

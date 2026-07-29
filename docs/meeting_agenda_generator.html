@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Meeting Agenda Generator - Engineering Management</title>
+    <title id="pageTitle">AI Meeting Agenda Generator - Engineering Management</title>
     <style>
         * {
             margin: 0;
@@ -29,6 +29,36 @@
             margin-bottom: 30px;
             text-align: center;
             box-shadow: 0 4px 20px rgba(79, 70, 229, 0.3);
+            position: relative;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.4);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: #4f46e5;
         }
 
         .header h1 {
@@ -338,6 +368,10 @@
                 display: none;
             }
 
+            .lang-switcher {
+                display: none;
+            }
+
             .header {
                 background: #4f46e5 !important;
                 -webkit-print-color-adjust: exact;
@@ -351,6 +385,12 @@
 
             .header {
                 padding: 20px;
+            }
+
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
             }
 
             .header h1 {
@@ -373,18 +413,22 @@
 </head>
 <body>
     <div class="header">
-        <h1>🤖 AI Meeting Agenda Generator</h1>
-        <p>Intelligent agenda creation for engineering management meetings with AI-powered suggestions and proven templates</p>
+        <div class="lang-switcher">
+            <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+            <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+        </div>
+        <h1>🤖 <span id="headerTitle">AI Meeting Agenda Generator</span></h1>
+        <p id="headerSubtitle">Intelligent agenda creation for engineering management meetings with AI-powered suggestions and proven templates</p>
     </div>
 
     <div class="container">
         <div class="section">
-            <h2>📋 Overview & Benefits</h2>
-            <p>This tool generates intelligent meeting agendas tailored to your specific context, team dynamics, and objectives. By providing structured prompts to AI assistants, you'll get comprehensive agenda suggestions that ensure productive, focused meetings.</p>
+            <h2>📋 <span id="overviewHeading">Overview &amp; Benefits</span></h2>
+            <p id="overviewBody">This tool generates intelligent meeting agendas tailored to your specific context, team dynamics, and objectives. By providing structured prompts to AI assistants, you'll get comprehensive agenda suggestions that ensure productive, focused meetings.</p>
 
             <div class="tips-section">
-                <h4>💡 Why Use AI for Agenda Generation?</h4>
-                <div class="tips-list">
+                <h4>💡 <span id="tipsHeading">Why Use AI for Agenda Generation?</span></h4>
+                <div class="tips-list" id="tipsList">
                     <li>Ensures no critical topics are missed</li>
                     <li>Suggests optimal time allocation</li>
                     <li>Adapts to team size and meeting context</li>
@@ -396,97 +440,97 @@
         </div>
 
         <div class="section">
-            <h2>🎯 Meeting Types</h2>
-            <p>Select your meeting type to get contextually relevant agenda suggestions:</p>
+            <h2>🎯 <span id="meetingTypesHeading">Meeting Types</span></h2>
+            <p id="meetingTypesBody">Select your meeting type to get contextually relevant agenda suggestions:</p>
 
             <div class="meeting-types">
                 <div class="meeting-type" onclick="selectMeetingType(this, 'standup')">
-                    <h3>🌅 Daily Standup</h3>
-                    <p>Quick team sync, blockers, daily priorities</p>
-                    <span class="duration">15-30 min</span>
+                    <h3>🌅 <span id="mtTitle-standup">Daily Standup</span></h3>
+                    <p id="mtDesc-standup">Quick team sync, blockers, daily priorities</p>
+                    <span class="duration" id="mtDuration-standup">15-30 min</span>
                 </div>
                 <div class="meeting-type" onclick="selectMeetingType(this, 'sprint-planning')">
-                    <h3>🎯 Sprint Planning</h3>
-                    <p>Story sizing, capacity planning, sprint goals</p>
-                    <span class="duration">2-4 hours</span>
+                    <h3>🎯 <span id="mtTitle-sprintPlanning">Sprint Planning</span></h3>
+                    <p id="mtDesc-sprintPlanning">Story sizing, capacity planning, sprint goals</p>
+                    <span class="duration" id="mtDuration-sprintPlanning">2-4 hours</span>
                 </div>
                 <div class="meeting-type" onclick="selectMeetingType(this, 'retrospective')">
-                    <h3>🔄 Sprint Retrospective</h3>
-                    <p>Process improvements, team feedback, action items</p>
-                    <span class="duration">1-2 hours</span>
+                    <h3>🔄 <span id="mtTitle-retrospective">Sprint Retrospective</span></h3>
+                    <p id="mtDesc-retrospective">Process improvements, team feedback, action items</p>
+                    <span class="duration" id="mtDuration-retrospective">1-2 hours</span>
                 </div>
                 <div class="meeting-type" onclick="selectMeetingType(this, 'one-on-one')">
-                    <h3>🤝 1:1 Meeting</h3>
-                    <p>Career development, feedback, personal check-ins</p>
-                    <span class="duration">30-60 min</span>
+                    <h3>🤝 <span id="mtTitle-oneOnOne">1:1 Meeting</span></h3>
+                    <p id="mtDesc-oneOnOne">Career development, feedback, personal check-ins</p>
+                    <span class="duration" id="mtDuration-oneOnOne">30-60 min</span>
                 </div>
                 <div class="meeting-type" onclick="selectMeetingType(this, 'architecture-review')">
-                    <h3>🏛️ Architecture Review</h3>
-                    <p>Technical decisions, design discussions, trade-offs</p>
-                    <span class="duration">1-2 hours</span>
+                    <h3>🏛️ <span id="mtTitle-architectureReview">Architecture Review</span></h3>
+                    <p id="mtDesc-architectureReview">Technical decisions, design discussions, trade-offs</p>
+                    <span class="duration" id="mtDuration-architectureReview">1-2 hours</span>
                 </div>
                 <div class="meeting-type" onclick="selectMeetingType(this, 'incident-postmortem')">
-                    <h3>🚨 Incident Postmortem</h3>
-                    <p>Root cause analysis, prevention strategies</p>
-                    <span class="duration">1 hour</span>
+                    <h3>🚨 <span id="mtTitle-incidentPostmortem">Incident Postmortem</span></h3>
+                    <p id="mtDesc-incidentPostmortem">Root cause analysis, prevention strategies</p>
+                    <span class="duration" id="mtDuration-incidentPostmortem">1 hour</span>
                 </div>
                 <div class="meeting-type" onclick="selectMeetingType(this, 'project-kickoff')">
-                    <h3>🚀 Project Kickoff</h3>
-                    <p>Goals, roles, timelines, risk assessment</p>
-                    <span class="duration">1-2 hours</span>
+                    <h3>🚀 <span id="mtTitle-projectKickoff">Project Kickoff</span></h3>
+                    <p id="mtDesc-projectKickoff">Goals, roles, timelines, risk assessment</p>
+                    <span class="duration" id="mtDuration-projectKickoff">1-2 hours</span>
                 </div>
                 <div class="meeting-type" onclick="selectMeetingType(this, 'all-hands')">
-                    <h3>🏢 All-Hands</h3>
-                    <p>Company updates, team achievements, Q&A</p>
-                    <span class="duration">30-60 min</span>
+                    <h3>🏢 <span id="mtTitle-allHands">All-Hands</span></h3>
+                    <p id="mtDesc-allHands">Company updates, team achievements, Q&amp;A</p>
+                    <span class="duration" id="mtDuration-allHands">30-60 min</span>
                 </div>
                 <div class="meeting-type" onclick="selectMeetingType(this, 'weekly-report')">
-                    <h3>📊 Weekly Upward Report</h3>
-                    <p>Status, risks, decisions needed, next week focus for leadership</p>
-                    <span class="duration">20-30 min</span>
+                    <h3>📊 <span id="mtTitle-weeklyReport">Weekly Upward Report</span></h3>
+                    <p id="mtDesc-weeklyReport">Status, risks, decisions needed, next week focus for leadership</p>
+                    <span class="duration" id="mtDuration-weeklyReport">20-30 min</span>
                 </div>
             </div>
         </div>
 
         <div class="section">
-            <h2>🔧 Agenda Generator</h2>
+            <h2>🔧 <span id="generatorHeading">Agenda Generator</span></h2>
 
             <div class="form-section">
-                <h3>📋 Meeting Context</h3>
+                <h3>📋 <span id="meetingContextHeading">Meeting Context</span></h3>
                 <div class="form-grid">
                     <div>
                         <div class="form-field">
-                            <label for="meetingTitle">Meeting Title/Purpose:</label>
+                            <label for="meetingTitle" id="lblMeetingTitle">Meeting Title/Purpose:</label>
                             <input type="text" id="meetingTitle" placeholder="e.g., Q4 Planning Sprint Kickoff">
                         </div>
 
                         <div class="form-field">
-                            <label for="duration">Meeting Duration:</label>
+                            <label for="duration" id="lblDuration">Meeting Duration:</label>
                             <select id="duration">
-                                <option value="15">15 minutes</option>
-                                <option value="30">30 minutes</option>
-                                <option value="60" selected>1 hour</option>
-                                <option value="90">90 minutes</option>
-                                <option value="120">2 hours</option>
-                                <option value="180">3 hours</option>
-                                <option value="240">4 hours</option>
+                                <option value="15" id="durOpt15">15 minutes</option>
+                                <option value="30" id="durOpt30">30 minutes</option>
+                                <option value="60" id="durOpt60" selected>1 hour</option>
+                                <option value="90" id="durOpt90">90 minutes</option>
+                                <option value="120" id="durOpt120">2 hours</option>
+                                <option value="180" id="durOpt180">3 hours</option>
+                                <option value="240" id="durOpt240">4 hours</option>
                             </select>
                         </div>
 
                         <div class="form-field">
-                            <label for="attendeeCount">Number of Attendees:</label>
+                            <label for="attendeeCount" id="lblAttendeeCount">Number of Attendees:</label>
                             <input type="number" id="attendeeCount" placeholder="e.g., 8" min="1" max="50">
                         </div>
                     </div>
 
                     <div>
                         <div class="form-field">
-                            <label for="meetingObjective">Primary Objective:</label>
+                            <label for="meetingObjective" id="lblMeetingObjective">Primary Objective:</label>
                             <textarea id="meetingObjective" placeholder="What specific outcome or decision do you need from this meeting?"></textarea>
                         </div>
 
                         <div class="form-field">
-                            <label for="currentContext">Current Context/Background:</label>
+                            <label for="currentContext" id="lblCurrentContext">Current Context/Background:</label>
                             <textarea id="currentContext" placeholder="Recent developments, project status, issues to address..."></textarea>
                         </div>
                     </div>
@@ -494,80 +538,79 @@
             </div>
 
             <div class="form-section">
-                <h3>👥 Team & Stakeholder Info</h3>
+                <h3>👥 <span id="teamStakeholderHeading">Team &amp; Stakeholder Info</span></h3>
                 <div class="form-grid">
                     <div class="form-field">
-                        <label for="keyAttendees">Key Attendees & Roles:</label>
+                        <label for="keyAttendees" id="lblKeyAttendees">Key Attendees &amp; Roles:</label>
                         <textarea id="keyAttendees" placeholder="e.g., Product Manager (Sarah), Tech Lead (Mike), Senior Engineers (3), QA Lead (Jenny)"></textarea>
                     </div>
 
                     <div class="form-field">
-                        <label for="stakeholderConcerns">Known Stakeholder Concerns/Interests:</label>
+                        <label for="stakeholderConcerns" id="lblStakeholderConcerns">Known Stakeholder Concerns/Interests:</label>
                         <textarea id="stakeholderConcerns" placeholder="Timeline concerns, resource constraints, technical risks, etc."></textarea>
                     </div>
                 </div>
             </div>
 
             <div class="form-section">
-                <h3>⚙️ Meeting Preferences</h3>
+                <h3>⚙️ <span id="preferencesHeading">Meeting Preferences</span></h3>
                 <div class="form-field">
-                    <label>Include These Elements:</label>
+                    <label id="lblIncludeElements">Include These Elements:</label>
                     <div class="checkbox-group">
                         <div class="checkbox-item">
                             <input type="checkbox" id="timeboxing" checked>
-                            <label for="timeboxing">Time-boxed agenda items</label>
+                            <label for="timeboxing" id="cbLabel-timeboxing">Time-boxed agenda items</label>
                         </div>
                         <div class="checkbox-item">
                             <input type="checkbox" id="actionItems" checked>
-                            <label for="actionItems">Action item tracking</label>
+                            <label for="actionItems" id="cbLabel-actionItems">Action item tracking</label>
                         </div>
                         <div class="checkbox-item">
                             <input type="checkbox" id="decisions" checked>
-                            <label for="decisions">Decision points</label>
+                            <label for="decisions" id="cbLabel-decisions">Decision points</label>
                         </div>
                         <div class="checkbox-item">
                             <input type="checkbox" id="parking">
-                            <label for="parking">Parking lot for off-topics</label>
+                            <label for="parking" id="cbLabel-parking">Parking lot for off-topics</label>
                         </div>
                         <div class="checkbox-item">
                             <input type="checkbox" id="prep">
-                            <label for="prep">Pre-meeting preparation</label>
+                            <label for="prep" id="cbLabel-prep">Pre-meeting preparation</label>
                         </div>
                         <div class="checkbox-item">
                             <input type="checkbox" id="followup">
-                            <label for="followup">Follow-up requirements</label>
+                            <label for="followup" id="cbLabel-followup">Follow-up requirements</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-field">
-                    <label for="facilitation">Facilitation Style:</label>
+                    <label for="facilitation" id="lblFacilitation">Facilitation Style:</label>
                     <select id="facilitation">
-                        <option value="structured">Structured & Time-boxed</option>
-                        <option value="collaborative">Collaborative Discussion</option>
-                        <option value="decision-focused">Decision-Focused</option>
-                        <option value="creative">Creative/Brainstorming</option>
+                        <option value="structured" id="facOpt-structured">Structured &amp; Time-boxed</option>
+                        <option value="collaborative" id="facOpt-collaborative">Collaborative Discussion</option>
+                        <option value="decision-focused" id="facOpt-decision-focused">Decision-Focused</option>
+                        <option value="creative" id="facOpt-creative">Creative/Brainstorming</option>
                     </select>
                 </div>
             </div>
 
-            <button class="generate-btn" onclick="generateAgendaPrompt()">🤖 Generate AI Prompt</button>
-            <button class="generate-btn secondary-btn" onclick="generateQuickAgenda()">⚡ Quick Agenda Template</button>
+            <button class="generate-btn" onclick="generateAgendaPrompt()" id="btnGenerateAIPrompt">🤖 Generate AI Prompt</button>
+            <button class="generate-btn secondary-btn" onclick="generateQuickAgenda()" id="btnQuickAgenda">⚡ Quick Agenda Template</button>
 
             <div class="output-area" id="outputArea">
-                <p style="color: #9ca3af; text-align: center; margin-top: 70px; font-style: italic;">🎯 Generated agenda or AI prompt will appear here...</p>
+                <p style="color: #9ca3af; text-align: center; margin-top: 70px; font-style: italic;" id="outputPlaceholder">🎯 Generated agenda or AI prompt will appear here...</p>
             </div>
         </div>
 
         <div class="section">
-            <h2>📚 Sample Agenda Templates</h2>
+            <h2>📚 <span id="samplesHeading">Sample Agenda Templates</span></h2>
             <div class="template-showcase">
                 <div class="template-card">
-                    <div class="template-header">🎯 Sprint Planning Meeting</div>
+                    <div class="template-header">🎯 <span id="tplHeader-sprintPlanning">Sprint Planning Meeting</span></div>
                     <div class="template-content">
-                        <strong>Duration:</strong> 2 hours | <strong>Attendees:</strong> Dev Team + PO
-                        <div class="template-example">
-🎯 SPRINT 12 PLANNING
+                        <span id="tplMeta-sprintPlanning"><strong>Duration:</strong> 2 hours | <strong>Attendees:</strong> Dev Team + PO</span>
+                        <div class="template-example" id="tplExample-sprintPlanning">🎯 SPRINT 12 PLANNING
 ⏱️ Total Time: 120 minutes
 
 ⏰ AGENDA:
@@ -595,27 +638,26 @@
    • Sprint goal confirmation
 
 📋 PREPARATION NEEDED:
-• Stories refined & prioritized
+• Stories refined &amp; prioritized
 • Team capacity calculated
 • Previous sprint metrics ready</div>
                     </div>
                 </div>
 
                 <div class="template-card">
-                    <div class="template-header">🤝 Engineering 1:1 Meeting</div>
+                    <div class="template-header">🤝 <span id="tplHeader-oneOnOne">Engineering 1:1 Meeting</span></div>
                     <div class="template-content">
-                        <strong>Duration:</strong> 45 minutes | <strong>Frequency:</strong> Bi-weekly
-                        <div class="template-example">
-🤝 1:1: [ENGINEER NAME]
+                        <span id="tplMeta-oneOnOne"><strong>Duration:</strong> 45 minutes | <strong>Frequency:</strong> Bi-weekly</span>
+                        <div class="template-example" id="tplExample-oneOnOne">🤝 1:1: [ENGINEER NAME]
 ⏱️ Duration: 45 minutes
 
 ⏰ AGENDA:
-1. Check-in & Wellbeing (5 min)
+1. Check-in &amp; Wellbeing (5 min)
    • How are you feeling overall?
    • Work-life balance status
 
 2. Current Work Discussion (15 min)
-   • Project progress & challenges
+   • Project progress &amp; challenges
    • Blockers or support needed
    • Technical decisions/questions
 
@@ -624,7 +666,7 @@
    • Skill development opportunities
    • Growth areas to focus on
 
-4. Team & Process Feedback (5 min)
+4. Team &amp; Process Feedback (5 min)
    • Team dynamics observations
    • Process improvement ideas
 
@@ -640,11 +682,10 @@
                 </div>
 
                 <div class="template-card">
-                    <div class="template-header">🚨 Incident Postmortem</div>
+                    <div class="template-header">🚨 <span id="tplHeader-incidentPostmortem">Incident Postmortem</span></div>
                     <div class="template-content">
-                        <strong>Duration:</strong> 90 minutes | <strong>Focus:</strong> Blameless analysis
-                        <div class="template-example">
-🚨 INCIDENT POSTMORTEM
+                        <span id="tplMeta-incidentPostmortem"><strong>Duration:</strong> 90 minutes | <strong>Focus:</strong> Blameless analysis</span>
+                        <div class="template-example" id="tplExample-incidentPostmortem">🚨 INCIDENT POSTMORTEM
 Incident: [NAME] | Date: [DATE]
 ⏱️ Duration: 90 minutes
 
@@ -665,9 +706,9 @@ Incident: [NAME] | Date: [DATE]
    • Process gap review
 
 4. Action Items Development (20 min)
-   • Immediate fixes (< 1 week)
-   • Medium-term improvements (< 1 month)
-   • Long-term preventions (< 3 months)
+   • Immediate fixes (&lt; 1 week)
+   • Medium-term improvements (&lt; 1 month)
+   • Long-term preventions (&lt; 3 months)
 
 5. Process Improvements (10 min)
    • Monitoring enhancements
@@ -682,11 +723,10 @@ Incident: [NAME] | Date: [DATE]
                 </div>
 
                 <div class="template-card">
-                    <div class="template-header">🏛️ Architecture Review</div>
+                    <div class="template-header">🏛️ <span id="tplHeader-architectureReview">Architecture Review</span></div>
                     <div class="template-content">
-                        <strong>Duration:</strong> 90 minutes | <strong>Focus:</strong> Technical decisions
-                        <div class="template-example">
-🏛️ ARCHITECTURE REVIEW
+                        <span id="tplMeta-architectureReview"><strong>Duration:</strong> 90 minutes | <strong>Focus:</strong> Technical decisions</span>
+                        <div class="template-example" id="tplExample-architectureReview">🏛️ ARCHITECTURE REVIEW
 System: [NAME] | Reviewer: [ARCHITECT]
 ⏱️ Duration: 90 minutes
 
@@ -725,11 +765,337 @@ System: [NAME] | Reviewer: [ARCHITECT]
                 </div>
 
                 <div class="template-card">
-                    <div class="template-header">📊 Weekly Upward Report</div>
+                    <div class="template-header">📊 <span id="tplHeader-weeklyReport">Weekly Upward Report</span></div>
                     <div class="template-content">
-                        <strong>Duration:</strong> 20-30 minutes | <strong>Attendees:</strong> You + Leadership
-                        <div class="template-example">
-📊 WEEKLY UPWARD STATUS REPORT
+                        <span id="tplMeta-weeklyReport"><strong>Duration:</strong> 20-30 minutes | <strong>Attendees:</strong> You + Leadership</span>
+                        <div class="template-example" id="tplExample-weeklyReport">📊 WEEKLY UPWARD STATUS REPORT
+[Team/Project Name]
+⏱️ Duration: 30 minutes
+
+⏰ AGENDA:
+1. Headline Status (5 min)
+   • Overall status: on track / at risk / off track
+   • Top 2-3 wins this week
+   • Top 2-3 risks
+
+2. Delivery vs. Goals (8 min)
+   • Progress against committed milestones/quarterly goals
+   • What changed since last update
+
+3. Decisions Needed (8 min)
+   • Decision 1: options, trade-offs, your recommendation
+   • Decision 2 (if any): same format
+
+4. Risks &amp; Escalations (4 min)
+   • What needs leadership awareness or support right now
+   • Trigger conditions for each risk
+
+5. Next Week Focus (5 min)
+   • Key priorities for next week
+   • What you'll report on next time
+
+🎯 SUCCESS CRITERIA:
+• Leadership leaves with the 2-3 things they need to know or decide
+• No status buried — risks and decisions surfaced, not just progress</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="time-tracker">
+            <h5>⏱️ <span id="timeTrackerHeading">Meeting Time Optimization Tips</span></h5>
+            <p id="timeTrackerBody"><strong>15 min:</strong> Status checks, quick decisions | <strong>30 min:</strong> Deep dives, problem-solving | <strong>60 min:</strong> Planning, reviews | <strong>90+ min:</strong> Workshops, comprehensive planning</p>
+        </div>
+    </div>
+
+    <script>
+        let selectedMeetingType = null;
+        let currentLang = localStorage.getItem('magLang') || 'en';
+
+        // ---------------------------------------------------------------
+        // i18n dictionaries
+        // ---------------------------------------------------------------
+        const I18N = {
+            en: {
+                pageTitle: "AI Meeting Agenda Generator - Engineering Management",
+                headerTitle: "AI Meeting Agenda Generator",
+                headerSubtitle: "Intelligent agenda creation for engineering management meetings with AI-powered suggestions and proven templates",
+                overviewHeading: "Overview & Benefits",
+                overviewBody: "This tool generates intelligent meeting agendas tailored to your specific context, team dynamics, and objectives. By providing structured prompts to AI assistants, you'll get comprehensive agenda suggestions that ensure productive, focused meetings.",
+                tipsHeading: "Why Use AI for Agenda Generation?",
+                tips: [
+                    "Ensures no critical topics are missed",
+                    "Suggests optimal time allocation",
+                    "Adapts to team size and meeting context",
+                    "Incorporates best practices automatically",
+                    "Saves 10-15 minutes of prep time per meeting",
+                    "Creates consistent meeting structures"
+                ],
+                meetingTypesHeading: "Meeting Types",
+                meetingTypesBody: "Select your meeting type to get contextually relevant agenda suggestions:",
+                meetingTypes: {
+                    standup: { title: "Daily Standup", desc: "Quick team sync, blockers, daily priorities", duration: "15-30 min" },
+                    sprintPlanning: { title: "Sprint Planning", desc: "Story sizing, capacity planning, sprint goals", duration: "2-4 hours" },
+                    retrospective: { title: "Sprint Retrospective", desc: "Process improvements, team feedback, action items", duration: "1-2 hours" },
+                    oneOnOne: { title: "1:1 Meeting", desc: "Career development, feedback, personal check-ins", duration: "30-60 min" },
+                    architectureReview: { title: "Architecture Review", desc: "Technical decisions, design discussions, trade-offs", duration: "1-2 hours" },
+                    incidentPostmortem: { title: "Incident Postmortem", desc: "Root cause analysis, prevention strategies", duration: "1 hour" },
+                    projectKickoff: { title: "Project Kickoff", desc: "Goals, roles, timelines, risk assessment", duration: "1-2 hours" },
+                    allHands: { title: "All-Hands", desc: "Company updates, team achievements, Q&A", duration: "30-60 min" },
+                    weeklyReport: { title: "Weekly Upward Report", desc: "Status, risks, decisions needed, next week focus for leadership", duration: "20-30 min" }
+                },
+                generatorHeading: "Agenda Generator",
+                meetingContextHeading: "Meeting Context",
+                lblMeetingTitle: "Meeting Title/Purpose:",
+                lblDuration: "Meeting Duration:",
+                durationOptions: { "15": "15 minutes", "30": "30 minutes", "60": "1 hour", "90": "90 minutes", "120": "2 hours", "180": "3 hours", "240": "4 hours" },
+                lblAttendeeCount: "Number of Attendees:",
+                lblMeetingObjective: "Primary Objective:",
+                lblCurrentContext: "Current Context/Background:",
+                teamStakeholderHeading: "Team & Stakeholder Info",
+                lblKeyAttendees: "Key Attendees & Roles:",
+                lblStakeholderConcerns: "Known Stakeholder Concerns/Interests:",
+                preferencesHeading: "Meeting Preferences",
+                lblIncludeElements: "Include These Elements:",
+                checkboxes: {
+                    timeboxing: "Time-boxed agenda items",
+                    actionItems: "Action item tracking",
+                    decisions: "Decision points",
+                    parking: "Parking lot for off-topics",
+                    prep: "Pre-meeting preparation",
+                    followup: "Follow-up requirements"
+                },
+                lblFacilitation: "Facilitation Style:",
+                facilitationOptions: {
+                    structured: "Structured & Time-boxed",
+                    collaborative: "Collaborative Discussion",
+                    "decision-focused": "Decision-Focused",
+                    creative: "Creative/Brainstorming"
+                },
+                btnGenerateAIPrompt: "🤖 Generate AI Prompt",
+                btnQuickAgenda: "⚡ Quick Agenda Template",
+                outputPlaceholder: "🎯 Generated agenda or AI prompt will appear here...",
+                samplesHeading: "Sample Agenda Templates",
+                samples: {
+                    sprintPlanning: { header: "Sprint Planning Meeting", meta: "<strong>Duration:</strong> 2 hours | <strong>Attendees:</strong> Dev Team + PO" },
+                    oneOnOne: { header: "Engineering 1:1 Meeting", meta: "<strong>Duration:</strong> 45 minutes | <strong>Frequency:</strong> Bi-weekly" },
+                    incidentPostmortem: { header: "Incident Postmortem", meta: "<strong>Duration:</strong> 90 minutes | <strong>Focus:</strong> Blameless analysis" },
+                    architectureReview: { header: "Architecture Review", meta: "<strong>Duration:</strong> 90 minutes | <strong>Focus:</strong> Technical decisions" },
+                    weeklyReport: { header: "Weekly Upward Report", meta: "<strong>Duration:</strong> 20-30 minutes | <strong>Attendees:</strong> You + Leadership" }
+                },
+                timeTrackerHeading: "Meeting Time Optimization Tips",
+                timeTrackerBody: "<strong>15 min:</strong> Status checks, quick decisions | <strong>30 min:</strong> Deep dives, problem-solving | <strong>60 min:</strong> Planning, reviews | <strong>90+ min:</strong> Workshops, comprehensive planning",
+                copyButton: "📋 Copy to Clipboard",
+                copied: "✅ Copied!"
+            },
+            zh: {
+                pageTitle: "AI 會議議程產生器 - 工程管理",
+                headerTitle: "AI 會議議程產生器",
+                headerSubtitle: "為工程管理會議打造的智慧議程產生工具，結合 AI 建議與實證有效的範本",
+                overviewHeading: "工具說明與效益",
+                overviewBody: "這個工具會依你的實際情境、團隊狀況與目標產生量身打造的會議議程建議。透過提供結構化的 prompt 給 AI 助理，你會得到完整的議程建議，讓會議更有效率、更聚焦。",
+                tipsHeading: "為什麼要用 AI 產生議程？",
+                tips: [
+                    "確保不會漏掉重要議題",
+                    "建議最合適的時間分配",
+                    "依團隊規模與會議情境自動調整",
+                    "自動套用最佳實務",
+                    "每場會議省下 10-15 分鐘的準備時間",
+                    "建立一致的會議結構"
+                ],
+                meetingTypesHeading: "會議類型",
+                meetingTypesBody: "選擇你的會議類型，取得符合情境的議程建議：",
+                meetingTypes: {
+                    standup: { title: "每日站會", desc: "快速團隊同步、blocker、當日優先事項", duration: "15-30 分鐘" },
+                    sprintPlanning: { title: "Sprint 規劃會議", desc: "story 估點、產能規劃、sprint 目標", duration: "2-4 小時" },
+                    retrospective: { title: "Sprint 回顧會議", desc: "流程改善、團隊回饋、action item", duration: "1-2 小時" },
+                    oneOnOne: { title: "1:1 會議", desc: "職涯發展、回饋、個人狀態關心", duration: "30-60 分鐘" },
+                    architectureReview: { title: "架構審查會議", desc: "技術決策、設計討論、取捨分析", duration: "1-2 小時" },
+                    incidentPostmortem: { title: "事故檢討會議", desc: "根本原因分析、預防策略", duration: "1 小時" },
+                    projectKickoff: { title: "專案啟動會議", desc: "目標、角色分工、時程、風險評估", duration: "1-2 小時" },
+                    allHands: { title: "全員大會", desc: "公司更新、團隊成果、Q&A", duration: "30-60 分鐘" },
+                    weeklyReport: { title: "週報向上報告", desc: "給主管看的狀態、風險、待決事項、下週重點", duration: "20-30 分鐘" }
+                },
+                generatorHeading: "議程產生器",
+                meetingContextHeading: "會議基本資訊",
+                lblMeetingTitle: "會議標題/目的：",
+                lblDuration: "會議時長：",
+                durationOptions: { "15": "15 分鐘", "30": "30 分鐘", "60": "1 小時", "90": "90 分鐘", "120": "2 小時", "180": "3 小時", "240": "4 小時" },
+                lblAttendeeCount: "參與人數：",
+                lblMeetingObjective: "主要目標：",
+                lblCurrentContext: "現況/背景：",
+                teamStakeholderHeading: "團隊與利害關係人資訊",
+                lblKeyAttendees: "關鍵與會者與角色：",
+                lblStakeholderConcerns: "已知的利害關係人關切/利益：",
+                preferencesHeading: "會議偏好設定",
+                lblIncludeElements: "要包含的元素：",
+                checkboxes: {
+                    timeboxing: "時間分配的議程項目",
+                    actionItems: "Action item 追蹤",
+                    decisions: "決策點",
+                    parking: "離題內容 Parking Lot",
+                    prep: "會前準備事項",
+                    followup: "後續追蹤要求"
+                },
+                lblFacilitation: "主持風格：",
+                facilitationOptions: {
+                    structured: "結構化、嚴格時間分配",
+                    collaborative: "協作討論",
+                    "decision-focused": "決策導向",
+                    creative: "創意/腦力激盪"
+                },
+                btnGenerateAIPrompt: "🤖 產生 AI Prompt",
+                btnQuickAgenda: "⚡ 快速議程範本",
+                outputPlaceholder: "🎯 產生的議程或 AI prompt 會顯示在這裡...",
+                samplesHeading: "議程範本範例",
+                samples: {
+                    sprintPlanning: { header: "Sprint 規劃會議", meta: "<strong>時長：</strong>2 小時｜<strong>與會者：</strong>開發團隊 + PO" },
+                    oneOnOne: { header: "工程師 1:1 會議", meta: "<strong>時長：</strong>45 分鐘｜<strong>頻率：</strong>雙週一次" },
+                    incidentPostmortem: { header: "事故檢討會議", meta: "<strong>時長：</strong>90 分鐘｜<strong>重點：</strong>無責備分析" },
+                    architectureReview: { header: "架構審查會議", meta: "<strong>時長：</strong>90 分鐘｜<strong>重點：</strong>技術決策" },
+                    weeklyReport: { header: "週報向上報告", meta: "<strong>時長：</strong>20-30 分鐘｜<strong>與會者：</strong>你與主管" }
+                },
+                timeTrackerHeading: "會議時間優化建議",
+                timeTrackerBody: "<strong>15 分鐘：</strong>狀態確認、快速決策｜<strong>30 分鐘：</strong>深入討論、解決問題｜<strong>60 分鐘：</strong>規劃、檢視｜<strong>90 分鐘以上：</strong>工作坊、完整規劃",
+                copyButton: "📋 複製到剪貼簿",
+                copied: "✅ 已複製！"
+            }
+        };
+
+        // Static sample-template full text blocks (5 cards), per language.
+        const SAMPLE_EXAMPLES = {
+            en: {
+                sprintPlanning: `🎯 SPRINT 12 PLANNING
+⏱️ Total Time: 120 minutes
+
+⏰ AGENDA:
+1. Sprint Goal Definition (15 min)
+   • Review product priorities
+   • Define sprint success criteria
+
+2. Backlog Review (30 min)
+   • Story walkthrough
+   • Acceptance criteria clarification
+   • Dependencies identification
+
+3. Capacity Planning (20 min)
+   • Team availability review
+   • Velocity consideration
+   • Commitment discussion
+
+4. Story Estimation (45 min)
+   • Planning poker sessions
+   • Risk assessment
+   • Task breakdown
+
+5. Sprint Commitment (10 min)
+   • Final story selection
+   • Sprint goal confirmation
+
+📋 PREPARATION NEEDED:
+• Stories refined & prioritized
+• Team capacity calculated
+• Previous sprint metrics ready`,
+                oneOnOne: `🤝 1:1: [ENGINEER NAME]
+⏱️ Duration: 45 minutes
+
+⏰ AGENDA:
+1. Check-in & Wellbeing (5 min)
+   • How are you feeling overall?
+   • Work-life balance status
+
+2. Current Work Discussion (15 min)
+   • Project progress & challenges
+   • Blockers or support needed
+   • Technical decisions/questions
+
+3. Career Development (15 min)
+   • Goal progress review
+   • Skill development opportunities
+   • Growth areas to focus on
+
+4. Team & Process Feedback (5 min)
+   • Team dynamics observations
+   • Process improvement ideas
+
+5. Future Planning (5 min)
+   • Upcoming assignments
+   • Next quarter interests
+
+📌 FOLLOW-UP ACTIONS:
+• Document key decisions
+• Update career development plan
+• Schedule follow-up meetings if needed`,
+                incidentPostmortem: `🚨 INCIDENT POSTMORTEM
+Incident: [NAME] | Date: [DATE]
+⏱️ Duration: 90 minutes
+
+⏰ AGENDA:
+1. Incident Summary (10 min)
+   • Timeline overview
+   • Impact assessment
+   • Key metrics affected
+
+2. Detailed Timeline Review (25 min)
+   • Chronological event walkthrough
+   • Decision points analysis
+   • Communication review
+
+3. Root Cause Analysis (25 min)
+   • Contributing factors identification
+   • System weakness analysis
+   • Process gap review
+
+4. Action Items Development (20 min)
+   • Immediate fixes (< 1 week)
+   • Medium-term improvements (< 1 month)
+   • Long-term preventions (< 3 months)
+
+5. Process Improvements (10 min)
+   • Monitoring enhancements
+   • Alert optimization
+   • Documentation updates
+
+🎯 SUCCESS CRITERIA:
+• Clear action items with owners
+• Prevention strategy defined
+• Lessons learned documented`,
+                architectureReview: `🏛️ ARCHITECTURE REVIEW
+System: [NAME] | Reviewer: [ARCHITECT]
+⏱️ Duration: 90 minutes
+
+⏰ AGENDA:
+1. Problem Statement (10 min)
+   • Business requirements review
+   • Technical constraints
+   • Success criteria definition
+
+2. Proposed Solution Overview (20 min)
+   • High-level architecture
+   • Technology choices rationale
+   • Integration points
+
+3. Deep Dive Discussion (40 min)
+   • Scalability considerations
+   • Security implications
+   • Performance characteristics
+   • Maintainability aspects
+
+4. Alternative Approaches (10 min)
+   • Options considered
+   • Trade-offs analysis
+   • Decision rationale
+
+5. Risk Assessment (10 min)
+   • Technical risks
+   • Implementation challenges
+   • Mitigation strategies
+
+📦 DELIVERABLES:
+• Architecture decision record (ADR)
+• Implementation recommendations
+• Risk mitigation plan`,
+                weeklyReport: `📊 WEEKLY UPWARD STATUS REPORT
 [Team/Project Name]
 ⏱️ Duration: 30 minutes
 
@@ -757,81 +1123,326 @@ System: [NAME] | Reviewer: [ARCHITECT]
 
 🎯 SUCCESS CRITERIA:
 • Leadership leaves with the 2-3 things they need to know or decide
-• No status buried — risks and decisions surfaced, not just progress</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+• No status buried — risks and decisions surfaced, not just progress`
+            },
+            zh: {
+                sprintPlanning: `🎯 SPRINT 12 規劃會議
+⏱️ 總時長：120 分鐘
 
-        <div class="time-tracker">
-            <h5>⏱️ Meeting Time Optimization Tips</h5>
-            <p><strong>15 min:</strong> Status checks, quick decisions | <strong>30 min:</strong> Deep dives, problem-solving | <strong>60 min:</strong> Planning, reviews | <strong>90+ min:</strong> Workshops, comprehensive planning</p>
-        </div>
-    </div>
+⏰ 議程：
+1. Sprint 目標定義（15 分鐘）
+   • 檢視產品優先順序
+   • 定義本次 sprint 成功標準
 
-    <script>
-        let selectedMeetingType = null;
+2. Backlog 檢視（30 分鐘）
+   • Story 逐一說明
+   • 釐清驗收標準
+   • 找出相依關係
 
+3. 產能規劃（20 分鐘）
+   • 檢視團隊可用時間
+   • 考量 velocity
+   • 討論承諾範圍
+
+4. Story 估點（45 分鐘）
+   • Planning poker
+   • 風險評估
+   • 任務拆解
+
+5. Sprint 承諾（10 分鐘）
+   • 最終 story 選定
+   • 確認 sprint 目標
+
+📋 需要的會前準備：
+• Story 已經整理與排序
+• 團隊產能已計算
+• 上個 sprint 的數據已備妥`,
+                oneOnOne: `🤝 1:1：[工程師姓名]
+⏱️ 時長：45 分鐘
+
+⏰ 議程：
+1. Check-in 與狀態關心（5 分鐘）
+   • 整體感覺如何？
+   • 工作與生活平衡狀況
+
+2. 目前工作討論（15 分鐘）
+   • 專案進度與挑戰
+   • Blocker 或需要的支援
+   • 技術決策/問題
+
+3. 職涯發展（15 分鐘）
+   • 目標進度回顧
+   • 技能發展機會
+   • 想加強的成長領域
+
+4. 團隊與流程回饋（5 分鐘）
+   • 團隊動態觀察
+   • 流程改善想法
+
+5. 未來規劃（5 分鐘）
+   • 接下來的任務安排
+   • 下一季的興趣方向
+
+📌 後續追蹤事項：
+• 記錄關鍵決策
+• 更新職涯發展計畫
+• 視需要排定後續會議`,
+                incidentPostmortem: `🚨 事故檢討會議
+事故：[名稱]｜日期：[日期]
+⏱️ 時長：90 分鐘
+
+⏰ 議程：
+1. 事故摘要（10 分鐘）
+   • 時間軸總覽
+   • 影響評估
+   • 受影響的關鍵指標
+
+2. 詳細時間軸回顧（25 分鐘）
+   • 依時間順序回顧事件
+   • 決策點分析
+   • 溝通過程檢視
+
+3. 根本原因分析（25 分鐘）
+   • 找出促成因素
+   • 系統弱點分析
+   • 流程缺口檢視
+
+4. Action Item 制定（20 分鐘）
+   • 立即修復（< 1 週）
+   • 中期改善（< 1 個月）
+   • 長期預防（< 3 個月）
+
+5. 流程改善（10 分鐘）
+   • 監控強化
+   • 告警優化
+   • 文件更新
+
+🎯 成功標準：
+• 有明確附負責人的 action item
+• 已定義預防策略
+• 已記錄學到的教訓`,
+                architectureReview: `🏛️ 架構審查會議
+系統：[名稱]｜審查者：[架構師]
+⏱️ 時長：90 分鐘
+
+⏰ 議程：
+1. 問題陳述（10 分鐘）
+   • 檢視業務需求
+   • 技術限制
+   • 定義成功標準
+
+2. 提案方案概覽（20 分鐘）
+   • 高階架構
+   • 技術選型理由
+   • 整合點
+
+3. 深入討論（40 分鐘）
+   • 可擴展性考量
+   • 安全性影響
+   • 效能特性
+   • 可維護性面向
+
+4. 替代方案（10 分鐘）
+   • 曾考慮過的選項
+   • 取捨分析
+   • 決策理由
+
+5. 風險評估（10 分鐘）
+   • 技術風險
+   • 實作挑戰
+   • 緩解策略
+
+📦 交付項目：
+• 架構決策記錄（ADR）
+• 實作建議
+• 風險緩解計畫`,
+                weeklyReport: `📊 週報向上報告
+[團隊/專案名稱]
+⏱️ 時長：30 分鐘
+
+⏰ 議程：
+1. 重點狀態（5 分鐘）
+   • 整體狀態：綠燈／需支持／紅燈
+   • 本週 2-3 個亮點
+   • 本週 2-3 個風險
+
+2. 交付進度對照目標（8 分鐘）
+   • 對照已承諾的里程碑/本季目標的進度
+   • 自上次更新以來有什麼變化
+
+3. 需要的決策（8 分鐘）
+   • 決策 1：選項、取捨、你的建議
+   • 決策 2（如果有）：同上格式
+
+4. 風險與升級事項（4 分鐘）
+   • 現在需要主管知道或協助的事
+   • 每個風險的觸發條件
+
+5. 下週重點（5 分鐘）
+   • 下週的關鍵優先事項
+   • 下次會回報什麼
+
+🎯 成功標準：
+• 主管離開時清楚知道 2-3 件需要知道或決定的事
+• 沒有把風險/決策藏在進度底下`
+            }
+        };
+
+        // Auto-populate defaults per meeting type (duration is language-independent, objective isn't).
+        const MEETING_DEFAULTS = {
+            en: {
+                'standup': { duration: '15', objective: 'Share progress updates, identify blockers, and align on daily priorities' },
+                'sprint-planning': { duration: '120', objective: 'Define sprint goals, estimate stories, and commit to deliverables for the upcoming sprint' },
+                'retrospective': { duration: '60', objective: 'Reflect on the previous sprint, identify improvement opportunities, and define action items' },
+                'one-on-one': { duration: '45', objective: 'Provide career guidance, address concerns, and support professional development' },
+                'architecture-review': { duration: '90', objective: 'Review technical design decisions, assess scalability and maintainability, and approve architecture' },
+                'incident-postmortem': { duration: '60', objective: 'Conduct blameless analysis of the incident and develop prevention strategies' },
+                'project-kickoff': { duration: '120', objective: 'Align on project goals, define roles and responsibilities, and establish success criteria' },
+                'all-hands': { duration: '45', objective: 'Share company updates, recognize achievements, and foster team alignment' },
+                'weekly-report': { duration: '30', objective: 'Give leadership a fast, decision-focused view of status, risks, and what needs their input this week' }
+            },
+            zh: {
+                'standup': { duration: '15', objective: '分享進度更新、找出 blocker、對齊當日優先事項' },
+                'sprint-planning': { duration: '120', objective: '定義 sprint 目標、估算 story、確認下個 sprint 的交付承諾' },
+                'retrospective': { duration: '60', objective: '回顧上個 sprint、找出改善機會、定義 action item' },
+                'one-on-one': { duration: '45', objective: '提供職涯指引、了解關切事項、支持專業發展' },
+                'architecture-review': { duration: '90', objective: '審查技術設計決策、評估可擴展性與可維護性、核准架構方案' },
+                'incident-postmortem': { duration: '60', objective: '對這次事故進行無責備分析、擬定預防策略' },
+                'project-kickoff': { duration: '120', objective: '對齊專案目標、明確角色分工、建立成功標準' },
+                'all-hands': { duration: '45', objective: '分享公司更新、表揚成果、促進團隊向心力' },
+                'weekly-report': { duration: '30', objective: '讓主管快速掌握狀態、風險，以及這週需要他們決定或協助的事' }
+            }
+        };
+
+        const SLUG_TO_KEY = {
+            'standup': 'standup',
+            'sprint-planning': 'sprintPlanning',
+            'retrospective': 'retrospective',
+            'one-on-one': 'oneOnOne',
+            'architecture-review': 'architectureReview',
+            'incident-postmortem': 'incidentPostmortem',
+            'project-kickoff': 'projectKickoff',
+            'all-hands': 'allHands',
+            'weekly-report': 'weeklyReport'
+        };
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        // ---------------------------------------------------------------
+        // Language switching / rendering
+        // ---------------------------------------------------------------
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('magLang', lang);
+            renderLanguage();
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+            document.getElementById('pageTitle').textContent = dict.pageTitle;
+            document.title = dict.pageTitle;
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            document.getElementById('headerTitle').textContent = dict.headerTitle;
+            document.getElementById('headerSubtitle').textContent = dict.headerSubtitle;
+
+            document.getElementById('overviewHeading').textContent = dict.overviewHeading;
+            document.getElementById('overviewBody').textContent = dict.overviewBody;
+            document.getElementById('tipsHeading').textContent = dict.tipsHeading;
+            const tipsList = document.getElementById('tipsList');
+            tipsList.innerHTML = dict.tips.map(tip => `<li>${tip}</li>`).join('');
+
+            document.getElementById('meetingTypesHeading').textContent = dict.meetingTypesHeading;
+            document.getElementById('meetingTypesBody').textContent = dict.meetingTypesBody;
+            Object.keys(dict.meetingTypes).forEach(key => {
+                const mt = dict.meetingTypes[key];
+                const titleEl = document.getElementById(`mtTitle-${key}`);
+                const descEl = document.getElementById(`mtDesc-${key}`);
+                const durEl = document.getElementById(`mtDuration-${key}`);
+                if (titleEl) titleEl.textContent = mt.title;
+                if (descEl) descEl.textContent = mt.desc;
+                if (durEl) durEl.textContent = mt.duration;
+            });
+
+            document.getElementById('generatorHeading').textContent = dict.generatorHeading;
+            document.getElementById('meetingContextHeading').textContent = dict.meetingContextHeading;
+            document.getElementById('lblMeetingTitle').textContent = dict.lblMeetingTitle;
+            document.getElementById('lblDuration').textContent = dict.lblDuration;
+            Object.keys(dict.durationOptions).forEach(val => {
+                const opt = document.getElementById(`durOpt${val}`);
+                if (opt) opt.textContent = dict.durationOptions[val];
+            });
+            document.getElementById('lblAttendeeCount').textContent = dict.lblAttendeeCount;
+            document.getElementById('lblMeetingObjective').textContent = dict.lblMeetingObjective;
+            document.getElementById('lblCurrentContext').textContent = dict.lblCurrentContext;
+
+            document.getElementById('teamStakeholderHeading').textContent = dict.teamStakeholderHeading;
+            document.getElementById('lblKeyAttendees').textContent = dict.lblKeyAttendees;
+            document.getElementById('lblStakeholderConcerns').textContent = dict.lblStakeholderConcerns;
+
+            document.getElementById('preferencesHeading').textContent = dict.preferencesHeading;
+            document.getElementById('lblIncludeElements').textContent = dict.lblIncludeElements;
+            Object.keys(dict.checkboxes).forEach(id => {
+                const el = document.getElementById(`cbLabel-${id}`);
+                if (el) el.textContent = dict.checkboxes[id];
+            });
+            document.getElementById('lblFacilitation').textContent = dict.lblFacilitation;
+            Object.keys(dict.facilitationOptions).forEach(val => {
+                const opt = document.getElementById(`facOpt-${val}`);
+                if (opt) opt.textContent = dict.facilitationOptions[val];
+            });
+
+            document.getElementById('btnGenerateAIPrompt').textContent = dict.btnGenerateAIPrompt;
+            document.getElementById('btnQuickAgenda').textContent = dict.btnQuickAgenda;
+            const outputPlaceholder = document.getElementById('outputPlaceholder');
+            if (outputPlaceholder) outputPlaceholder.textContent = dict.outputPlaceholder;
+
+            document.getElementById('samplesHeading').textContent = dict.samplesHeading;
+            Object.keys(dict.samples).forEach(key => {
+                const headerEl = document.getElementById(`tplHeader-${key}`);
+                const metaEl = document.getElementById(`tplMeta-${key}`);
+                const exampleEl = document.getElementById(`tplExample-${key}`);
+                if (headerEl) headerEl.textContent = dict.samples[key].header;
+                if (metaEl) metaEl.innerHTML = dict.samples[key].meta;
+                if (exampleEl) exampleEl.textContent = SAMPLE_EXAMPLES[currentLang][key];
+            });
+
+            document.getElementById('timeTrackerHeading').textContent = dict.timeTrackerHeading;
+            document.getElementById('timeTrackerBody').innerHTML = dict.timeTrackerBody;
+        }
+
+        // ---------------------------------------------------------------
+        // Meeting type selection
+        // ---------------------------------------------------------------
         function selectMeetingType(element, type) {
             document.querySelectorAll('.meeting-type').forEach(el => el.classList.remove('selected'));
             element.classList.add('selected');
             selectedMeetingType = type;
 
-            // Auto-populate some fields based on meeting type
             populateFieldsForMeetingType(type);
         }
 
         function populateFieldsForMeetingType(type) {
             const durationField = document.getElementById('duration');
             const objectiveField = document.getElementById('meetingObjective');
+            const defaults = MEETING_DEFAULTS[currentLang][type];
 
-            const meetingDefaults = {
-                'standup': {
-                    duration: '15',
-                    objective: 'Share progress updates, identify blockers, and align on daily priorities'
-                },
-                'sprint-planning': {
-                    duration: '120',
-                    objective: 'Define sprint goals, estimate stories, and commit to deliverables for the upcoming sprint'
-                },
-                'retrospective': {
-                    duration: '60',
-                    objective: 'Reflect on the previous sprint, identify improvement opportunities, and define action items'
-                },
-                'one-on-one': {
-                    duration: '45',
-                    objective: 'Provide career guidance, address concerns, and support professional development'
-                },
-                'architecture-review': {
-                    duration: '90',
-                    objective: 'Review technical design decisions, assess scalability and maintainability, and approve architecture'
-                },
-                'incident-postmortem': {
-                    duration: '60',
-                    objective: 'Conduct blameless analysis of the incident and develop prevention strategies'
-                },
-                'project-kickoff': {
-                    duration: '120',
-                    objective: 'Align on project goals, define roles and responsibilities, and establish success criteria'
-                },
-                'all-hands': {
-                    duration: '45',
-                    objective: 'Share company updates, recognize achievements, and foster team alignment'
-                },
-                'weekly-report': {
-                    duration: '30',
-                    objective: 'Give leadership a fast, decision-focused view of status, risks, and what needs their input this week'
-                }
-            };
-
-            if (meetingDefaults[type]) {
-                durationField.value = meetingDefaults[type].duration;
+            if (defaults) {
+                durationField.value = defaults.duration;
                 if (!objectiveField.value.trim()) {
-                    objectiveField.value = meetingDefaults[type].objective;
+                    objectiveField.value = defaults.objective;
                 }
             }
         }
 
+        // ---------------------------------------------------------------
+        // Generators
+        // ---------------------------------------------------------------
         function generateAgendaPrompt() {
             const meetingTitle = document.getElementById('meetingTitle').value;
             const duration = document.getElementById('duration').value;
@@ -840,19 +1451,56 @@ System: [NAME] | Reviewer: [ARCHITECT]
             const context = document.getElementById('currentContext').value;
             const attendees = document.getElementById('keyAttendees').value;
             const concerns = document.getElementById('stakeholderConcerns').value;
-            const facilitation = document.getElementById('facilitation').value;
+            const facilitationValue = document.getElementById('facilitation').value;
+            const dict = t();
+            const facilitation = dict.facilitationOptions[facilitationValue] || facilitationValue;
 
             const selectedOptions = [];
-            if (document.getElementById('timeboxing').checked) selectedOptions.push('time-boxed agenda items');
-            if (document.getElementById('actionItems').checked) selectedOptions.push('action item tracking');
-            if (document.getElementById('decisions').checked) selectedOptions.push('decision points');
-            if (document.getElementById('parking').checked) selectedOptions.push('parking lot for off-topic items');
-            if (document.getElementById('prep').checked) selectedOptions.push('pre-meeting preparation requirements');
-            if (document.getElementById('followup').checked) selectedOptions.push('follow-up action planning');
+            if (document.getElementById('timeboxing').checked) selectedOptions.push(dict.checkboxes.timeboxing);
+            if (document.getElementById('actionItems').checked) selectedOptions.push(dict.checkboxes.actionItems);
+            if (document.getElementById('decisions').checked) selectedOptions.push(dict.checkboxes.decisions);
+            if (document.getElementById('parking').checked) selectedOptions.push(dict.checkboxes.parking);
+            if (document.getElementById('prep').checked) selectedOptions.push(dict.checkboxes.prep);
+            if (document.getElementById('followup').checked) selectedOptions.push(dict.checkboxes.followup);
 
-            const meetingTypeText = selectedMeetingType ? `(${selectedMeetingType.replace('-', ' ')})` : '';
+            const mtKey = selectedMeetingType ? SLUG_TO_KEY[selectedMeetingType] : null;
+            const meetingTypeText = mtKey ? `(${dict.meetingTypes[mtKey].title})` : '';
 
-            const prompt = `Please create a comprehensive meeting agenda ${meetingTypeText} with the following specifications:
+            let prompt;
+            if (currentLang === 'zh') {
+                prompt = `請為以下會議${meetingTypeText}產生一份完整的會議議程：
+
+會議資訊：
+• 標題/目的：${meetingTitle || '[未填寫]'}
+• 時長：${duration} 分鐘
+• 參與人數：${attendeeCount || '[未填寫]'} 人
+• 主持風格：${facilitation}
+
+會議目標：
+${objective || '[請填寫主要目標]'}
+
+現況背景：
+${context || '[請提供相關背景資訊]'}
+
+關鍵與會者與角色：
+${attendees || '[請列出關鍵參與者與角色]'}
+
+利害關係人關切/利益：
+${concerns || '[請填寫已知的關切事項]'}
+
+需要包含的元素：
+${selectedOptions.length > 0 ? '• ' + selectedOptions.join('\n• ') : '[標準議程格式]'}
+
+請產生：
+1. 附具體時間分配的結構化議程
+2. 每個議程項目的清楚目標
+3. 會前準備事項（如果需要）
+4. 預期成果/交付項目
+5. 後續追蹤事項範本
+
+請確保議程可執行、有效率，並聚焦在達成上述目標。`;
+            } else {
+                prompt = `Please create a comprehensive meeting agenda ${meetingTypeText} with the following specifications:
 
 MEETING DETAILS:
 • Title/Purpose: ${meetingTitle || '[Not specified]'}
@@ -883,8 +1531,14 @@ Please generate:
 5. Follow-up actions template
 
 Make the agenda actionable, time-efficient, and focused on achieving the stated objectives.`;
+            }
 
-            displayOutput('🤖 AI Prompt Generated', prompt, 'Copy this prompt and paste it into your AI assistant (Claude, ChatGPT, etc.) to generate a comprehensive meeting agenda.');
+            const title = currentLang === 'zh' ? '🤖 AI Prompt 已產生' : '🤖 AI Prompt Generated';
+            const note = currentLang === 'zh'
+                ? '複製這段 prompt，貼到你的 AI 助理（Claude、ChatGPT 等）裡，產生完整的會議議程。'
+                : 'Copy this prompt and paste it into your AI assistant (Claude, ChatGPT, etc.) to generate a comprehensive meeting agenda.';
+
+            displayOutput(title, prompt, note);
         }
 
         function generateQuickAgenda() {
@@ -892,11 +1546,31 @@ Make the agenda actionable, time-efficient, and focused on achieving the stated 
             const duration = parseInt(document.getElementById('duration').value);
             const objective = document.getElementById('meetingObjective').value;
             const attendees = document.getElementById('keyAttendees').value;
+            const zh = currentLang === 'zh';
 
             let template = '';
 
             if (selectedMeetingType === 'standup') {
-                template = `🌅 DAILY STANDUP
+                template = zh ? `🌅 每日站會
+⏱️ 時長：15 分鐘
+
+⏰ 議程：
+1. 輪流更新（10 分鐘）
+   • 昨天完成了什麼？
+   • 今天要做什麼？
+   • 有沒有 blocker 或阻礙？
+
+2. Blocker 討論（3 分鐘）
+   • 處理阻礙事項
+   • 分配協助/資源
+
+3. 當日規劃（2 分鐘）
+   • 確認優先事項
+   • 排定後續追蹤
+
+🎯 成功標準：
+• 所有 blocker 都已被識別並處理
+• 團隊對齊當日優先事項` : `🌅 DAILY STANDUP
 ⏱️ Duration: 15 minutes
 
 ⏰ AGENDA:
@@ -917,7 +1591,33 @@ Make the agenda actionable, time-efficient, and focused on achieving the stated 
 • All blockers identified and addressed
 • Team aligned on daily priorities`;
             } else if (selectedMeetingType === 'one-on-one') {
-                template = `🤝 1:1 MEETING
+                template = zh ? `🤝 1:1 會議
+${meetingTitle || '[工程師姓名]'}
+⏱️ 時長：${duration} 分鐘
+
+⏰ 議程：
+1. Check-in（${Math.round(duration * 0.1)} 分鐘）
+   • 最近整體感覺如何？
+   • 有沒有個人/工作上的擔憂？
+
+2. 目前工作（${Math.round(duration * 0.4)} 分鐘）
+   • 專案進度與挑戰
+   • 技術決策或問題
+   • 需要我提供的支援
+
+3. 職涯發展（${Math.round(duration * 0.3)} 分鐘）
+   • 目標進度回顧
+   • 學習機會
+   • 想加強的成長領域
+
+4. 回饋與規劃（${Math.round(duration * 0.2)} 分鐘）
+   • 流程改善想法
+   • 後續步驟與行動
+
+📌 後續追蹤：
+• 記錄 action item
+• 更新職涯目標
+• 排定下次會議` : `🤝 1:1 MEETING
 ${meetingTitle || '[Engineer Name]'}
 ⏱️ Duration: ${duration} minutes
 
@@ -945,7 +1645,40 @@ ${meetingTitle || '[Engineer Name]'}
 • Career goals updated
 • Next meeting scheduled`;
             } else if (selectedMeetingType === 'weekly-report') {
-                template = `📊 WEEKLY UPWARD STATUS REPORT
+                template = zh ? `📊 週報向上報告
+${meetingTitle || '[團隊/專案名稱]'}
+⏱️ 時長：${duration} 分鐘
+
+⏰ 議程：
+1. 重點狀態（${Math.round(duration * 0.15)} 分鐘）
+   • 整體狀態：綠燈／需支持／紅燈
+   • 本週 2-3 個亮點
+   • 本週 2-3 個風險
+
+2. 交付進度對照目標（${Math.round(duration * 0.25)} 分鐘）
+   • 對照已承諾的里程碑/本季目標的進度
+   • 自上次更新以來有什麼變化
+
+3. 需要的決策（${Math.round(duration * 0.25)} 分鐘）
+   • 決策 1：選項、取捨、你的建議
+   • 決策 2（如果有）：同上格式
+
+4. 風險與升級事項（${Math.round(duration * 0.15)} 分鐘）
+   • 現在需要主管知道或協助的事
+   • 每個風險的觸發條件
+
+5. 下週重點（${Math.round(duration * 0.2)} 分鐘）
+   • 下週的關鍵優先事項
+   • 下次會回報什麼
+
+📌 後續追蹤：
+• 已確認決策與負責人
+• Action item 附負責人/日期
+• 確認下次回報時間
+
+🎯 成功標準：
+• 主管離開時清楚知道 2-3 件需要知道或決定的事
+• 沒有把風險/決策藏在進度底下` : `📊 WEEKLY UPWARD STATUS REPORT
 ${meetingTitle || '[Team/Project Name]'}
 ⏱️ Duration: ${duration} minutes
 
@@ -980,11 +1713,39 @@ ${meetingTitle || '[Team/Project Name]'}
 • Leadership leaves with the 2-3 things they need to know or decide
 • No status buried — risks and decisions surfaced, not just progress`;
             } else {
-                // Generic template
-                const segments = Math.max(3, Math.min(6, Math.floor(duration / 15)));
-                const timePerSegment = Math.floor(duration / segments);
+                template = zh ? `📋 ${meetingTitle || '會議議程'}
+⏱️ 時長：${duration} 分鐘
+🎯 目標：${objective || '定義會議目標'}
 
-                template = `📋 ${meetingTitle || 'MEETING AGENDA'}
+⏰ 議程：
+1. 開場與背景（${Math.round(duration * 0.1)} 分鐘）
+   • 歡迎與介紹
+   • 回顧會議目標
+
+2. 主要討論（${Math.round(duration * 0.6)} 分鐘）
+   • [重點主題 1]
+   • [重點主題 2]
+   • [重點主題 3]
+
+3. 決策點（${Math.round(duration * 0.2)} 分鐘）
+   • 需要的決策
+   • 後續步驟規劃
+
+4. 收尾（${Math.round(duration * 0.1)} 分鐘）
+   • 回顧 action item
+   • 排定後續追蹤
+
+👥 與會者：
+${attendees || '在這裡列出關鍵參與者'}
+
+📋 會前準備：
+• [會前需要準備的事項]
+• [需要先看的文件]
+
+🎯 成功標準：
+• 做出明確決策
+• Action item 已指派
+• 後續步驟已定義` : `📋 ${meetingTitle || 'MEETING AGENDA'}
 ⏱️ Duration: ${duration} minutes
 🎯 Objective: ${objective || 'Define meeting objectives'}
 
@@ -1019,7 +1780,10 @@ ${attendees || 'List key participants here'}
 • Next steps defined`;
             }
 
-            displayOutput('⚡ Quick Agenda Generated', template, 'Customize the bracketed placeholders with your specific information.');
+            const title = zh ? '⚡ 快速議程已產生' : '⚡ Quick Agenda Generated';
+            const note = zh ? '把方括號裡的佔位內容換成你的實際資訊。' : 'Customize the bracketed placeholders with your specific information.';
+
+            displayOutput(title, template, note);
         }
 
         function displayOutput(title, content, note) {
@@ -1029,17 +1793,16 @@ ${attendees || 'List key participants here'}
                 <h4 style="color: #059669; margin-bottom: 15px; font-size: 1.1em;">${title}</h4>
                 <div style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #d1d5db; font-family: 'Monaco', 'Menlo', monospace; font-size: 13px; line-height: 1.6; white-space: pre-wrap; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">${content}</div>
                 <p style="margin-top: 15px; color: #6b7280; font-style: italic; font-size: 0.9em;">${note}</p>
-                <button onclick="copyToClipboard()" style="margin-top: 10px; padding: 8px 16px; background: #4f46e5; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9em;">📋 Copy to Clipboard</button>
+                <button onclick="copyToClipboard()" style="margin-top: 10px; padding: 8px 16px; background: #4f46e5; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9em;">${t().copyButton}</button>
             `;
         }
 
         function copyToClipboard() {
             const content = document.querySelector('.output-area div').textContent;
             navigator.clipboard.writeText(content).then(() => {
-                // Provide visual feedback
                 const button = event.target;
                 const originalText = button.textContent;
-                button.textContent = '✅ Copied!';
+                button.textContent = t().copied;
                 button.style.background = '#059669';
                 setTimeout(() => {
                     button.textContent = originalText;
@@ -1047,6 +1810,11 @@ ${attendees || 'List key participants here'}
                 }, 2000);
             });
         }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderLanguage();
+        });
     </script>
 </body>
 </html>
