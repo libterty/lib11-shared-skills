@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Coaching Suggestion Prompt - Engineering Management Tool</title>
+    <title id="pageTitle">AI Coaching Suggestion Prompt - Engineering Management Tool</title>
     <style>
         * {
             margin: 0;
@@ -34,6 +34,36 @@
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 3px solid #2c5aa0;
+            position: relative;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: rgba(44, 90, 160, 0.08);
+            color: #2c5aa0;
+            border: 1px solid rgba(44, 90, 160, 0.4);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:hover {
+            background: rgba(44, 90, 160, 0.18);
+        }
+
+        .lang-btn.active {
+            background: #2c5aa0;
+            color: white;
         }
 
         .header h1 {
@@ -212,6 +242,9 @@
             .action-buttons {
                 display: none;
             }
+            .lang-switcher {
+                display: none;
+            }
         }
 
         @media (max-width: 768px) {
@@ -227,139 +260,148 @@
             .checkbox-group {
                 grid-template-columns: 1fr;
             }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎯 AI Coaching Suggestion Prompt</h1>
-            <div class="subtitle">Engineering Management Tool for Direct Report Growth Planning</div>
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1>🎯 <span id="headerTitle">AI Coaching Suggestion Prompt</span></h1>
+            <div class="subtitle" id="headerSubtitle">Engineering Management Tool for Direct Report Growth Planning</div>
         </div>
 
         <div class="description">
-            <h2>📋 What is this tool?</h2>
-            <p>This template helps engineering managers create comprehensive AI prompts to generate personalized growth and development suggestions for their direct reports. By providing structured context about an engineer's current situation, performance, and career goals, you can leverage AI to identify specific coaching opportunities, skill development areas, and career advancement strategies.</p>
+            <h2>📋 <span id="descHeading">What is this tool?</span></h2>
+            <p id="descBody1">This template helps engineering managers create comprehensive AI prompts to generate personalized growth and development suggestions for their direct reports. By providing structured context about an engineer's current situation, performance, and career goals, you can leverage AI to identify specific coaching opportunities, skill development areas, and career advancement strategies.</p>
 
-            <p><strong>Why use this:</strong> Saves time in coaching preparation, ensures comprehensive coverage of growth areas, provides objective suggestions, and helps identify blind spots in development planning.</p>
+            <p id="descBody2"><strong>Why use this:</strong> Saves time in coaching preparation, ensures comprehensive coverage of growth areas, provides objective suggestions, and helps identify blind spots in development planning.</p>
         </div>
 
         <div class="section">
-            <div class="section-title">👤 Employee Context</div>
+            <div class="section-title" id="sectionTitle-employeeContext">👤 Employee Context</div>
 
             <div class="form-group">
-                <label for="employee-name">Employee Name:</label>
+                <label for="employee-name" id="lblEmployeeName">Employee Name:</label>
                 <input type="text" id="employee-name" placeholder="e.g., Sarah Johnson">
             </div>
 
             <div class="form-group">
-                <label for="current-role">Current Role & Level:</label>
+                <label for="current-role" id="lblCurrentRole">Current Role & Level:</label>
                 <input type="text" id="current-role" placeholder="e.g., Senior Software Engineer, Level 4">
             </div>
 
             <div class="form-group">
-                <label for="tenure">Time in Current Role:</label>
+                <label for="tenure" id="lblTenure">Time in Current Role:</label>
                 <input type="text" id="tenure" placeholder="e.g., 18 months">
             </div>
 
             <div class="form-group">
-                <label for="team-context">Team & Tech Stack:</label>
+                <label for="team-context" id="lblTeamContext">Team & Tech Stack:</label>
                 <textarea id="team-context" placeholder="e.g., Backend team working on microservices architecture using Java, Spring Boot, AWS, focusing on payment processing systems"></textarea>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">📊 Current Performance & Strengths</div>
+            <div class="section-title" id="sectionTitle-performance">📊 Current Performance & Strengths</div>
 
             <div class="form-group">
-                <label for="strengths">Key Strengths & Recent Achievements:</label>
+                <label for="strengths" id="lblStrengths">Key Strengths & Recent Achievements:</label>
                 <textarea id="strengths" placeholder="e.g., Excellent code quality, led migration project reducing latency by 40%, strong problem-solving skills, mentors junior developers effectively"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="performance-level">Current Performance Level:</label>
+                <label for="performance-level" id="lblPerformanceLevel">Current Performance Level:</label>
                 <select id="performance-level">
-                    <option value="">Select performance level</option>
-                    <option value="exceeds">Exceeds Expectations</option>
-                    <option value="meets">Meets Expectations</option>
-                    <option value="developing">Developing/Below Expectations</option>
-                    <option value="new">New to Role/Ramping Up</option>
+                    <option value="" id="perfOpt-empty">Select performance level</option>
+                    <option value="exceeds" id="perfOpt-exceeds">Exceeds Expectations</option>
+                    <option value="meets" id="perfOpt-meets">Meets Expectations</option>
+                    <option value="developing" id="perfOpt-developing">Developing/Below Expectations</option>
+                    <option value="new" id="perfOpt-new">New to Role/Ramping Up</option>
                 </select>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">🌱 Growth Areas & Challenges</div>
+            <div class="section-title" id="sectionTitle-growth">🌱 Growth Areas & Challenges</div>
 
             <div class="form-group">
-                <label for="growth-areas">Areas for Development:</label>
+                <label for="growth-areas" id="lblGrowthAreas">Areas for Development:</label>
                 <textarea id="growth-areas" placeholder="e.g., System design skills for large-scale applications, communication with non-technical stakeholders, project management and planning"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="challenges">Current Challenges or Blockers:</label>
+                <label for="challenges" id="lblChallenges">Current Challenges or Blockers:</label>
                 <textarea id="challenges" placeholder="e.g., Struggling with ambiguous requirements, tendency to over-engineer solutions, needs more confidence in technical decision-making"></textarea>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">🚀 Career Aspirations & Context</div>
+            <div class="section-title" id="sectionTitle-career">🚀 Career Aspirations & Context</div>
 
             <div class="form-group">
-                <label for="career-goals">Career Goals (6-18 months):</label>
+                <label for="career-goals" id="lblCareerGoals">Career Goals (6-18 months):</label>
                 <textarea id="career-goals" placeholder="e.g., Promotion to Staff Engineer, transition to Tech Lead role, move into engineering management"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="interests">Professional Interests & Preferences:</label>
+                <label for="interests" id="lblInterests">Professional Interests & Preferences:</label>
                 <textarea id="interests" placeholder="e.g., Interested in distributed systems, enjoys mentoring, prefers hands-on coding over meetings, wants to learn more about product strategy"></textarea>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">🧭 Focus Areas for Coaching</div>
+            <div class="section-title" id="sectionTitle-focusAreas">🧭 Focus Areas for Coaching</div>
 
             <div class="form-group">
-                <label>Select relevant coaching focus areas:</label>
+                <label id="lblSelectFocusAreas">Select relevant coaching focus areas:</label>
                 <div class="checkbox-group">
                     <div class="checkbox-item">
                         <input type="checkbox" id="technical-skills">
-                        <label for="technical-skills">Technical Skills</label>
+                        <label for="technical-skills" id="cbLabel-technical-skills">Technical Skills</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="system-design">
-                        <label for="system-design">System Design</label>
+                        <label for="system-design" id="cbLabel-system-design">System Design</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="leadership">
-                        <label for="leadership">Leadership & Influence</label>
+                        <label for="leadership" id="cbLabel-leadership">Leadership & Influence</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="communication">
-                        <label for="communication">Communication</label>
+                        <label for="communication" id="cbLabel-communication">Communication</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="project-management">
-                        <label for="project-management">Project Management</label>
+                        <label for="project-management" id="cbLabel-project-management">Project Management</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="mentoring">
-                        <label for="mentoring">Mentoring Others</label>
+                        <label for="mentoring" id="cbLabel-mentoring">Mentoring Others</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="product-thinking">
-                        <label for="product-thinking">Product Thinking</label>
+                        <label for="product-thinking" id="cbLabel-product-thinking">Product Thinking</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="strategic-thinking">
-                        <label for="strategic-thinking">Strategic Thinking</label>
+                        <label for="strategic-thinking" id="cbLabel-strategic-thinking">Strategic Thinking</label>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">🤖 Generated AI Prompt</div>
+            <div class="section-title" id="sectionTitle-generatedPrompt">🤖 Generated AI Prompt</div>
 
             <div class="prompt-box" id="generated-prompt">
 You are an experienced engineering manager and career coach. Based on the following information about one of my direct reports, please provide specific, actionable coaching suggestions and growth opportunities.
@@ -398,15 +440,15 @@ Tailor all suggestions to their current level, team context, and career aspirati
         </div>
 
         <div class="example-section">
-            <h4>💡 Example Usage</h4>
-            <p><strong>Scenario:</strong> Mid-level engineer looking to become a tech lead</p>
-            <p><strong>Input:</strong> Strong technical skills but needs to develop system design thinking and cross-team communication</p>
-            <p><strong>AI Output:</strong> Specific recommendations like "Lead the next architecture review session," "Take the 'Designing Data-Intensive Applications' course," and "Shadow the current tech lead during stakeholder meetings"</p>
+            <h4>💡 <span id="exampleHeading">Example Usage</span></h4>
+            <p id="exampleScenario"><strong>Scenario:</strong> Mid-level engineer looking to become a tech lead</p>
+            <p id="exampleInput"><strong>Input:</strong> Strong technical skills but needs to develop system design thinking and cross-team communication</p>
+            <p id="exampleOutput"><strong>AI Output:</strong> Specific recommendations like "Lead the next architecture review session," "Take the 'Designing Data-Intensive Applications' course," and "Shadow the current tech lead during stakeholder meetings"</p>
         </div>
 
         <div class="tips">
-            <h4>💡 Pro Tips for Best Results</h4>
-            <ul>
+            <h4>💡 <span id="tipsHeading">Pro Tips for Best Results</span></h4>
+            <ul id="tipsList">
                 <li><strong>Be Specific:</strong> Include concrete examples of strengths and challenges rather than generic statements</li>
                 <li><strong>Context Matters:</strong> Mention team dynamics, current projects, and company culture when relevant</li>
                 <li><strong>Update Regularly:</strong> Refresh the prompt quarterly or after major projects/changes</li>
@@ -416,24 +458,391 @@ Tailor all suggestions to their current level, team context, and career aspirati
         </div>
 
         <div class="action-buttons">
-            <button class="btn" onclick="generatePrompt()">✨ Generate AI Prompt</button>
-            <button class="btn btn-secondary" onclick="window.print()">🖨️ Print Template</button>
-            <button class="btn btn-secondary" onclick="clearForm()">🗑️ Clear Form</button>
+            <button class="btn" onclick="generatePrompt()" id="btnGeneratePrompt">✨ Generate AI Prompt</button>
+            <button class="btn btn-secondary" onclick="window.print()" id="btnPrint">🖨️ Print Template</button>
+            <button class="btn btn-secondary" onclick="clearForm()" id="btnClear">🗑️ Clear Form</button>
         </div>
     </div>
 
     <script>
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        // ---------------------------------------------------------------
+        // i18n dictionaries
+        // ---------------------------------------------------------------
+        const I18N = {
+            en: {
+                pageTitle: "AI Coaching Suggestion Prompt - Engineering Management Tool",
+                headerTitle: "AI Coaching Suggestion Prompt",
+                headerSubtitle: "Engineering Management Tool for Direct Report Growth Planning",
+                descHeading: "What is this tool?",
+                descBody1: "This template helps engineering managers create comprehensive AI prompts to generate personalized growth and development suggestions for their direct reports. By providing structured context about an engineer's current situation, performance, and career goals, you can leverage AI to identify specific coaching opportunities, skill development areas, and career advancement strategies.",
+                descBody2: "<strong>Why use this:</strong> Saves time in coaching preparation, ensures comprehensive coverage of growth areas, provides objective suggestions, and helps identify blind spots in development planning.",
+                sectionTitles: {
+                    employeeContext: "👤 Employee Context",
+                    performance: "📊 Current Performance & Strengths",
+                    growth: "🌱 Growth Areas & Challenges",
+                    career: "🚀 Career Aspirations & Context",
+                    focusAreas: "🧭 Focus Areas for Coaching",
+                    generatedPrompt: "🤖 Generated AI Prompt"
+                },
+                labels: {
+                    employeeName: "Employee Name:",
+                    currentRole: "Current Role & Level:",
+                    tenure: "Time in Current Role:",
+                    teamContext: "Team & Tech Stack:",
+                    strengths: "Key Strengths & Recent Achievements:",
+                    performanceLevel: "Current Performance Level:",
+                    growthAreas: "Areas for Development:",
+                    challenges: "Current Challenges or Blockers:",
+                    careerGoals: "Career Goals (6-18 months):",
+                    interests: "Professional Interests & Preferences:",
+                    selectFocusAreas: "Select relevant coaching focus areas:"
+                },
+                placeholders: {
+                    "employee-name": "e.g., Sarah Johnson",
+                    "current-role": "e.g., Senior Software Engineer, Level 4",
+                    "tenure": "e.g., 18 months",
+                    "team-context": "e.g., Backend team working on microservices architecture using Java, Spring Boot, AWS, focusing on payment processing systems",
+                    "strengths": "e.g., Excellent code quality, led migration project reducing latency by 40%, strong problem-solving skills, mentors junior developers effectively",
+                    "growth-areas": "e.g., System design skills for large-scale applications, communication with non-technical stakeholders, project management and planning",
+                    "challenges": "e.g., Struggling with ambiguous requirements, tendency to over-engineer solutions, needs more confidence in technical decision-making",
+                    "career-goals": "e.g., Promotion to Staff Engineer, transition to Tech Lead role, move into engineering management",
+                    "interests": "e.g., Interested in distributed systems, enjoys mentoring, prefers hands-on coding over meetings, wants to learn more about product strategy"
+                },
+                perfOptions: {
+                    empty: "Select performance level",
+                    exceeds: "Exceeds Expectations",
+                    meets: "Meets Expectations",
+                    developing: "Developing/Below Expectations",
+                    new: "New to Role/Ramping Up"
+                },
+                checkboxes: {
+                    "technical-skills": "Technical Skills",
+                    "system-design": "System Design",
+                    "leadership": "Leadership & Influence",
+                    "communication": "Communication",
+                    "project-management": "Project Management",
+                    "mentoring": "Mentoring Others",
+                    "product-thinking": "Product Thinking",
+                    "strategic-thinking": "Strategic Thinking"
+                },
+                exampleHeading: "Example Usage",
+                exampleScenario: "<strong>Scenario:</strong> Mid-level engineer looking to become a tech lead",
+                exampleInput: "<strong>Input:</strong> Strong technical skills but needs to develop system design thinking and cross-team communication",
+                exampleOutput: "<strong>AI Output:</strong> Specific recommendations like \"Lead the next architecture review session,\" \"Take the 'Designing Data-Intensive Applications' course,\" and \"Shadow the current tech lead during stakeholder meetings\"",
+                tipsHeading: "Pro Tips for Best Results",
+                tips: [
+                    "<strong>Be Specific:</strong> Include concrete examples of strengths and challenges rather than generic statements",
+                    "<strong>Context Matters:</strong> Mention team dynamics, current projects, and company culture when relevant",
+                    "<strong>Update Regularly:</strong> Refresh the prompt quarterly or after major projects/changes",
+                    "<strong>Follow Up:</strong> Use the AI suggestions as a starting point for deeper 1:1 conversations",
+                    "<strong>Personalize:</strong> Adapt the suggested focus areas based on what you know motivates this person"
+                ],
+                btnGeneratePrompt: "✨ Generate AI Prompt",
+                btnPrint: "🖨️ Print Template",
+                btnClear: "🗑️ Clear Form",
+                clearConfirm: "Are you sure you want to clear all form data?",
+                copySuccessAlert: "✅ AI Prompt generated and copied to clipboard! You can now paste it into your preferred AI tool.",
+                copyFailAlert: "ℹ️ AI Prompt generated! You can copy it from the text box below.",
+                prompt: {
+                    intro: "You are an experienced engineering manager and career coach. Based on the following information about one of my direct reports, please provide specific, actionable coaching suggestions and growth opportunities.",
+                    profileHeading: "**Employee Profile:**",
+                    nameLabel: "Name:",
+                    roleLabel: "Role:",
+                    tenureLabel: "Tenure:",
+                    teamContextLabel: "Team Context:",
+                    performanceHeading: "**Current Performance:**",
+                    strengthsLabel: "Strengths & Achievements:",
+                    performanceLevelLabel: "Performance Level:",
+                    growthHeading: "**Growth & Development:**",
+                    growthAreasLabel: "Areas for Development:",
+                    challengesLabel: "Current Challenges:",
+                    careerHeading: "**Career Aspirations:**",
+                    goalsLabel: "Goals (6-18 months):",
+                    interestsLabel: "Interests & Preferences:",
+                    focusAreasLabel: "**Focus Areas:**",
+                    providePlease: "Please provide:",
+                    item1: "1. **Top 3 Growth Opportunities** - Specific areas where this person can develop, with concrete examples",
+                    item2: "2. **Actionable Development Plan** - 3-5 specific actions they can take in the next 3 months",
+                    item3: "3. **Skill-Building Resources** - Books, courses, projects, or experiences that align with their goals",
+                    item4: "4. **Stretch Assignments** - Project ideas or responsibilities that would challenge them appropriately",
+                    item5: "5. **Potential Blind Spots** - Areas they might not be aware they need to develop",
+                    item6: "6. **Coaching Conversation Starters** - 3-4 thoughtful questions to use in your next 1:1",
+                    closing: "Tailor all suggestions to their current level, team context, and career aspirations. Be specific and actionable rather than generic.",
+                    defaults: {
+                        employeeName: "[Employee Name]",
+                        currentRole: "[Current Role & Level]",
+                        tenure: "[Time in Current Role]",
+                        teamContext: "[Team & Tech Stack]",
+                        strengths: "[Key Strengths & Recent Achievements]",
+                        performanceLevel: "[Current Performance Level]",
+                        growthAreas: "[Areas for Development]",
+                        challenges: "[Current Challenges or Blockers]",
+                        careerGoals: "[Career Goals]",
+                        interests: "[Professional Interests & Preferences]",
+                        focusAreas: "[Selected Focus Areas]"
+                    }
+                }
+            },
+            zh: {
+                pageTitle: "AI 教練建議 Prompt - 工程管理工具",
+                headerTitle: "AI 教練建議 Prompt",
+                headerSubtitle: "為直屬部屬成長規劃打造的工程管理工具",
+                descHeading: "這個工具是做什麼的？",
+                descBody1: "這個範本協助工程主管建立完整的 AI prompt，為直屬部屬產生量身打造的成長與發展建議。透過提供工程師目前狀況、表現與職涯目標的結構化脈絡，你可以善用 AI 找出具體的教練切入點、技能發展領域，以及職涯晉升策略。",
+                descBody2: "<strong>為什麼要用這個：</strong>節省教練準備時間、確保成長領域面面俱到、提供客觀的建議，並協助找出發展規劃中的盲點。",
+                sectionTitles: {
+                    employeeContext: "👤 員工背景",
+                    performance: "📊 目前表現與優勢",
+                    growth: "🌱 成長領域與挑戰",
+                    career: "🚀 職涯抱負與背景",
+                    focusAreas: "🧭 教練聚焦領域",
+                    generatedPrompt: "🤖 產生的 AI Prompt"
+                },
+                labels: {
+                    employeeName: "員工姓名：",
+                    currentRole: "目前角色與職級：",
+                    tenure: "目前角色任職時間：",
+                    teamContext: "團隊與技術背景：",
+                    strengths: "主要優勢與近期成就：",
+                    performanceLevel: "目前表現水準：",
+                    growthAreas: "待發展領域：",
+                    challenges: "目前的挑戰或阻礙：",
+                    careerGoals: "職涯目標（6-18 個月）：",
+                    interests: "專業興趣與偏好：",
+                    selectFocusAreas: "選擇相關的教練聚焦領域："
+                },
+                placeholders: {
+                    "employee-name": "例如：陳雅婷",
+                    "current-role": "例如：資深軟體工程師，Level 4",
+                    "tenure": "例如：18 個月",
+                    "team-context": "例如：後端團隊，負責用 Java、Spring Boot、AWS 打造的微服務架構，專注在金流處理系統",
+                    "strengths": "例如：程式碼品質優異、主導遷移專案將延遲降低 40%、問題解決能力強、有效指導資淺工程師",
+                    "growth-areas": "例如：大型系統的系統設計能力、與非技術利害關係人的溝通、專案管理與規劃",
+                    "challenges": "例如：面對模糊需求較吃力、有過度工程化的傾向、在技術決策上需要更多信心",
+                    "career-goals": "例如：晉升為 Staff Engineer、轉任 Tech Lead、朝工程管理方向發展",
+                    "interests": "例如：對分散式系統有興趣、喜歡指導他人、比起開會更偏好動手寫程式、想多了解產品策略"
+                },
+                perfOptions: {
+                    empty: "選擇目前表現水準",
+                    exceeds: "超出預期",
+                    meets: "符合預期",
+                    developing: "發展中/未達預期",
+                    new: "剛到任新角色/上手中"
+                },
+                checkboxes: {
+                    "technical-skills": "技術能力",
+                    "system-design": "系統設計",
+                    "leadership": "領導力與影響力",
+                    "communication": "溝通能力",
+                    "project-management": "專案管理",
+                    "mentoring": "指導他人",
+                    "product-thinking": "產品思維",
+                    "strategic-thinking": "策略思維"
+                },
+                exampleHeading: "使用範例",
+                exampleScenario: "<strong>情境：</strong>一位想成為 Tech Lead 的中階工程師",
+                exampleInput: "<strong>輸入：</strong>技術能力紮實，但需要培養系統設計思維與跨團隊溝通能力",
+                exampleOutput: "<strong>AI 輸出：</strong>具體建議如「主持下次架構審查會議」、「修習《Designing Data-Intensive Applications》課程」、以及「在利害關係人會議中跟著目前的 Tech Lead 觀摩學習」",
+                tipsHeading: "獲得最佳結果的小技巧",
+                tips: [
+                    "<strong>要具體：</strong>提供優勢與挑戰的具體案例，而非籠統的敘述",
+                    "<strong>重視脈絡：</strong>視情況提及團隊動態、目前專案與公司文化",
+                    "<strong>定期更新：</strong>每一季或重大專案/異動後重新整理這份 prompt",
+                    "<strong>要有後續：</strong>把 AI 建議當作深入 1:1 對話的起點，而不是終點",
+                    "<strong>要個人化：</strong>依你對這個人真正在意的事，調整建議的聚焦領域"
+                ],
+                btnGeneratePrompt: "✨ 產生 AI Prompt",
+                btnPrint: "🖨️ 列印範本",
+                btnClear: "🗑️ 清除表單",
+                clearConfirm: "確定要清除所有表單資料嗎？",
+                copySuccessAlert: "✅ AI Prompt 已產生並複製到剪貼簿！現在可以貼到你偏好的 AI 工具中使用。",
+                copyFailAlert: "ℹ️ AI Prompt 已產生！你可以從下方的文字框複製。",
+                prompt: {
+                    intro: "你是一位資深工程主管兼職涯教練。根據以下關於我的一位直屬部屬的資訊，請提供具體、可執行的教練建議與成長機會。",
+                    profileHeading: "**員工檔案：**",
+                    nameLabel: "姓名：",
+                    roleLabel: "角色：",
+                    tenureLabel: "年資：",
+                    teamContextLabel: "團隊背景：",
+                    performanceHeading: "**目前表現：**",
+                    strengthsLabel: "優勢與成就：",
+                    performanceLevelLabel: "表現水準：",
+                    growthHeading: "**成長與發展：**",
+                    growthAreasLabel: "待發展領域：",
+                    challengesLabel: "目前的挑戰：",
+                    careerHeading: "**職涯抱負：**",
+                    goalsLabel: "目標（6-18 個月）：",
+                    interestsLabel: "興趣與偏好：",
+                    focusAreasLabel: "**聚焦領域：**",
+                    providePlease: "請提供：",
+                    item1: "1. **前 3 大成長機會** - 這個人可以發展的具體領域，附具體案例",
+                    item2: "2. **可執行的發展計畫** - 未來 3 個月內可採取的 3-5 個具體行動",
+                    item3: "3. **技能建構資源** - 符合其目標的書籍、課程、專案或經驗",
+                    item4: "4. **延伸任務** - 能適度挑戰他們的專案構想或職責",
+                    item5: "5. **可能的盲點** - 他們可能沒意識到自己需要發展的領域",
+                    item6: "6. **教練式對話開場問題** - 3-4 個可用於下次 1:1 的深度問題",
+                    closing: "請根據其目前的職級、團隊背景與職涯抱負量身打造建議。請具體、可執行，避免空泛籠統。",
+                    defaults: {
+                        employeeName: "[員工姓名]",
+                        currentRole: "[目前角色與職級]",
+                        tenure: "[目前角色任職時間]",
+                        teamContext: "[團隊與技術背景]",
+                        strengths: "[主要優勢與近期成就]",
+                        performanceLevel: "[目前表現水準]",
+                        growthAreas: "[待發展領域]",
+                        challenges: "[目前的挑戰或阻礙]",
+                        careerGoals: "[職涯目標]",
+                        interests: "[專業興趣與偏好]",
+                        focusAreas: "[已選擇的聚焦領域]"
+                    }
+                }
+            }
+        };
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        // ---------------------------------------------------------------
+        // Prompt building — shared by generatePrompt() and reset/render.
+        // ---------------------------------------------------------------
+        function buildPrompt(dict, values) {
+            const d = dict.prompt;
+            const v = Object.assign({}, d.defaults, values || {});
+            return `${d.intro}
+
+${d.profileHeading}
+${d.nameLabel} ${v.employeeName}
+${d.roleLabel} ${v.currentRole}
+${d.tenureLabel} ${v.tenure}
+${d.teamContextLabel} ${v.teamContext}
+
+${d.performanceHeading}
+${d.strengthsLabel} ${v.strengths}
+${d.performanceLevelLabel} ${v.performanceLevel}
+
+${d.growthHeading}
+${d.growthAreasLabel} ${v.growthAreas}
+${d.challengesLabel} ${v.challenges}
+
+${d.careerHeading}
+${d.goalsLabel} ${v.careerGoals}
+${d.interestsLabel} ${v.interests}
+
+${d.focusAreasLabel} ${v.focusAreas}
+
+${d.providePlease}
+
+${d.item1}
+${d.item2}
+${d.item3}
+${d.item4}
+${d.item5}
+${d.item6}
+
+${d.closing}`;
+        }
+
+        // ---------------------------------------------------------------
+        // Language switching / rendering
+        // ---------------------------------------------------------------
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+            document.getElementById('pageTitle').textContent = dict.pageTitle;
+            document.title = dict.pageTitle;
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            document.getElementById('headerTitle').textContent = dict.headerTitle;
+            document.getElementById('headerSubtitle').textContent = dict.headerSubtitle;
+
+            document.getElementById('descHeading').textContent = dict.descHeading;
+            document.getElementById('descBody1').textContent = dict.descBody1;
+            document.getElementById('descBody2').innerHTML = dict.descBody2;
+
+            document.getElementById('sectionTitle-employeeContext').textContent = dict.sectionTitles.employeeContext;
+            document.getElementById('sectionTitle-performance').textContent = dict.sectionTitles.performance;
+            document.getElementById('sectionTitle-growth').textContent = dict.sectionTitles.growth;
+            document.getElementById('sectionTitle-career').textContent = dict.sectionTitles.career;
+            document.getElementById('sectionTitle-focusAreas').textContent = dict.sectionTitles.focusAreas;
+            document.getElementById('sectionTitle-generatedPrompt').textContent = dict.sectionTitles.generatedPrompt;
+
+            document.getElementById('lblEmployeeName').textContent = dict.labels.employeeName;
+            document.getElementById('lblCurrentRole').textContent = dict.labels.currentRole;
+            document.getElementById('lblTenure').textContent = dict.labels.tenure;
+            document.getElementById('lblTeamContext').textContent = dict.labels.teamContext;
+            document.getElementById('lblStrengths').textContent = dict.labels.strengths;
+            document.getElementById('lblPerformanceLevel').textContent = dict.labels.performanceLevel;
+            document.getElementById('lblGrowthAreas').textContent = dict.labels.growthAreas;
+            document.getElementById('lblChallenges').textContent = dict.labels.challenges;
+            document.getElementById('lblCareerGoals').textContent = dict.labels.careerGoals;
+            document.getElementById('lblInterests').textContent = dict.labels.interests;
+            document.getElementById('lblSelectFocusAreas').textContent = dict.labels.selectFocusAreas;
+
+            Object.keys(dict.placeholders).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.placeholder = dict.placeholders[id];
+            });
+
+            document.getElementById('perfOpt-empty').textContent = dict.perfOptions.empty;
+            document.getElementById('perfOpt-exceeds').textContent = dict.perfOptions.exceeds;
+            document.getElementById('perfOpt-meets').textContent = dict.perfOptions.meets;
+            document.getElementById('perfOpt-developing').textContent = dict.perfOptions.developing;
+            document.getElementById('perfOpt-new').textContent = dict.perfOptions.new;
+
+            Object.keys(dict.checkboxes).forEach(id => {
+                const el = document.getElementById(`cbLabel-${id}`);
+                if (el) el.textContent = dict.checkboxes[id];
+            });
+
+            document.getElementById('exampleHeading').textContent = dict.exampleHeading;
+            document.getElementById('exampleScenario').innerHTML = dict.exampleScenario;
+            document.getElementById('exampleInput').innerHTML = dict.exampleInput;
+            document.getElementById('exampleOutput').innerHTML = dict.exampleOutput;
+
+            document.getElementById('tipsHeading').textContent = dict.tipsHeading;
+            document.getElementById('tipsList').innerHTML = dict.tips.map(tip => `<li>${tip}</li>`).join('');
+
+            document.getElementById('btnGeneratePrompt').textContent = dict.btnGeneratePrompt;
+            document.getElementById('btnPrint').textContent = dict.btnPrint;
+            document.getElementById('btnClear').textContent = dict.btnClear;
+
+            // Reset the generated-prompt box to the placeholder-only default
+            // whenever the language changes and no custom values have been generated yet.
+            const promptBox = document.getElementById('generated-prompt');
+            if (promptBox.dataset.customized !== 'true') {
+                promptBox.textContent = buildPrompt(dict, {});
+            }
+        }
+
+        // ---------------------------------------------------------------
+        // Prompt generation
+        // ---------------------------------------------------------------
         function generatePrompt() {
-            const employeeName = document.getElementById('employee-name').value || '[Employee Name]';
-            const currentRole = document.getElementById('current-role').value || '[Current Role & Level]';
-            const tenure = document.getElementById('tenure').value || '[Time in Current Role]';
-            const teamContext = document.getElementById('team-context').value || '[Team & Tech Stack]';
-            const strengths = document.getElementById('strengths').value || '[Key Strengths & Recent Achievements]';
-            const performanceLevel = document.getElementById('performance-level').value || '[Current Performance Level]';
-            const growthAreas = document.getElementById('growth-areas').value || '[Areas for Development]';
-            const challenges = document.getElementById('challenges').value || '[Current Challenges or Blockers]';
-            const careerGoals = document.getElementById('career-goals').value || '[Career Goals]';
-            const interests = document.getElementById('interests').value || '[Professional Interests & Preferences]';
+            const dict = t();
+            const d = dict.prompt.defaults;
+
+            const employeeName = document.getElementById('employee-name').value || d.employeeName;
+            const currentRole = document.getElementById('current-role').value || d.currentRole;
+            const tenure = document.getElementById('tenure').value || d.tenure;
+            const teamContext = document.getElementById('team-context').value || d.teamContext;
+            const strengths = document.getElementById('strengths').value || d.strengths;
+            const performanceLevelValue = document.getElementById('performance-level').value;
+            const performanceLevel = performanceLevelValue ? (dict.perfOptions[performanceLevelValue] || performanceLevelValue) : d.performanceLevel;
+            const growthAreas = document.getElementById('growth-areas').value || d.growthAreas;
+            const challenges = document.getElementById('challenges').value || d.challenges;
+            const careerGoals = document.getElementById('career-goals').value || d.careerGoals;
+            const interests = document.getElementById('interests').value || d.interests;
 
             // Get selected focus areas
             const focusAreas = [];
@@ -441,53 +850,29 @@ Tailor all suggestions to their current level, team context, and career aspirati
             checkboxes.forEach(checkbox => {
                 focusAreas.push(checkbox.nextElementSibling.textContent);
             });
-            const focusAreasText = focusAreas.length > 0 ? focusAreas.join(', ') : '[Selected Focus Areas]';
+            const focusAreasText = focusAreas.length > 0 ? focusAreas.join(', ') : d.focusAreas;
 
-            const prompt = `You are an experienced engineering manager and career coach. Based on the following information about one of my direct reports, please provide specific, actionable coaching suggestions and growth opportunities.
+            const prompt = buildPrompt(dict, {
+                employeeName, currentRole, tenure, teamContext,
+                strengths, performanceLevel, growthAreas, challenges,
+                careerGoals, interests, focusAreas: focusAreasText
+            });
 
-**Employee Profile:**
-Name: ${employeeName}
-Role: ${currentRole}
-Tenure: ${tenure}
-Team Context: ${teamContext}
-
-**Current Performance:**
-Strengths & Achievements: ${strengths}
-Performance Level: ${performanceLevel}
-
-**Growth & Development:**
-Areas for Development: ${growthAreas}
-Current Challenges: ${challenges}
-
-**Career Aspirations:**
-Goals (6-18 months): ${careerGoals}
-Interests & Preferences: ${interests}
-
-**Focus Areas:** ${focusAreasText}
-
-Please provide:
-
-1. **Top 3 Growth Opportunities** - Specific areas where this person can develop, with concrete examples
-2. **Actionable Development Plan** - 3-5 specific actions they can take in the next 3 months
-3. **Skill-Building Resources** - Books, courses, projects, or experiences that align with their goals
-4. **Stretch Assignments** - Project ideas or responsibilities that would challenge them appropriately
-5. **Potential Blind Spots** - Areas they might not be aware they need to develop
-6. **Coaching Conversation Starters** - 3-4 thoughtful questions to use in your next 1:1
-
-Tailor all suggestions to their current level, team context, and career aspirations. Be specific and actionable rather than generic.`;
-
-            document.getElementById('generated-prompt').textContent = prompt;
+            const promptBox = document.getElementById('generated-prompt');
+            promptBox.textContent = prompt;
+            promptBox.dataset.customized = 'true';
 
             // Copy to clipboard
             navigator.clipboard.writeText(prompt).then(() => {
-                alert('✅ AI Prompt generated and copied to clipboard! You can now paste it into your preferred AI tool.');
+                alert(dict.copySuccessAlert);
             }).catch(() => {
-                alert('ℹ️ AI Prompt generated! You can copy it from the text box below.');
+                alert(dict.copyFailAlert);
             });
         }
 
         function clearForm() {
-            if (confirm('Are you sure you want to clear all form data?')) {
+            const dict = t();
+            if (confirm(dict.clearConfirm)) {
                 document.querySelectorAll('input, textarea, select').forEach(element => {
                     if (element.type === 'checkbox') {
                         element.checked = false;
@@ -497,40 +882,16 @@ Tailor all suggestions to their current level, team context, and career aspirati
                 });
 
                 // Reset the generated prompt
-                document.getElementById('generated-prompt').textContent = `You are an experienced engineering manager and career coach. Based on the following information about one of my direct reports, please provide specific, actionable coaching suggestions and growth opportunities.
-
-**Employee Profile:**
-Name: [Employee Name]
-Role: [Current Role & Level]
-Tenure: [Time in Current Role]
-Team Context: [Team & Tech Stack]
-
-**Current Performance:**
-Strengths & Achievements: [Key Strengths & Recent Achievements]
-Performance Level: [Current Performance Level]
-
-**Growth & Development:**
-Areas for Development: [Areas for Development]
-Current Challenges: [Current Challenges or Blockers]
-
-**Career Aspirations:**
-Goals (6-18 months): [Career Goals]
-Interests & Preferences: [Professional Interests & Preferences]
-
-**Focus Areas:** [Selected Focus Areas]
-
-Please provide:
-
-1. **Top 3 Growth Opportunities** - Specific areas where this person can develop, with concrete examples
-2. **Actionable Development Plan** - 3-5 specific actions they can take in the next 3 months
-3. **Skill-Building Resources** - Books, courses, projects, or experiences that align with their goals
-4. **Stretch Assignments** - Project ideas or responsibilities that would challenge them appropriately
-5. **Potential Blind Spots** - Areas they might not be aware they need to develop
-6. **Coaching Conversation Starters** - 3-4 thoughtful questions to use in your next 1:1
-
-Tailor all suggestions to their current level, team context, and career aspirations. Be specific and actionable rather than generic.`;
+                const promptBox = document.getElementById('generated-prompt');
+                promptBox.textContent = buildPrompt(dict, {});
+                promptBox.dataset.customized = 'false';
             }
         }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderLanguage();
+        });
     </script>
 </body>
 </html>

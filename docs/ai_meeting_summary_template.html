@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-Assisted Meeting Summary Template</title>
+    <title id="pageTitle">AI-Assisted Meeting Summary Template</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,6 +19,39 @@
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+        }
+
+        .page-header {
+            position: relative;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: rgba(159, 122, 234, 0.1);
+            color: #805ad5;
+            border: 1px solid rgba(159, 122, 234, 0.4);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:hover {
+            background: rgba(159, 122, 234, 0.2);
+        }
+
+        .lang-btn.active {
+            background: #805ad5;
+            color: white;
         }
 
         h1 {
@@ -436,6 +469,7 @@
             .actions { display: none; }
             .copy-prompt-btn { display: none; }
             .quick-actions { display: none; }
+            .lang-switcher { display: none; }
         }
 
         @media (max-width: 768px) {
@@ -444,96 +478,103 @@
             .header-grid { grid-template-columns: 1fr; }
             .workflow-steps { grid-template-columns: 1fr; }
             .attendee-grid { grid-template-columns: repeat(2, 1fr); }
+            .lang-switcher { position: static; justify-content: center; margin-bottom: 15px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🤖 AI-Assisted Meeting Summary</h1>
+        <div class="page-header">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1>🤖 <span id="headerTitle">AI-Assisted Meeting Summary</span></h1>
+        </div>
 
-        <div class="description">
+        <div class="description" id="descBody">
             <strong>Purpose:</strong> This template combines traditional meeting documentation with AI assistance to create comprehensive, actionable meeting summaries. Capture raw notes during the meeting, then use AI tools to enhance, structure, and extract key insights for better follow-up and team communication.
         </div>
 
         <!-- AI Workflow Overview -->
         <div class="ai-workflow">
-            <h4>🔄 AI-Enhanced Meeting Documentation Workflow</h4>
+            <h4>🔄 <span id="workflowHeading">AI-Enhanced Meeting Documentation Workflow</span></h4>
             <div class="workflow-steps">
                 <div class="workflow-step">
                     <div class="step-number">1</div>
-                    <div class="step-title">Capture</div>
-                    <div class="step-desc">Take raw notes during meeting</div>
+                    <div class="step-title" id="stepTitle-1">Capture</div>
+                    <div class="step-desc" id="stepDesc-1">Take raw notes during meeting</div>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">2</div>
-                    <div class="step-title">Structure</div>
-                    <div class="step-desc">Organize basic meeting info</div>
+                    <div class="step-title" id="stepTitle-2">Structure</div>
+                    <div class="step-desc" id="stepDesc-2">Organize basic meeting info</div>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">3</div>
-                    <div class="step-title">Enhance</div>
-                    <div class="step-desc">Use AI to extract insights</div>
+                    <div class="step-title" id="stepTitle-3">Enhance</div>
+                    <div class="step-desc" id="stepDesc-3">Use AI to extract insights</div>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">4</div>
-                    <div class="step-title">Review</div>
-                    <div class="step-desc">Validate and customize AI output</div>
+                    <div class="step-title" id="stepTitle-4">Review</div>
+                    <div class="step-desc" id="stepDesc-4">Validate and customize AI output</div>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">5</div>
-                    <div class="step-title">Share</div>
-                    <div class="step-desc">Distribute final summary</div>
+                    <div class="step-title" id="stepTitle-5">Share</div>
+                    <div class="step-desc" id="stepDesc-5">Distribute final summary</div>
                 </div>
             </div>
         </div>
 
         <!-- Meeting Header -->
         <div class="meeting-header">
-            <h3>📋 Meeting Information</h3>
+            <h3>📋 <span id="meetingInfoHeading">Meeting Information</span></h3>
             <div class="header-grid">
                 <div class="field">
-                    <span class="field-label">Meeting Title:</span>
+                    <span class="field-label" id="lblMeetingTitle">Meeting Title:</span>
                     <input type="text" class="field-input" id="meeting-title" placeholder="e.g., Sprint Planning - Team Alpha">
                 </div>
                 <div class="field">
-                    <span class="field-label">Date & Time:</span>
+                    <span class="field-label" id="lblMeetingDatetime">Date & Time:</span>
                     <input type="datetime-local" class="field-input" id="meeting-datetime">
                 </div>
                 <div class="field">
-                    <span class="field-label">Duration:</span>
+                    <span class="field-label" id="lblDuration">Duration:</span>
                     <input type="text" class="field-input" id="duration" placeholder="e.g., 60 minutes">
                 </div>
                 <div class="field">
-                    <span class="field-label">Meeting Type:</span>
+                    <span class="field-label" id="lblMeetingType">Meeting Type:</span>
                     <select class="field-select" id="meeting-type">
-                        <option value="Team Meeting">Team Meeting</option>
-                        <option value="Sprint Planning">Sprint Planning</option>
-                        <option value="Sprint Review">Sprint Review</option>
-                        <option value="Retrospective">Retrospective</option>
-                        <option value="1:1 Meeting">1:1 Meeting</option>
-                        <option value="Stakeholder Update">Stakeholder Update</option>
-                        <option value="Technical Review">Technical Review</option>
-                        <option value="Project Kickoff">Project Kickoff</option>
-                        <option value="Other">Other</option>
+                        <option value="Team Meeting" id="mtOpt-team">Team Meeting</option>
+                        <option value="Sprint Planning" id="mtOpt-sprintPlanning">Sprint Planning</option>
+                        <option value="Sprint Review" id="mtOpt-sprintReview">Sprint Review</option>
+                        <option value="Retrospective" id="mtOpt-retro">Retrospective</option>
+                        <option value="1:1 Meeting" id="mtOpt-oneOnOne">1:1 Meeting</option>
+                        <option value="Stakeholder Update" id="mtOpt-stakeholder">Stakeholder Update</option>
+                        <option value="Technical Review" id="mtOpt-techReview">Technical Review</option>
+                        <option value="Project Kickoff" id="mtOpt-kickoff">Project Kickoff</option>
+                        <option value="Other" id="mtOpt-other">Other</option>
                     </select>
                 </div>
                 <div class="field">
-                    <span class="field-label">Location/Platform:</span>
+                    <span class="field-label" id="lblLocation">Location/Platform:</span>
                     <input type="text" class="field-input" id="location" placeholder="e.g., Conference Room A, Zoom">
                 </div>
                 <div class="field">
-                    <span class="field-label">Meeting Lead:</span>
+                    <span class="field-label" id="lblMeetingLead">Meeting Lead:</span>
                     <input type="text" class="field-input" id="meeting-lead" placeholder="Your name">
                 </div>
             </div>
 
             <div class="field" style="margin-top: 15px;">
-                <span class="field-label">Meeting Purpose/Agenda:</span>
+                <span class="field-label" id="lblMeetingPurpose">Meeting Purpose/Agenda:</span>
                 <textarea class="field-textarea" id="meeting-purpose" placeholder="Brief description of the meeting's main objectives and agenda items..."></textarea>
             </div>
 
             <div class="field">
-                <span class="field-label">Attendees:</span>
+                <span class="field-label" id="lblAttendees">Attendees:</span>
                 <div class="attendee-grid">
                     <div class="attendee-item">
                         <div class="attendee-name">
@@ -560,14 +601,14 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-secondary" onclick="addAttendee()" style="margin-top: 10px;">+ Add Attendee</button>
+                <button class="btn btn-secondary" onclick="addAttendee()" id="btnAddAttendee" style="margin-top: 10px;">+ Add Attendee</button>
             </div>
         </div>
 
         <!-- Raw Notes Section -->
         <div class="raw-notes-section">
-            <h4>📝 Raw Meeting Notes</h4>
-            <p><strong>Instructions:</strong> Capture notes here during the meeting. Don't worry about structure - just document key points, discussions, and decisions as they happen. AI will help organize this later.</p>
+            <h4>📝 <span id="rawNotesHeading">Raw Meeting Notes</span></h4>
+            <p id="rawNotesInstructions"><strong>Instructions:</strong> Capture notes here during the meeting. Don't worry about structure - just document key points, discussions, and decisions as they happen. AI will help organize this later.</p>
             <textarea class="field-textarea large-textarea" id="raw-notes" placeholder="Type or paste your raw meeting notes here...
 
 Examples:
@@ -582,12 +623,12 @@ Examples:
         <!-- AI-Enhanced Sections -->
         <div class="section">
             <div class="section-header summary-header">
-                <span><span class="section-icon">📊</span>AI-Enhanced Meeting Summary</span>
+                <span><span class="section-icon">📊</span><span id="sectionHeader-summary">AI-Enhanced Meeting Summary</span></span>
             </div>
             <div class="section-content">
                 <div class="ai-enhancement">
-                    <div class="enhancement-title">🤖 AI Prompt for Meeting Summary</div>
-                    <p>Copy this prompt and your raw notes into ChatGPT, Claude, or your preferred AI tool:</p>
+                    <div class="enhancement-title" id="enhTitle-summary">🤖 AI Prompt for Meeting Summary</div>
+                    <p id="summaryPromptIntro">Copy this prompt and your raw notes into ChatGPT, Claude, or your preferred AI tool:</p>
                     <div class="ai-prompt-box" id="summary-prompt">
 Please analyze these meeting notes and create a professional meeting summary:
 
@@ -610,11 +651,11 @@ Please analyze these meeting notes and create a professional meeting summary:
 
 Format for easy sharing with the team.
                     </div>
-                    <button class="copy-prompt-btn" onclick="copySummaryPrompt()">Copy</button>
+                    <button class="copy-prompt-btn" onclick="copySummaryPrompt()" id="copyBtn-summary">Copy</button>
                 </div>
 
                 <div class="field">
-                    <span class="field-label">AI-Generated Summary (paste AI output here):</span>
+                    <span class="field-label" id="lblAiSummary">AI-Generated Summary (paste AI output here):</span>
                     <textarea class="field-textarea large-textarea" id="ai-summary" placeholder="Paste the AI-generated meeting summary here, then review and customize as needed..."></textarea>
                 </div>
             </div>
@@ -623,11 +664,11 @@ Format for easy sharing with the team.
         <!-- Decisions Made -->
         <div class="section">
             <div class="section-header decisions-header">
-                <span><span class="section-icon">✅</span>Decisions Made</span>
+                <span><span class="section-icon">✅</span><span id="sectionHeader-decisions">Decisions Made</span></span>
             </div>
             <div class="section-content">
                 <div class="ai-enhancement">
-                    <div class="enhancement-title">🤖 AI Prompt for Decision Extraction</div>
+                    <div class="enhancement-title" id="enhTitle-decisions">🤖 AI Prompt for Decision Extraction</div>
                     <div class="ai-prompt-box" id="decisions-prompt">
 From these meeting notes, extract and clearly list all decisions that were made:
 
@@ -642,39 +683,39 @@ From these meeting notes, extract and clearly list all decisions that were made:
 
 Format as clear, actionable decision statements.
                     </div>
-                    <button class="copy-prompt-btn" onclick="copyDecisionsPrompt()">Copy</button>
+                    <button class="copy-prompt-btn" onclick="copyDecisionsPrompt()" id="copyBtn-decisions">Copy</button>
                 </div>
 
                 <div class="decision-item">
                     <div class="decision-title">
-                        <input type="text" class="field-input" placeholder="Decision title or brief description" style="border: none; background: transparent; font-weight: 600;">
+                        <input type="text" class="field-input" id="decisionTitle-1" placeholder="Decision title or brief description" style="border: none; background: transparent; font-weight: 600;">
                     </div>
                     <div class="decision-details">
-                        <textarea class="field-textarea" placeholder="Decision details: What was decided, why, and what the impact/next steps are..."></textarea>
+                        <textarea class="field-textarea" id="decisionDetails-1" placeholder="Decision details: What was decided, why, and what the impact/next steps are..."></textarea>
                     </div>
                 </div>
 
                 <div class="decision-item">
                     <div class="decision-title">
-                        <input type="text" class="field-input" placeholder="Another decision made" style="border: none; background: transparent; font-weight: 600;">
+                        <input type="text" class="field-input" id="decisionTitle-2" placeholder="Another decision made" style="border: none; background: transparent; font-weight: 600;">
                     </div>
                     <div class="decision-details">
-                        <textarea class="field-textarea" placeholder="Decision details..."></textarea>
+                        <textarea class="field-textarea" id="decisionDetails-2" placeholder="Decision details..."></textarea>
                     </div>
                 </div>
 
-                <button class="btn btn-secondary" onclick="addDecision()">+ Add Decision</button>
+                <button class="btn btn-secondary" onclick="addDecision()" id="btnAddDecision">+ Add Decision</button>
             </div>
         </div>
 
         <!-- Action Items -->
         <div class="section">
             <div class="section-header actions-header">
-                <span><span class="section-icon">🎯</span>Action Items</span>
+                <span><span class="section-icon">🎯</span><span id="sectionHeader-actions">Action Items</span></span>
             </div>
             <div class="section-content">
                 <div class="ai-enhancement">
-                    <div class="enhancement-title">🤖 AI Prompt for Action Item Extraction</div>
+                    <div class="enhancement-title" id="enhTitle-actions">🤖 AI Prompt for Action Item Extraction</div>
                     <div class="ai-prompt-box" id="actions-prompt">
 Extract all action items from these meeting notes:
 
@@ -690,23 +731,23 @@ Extract all action items from these meeting notes:
 
 Present as a clear, trackable action list with owners and deadlines.
                     </div>
-                    <button class="copy-prompt-btn" onclick="copyActionsPrompt()">Copy</button>
+                    <button class="copy-prompt-btn" onclick="copyActionsPrompt()" id="copyBtn-actions">Copy</button>
                 </div>
 
                 <div class="action-item">
                     <input type="checkbox" class="action-checkbox">
                     <div class="action-content">
                         <div class="action-text">
-                            <input type="text" class="field-input" placeholder="Action item description" style="border: none; background: transparent; font-weight: 500;">
+                            <input type="text" class="field-input" id="actionText-1" placeholder="Action item description" style="border: none; background: transparent; font-weight: 500;">
                         </div>
                         <div class="action-details">
                             <span class="action-owner">
-                                <input type="text" class="field-input" placeholder="Owner name" style="border: none; background: transparent; width: 120px;">
+                                <input type="text" class="field-input" id="actionOwner-1" placeholder="Owner name" style="border: none; background: transparent; width: 120px;">
                             </span>
                             <span class="action-due">
                                 <input type="date" class="field-input" style="border: none; background: transparent; width: 130px;">
                             </span>
-                            <span class="action-priority priority-medium">Medium Priority</span>
+                            <span class="action-priority priority-medium" id="actionPriority-1">Medium Priority</span>
                         </div>
                     </div>
                 </div>
@@ -715,32 +756,32 @@ Present as a clear, trackable action list with owners and deadlines.
                     <input type="checkbox" class="action-checkbox">
                     <div class="action-content">
                         <div class="action-text">
-                            <input type="text" class="field-input" placeholder="Another action item" style="border: none; background: transparent; font-weight: 500;">
+                            <input type="text" class="field-input" id="actionText-2" placeholder="Another action item" style="border: none; background: transparent; font-weight: 500;">
                         </div>
                         <div class="action-details">
                             <span class="action-owner">
-                                <input type="text" class="field-input" placeholder="Owner name" style="border: none; background: transparent; width: 120px;">
+                                <input type="text" class="field-input" id="actionOwner-2" placeholder="Owner name" style="border: none; background: transparent; width: 120px;">
                             </span>
                             <span class="action-due">
                                 <input type="date" class="field-input" style="border: none; background: transparent; width: 130px;">
                             </span>
-                            <span class="action-priority priority-high">High Priority</span>
+                            <span class="action-priority priority-high" id="actionPriority-2">High Priority</span>
                         </div>
                     </div>
                 </div>
 
-                <button class="btn btn-secondary" onclick="addActionItem()">+ Add Action Item</button>
+                <button class="btn btn-secondary" onclick="addActionItem()" id="btnAddAction">+ Add Action Item</button>
             </div>
         </div>
 
         <!-- Key Insights & Follow-up -->
         <div class="section">
             <div class="section-header ai-enhanced-header">
-                <span><span class="section-icon">💡</span>Key Insights & Follow-up</span>
+                <span><span class="section-icon">💡</span><span id="sectionHeader-insights">Key Insights & Follow-up</span></span>
             </div>
             <div class="section-content">
                 <div class="ai-enhancement">
-                    <div class="enhancement-title">🤖 AI Prompt for Insights & Analysis</div>
+                    <div class="enhancement-title" id="enhTitle-insights">🤖 AI Prompt for Insights & Analysis</div>
                     <div class="ai-prompt-box" id="insights-prompt">
 Analyze these meeting notes for deeper insights and strategic implications:
 
@@ -758,21 +799,21 @@ Analyze these meeting notes for deeper insights and strategic implications:
 
 Provide strategic insights that help with team management and decision-making.
                     </div>
-                    <button class="copy-prompt-btn" onclick="copyInsightsPrompt()">Copy</button>
+                    <button class="copy-prompt-btn" onclick="copyInsightsPrompt()" id="copyBtn-insights">Copy</button>
                 </div>
 
                 <div class="field">
-                    <span class="field-label">Key Insights & Takeaways:</span>
+                    <span class="field-label" id="lblKeyInsights">Key Insights & Takeaways:</span>
                     <textarea class="field-textarea large-textarea" id="key-insights" placeholder="AI-generated insights about team dynamics, risks, opportunities, and strategic implications..."></textarea>
                 </div>
 
                 <div class="field">
-                    <span class="field-label">Follow-up Items & Next Steps:</span>
+                    <span class="field-label" id="lblFollowUp">Follow-up Items & Next Steps:</span>
                     <textarea class="field-textarea" id="follow-up" placeholder="What follow-up meetings, conversations, or investigations are needed based on this discussion?"></textarea>
                 </div>
 
                 <div class="field">
-                    <span class="field-label">Questions for Next Meeting:</span>
+                    <span class="field-label" id="lblNextQuestions">Questions for Next Meeting:</span>
                     <textarea class="field-textarea" id="next-questions" placeholder="What questions should be prepared for follow-up discussions?"></textarea>
                 </div>
             </div>
@@ -780,7 +821,7 @@ Provide strategic insights that help with team management and decision-making.
 
         <!-- AI Tools & Quick Actions -->
         <div class="ai-tools-note">
-            <strong>🤖 Compatible AI Tools:</strong>
+            <strong id="aiToolsLabel">🤖 Compatible AI Tools:</strong>
             <div class="tool-options">
                 <span class="tool-option">ChatGPT</span>
                 <span class="tool-option">Claude</span>
@@ -793,50 +834,570 @@ Provide strategic insights that help with team management and decision-making.
         </div>
 
         <div class="quick-actions">
-            <h4>⚡ Quick Actions</h4>
+            <h4 id="quickActionsHeading">⚡ Quick Actions</h4>
             <div class="action-buttons">
-                <button class="action-btn" onclick="generateAllPrompts()">🔄 Generate All AI Prompts</button>
-                <button class="action-btn" onclick="copyRawNotes()">📋 Copy Raw Notes</button>
-                <button class="action-btn" onclick="exportActionItems()">📤 Export Action Items</button>
-                <button class="action-btn" onclick="createFollowupEmail()">📧 Create Follow-up Email</button>
-                <button class="action-btn" onclick="validateCompleteness()">✅ Check Completeness</button>
+                <button class="action-btn" onclick="generateAllPrompts()" id="btnGenerateAll">🔄 Generate All AI Prompts</button>
+                <button class="action-btn" onclick="copyRawNotes()" id="btnCopyRawNotes">📋 Copy Raw Notes</button>
+                <button class="action-btn" onclick="exportActionItems()" id="btnExportActions">📤 Export Action Items</button>
+                <button class="action-btn" onclick="createFollowupEmail()" id="btnFollowupEmail">📧 Create Follow-up Email</button>
+                <button class="action-btn" onclick="validateCompleteness()" id="btnValidate">✅ Check Completeness</button>
             </div>
         </div>
 
         <div class="actions">
-            <button class="btn btn-success" onclick="updateSummary()">Update Summary</button>
-            <button class="btn" onclick="window.print()">Print Summary</button>
-            <button class="btn btn-secondary" onclick="downloadSummary()">Download Summary</button>
-            <button class="btn btn-secondary" onclick="resetSummary()">New Meeting</button>
+            <button class="btn btn-success" onclick="updateSummary()" id="btnUpdateSummary">Update Summary</button>
+            <button class="btn" onclick="window.print()" id="btnPrintSummary">Print Summary</button>
+            <button class="btn btn-secondary" onclick="downloadSummary()" id="btnDownloadSummary">Download Summary</button>
+            <button class="btn btn-secondary" onclick="resetSummary()" id="btnNewMeeting">New Meeting</button>
         </div>
     </div>
 
     <script>
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        // ---------------------------------------------------------------
+        // i18n dictionaries
+        // ---------------------------------------------------------------
+        const I18N = {
+            en: {
+                pageTitle: "AI-Assisted Meeting Summary Template",
+                headerTitle: "AI-Assisted Meeting Summary",
+                descBody: "<strong>Purpose:</strong> This template combines traditional meeting documentation with AI assistance to create comprehensive, actionable meeting summaries. Capture raw notes during the meeting, then use AI tools to enhance, structure, and extract key insights for better follow-up and team communication.",
+                workflowHeading: "AI-Enhanced Meeting Documentation Workflow",
+                steps: {
+                    1: { title: "Capture", desc: "Take raw notes during meeting" },
+                    2: { title: "Structure", desc: "Organize basic meeting info" },
+                    3: { title: "Enhance", desc: "Use AI to extract insights" },
+                    4: { title: "Review", desc: "Validate and customize AI output" },
+                    5: { title: "Share", desc: "Distribute final summary" }
+                },
+                meetingInfoHeading: "Meeting Information",
+                lblMeetingTitle: "Meeting Title:",
+                lblMeetingDatetime: "Date & Time:",
+                lblDuration: "Duration:",
+                lblMeetingType: "Meeting Type:",
+                lblLocation: "Location/Platform:",
+                lblMeetingLead: "Meeting Lead:",
+                lblMeetingPurpose: "Meeting Purpose/Agenda:",
+                lblAttendees: "Attendees:",
+                placeholders: {
+                    "meeting-title": "e.g., Sprint Planning - Team Alpha",
+                    "duration": "e.g., 60 minutes",
+                    "location": "e.g., Conference Room A, Zoom",
+                    "meeting-lead": "Your name",
+                    "meeting-purpose": "Brief description of the meeting's main objectives and agenda items...",
+                    "raw-notes": "Type or paste your raw meeting notes here...\n\nExamples:\n- John mentioned the API performance issue affecting mobile users\n- Decided to prioritize the authentication bug fix for next sprint\n- Sarah will coordinate with design team on new mockups\n- Need budget approval for additional server capacity\n- Discussion about moving stand-ups to async format\n- Mike raised concerns about technical debt in payment system",
+                    "ai-summary": "Paste the AI-generated meeting summary here, then review and customize as needed...",
+                    "key-insights": "AI-generated insights about team dynamics, risks, opportunities, and strategic implications...",
+                    "follow-up": "What follow-up meetings, conversations, or investigations are needed based on this discussion?",
+                    "next-questions": "What questions should be prepared for follow-up discussions?"
+                },
+                attendeeNamePlaceholder: "Name",
+                attendeeRolePlaceholder: "Role",
+                btnAddAttendee: "+ Add Attendee",
+                meetingTypeOptions: {
+                    "Team Meeting": "Team Meeting",
+                    "Sprint Planning": "Sprint Planning",
+                    "Sprint Review": "Sprint Review",
+                    "Retrospective": "Retrospective",
+                    "1:1 Meeting": "1:1 Meeting",
+                    "Stakeholder Update": "Stakeholder Update",
+                    "Technical Review": "Technical Review",
+                    "Project Kickoff": "Project Kickoff",
+                    "Other": "Other"
+                },
+                rawNotesHeading: "Raw Meeting Notes",
+                rawNotesInstructions: "<strong>Instructions:</strong> Capture notes here during the meeting. Don't worry about structure - just document key points, discussions, and decisions as they happen. AI will help organize this later.",
+                sectionHeaders: {
+                    summary: "AI-Enhanced Meeting Summary",
+                    decisions: "Decisions Made",
+                    actions: "Action Items",
+                    insights: "Key Insights & Follow-up"
+                },
+                enhTitles: {
+                    summary: "🤖 AI Prompt for Meeting Summary",
+                    decisions: "🤖 AI Prompt for Decision Extraction",
+                    actions: "🤖 AI Prompt for Action Item Extraction",
+                    insights: "🤖 AI Prompt for Insights & Analysis"
+                },
+                summaryPromptIntro: "Copy this prompt and your raw notes into ChatGPT, Claude, or your preferred AI tool:",
+                copyBtn: "Copy",
+                lblAiSummary: "AI-Generated Summary (paste AI output here):",
+                decisionsGeneric: { title: "Decision title", details: "Decision details..." },
+                decisionTitle2Placeholder: "Another decision made",
+                lblKeyInsights: "Key Insights & Takeaways:",
+                lblFollowUp: "Follow-up Items & Next Steps:",
+                lblNextQuestions: "Questions for Next Meeting:",
+                aiToolsLabel: "🤖 Compatible AI Tools:",
+                quickActionsHeading: "⚡ Quick Actions",
+                btnGenerateAll: "🔄 Generate All AI Prompts",
+                btnCopyRawNotes: "📋 Copy Raw Notes",
+                btnExportActions: "📤 Export Action Items",
+                btnFollowupEmail: "📧 Create Follow-up Email",
+                btnValidate: "✅ Check Completeness",
+                btnUpdateSummary: "Update Summary",
+                btnPrintSummary: "Print Summary",
+                btnDownloadSummary: "Download Summary",
+                btnNewMeeting: "New Meeting",
+                priorityMedium: "Medium Priority",
+                priorityHigh: "High Priority",
+                actionItemDescPlaceholder: "Action item description",
+                actionItemDesc2Placeholder: "Another action item",
+                actionOwnerPlaceholder: "Owner name",
+
+                // Prompt template bodies. Bracket tokens like [MEETING_TITLE] are
+                // literal substitution markers used by the copy*Prompt() functions
+                // and must be kept verbatim in every language.
+                promptTemplates: {
+                    summary: `Please analyze these meeting notes and create a professional meeting summary:
+
+**Meeting Context:**
+- Title: [MEETING_TITLE]
+- Date: [DATE]
+- Duration: [DURATION]
+- Attendees: [ATTENDEES]
+
+**Raw Notes:**
+[PASTE_RAW_NOTES_HERE]
+
+**Please provide:**
+1. **Executive Summary** (2-3 sentences)
+2. **Key Discussion Points** (main topics covered)
+3. **Decisions Made** (specific decisions with context)
+4. **Action Items** (what needs to be done, by whom, by when)
+5. **Important Insights** (key takeaways or concerns raised)
+6. **Follow-up Required** (what needs continued attention)
+
+Format for easy sharing with the team.`,
+                    decisions: `From these meeting notes, extract and clearly list all decisions that were made:
+
+**Meeting Notes:**
+[PASTE_RAW_NOTES_HERE]
+
+**For each decision, provide:**
+1. **Decision**: What was decided
+2. **Context**: Why this decision was made
+3. **Impact**: Who/what this affects
+4. **Implementation**: When/how this will be executed
+
+Format as clear, actionable decision statements.`,
+                    actions: `Extract all action items from these meeting notes:
+
+**Meeting Notes:**
+[PASTE_RAW_NOTES_HERE]
+
+**For each action item, identify:**
+1. **Task**: Specific action to be taken
+2. **Owner**: Person responsible (if mentioned)
+3. **Due Date**: Timeline or deadline (if mentioned)
+4. **Priority**: High/Medium/Low based on context
+5. **Dependencies**: What this task depends on or blocks
+
+Present as a clear, trackable action list with owners and deadlines.`,
+                    insights: `Analyze these meeting notes for deeper insights and strategic implications:
+
+**Meeting Context:** [MEETING_TYPE] - [MEETING_TITLE]
+**Meeting Notes:**
+[PASTE_RAW_NOTES_HERE]
+
+**Please identify:**
+1. **Key Themes**: What were the main topics/concerns discussed?
+2. **Risks & Concerns**: Any risks, blockers, or concerns raised?
+3. **Opportunities**: Positive developments or opportunities mentioned?
+4. **Team Dynamics**: Any insights about team morale, collaboration, or communication?
+5. **Strategic Implications**: How do these discussions impact broader goals?
+6. **Recommended Follow-ups**: What conversations or actions should happen next?
+
+Provide strategic insights that help with team management and decision-making.`
+                },
+
+                notifications: {
+                    summaryCopied: "Meeting summary prompt copied! 📋",
+                    decisionsCopied: "Decisions extraction prompt copied! ✅",
+                    actionsCopied: "Action items extraction prompt copied! 🎯",
+                    insightsCopied: "Insights analysis prompt copied! 💡",
+                    rawNotesCopied: "Raw notes copied to clipboard! 📋",
+                    actionsExported: "Action items exported to clipboard! 📤",
+                    emailCopied: "Follow-up email template copied! 📧",
+                    complete: "Meeting summary is complete! ✅"
+                },
+                alerts: {
+                    generateAll: "All AI prompts are now populated with your meeting data. Use the copy buttons on each prompt to get the customized versions.",
+                    noRawNotes: "No raw notes to copy. Please add some meeting notes first.",
+                    noActionItems: "No action items to export. Please add some action items first.",
+                    missingInfo: "Missing information:\n• ",
+                    resetConfirm: "Start a new meeting summary? This will clear all current data."
+                },
+                exportLabels: {
+                    actionItemsHeading: "Action Items:",
+                    owner: "Owner:",
+                    due: "Due:",
+                    tbd: "TBD"
+                },
+                emailTemplate: {
+                    subject: "Subject: Follow-up: ",
+                    greeting: "Hi team,",
+                    body: "Thanks for a productive meeting. Here are the key outcomes and next steps:",
+                    summaryPlaceholder: "[PASTE AI-GENERATED SUMMARY HERE]",
+                    actionItemsHeading: "Action Items:",
+                    actionItemsPlaceholder: "[PASTE ACTION ITEMS HERE]",
+                    closing: "Let me know if you have any questions or if I missed anything important.",
+                    signoff: "Best regards,",
+                    namePlaceholder: "[YOUR NAME]",
+                    defaultTitle: "Meeting"
+                },
+                missingFields: {
+                    meetingTitle: "Meeting title",
+                    rawNotes: "Raw meeting notes",
+                    attendee: "At least one attendee",
+                    actionItem: "At least one action item"
+                }
+            },
+            zh: {
+                pageTitle: "AI 輔助會議摘要範本",
+                headerTitle: "AI 輔助會議摘要",
+                descBody: "<strong>用途：</strong>這個範本結合傳統會議記錄與 AI 輔助，協助你建立完整、可執行的會議摘要。會議中先記錄原始筆記，之後用 AI 工具整理、結構化並萃取重點洞察，讓後續追蹤與團隊溝通更有效率。",
+                workflowHeading: "AI 輔助會議記錄工作流程",
+                steps: {
+                    1: { title: "記錄", desc: "會議中記錄原始筆記" },
+                    2: { title: "整理", desc: "整理基本會議資訊" },
+                    3: { title: "強化", desc: "用 AI 萃取重點洞察" },
+                    4: { title: "審核", desc: "檢查並調整 AI 產出內容" },
+                    5: { title: "分享", desc: "發送最終摘要" }
+                },
+                meetingInfoHeading: "會議資訊",
+                lblMeetingTitle: "會議標題：",
+                lblMeetingDatetime: "日期與時間：",
+                lblDuration: "時長：",
+                lblMeetingType: "會議類型：",
+                lblLocation: "地點/平台：",
+                lblMeetingLead: "會議主持人：",
+                lblMeetingPurpose: "會議目的/議程：",
+                lblAttendees: "與會者：",
+                placeholders: {
+                    "meeting-title": "例如：Sprint 規劃會議 - Alpha 團隊",
+                    "duration": "例如：60 分鐘",
+                    "location": "例如：A 會議室、Zoom",
+                    "meeting-lead": "你的名字",
+                    "meeting-purpose": "簡要描述本次會議的主要目標與議程項目...",
+                    "raw-notes": "在這裡輸入或貼上你的原始會議筆記...\n\n範例：\n- John 提到影響行動裝置用戶的 API 效能問題\n- 決定在下個 sprint 優先修復身分驗證的 bug\n- Sarah 將與設計團隊協調新的 mockup\n- 需要爭取額外伺服器容量的預算核准\n- 討論把站會改成非同步形式\n- Mike 提出對金流系統技術債的擔憂",
+                    "ai-summary": "把 AI 產生的會議摘要貼在這裡，然後檢查並依需求調整...",
+                    "key-insights": "AI 產生的洞察，關於團隊動態、風險、機會與策略意涵...",
+                    "follow-up": "根據這次討論，需要哪些後續會議、對話或調查？",
+                    "next-questions": "為下次追蹤討論該準備哪些問題？"
+                },
+                attendeeNamePlaceholder: "姓名",
+                attendeeRolePlaceholder: "角色",
+                btnAddAttendee: "+ 新增與會者",
+                meetingTypeOptions: {
+                    "Team Meeting": "團隊會議",
+                    "Sprint Planning": "Sprint 規劃",
+                    "Sprint Review": "Sprint 審查",
+                    "Retrospective": "回顧會議",
+                    "1:1 Meeting": "1:1 會議",
+                    "Stakeholder Update": "利害關係人更新",
+                    "Technical Review": "技術審查",
+                    "Project Kickoff": "專案啟動",
+                    "Other": "其他"
+                },
+                rawNotesHeading: "原始會議筆記",
+                rawNotesInstructions: "<strong>使用說明：</strong>會議進行時在這裡記錄筆記，不用擔心結構——只要即時記下重點、討論內容與決策即可，之後交給 AI 整理。",
+                sectionHeaders: {
+                    summary: "AI 輔助會議摘要",
+                    decisions: "已做出的決策",
+                    actions: "Action Item",
+                    insights: "重點洞察與後續追蹤"
+                },
+                enhTitles: {
+                    summary: "🤖 會議摘要用 AI Prompt",
+                    decisions: "🤖 決策萃取用 AI Prompt",
+                    actions: "🤖 Action Item 萃取用 AI Prompt",
+                    insights: "🤖 洞察分析用 AI Prompt"
+                },
+                summaryPromptIntro: "複製這段 prompt 和你的原始筆記，貼到 ChatGPT、Claude 或你偏好的 AI 工具中：",
+                copyBtn: "複製",
+                lblAiSummary: "AI 產生的摘要（把 AI 輸出貼在這裡）：",
+                decisionsGeneric: { title: "決策標題", details: "決策細節..." },
+                decisionTitle2Placeholder: "另一項決策",
+                lblKeyInsights: "重點洞察與收穫：",
+                lblFollowUp: "後續追蹤事項與下一步：",
+                lblNextQuestions: "下次會議要準備的問題：",
+                aiToolsLabel: "🤖 相容的 AI 工具：",
+                quickActionsHeading: "⚡ 快速操作",
+                btnGenerateAll: "🔄 產生所有 AI Prompt",
+                btnCopyRawNotes: "📋 複製原始筆記",
+                btnExportActions: "📤 匯出 Action Item",
+                btnFollowupEmail: "📧 建立後續追蹤信件",
+                btnValidate: "✅ 檢查完整度",
+                btnUpdateSummary: "更新摘要",
+                btnPrintSummary: "列印摘要",
+                btnDownloadSummary: "下載摘要",
+                btnNewMeeting: "新會議",
+                priorityMedium: "中等優先",
+                priorityHigh: "高優先",
+                actionItemDescPlaceholder: "Action item 描述",
+                actionItemDesc2Placeholder: "另一項 action item",
+                actionOwnerPlaceholder: "負責人姓名",
+
+                promptTemplates: {
+                    summary: `請分析以下會議筆記，並產生一份專業的會議摘要：
+
+**會議背景：**
+- 標題：[MEETING_TITLE]
+- 日期：[DATE]
+- 時長：[DURATION]
+- 與會者：[ATTENDEES]
+
+**原始筆記：**
+[PASTE_RAW_NOTES_HERE]
+
+**請提供：**
+1. **摘要總覽**（2-3 句話）
+2. **主要討論重點**（涵蓋的主要議題）
+3. **已做出的決策**（附具體脈絡的決策內容）
+4. **Action Item**（需要做什麼、由誰負責、何時完成）
+5. **重要洞察**（提出的重點收穫或關切事項）
+6. **需要後續追蹤的事項**（哪些需要持續關注）
+
+請整理成方便與團隊分享的格式。`,
+                    decisions: `請從以下會議筆記中，萃取並清楚列出所有做出的決策：
+
+**會議筆記：**
+[PASTE_RAW_NOTES_HERE]
+
+**針對每個決策，請提供：**
+1. **決策內容**：決定了什麼
+2. **背景脈絡**：為什麼會做出這個決策
+3. **影響範圍**：影響到誰/什麼
+4. **執行方式**：何時/如何執行
+
+請整理成清楚、可執行的決策陳述。`,
+                    actions: `請從以下會議筆記中萃取所有 action item：
+
+**會議筆記：**
+[PASTE_RAW_NOTES_HERE]
+
+**針對每個 action item，請標明：**
+1. **任務**：具體要採取的行動
+2. **負責人**：責任歸屬（如有提及）
+3. **截止日期**：時程或期限（如有提及）
+4. **優先順序**：依脈絡判斷高/中/低
+5. **相依關係**：這項任務相依於什麼、或阻擋了什麼
+
+請整理成清楚、可追蹤，並附負責人與截止日期的 action item 清單。`,
+                    insights: `請分析以下會議筆記，找出更深層的洞察與策略意涵：
+
+**會議背景：**[MEETING_TYPE] - [MEETING_TITLE]
+**會議筆記：**
+[PASTE_RAW_NOTES_HERE]
+
+**請找出：**
+1. **關鍵主題**：主要討論的議題/關切事項是什麼？
+2. **風險與擔憂**：有沒有提到任何風險、blocker 或擔憂？
+3. **機會**：有沒有提到正向的發展或機會？
+4. **團隊動態**：對團隊士氣、協作或溝通有什麼觀察？
+5. **策略意涵**：這些討論對更大的目標有什麼影響？
+6. **建議的後續行動**：接下來應該進行哪些對話或行動？
+
+請提供有助於團隊管理與決策的策略性洞察。`
+                },
+
+                notifications: {
+                    summaryCopied: "會議摘要 prompt 已複製！📋",
+                    decisionsCopied: "決策萃取 prompt 已複製！✅",
+                    actionsCopied: "Action item 萃取 prompt 已複製！🎯",
+                    insightsCopied: "洞察分析 prompt 已複製！💡",
+                    rawNotesCopied: "原始筆記已複製到剪貼簿！📋",
+                    actionsExported: "Action item 已匯出到剪貼簿！📤",
+                    emailCopied: "後續追蹤信件範本已複製！📧",
+                    complete: "會議摘要已完整填寫！✅"
+                },
+                alerts: {
+                    generateAll: "所有 AI prompt 已套用你的會議資料。使用每個 prompt 旁的複製按鈕即可取得客製化版本。",
+                    noRawNotes: "沒有可複製的原始筆記，請先新增一些會議筆記。",
+                    noActionItems: "沒有可匯出的 action item，請先新增一些 action item。",
+                    missingInfo: "缺少以下資訊：\n• ",
+                    resetConfirm: "要開始一份新的會議摘要嗎？這會清除目前所有資料。"
+                },
+                exportLabels: {
+                    actionItemsHeading: "Action Item：",
+                    owner: "負責人：",
+                    due: "截止日期：",
+                    tbd: "待定"
+                },
+                emailTemplate: {
+                    subject: "主旨：後續追蹤：",
+                    greeting: "團隊夥伴好，",
+                    body: "謝謝大家參與這場有成效的會議，以下是重點結論與下一步：",
+                    summaryPlaceholder: "[請貼上 AI 產生的摘要]",
+                    actionItemsHeading: "Action Item：",
+                    actionItemsPlaceholder: "[請貼上 Action Item]",
+                    closing: "如有任何問題，或我遺漏了什麼重要內容，歡迎告訴我。",
+                    signoff: "祝好，",
+                    namePlaceholder: "[你的名字]",
+                    defaultTitle: "會議"
+                },
+                missingFields: {
+                    meetingTitle: "會議標題",
+                    rawNotes: "原始會議筆記",
+                    attendee: "至少一位與會者",
+                    actionItem: "至少一項 action item"
+                }
+            }
+        };
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        // ---------------------------------------------------------------
+        // Language switching / rendering
+        // ---------------------------------------------------------------
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+            document.getElementById('pageTitle').textContent = dict.pageTitle;
+            document.title = dict.pageTitle;
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            document.getElementById('headerTitle').textContent = dict.headerTitle;
+            document.getElementById('descBody').innerHTML = dict.descBody;
+
+            document.getElementById('workflowHeading').textContent = dict.workflowHeading;
+            Object.keys(dict.steps).forEach(num => {
+                const titleEl = document.getElementById(`stepTitle-${num}`);
+                const descEl = document.getElementById(`stepDesc-${num}`);
+                if (titleEl) titleEl.textContent = dict.steps[num].title;
+                if (descEl) descEl.textContent = dict.steps[num].desc;
+            });
+
+            document.getElementById('meetingInfoHeading').textContent = dict.meetingInfoHeading;
+            document.getElementById('lblMeetingTitle').textContent = dict.lblMeetingTitle;
+            document.getElementById('lblMeetingDatetime').textContent = dict.lblMeetingDatetime;
+            document.getElementById('lblDuration').textContent = dict.lblDuration;
+            document.getElementById('lblMeetingType').textContent = dict.lblMeetingType;
+            document.getElementById('lblLocation').textContent = dict.lblLocation;
+            document.getElementById('lblMeetingLead').textContent = dict.lblMeetingLead;
+            document.getElementById('lblMeetingPurpose').textContent = dict.lblMeetingPurpose;
+            document.getElementById('lblAttendees').textContent = dict.lblAttendees;
+
+            Object.keys(dict.placeholders).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.placeholder = dict.placeholders[id];
+            });
+
+            document.querySelectorAll('.attendee-name input').forEach(input => {
+                input.placeholder = dict.attendeeNamePlaceholder;
+            });
+            document.querySelectorAll('.attendee-role input').forEach(input => {
+                input.placeholder = dict.attendeeRolePlaceholder;
+            });
+            document.getElementById('btnAddAttendee').textContent = dict.btnAddAttendee;
+
+            const mtIdMap = {
+                "Team Meeting": "mtOpt-team", "Sprint Planning": "mtOpt-sprintPlanning",
+                "Sprint Review": "mtOpt-sprintReview", "Retrospective": "mtOpt-retro",
+                "1:1 Meeting": "mtOpt-oneOnOne", "Stakeholder Update": "mtOpt-stakeholder",
+                "Technical Review": "mtOpt-techReview", "Project Kickoff": "mtOpt-kickoff",
+                "Other": "mtOpt-other"
+            };
+            Object.keys(dict.meetingTypeOptions).forEach(value => {
+                const opt = document.getElementById(mtIdMap[value]);
+                if (opt) opt.textContent = dict.meetingTypeOptions[value];
+            });
+
+            document.getElementById('rawNotesHeading').textContent = dict.rawNotesHeading;
+            document.getElementById('rawNotesInstructions').innerHTML = dict.rawNotesInstructions;
+
+            document.getElementById('sectionHeader-summary').textContent = dict.sectionHeaders.summary;
+            document.getElementById('sectionHeader-decisions').textContent = dict.sectionHeaders.decisions;
+            document.getElementById('sectionHeader-actions').textContent = dict.sectionHeaders.actions;
+            document.getElementById('sectionHeader-insights').textContent = dict.sectionHeaders.insights;
+
+            document.getElementById('enhTitle-summary').textContent = dict.enhTitles.summary;
+            document.getElementById('enhTitle-decisions').textContent = dict.enhTitles.decisions;
+            document.getElementById('enhTitle-actions').textContent = dict.enhTitles.actions;
+            document.getElementById('enhTitle-insights').textContent = dict.enhTitles.insights;
+
+            document.getElementById('summaryPromptIntro').textContent = dict.summaryPromptIntro;
+
+            document.getElementById('summary-prompt').textContent = dict.promptTemplates.summary;
+            document.getElementById('decisions-prompt').textContent = dict.promptTemplates.decisions;
+            document.getElementById('actions-prompt').textContent = dict.promptTemplates.actions;
+            document.getElementById('insights-prompt').textContent = dict.promptTemplates.insights;
+
+            document.getElementById('copyBtn-summary').textContent = dict.copyBtn;
+            document.getElementById('copyBtn-decisions').textContent = dict.copyBtn;
+            document.getElementById('copyBtn-actions').textContent = dict.copyBtn;
+            document.getElementById('copyBtn-insights').textContent = dict.copyBtn;
+
+            document.getElementById('lblAiSummary').textContent = dict.lblAiSummary;
+
+            document.getElementById('decisionTitle-2').placeholder = dict.decisionTitle2Placeholder;
+            document.getElementById('decisionDetails-2').placeholder = dict.decisionsGeneric.details;
+
+            document.getElementById('lblKeyInsights').textContent = dict.lblKeyInsights;
+            document.getElementById('lblFollowUp').textContent = dict.lblFollowUp;
+            document.getElementById('lblNextQuestions').textContent = dict.lblNextQuestions;
+
+            document.getElementById('aiToolsLabel').textContent = dict.aiToolsLabel;
+            document.getElementById('quickActionsHeading').textContent = dict.quickActionsHeading;
+            document.getElementById('btnGenerateAll').textContent = dict.btnGenerateAll;
+            document.getElementById('btnCopyRawNotes').textContent = dict.btnCopyRawNotes;
+            document.getElementById('btnExportActions').textContent = dict.btnExportActions;
+            document.getElementById('btnFollowupEmail').textContent = dict.btnFollowupEmail;
+            document.getElementById('btnValidate').textContent = dict.btnValidate;
+
+            document.getElementById('btnUpdateSummary').textContent = dict.btnUpdateSummary;
+            document.getElementById('btnPrintSummary').textContent = dict.btnPrintSummary;
+            document.getElementById('btnDownloadSummary').textContent = dict.btnDownloadSummary;
+            document.getElementById('btnNewMeeting').textContent = dict.btnNewMeeting;
+
+            document.getElementById('actionText-2').placeholder = dict.actionItemDesc2Placeholder;
+            document.getElementById('actionOwner-1').placeholder = dict.actionOwnerPlaceholder;
+            document.getElementById('actionOwner-2').placeholder = dict.actionOwnerPlaceholder;
+            document.getElementById('actionPriority-1').textContent = dict.priorityMedium;
+            document.getElementById('actionPriority-2').textContent = dict.priorityHigh;
+        }
+
+        // ---------------------------------------------------------------
+        // Dynamic element creation (attendees, decisions, action items)
+        // ---------------------------------------------------------------
         function addAttendee() {
+            const dict = t();
             const attendeeGrid = document.querySelector('.attendee-grid');
             const newAttendee = document.createElement('div');
             newAttendee.className = 'attendee-item';
             newAttendee.innerHTML = `
                 <div class="attendee-name">
-                    <input type="text" class="field-input" placeholder="Name" style="border: none; background: transparent; text-align: center; font-weight: 600;">
+                    <input type="text" class="field-input" placeholder="${dict.attendeeNamePlaceholder}" style="border: none; background: transparent; text-align: center; font-weight: 600;">
                 </div>
                 <div class="attendee-role">
-                    <input type="text" class="field-input" placeholder="Role" style="border: none; background: transparent; text-align: center; font-size: 12px;">
+                    <input type="text" class="field-input" placeholder="${dict.attendeeRolePlaceholder}" style="border: none; background: transparent; text-align: center; font-size: 12px;">
                 </div>
             `;
             attendeeGrid.appendChild(newAttendee);
         }
 
         function addDecision() {
+            const dict = t();
             const decisionsSection = document.querySelector('.decisions-header + .section-content');
             const newDecision = document.createElement('div');
             newDecision.className = 'decision-item';
             newDecision.innerHTML = `
                 <div class="decision-title">
-                    <input type="text" class="field-input" placeholder="Decision title" style="border: none; background: transparent; font-weight: 600;">
+                    <input type="text" class="field-input" placeholder="${dict.decisionsGeneric.title}" style="border: none; background: transparent; font-weight: 600;">
                 </div>
                 <div class="decision-details">
-                    <textarea class="field-textarea" placeholder="Decision details..."></textarea>
+                    <textarea class="field-textarea" placeholder="${dict.decisionsGeneric.details}"></textarea>
                 </div>
             `;
             const addButton = decisionsSection.querySelector('button');
@@ -844,6 +1405,7 @@ Provide strategic insights that help with team management and decision-making.
         }
 
         function addActionItem() {
+            const dict = t();
             const actionsSection = document.querySelector('.actions-header + .section-content');
             const newAction = document.createElement('div');
             newAction.className = 'action-item';
@@ -851,16 +1413,16 @@ Provide strategic insights that help with team management and decision-making.
                 <input type="checkbox" class="action-checkbox">
                 <div class="action-content">
                     <div class="action-text">
-                        <input type="text" class="field-input" placeholder="Action item description" style="border: none; background: transparent; font-weight: 500;">
+                        <input type="text" class="field-input" placeholder="${dict.actionItemDescPlaceholder}" style="border: none; background: transparent; font-weight: 500;">
                     </div>
                     <div class="action-details">
                         <span class="action-owner">
-                            <input type="text" class="field-input" placeholder="Owner name" style="border: none; background: transparent; width: 120px;">
+                            <input type="text" class="field-input" placeholder="${dict.actionOwnerPlaceholder}" style="border: none; background: transparent; width: 120px;">
                         </span>
                         <span class="action-due">
                             <input type="date" class="field-input" style="border: none; background: transparent; width: 130px;">
                         </span>
-                        <span class="action-priority priority-medium">Medium Priority</span>
+                        <span class="action-priority priority-medium">${dict.priorityMedium}</span>
                     </div>
                 </div>
             `;
@@ -868,7 +1430,11 @@ Provide strategic insights that help with team management and decision-making.
             actionsSection.insertBefore(newAction, addButton);
         }
 
+        // ---------------------------------------------------------------
+        // AI prompt copy functions
+        // ---------------------------------------------------------------
         function copySummaryPrompt() {
+            const dict = t();
             const meetingTitle = document.getElementById('meeting-title').value || '[MEETING_TITLE]';
             const meetingDate = document.getElementById('meeting-datetime').value || '[DATE]';
             const duration = document.getElementById('duration').value || '[DURATION]';
@@ -885,29 +1451,33 @@ Provide strategic insights that help with team management and decision-making.
                 .replace('[PASTE_RAW_NOTES_HERE]', rawNotes);
 
             copyToClipboard(prompt);
-            showNotification('Meeting summary prompt copied! 📋');
+            showNotification(dict.notifications.summaryCopied);
         }
 
         function copyDecisionsPrompt() {
+            const dict = t();
             const rawNotes = document.getElementById('raw-notes').value || '[PASTE_RAW_NOTES_HERE]';
             const prompt = document.getElementById('decisions-prompt').textContent
                 .replace('[PASTE_RAW_NOTES_HERE]', rawNotes);
 
             copyToClipboard(prompt);
-            showNotification('Decisions extraction prompt copied! ✅');
+            showNotification(dict.notifications.decisionsCopied);
         }
 
         function copyActionsPrompt() {
+            const dict = t();
             const rawNotes = document.getElementById('raw-notes').value || '[PASTE_RAW_NOTES_HERE]';
             const prompt = document.getElementById('actions-prompt').textContent
                 .replace('[PASTE_RAW_NOTES_HERE]', rawNotes);
 
             copyToClipboard(prompt);
-            showNotification('Action items extraction prompt copied! 🎯');
+            showNotification(dict.notifications.actionsCopied);
         }
 
         function copyInsightsPrompt() {
-            const meetingType = document.getElementById('meeting-type').value || '[MEETING_TYPE]';
+            const dict = t();
+            const meetingTypeValue = document.getElementById('meeting-type').value || '[MEETING_TYPE]';
+            const meetingType = dict.meetingTypeOptions[meetingTypeValue] || meetingTypeValue;
             const meetingTitle = document.getElementById('meeting-title').value || '[MEETING_TITLE]';
             const rawNotes = document.getElementById('raw-notes').value || '[PASTE_RAW_NOTES_HERE]';
 
@@ -917,83 +1487,89 @@ Provide strategic insights that help with team management and decision-making.
                 .replace('[PASTE_RAW_NOTES_HERE]', rawNotes);
 
             copyToClipboard(prompt);
-            showNotification('Insights analysis prompt copied! 💡');
+            showNotification(dict.notifications.insightsCopied);
         }
 
         function generateAllPrompts() {
+            const dict = t();
             // This could open a modal or separate section with all prompts ready to copy
-            alert('All AI prompts are now populated with your meeting data. Use the copy buttons on each prompt to get the customized versions.');
+            alert(dict.alerts.generateAll);
         }
 
         function copyRawNotes() {
+            const dict = t();
             const rawNotes = document.getElementById('raw-notes').value;
             if (!rawNotes.trim()) {
-                alert('No raw notes to copy. Please add some meeting notes first.');
+                alert(dict.alerts.noRawNotes);
                 return;
             }
             copyToClipboard(rawNotes);
-            showNotification('Raw notes copied to clipboard! 📋');
+            showNotification(dict.notifications.rawNotesCopied);
         }
 
         function exportActionItems() {
+            const dict = t();
             const actionItems = [];
             document.querySelectorAll('.action-item').forEach(item => {
                 const task = item.querySelector('.action-text input').value;
                 const owner = item.querySelector('.action-owner input').value;
                 const due = item.querySelector('.action-due input').value;
                 if (task.trim()) {
-                    actionItems.push(`• ${task} (Owner: ${owner || 'TBD'}, Due: ${due || 'TBD'})`);
+                    actionItems.push(`• ${task} (${dict.exportLabels.owner} ${owner || dict.exportLabels.tbd}, ${dict.exportLabels.due} ${due || dict.exportLabels.tbd})`);
                 }
             });
 
             if (actionItems.length === 0) {
-                alert('No action items to export. Please add some action items first.');
+                alert(dict.alerts.noActionItems);
                 return;
             }
 
-            const exportText = `Action Items:\n${actionItems.join('\n')}`;
+            const exportText = `${dict.exportLabels.actionItemsHeading}\n${actionItems.join('\n')}`;
             copyToClipboard(exportText);
-            showNotification('Action items exported to clipboard! 📤');
+            showNotification(dict.notifications.actionsExported);
         }
 
         function createFollowupEmail() {
-            const meetingTitle = document.getElementById('meeting-title').value || 'Meeting';
-            const followupTemplate = `Subject: Follow-up: ${meetingTitle}
+            const dict = t();
+            const et = dict.emailTemplate;
+            const meetingTitle = document.getElementById('meeting-title').value || et.defaultTitle;
+            const followupTemplate = `${et.subject}${meetingTitle}
 
-Hi team,
+${et.greeting}
 
-Thanks for a productive meeting. Here are the key outcomes and next steps:
+${et.body}
 
-[PASTE AI-GENERATED SUMMARY HERE]
+${et.summaryPlaceholder}
 
-Action Items:
-[PASTE ACTION ITEMS HERE]
+${et.actionItemsHeading}
+${et.actionItemsPlaceholder}
 
-Let me know if you have any questions or if I missed anything important.
+${et.closing}
 
-Best regards,
-[YOUR NAME]`;
+${et.signoff}
+${et.namePlaceholder}`;
 
             copyToClipboard(followupTemplate);
-            showNotification('Follow-up email template copied! 📧');
+            showNotification(dict.notifications.emailCopied);
         }
 
         function validateCompleteness() {
+            const dict = t();
             const missing = [];
 
-            if (!document.getElementById('meeting-title').value.trim()) missing.push('Meeting title');
-            if (!document.getElementById('raw-notes').value.trim()) missing.push('Raw meeting notes');
+            if (!document.getElementById('meeting-title').value.trim()) missing.push(dict.missingFields.meetingTitle);
+            if (!document.getElementById('raw-notes').value.trim()) missing.push(dict.missingFields.rawNotes);
 
             const hasAttendees = Array.from(document.querySelectorAll('.attendee-name input')).some(input => input.value.trim());
-            if (!hasAttendees) missing.push('At least one attendee');
+            if (!hasAttendees) missing.push(dict.missingFields.attendee);
 
             const hasActions = Array.from(document.querySelectorAll('.action-text input')).some(input => input.value.trim());
-            if (!hasActions) missing.push('At least one action item');
+            if (!hasActions) missing.push(dict.missingFields.actionItem);
 
             if (missing.length > 0) {
-                alert(`Missing information:\n• ${missing.join('\n• ')}`);
+                alert(`${dict.alerts.missingInfo}${missing.join('\n• ')}`);
             } else {
-                showNotification('Meeting summary is complete! ✅');
+                showNotification(dict.notifications.complete);
             }
         }
 
@@ -1081,7 +1657,8 @@ Best regards,
         }
 
         function resetSummary() {
-            if (confirm('Start a new meeting summary? This will clear all current data.')) {
+            const dict = t();
+            if (confirm(dict.alerts.resetConfirm)) {
                 localStorage.removeItem('aiMeetingSummary');
                 location.reload();
             }
@@ -1095,6 +1672,7 @@ Best regards,
             document.getElementById('meeting-datetime').value = now.toISOString().slice(0, 16);
 
             loadSaved();
+            renderLanguage();
 
             // Auto-save on input changes
             document.addEventListener('input', autoSave);

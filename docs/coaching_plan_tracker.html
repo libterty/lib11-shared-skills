@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coaching Plan Tracker Template</title>
+    <title id="pageTitle">Coaching Plan Tracker Template</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -27,6 +27,36 @@
             border-bottom: 3px solid #27ae60;
             padding-bottom: 20px;
             margin-bottom: 30px;
+            position: relative;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: rgba(39, 174, 96, 0.08);
+            color: #27ae60;
+            border: 1px solid rgba(39, 174, 96, 0.5);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:hover {
+            background: rgba(39, 174, 96, 0.18);
+        }
+
+        .lang-btn.active {
+            background: #27ae60;
+            color: white;
         }
 
         .header h1 {
@@ -359,6 +389,9 @@
             .print-button {
                 display: none;
             }
+            .lang-switcher {
+                display: none;
+            }
         }
 
         @media (max-width: 768px) {
@@ -374,243 +407,252 @@
             .goals-table {
                 font-size: 0.9em;
             }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <button class="print-button" onclick="window.print()">🖨️ Print/Save as PDF</button>
+    <button class="print-button" onclick="window.print()" id="btnPrint">🖨️ Print/Save as PDF</button>
 
     <div class="container">
         <div class="header">
-            <h1>🎯 Coaching Plan Tracker</h1>
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1>🎯 <span id="headerTitle">Coaching Plan Tracker</span></h1>
         </div>
 
         <div class="description">
-            <strong>Purpose:</strong> This comprehensive coaching tracker helps engineering managers create structured development plans for team members, track progress on goals, and maintain consistent coaching relationships. It provides a framework for regular check-ins, skill development tracking, and career growth planning.
+            <strong id="purposeLabel">Purpose:</strong> <span id="purposeBody">This comprehensive coaching tracker helps engineering managers create structured development plans for team members, track progress on goals, and maintain consistent coaching relationships. It provides a framework for regular check-ins, skill development tracking, and career growth planning.</span>
             <br><br>
-            <strong>Benefits:</strong> Structured development approach • Clear goal tracking • Improved 1:1 quality • Career progression visibility • Performance documentation • Consistent coaching methodology
+            <strong id="benefitsLabel">Benefits:</strong> <span id="benefitsBody">Structured development approach • Clear goal tracking • Improved 1:1 quality • Career progression visibility • Performance documentation • Consistent coaching methodology</span>
         </div>
 
         <div class="section">
-            <h2 style="--emoji: '👤';">Employee Information</h2>
+            <h2 style="--emoji: '👤';">👤 <span id="sectionEmployeeInfo">Employee Information</span></h2>
 
             <div class="employee-info">
                 <div class="info-box">
-                    <label for="employee-name">Employee Name:</label>
+                    <label for="employee-name" id="lblEmployeeName">Employee Name:</label>
                     <input type="text" id="employee-name" placeholder="Sarah Johnson">
                 </div>
                 <div class="info-box">
-                    <label for="employee-role">Current Role:</label>
+                    <label for="employee-role" id="lblEmployeeRole">Current Role:</label>
                     <input type="text" id="employee-role" placeholder="Senior Software Engineer">
                 </div>
                 <div class="info-box">
-                    <label for="hire-date">Hire Date:</label>
+                    <label for="hire-date" id="lblHireDate">Hire Date:</label>
                     <input type="date" id="hire-date">
                 </div>
                 <div class="info-box">
-                    <label for="manager-name">Manager:</label>
+                    <label for="manager-name" id="lblManagerName">Manager:</label>
                     <input type="text" id="manager-name" placeholder="Your Name">
                 </div>
                 <div class="info-box">
-                    <label for="coaching-start">Coaching Plan Start:</label>
+                    <label for="coaching-start" id="lblCoachingStart">Coaching Plan Start:</label>
                     <input type="date" id="coaching-start">
                 </div>
                 <div class="info-box">
-                    <label for="review-cycle">Review Cycle:</label>
+                    <label for="review-cycle" id="lblReviewCycle">Review Cycle:</label>
                     <select id="review-cycle">
-                        <option value="quarterly">Quarterly</option>
-                        <option value="biannual">Bi-annual</option>
-                        <option value="annual">Annual</option>
+                        <option value="quarterly" id="reviewOpt-quarterly">Quarterly</option>
+                        <option value="biannual" id="reviewOpt-biannual">Bi-annual</option>
+                        <option value="annual" id="reviewOpt-annual">Annual</option>
                     </select>
                 </div>
             </div>
         </div>
 
         <div class="section">
-            <h2>🎯 Development Goals</h2>
+            <h2>🎯 <span id="sectionGoals">Development Goals</span></h2>
 
             <table class="goals-table">
                 <thead>
                     <tr>
-                        <th style="width: 25%;">Goal</th>
-                        <th style="width: 20%;">Category</th>
-                        <th style="width: 15%;">Target Date</th>
-                        <th style="width: 15%;">Progress</th>
-                        <th style="width: 12%;">Status</th>
-                        <th style="width: 13%;">Priority</th>
+                        <th style="width: 25%;" id="goalsTh-goal">Goal</th>
+                        <th style="width: 20%;" id="goalsTh-category">Category</th>
+                        <th style="width: 15%;" id="goalsTh-targetDate">Target Date</th>
+                        <th style="width: 15%;" id="goalsTh-progress">Progress</th>
+                        <th style="width: 12%;" id="goalsTh-status">Status</th>
+                        <th style="width: 13%;" id="goalsTh-priority">Priority</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Lead architecture design for microservices migration</td>
-                        <td>Technical Leadership</td>
-                        <td>Q2 2024</td>
+                        <td id="goalRow1-goal">Lead architecture design for microservices migration</td>
+                        <td id="goalRow1-category">Technical Leadership</td>
+                        <td id="goalRow1-date">Q2 2024</td>
                         <td>
                             <div class="progress-bar-container">
                                 <div class="progress-bar" style="width: 65%;"></div>
                                 <div class="progress-text">65%</div>
                             </div>
                         </td>
-                        <td><span class="status-badge status-in-progress">In Progress</span></td>
-                        <td>High</td>
+                        <td><span class="status-badge status-in-progress" id="goalRow1-status">In Progress</span></td>
+                        <td id="goalRow1-priority">High</td>
                     </tr>
                     <tr>
-                        <td>Mentor 2 junior developers</td>
-                        <td>People Development</td>
-                        <td>Ongoing</td>
+                        <td id="goalRow2-goal">Mentor 2 junior developers</td>
+                        <td id="goalRow2-category">People Development</td>
+                        <td id="goalRow2-date">Ongoing</td>
                         <td>
                             <div class="progress-bar-container">
                                 <div class="progress-bar" style="width: 80%;"></div>
                                 <div class="progress-text">80%</div>
                             </div>
                         </td>
-                        <td><span class="status-badge status-in-progress">In Progress</span></td>
-                        <td>Medium</td>
+                        <td><span class="status-badge status-in-progress" id="goalRow2-status">In Progress</span></td>
+                        <td id="goalRow2-priority">Medium</td>
                     </tr>
                     <tr>
-                        <td>Complete AWS Solutions Architect certification</td>
-                        <td>Professional Growth</td>
-                        <td>Q3 2024</td>
+                        <td id="goalRow3-goal">Complete AWS Solutions Architect certification</td>
+                        <td id="goalRow3-category">Professional Growth</td>
+                        <td id="goalRow3-date">Q3 2024</td>
                         <td>
                             <div class="progress-bar-container">
                                 <div class="progress-bar" style="width: 30%;"></div>
                                 <div class="progress-text">30%</div>
                             </div>
                         </td>
-                        <td><span class="status-badge status-not-started">Planning</span></td>
-                        <td>Medium</td>
+                        <td><span class="status-badge status-not-started" id="goalRow3-status">Planning</span></td>
+                        <td id="goalRow3-priority">Medium</td>
                     </tr>
                     <tr>
-                        <td>Improve public speaking skills</td>
-                        <td>Communication</td>
-                        <td>Q4 2024</td>
+                        <td id="goalRow4-goal">Improve public speaking skills</td>
+                        <td id="goalRow4-category">Communication</td>
+                        <td id="goalRow4-date">Q4 2024</td>
                         <td>
                             <div class="progress-bar-container">
                                 <div class="progress-bar" style="width: 15%;"></div>
                                 <div class="progress-text">15%</div>
                             </div>
                         </td>
-                        <td><span class="status-badge status-not-started">Not Started</span></td>
-                        <td>Low</td>
+                        <td><span class="status-badge status-not-started" id="goalRow4-status">Not Started</span></td>
+                        <td id="goalRow4-priority">Low</td>
                     </tr>
                 </tbody>
             </table>
 
-            <button class="add-button">+ Add New Goal</button>
+            <button class="add-button" id="btnAddGoal">+ Add New Goal</button>
         </div>
 
         <div class="section">
-            <h2>🛠️ Skills Assessment</h2>
+            <h2>🛠️ <span id="sectionSkills">Skills Assessment</span></h2>
 
             <div class="skills-matrix">
                 <div class="skill-item">
                     <div class="skill-name">JavaScript/TypeScript</div>
-                    <div class="skill-level">Expert Level</div>
+                    <div class="skill-level" id="skillLevel-js">Expert Level</div>
                     <div class="star-rating">★★★★★</div>
                 </div>
                 <div class="skill-item">
-                    <div class="skill-name">System Architecture</div>
-                    <div class="skill-level">Advanced Level</div>
+                    <div class="skill-name" id="skillName-arch">System Architecture</div>
+                    <div class="skill-level" id="skillLevel-arch">Advanced Level</div>
                     <div class="star-rating">★★★★☆</div>
                 </div>
                 <div class="skill-item">
-                    <div class="skill-name">Team Leadership</div>
-                    <div class="skill-level">Intermediate Level</div>
+                    <div class="skill-name" id="skillName-leadership">Team Leadership</div>
+                    <div class="skill-level" id="skillLevel-leadership">Intermediate Level</div>
                     <div class="star-rating">★★★☆☆</div>
                 </div>
                 <div class="skill-item">
-                    <div class="skill-name">Cloud Technologies</div>
-                    <div class="skill-level">Intermediate Level</div>
+                    <div class="skill-name" id="skillName-cloud">Cloud Technologies</div>
+                    <div class="skill-level" id="skillLevel-cloud">Intermediate Level</div>
                     <div class="star-rating">★★★☆☆</div>
                 </div>
                 <div class="skill-item">
-                    <div class="skill-name">Product Strategy</div>
-                    <div class="skill-level">Beginner Level</div>
+                    <div class="skill-name" id="skillName-product">Product Strategy</div>
+                    <div class="skill-level" id="skillLevel-product">Beginner Level</div>
                     <div class="star-rating">★★☆☆☆</div>
                 </div>
                 <div class="skill-item">
-                    <div class="skill-name">Public Speaking</div>
-                    <div class="skill-level">Beginner Level</div>
+                    <div class="skill-name" id="skillName-speaking">Public Speaking</div>
+                    <div class="skill-level" id="skillLevel-speaking">Beginner Level</div>
                     <div class="star-rating">★★☆☆☆</div>
                 </div>
             </div>
         </div>
 
         <div class="section">
-            <h2>✅ Action Items & Next Steps</h2>
+            <h2>✅ <span id="sectionActionItems">Action Items &amp; Next Steps</span></h2>
 
             <ul class="action-checklist">
                 <li>
                     <input type="checkbox" id="action1">
                     <div class="action-content">
-                        <div class="action-title">Schedule architecture review session with senior team</div>
-                        <div class="action-details">Due: March 25, 2024 • Owner: Sarah • Priority: High</div>
+                        <div class="action-title" id="action1-title">Schedule architecture review session with senior team</div>
+                        <div class="action-details" id="action1-details">Due: March 25, 2024 • Owner: Sarah • Priority: High</div>
                     </div>
                 </li>
                 <li>
                     <input type="checkbox" id="action2" checked>
                     <div class="action-content">
-                        <div class="action-title">Enroll in AWS certification training program</div>
-                        <div class="action-details">Due: March 20, 2024 • Owner: Sarah • Priority: Medium • Status: Completed</div>
+                        <div class="action-title" id="action2-title">Enroll in AWS certification training program</div>
+                        <div class="action-details" id="action2-details">Due: March 20, 2024 • Owner: Sarah • Priority: Medium • Status: Completed</div>
                     </div>
                 </li>
                 <li>
                     <input type="checkbox" id="action3">
                     <div class="action-content">
-                        <div class="action-title">Set up weekly mentoring sessions with junior developers</div>
-                        <div class="action-details">Due: March 30, 2024 • Owner: Sarah + HR • Priority: High</div>
+                        <div class="action-title" id="action3-title">Set up weekly mentoring sessions with junior developers</div>
+                        <div class="action-details" id="action3-details">Due: March 30, 2024 • Owner: Sarah + HR • Priority: High</div>
                     </div>
                 </li>
                 <li>
                     <input type="checkbox" id="action4">
                     <div class="action-content">
-                        <div class="action-title">Join Toastmasters club or similar speaking group</div>
-                        <div class="action-details">Due: April 15, 2024 • Owner: Sarah • Priority: Low</div>
+                        <div class="action-title" id="action4-title">Join Toastmasters club or similar speaking group</div>
+                        <div class="action-details" id="action4-details">Due: April 15, 2024 • Owner: Sarah • Priority: Low</div>
                     </div>
                 </li>
                 <li>
                     <input type="checkbox" id="action5">
                     <div class="action-content">
-                        <div class="action-title">Create technical blog post on microservices patterns</div>
-                        <div class="action-details">Due: April 30, 2024 • Owner: Sarah • Priority: Medium</div>
+                        <div class="action-title" id="action5-title">Create technical blog post on microservices patterns</div>
+                        <div class="action-details" id="action5-details">Due: April 30, 2024 • Owner: Sarah • Priority: Medium</div>
                     </div>
                 </li>
             </ul>
         </div>
 
         <div class="section">
-            <h2>💬 Coaching Session Log</h2>
+            <h2>💬 <span id="sectionSessionLog">Coaching Session Log</span></h2>
 
             <div class="meeting-log">
-                <h4>Session #1 - March 15, 2024</h4>
-                <p><strong>Focus:</strong> Goal setting and career aspirations</p>
-                <p><strong>Key Discussion Points:</strong></p>
+                <h4 id="session1-heading">Session #1 - March 15, 2024</h4>
+                <p><strong id="focusLabel1">Focus:</strong> <span id="session1-focus">Goal setting and career aspirations</span></p>
+                <p><strong id="discussionLabel1">Key Discussion Points:</strong></p>
                 <ul>
-                    <li>Sarah expressed interest in moving toward technical leadership role</li>
-                    <li>Identified microservices migration project as key growth opportunity</li>
-                    <li>Discussed importance of developing mentoring skills</li>
+                    <li id="session1-point1">Sarah expressed interest in moving toward technical leadership role</li>
+                    <li id="session1-point2">Identified microservices migration project as key growth opportunity</li>
+                    <li id="session1-point3">Discussed importance of developing mentoring skills</li>
                 </ul>
-                <p><strong>Action Items:</strong> Set up architecture review process, begin mentoring junior developers</p>
-                <p><strong>Next Session:</strong> March 29, 2024</p>
+                <p><strong id="actionItemsLabel1">Action Items:</strong> <span id="session1-actions">Set up architecture review process, begin mentoring junior developers</span></p>
+                <p><strong id="nextSessionLabel1">Next Session:</strong> <span id="session1-next">March 29, 2024</span></p>
             </div>
 
             <div class="meeting-log">
-                <h4>Session #2 - March 29, 2024</h4>
-                <p><strong>Focus:</strong> Progress review and obstacle identification</p>
-                <p><strong>Key Discussion Points:</strong></p>
+                <h4 id="session2-heading">Session #2 - March 29, 2024</h4>
+                <p><strong id="focusLabel2">Focus:</strong> <span id="session2-focus">Progress review and obstacle identification</span></p>
+                <p><strong id="discussionLabel2">Key Discussion Points:</strong></p>
                 <ul>
-                    <li>Good progress on architecture design - 65% complete</li>
-                    <li>Mentoring sessions going well, positive feedback from mentees</li>
-                    <li>Need more structure for AWS certification study plan</li>
+                    <li id="session2-point1">Good progress on architecture design - 65% complete</li>
+                    <li id="session2-point2">Mentoring sessions going well, positive feedback from mentees</li>
+                    <li id="session2-point3">Need more structure for AWS certification study plan</li>
                 </ul>
-                <p><strong>Action Items:</strong> Create study schedule for AWS cert, schedule team presentation practice</p>
-                <p><strong>Next Session:</strong> April 12, 2024</p>
+                <p><strong id="actionItemsLabel2">Action Items:</strong> <span id="session2-actions">Create study schedule for AWS cert, schedule team presentation practice</span></p>
+                <p><strong id="nextSessionLabel2">Next Session:</strong> <span id="session2-next">April 12, 2024</span></p>
             </div>
         </div>
 
         <div class="coaching-notes">
-            <h4>Coaching Notes & Insights</h4>
-            <textarea rows="6" style="width: 100%; border: 1px solid #ffd93d; border-radius: 4px; padding: 10px; font-family: inherit;" placeholder="Record observations about coaching conversations, breakthrough moments, patterns you notice, and insights about the employee's growth...
+            <h4 id="notesHeading">Coaching Notes &amp; Insights</h4>
+            <textarea rows="6" style="width: 100%; border: 1px solid #ffd93d; border-radius: 4px; padding: 10px; font-family: inherit;" id="coaching-notes-textarea" placeholder="Record observations about coaching conversations, breakthrough moments, patterns you notice, and insights about the employee's growth...
 
 Example notes:
 • Sarah shows strong technical aptitude but lacks confidence in leadership scenarios
@@ -621,32 +663,32 @@ Example notes:
         </div>
 
         <div class="section">
-            <h2>📝 Development Plan Summary</h2>
+            <h2>📝 <span id="sectionSummary">Development Plan Summary</span></h2>
 
             <div class="employee-info">
                 <div class="info-box">
-                    <label for="strengths">Key Strengths:</label>
+                    <label for="strengths" id="lblStrengths">Key Strengths:</label>
                     <textarea id="strengths" rows="3" placeholder="• Strong technical skills and problem-solving ability
 • Natural mentoring instincts and patience with others
 • Detail-oriented and thorough in work approach
 • Good team collaboration and communication skills"></textarea>
                 </div>
                 <div class="info-box">
-                    <label for="growth-areas">Growth Areas:</label>
+                    <label for="growth-areas" id="lblGrowthAreas">Growth Areas:</label>
                     <textarea id="growth-areas" rows="3" placeholder="• Building confidence in leadership situations
 • Developing strategic thinking skills
 • Improving public speaking and presentation skills
 • Learning to delegate and trust others' work"></textarea>
                 </div>
                 <div class="info-box">
-                    <label for="career-goals">Long-term Career Goals:</label>
+                    <label for="career-goals" id="lblCareerGoals">Long-term Career Goals:</label>
                     <textarea id="career-goals" rows="3" placeholder="• Technical Lead position within 18 months
 • Eventual goal of Engineering Manager role
 • Interest in product strategy and customer impact
 • Wants to build and lead high-performing teams"></textarea>
                 </div>
                 <div class="info-box">
-                    <label for="support-needed">Support Needed:</label>
+                    <label for="support-needed" id="lblSupportNeeded">Support Needed:</label>
                     <textarea id="support-needed" rows="3" placeholder="• More exposure to senior leadership meetings
 • Structured mentoring from current tech leads
 • Professional development budget for courses/conferences
@@ -656,62 +698,427 @@ Example notes:
         </div>
 
         <div class="section">
-            <h2>📅 Review Schedule</h2>
+            <h2>📅 <span id="sectionReviewSchedule">Review Schedule</span></h2>
 
             <table class="goals-table">
                 <thead>
                     <tr>
-                        <th>Review Type</th>
-                        <th>Frequency</th>
-                        <th>Next Review Date</th>
-                        <th>Focus Areas</th>
-                        <th>Participants</th>
+                        <th id="reviewTh-type">Review Type</th>
+                        <th id="reviewTh-frequency">Frequency</th>
+                        <th id="reviewTh-nextDate">Next Review Date</th>
+                        <th id="reviewTh-focusAreas">Focus Areas</th>
+                        <th id="reviewTh-participants">Participants</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Weekly 1:1</td>
-                        <td>Weekly</td>
-                        <td>April 5, 2024</td>
-                        <td>Progress check, obstacle removal</td>
-                        <td>Manager, Employee</td>
+                        <td id="reviewRow1-type">Weekly 1:1</td>
+                        <td id="reviewRow1-frequency">Weekly</td>
+                        <td id="reviewRow1-date">April 5, 2024</td>
+                        <td id="reviewRow1-focus">Progress check, obstacle removal</td>
+                        <td id="reviewRow1-participants">Manager, Employee</td>
                     </tr>
                     <tr>
-                        <td>Monthly Goal Review</td>
-                        <td>Monthly</td>
-                        <td>April 30, 2024</td>
-                        <td>Goal progress, plan adjustments</td>
-                        <td>Manager, Employee</td>
+                        <td id="reviewRow2-type">Monthly Goal Review</td>
+                        <td id="reviewRow2-frequency">Monthly</td>
+                        <td id="reviewRow2-date">April 30, 2024</td>
+                        <td id="reviewRow2-focus">Goal progress, plan adjustments</td>
+                        <td id="reviewRow2-participants">Manager, Employee</td>
                     </tr>
                     <tr>
-                        <td>Quarterly Development Review</td>
-                        <td>Quarterly</td>
-                        <td>June 30, 2024</td>
-                        <td>Comprehensive skills assessment</td>
-                        <td>Manager, Employee, Skip-level</td>
+                        <td id="reviewRow3-type">Quarterly Development Review</td>
+                        <td id="reviewRow3-frequency">Quarterly</td>
+                        <td id="reviewRow3-date">June 30, 2024</td>
+                        <td id="reviewRow3-focus">Comprehensive skills assessment</td>
+                        <td id="reviewRow3-participants">Manager, Employee, Skip-level</td>
                     </tr>
                     <tr>
-                        <td>Annual Performance Review</td>
-                        <td>Annual</td>
-                        <td>December 31, 2024</td>
-                        <td>Full performance evaluation</td>
-                        <td>Manager, Employee, HR</td>
+                        <td id="reviewRow4-type">Annual Performance Review</td>
+                        <td id="reviewRow4-frequency">Annual</td>
+                        <td id="reviewRow4-date">December 31, 2024</td>
+                        <td id="reviewRow4-focus">Full performance evaluation</td>
+                        <td id="reviewRow4-participants">Manager, Employee, HR</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <div style="text-align: center; margin-top: 40px; padding: 20px; background: linear-gradient(135deg, #e8f8f2, #f0fdf7); border-radius: 8px;">
-            <p><strong>Coaching Success Principles:</strong> Regular check-ins • Clear expectations • Growth-focused conversations • Celebrate progress • Address challenges early</p>
-            <p><small>Template created: <span id="created-date"></span></small></p>
+            <p><strong id="successPrinciplesLabel">Coaching Success Principles:</strong> <span id="successPrinciplesBody">Regular check-ins • Clear expectations • Growth-focused conversations • Celebrate progress • Address challenges early</span></p>
+            <p><small><span id="templateCreatedLabel">Template created:</span> <span id="created-date"></span></small></p>
         </div>
     </div>
 
     <script>
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        // ---------------------------------------------------------------
+        // i18n dictionary
+        // ---------------------------------------------------------------
+        const I18N = {
+            en: {
+                pageTitle: "Coaching Plan Tracker Template",
+                headerTitle: "Coaching Plan Tracker",
+                purposeLabel: "Purpose:",
+                purposeBody: "This comprehensive coaching tracker helps engineering managers create structured development plans for team members, track progress on goals, and maintain consistent coaching relationships. It provides a framework for regular check-ins, skill development tracking, and career growth planning.",
+                benefitsLabel: "Benefits:",
+                benefitsBody: "Structured development approach • Clear goal tracking • Improved 1:1 quality • Career progression visibility • Performance documentation • Consistent coaching methodology",
+                btnPrint: "🖨️ Print/Save as PDF",
+                sectionEmployeeInfo: "Employee Information",
+                lblEmployeeName: "Employee Name:",
+                phEmployeeName: "Sarah Johnson",
+                lblEmployeeRole: "Current Role:",
+                phEmployeeRole: "Senior Software Engineer",
+                lblHireDate: "Hire Date:",
+                lblManagerName: "Manager:",
+                phManagerName: "Your Name",
+                lblCoachingStart: "Coaching Plan Start:",
+                lblReviewCycle: "Review Cycle:",
+                reviewOptions: { quarterly: "Quarterly", biannual: "Bi-annual", annual: "Annual" },
+                sectionGoals: "Development Goals",
+                goalsHeaders: { goal: "Goal", category: "Category", targetDate: "Target Date", progress: "Progress", status: "Status", priority: "Priority" },
+                goalRows: {
+                    1: { goal: "Lead architecture design for microservices migration", category: "Technical Leadership", date: "Q2 2024", status: "In Progress", priority: "High" },
+                    2: { goal: "Mentor 2 junior developers", category: "People Development", date: "Ongoing", status: "In Progress", priority: "Medium" },
+                    3: { goal: "Complete AWS Solutions Architect certification", category: "Professional Growth", date: "Q3 2024", status: "Planning", priority: "Medium" },
+                    4: { goal: "Improve public speaking skills", category: "Communication", date: "Q4 2024", status: "Not Started", priority: "Low" }
+                },
+                btnAddGoal: "+ Add New Goal",
+                sectionSkills: "Skills Assessment",
+                skillNames: { js: "JavaScript/TypeScript", arch: "System Architecture", leadership: "Team Leadership", cloud: "Cloud Technologies", product: "Product Strategy", speaking: "Public Speaking" },
+                skillLevels: { js: "Expert Level", arch: "Advanced Level", leadership: "Intermediate Level", cloud: "Intermediate Level", product: "Beginner Level", speaking: "Beginner Level" },
+                sectionActionItems: "Action Items &amp; Next Steps",
+                actions: {
+                    1: { title: "Schedule architecture review session with senior team", details: "Due: March 25, 2024 • Owner: Sarah • Priority: High" },
+                    2: { title: "Enroll in AWS certification training program", details: "Due: March 20, 2024 • Owner: Sarah • Priority: Medium • Status: Completed" },
+                    3: { title: "Set up weekly mentoring sessions with junior developers", details: "Due: March 30, 2024 • Owner: Sarah + HR • Priority: High" },
+                    4: { title: "Join Toastmasters club or similar speaking group", details: "Due: April 15, 2024 • Owner: Sarah • Priority: Low" },
+                    5: { title: "Create technical blog post on microservices patterns", details: "Due: April 30, 2024 • Owner: Sarah • Priority: Medium" }
+                },
+                sectionSessionLog: "Coaching Session Log",
+                focusLabel: "Focus:",
+                discussionLabel: "Key Discussion Points:",
+                actionItemsLabel: "Action Items:",
+                nextSessionLabel: "Next Session:",
+                session1: {
+                    heading: "Session #1 - March 15, 2024",
+                    focus: "Goal setting and career aspirations",
+                    points: [
+                        "Sarah expressed interest in moving toward technical leadership role",
+                        "Identified microservices migration project as key growth opportunity",
+                        "Discussed importance of developing mentoring skills"
+                    ],
+                    actions: "Set up architecture review process, begin mentoring junior developers",
+                    next: "March 29, 2024"
+                },
+                session2: {
+                    heading: "Session #2 - March 29, 2024",
+                    focus: "Progress review and obstacle identification",
+                    points: [
+                        "Good progress on architecture design - 65% complete",
+                        "Mentoring sessions going well, positive feedback from mentees",
+                        "Need more structure for AWS certification study plan"
+                    ],
+                    actions: "Create study schedule for AWS cert, schedule team presentation practice",
+                    next: "April 12, 2024"
+                },
+                notesHeading: "Coaching Notes &amp; Insights",
+                notesPlaceholder: "Record observations about coaching conversations, breakthrough moments, patterns you notice, and insights about the employee's growth...\n\nExample notes:\n• Sarah shows strong technical aptitude but lacks confidence in leadership scenarios\n• Responds well to structured feedback and clear milestones\n• Natural mentor - junior developers seek her out for guidance\n• May benefit from exposure to higher-level strategic discussions\n• Consider stretch assignment involving cross-team collaboration",
+                sectionSummary: "Development Plan Summary",
+                lblStrengths: "Key Strengths:",
+                phStrengths: "• Strong technical skills and problem-solving ability\n• Natural mentoring instincts and patience with others\n• Detail-oriented and thorough in work approach\n• Good team collaboration and communication skills",
+                lblGrowthAreas: "Growth Areas:",
+                phGrowthAreas: "• Building confidence in leadership situations\n• Developing strategic thinking skills\n• Improving public speaking and presentation skills\n• Learning to delegate and trust others' work",
+                lblCareerGoals: "Long-term Career Goals:",
+                phCareerGoals: "• Technical Lead position within 18 months\n• Eventual goal of Engineering Manager role\n• Interest in product strategy and customer impact\n• Wants to build and lead high-performing teams",
+                lblSupportNeeded: "Support Needed:",
+                phSupportNeeded: "• More exposure to senior leadership meetings\n• Structured mentoring from current tech leads\n• Professional development budget for courses/conferences\n• Opportunities to present to broader audiences",
+                sectionReviewSchedule: "Review Schedule",
+                reviewHeaders: { type: "Review Type", frequency: "Frequency", nextDate: "Next Review Date", focusAreas: "Focus Areas", participants: "Participants" },
+                reviewRows: {
+                    1: { type: "Weekly 1:1", frequency: "Weekly", date: "April 5, 2024", focus: "Progress check, obstacle removal", participants: "Manager, Employee" },
+                    2: { type: "Monthly Goal Review", frequency: "Monthly", date: "April 30, 2024", focus: "Goal progress, plan adjustments", participants: "Manager, Employee" },
+                    3: { type: "Quarterly Development Review", frequency: "Quarterly", date: "June 30, 2024", focus: "Comprehensive skills assessment", participants: "Manager, Employee, Skip-level" },
+                    4: { type: "Annual Performance Review", frequency: "Annual", date: "December 31, 2024", focus: "Full performance evaluation", participants: "Manager, Employee, HR" }
+                },
+                successPrinciplesLabel: "Coaching Success Principles:",
+                successPrinciplesBody: "Regular check-ins • Clear expectations • Growth-focused conversations • Celebrate progress • Address challenges early",
+                templateCreatedLabel: "Template created:",
+                newGoalPrompts: {
+                    goal: "Enter the new goal:",
+                    category: "Enter the category (e.g., Technical Leadership, People Development):",
+                    date: "Enter the target date (e.g., Q4 2024):",
+                    priority: "Enter the priority (High, Medium, Low):"
+                },
+                newGoalDefaultStatus: "Not Started"
+            },
+            zh: {
+                pageTitle: "教練輔導計畫追蹤範本",
+                headerTitle: "教練輔導計畫追蹤表",
+                purposeLabel: "用途：",
+                purposeBody: "這個完整的教練輔導追蹤表協助工程主管為團隊成員建立結構化的發展計畫、追蹤目標進度，並維持穩定的教練輔導關係。它提供了定期關心對話、技能發展追蹤與職涯成長規劃的框架。",
+                benefitsLabel: "效益：",
+                benefitsBody: "結構化的發展方式．清楚的目標追蹤．提升 1:1 品質．職涯發展可視化．績效紀錄留存．一致的教練輔導方法",
+                btnPrint: "🖨️ 列印／存成 PDF",
+                sectionEmployeeInfo: "員工資訊",
+                lblEmployeeName: "員工姓名：",
+                phEmployeeName: "王小美",
+                lblEmployeeRole: "目前職稱：",
+                phEmployeeRole: "資深軟體工程師",
+                lblHireDate: "到職日期：",
+                lblManagerName: "主管：",
+                phManagerName: "你的姓名",
+                lblCoachingStart: "教練輔導計畫開始日：",
+                lblReviewCycle: "檢視週期：",
+                reviewOptions: { quarterly: "每季", biannual: "每半年", annual: "每年" },
+                sectionGoals: "發展目標",
+                goalsHeaders: { goal: "目標", category: "類別", targetDate: "目標日期", progress: "進度", status: "狀態", priority: "優先順序" },
+                goalRows: {
+                    1: { goal: "主導微服務遷移的架構設計", category: "技術領導力", date: "2024 Q2", status: "進行中", priority: "高" },
+                    2: { goal: "指導 2 位資淺工程師", category: "人才發展", date: "持續進行", status: "進行中", priority: "中" },
+                    3: { goal: "完成 AWS Solutions Architect 證照", category: "專業成長", date: "2024 Q3", status: "規劃中", priority: "中" },
+                    4: { goal: "提升公開演講能力", category: "溝通表達", date: "2024 Q4", status: "尚未開始", priority: "低" }
+                },
+                btnAddGoal: "＋新增目標",
+                sectionSkills: "技能評估",
+                skillNames: { js: "JavaScript/TypeScript", arch: "系統架構", leadership: "團隊領導力", cloud: "雲端技術", product: "產品策略", speaking: "公開演講" },
+                skillLevels: { js: "專家等級", arch: "進階等級", leadership: "中階等級", cloud: "中階等級", product: "初階等級", speaking: "初階等級" },
+                sectionActionItems: "行動項目與後續步驟",
+                actions: {
+                    1: { title: "與資深團隊排定架構審查會議", details: "截止日：2024/3/25．負責人：小美．優先順序：高" },
+                    2: { title: "報名 AWS 證照培訓課程", details: "截止日：2024/3/20．負責人：小美．優先順序：中．狀態：已完成" },
+                    3: { title: "與資淺工程師建立每週指導會議", details: "截止日：2024/3/30．負責人：小美 + HR．優先順序：高" },
+                    4: { title: "加入 Toastmasters 或類似的演講社團", details: "截止日：2024/4/15．負責人：小美．優先順序：低" },
+                    5: { title: "撰寫微服務架構模式的技術部落格文章", details: "截止日：2024/4/30．負責人：小美．優先順序：中" }
+                },
+                sectionSessionLog: "教練輔導會談紀錄",
+                focusLabel: "重點：",
+                discussionLabel: "關鍵討論內容：",
+                actionItemsLabel: "行動項目：",
+                nextSessionLabel: "下次會談：",
+                session1: {
+                    heading: "第 1 次會談 - 2024/3/15",
+                    focus: "目標設定與職涯志向",
+                    points: [
+                        "小美表達了想朝技術領導角色發展的興趣",
+                        "找出微服務遷移專案為關鍵成長機會",
+                        "討論了培養指導技能的重要性"
+                    ],
+                    actions: "建立架構審查流程、開始指導資淺工程師",
+                    next: "2024/3/29"
+                },
+                session2: {
+                    heading: "第 2 次會談 - 2024/3/29",
+                    focus: "進度檢視與障礙排除",
+                    points: [
+                        "架構設計進度良好——已完成 65%",
+                        "指導會議進行順利，受指導者回饋正向",
+                        "AWS 證照的讀書計畫需要更有結構"
+                    ],
+                    actions: "建立 AWS 證照讀書時程表、安排團隊簡報練習",
+                    next: "2024/4/12"
+                },
+                notesHeading: "教練輔導筆記與觀察",
+                notesPlaceholder: "記錄教練輔導對話中的觀察、突破性時刻、你注意到的模式，以及對這位員工成長的洞察...\n\n範例筆記：\n• 小美有很強的技術能力，但在領導情境中還缺乏自信\n• 對結構化的回饋與明確的里程碑反應良好\n• 天生的良師益友——資淺工程師會主動找她請教\n• 或許能從接觸更高層級的策略性討論中受益\n• 可考慮安排涉及跨團隊協作的挑戰型任務",
+                sectionSummary: "發展計畫摘要",
+                lblStrengths: "關鍵優勢：",
+                phStrengths: "• 技術能力強，解決問題能力佳\n• 天生具備指導他人的耐心與特質\n• 做事細心、work approach 完整周全\n• 團隊協作與溝通能力佳",
+                lblGrowthAreas: "成長領域：",
+                phGrowthAreas: "• 建立在領導情境中的自信心\n• 培養策略性思考能力\n• 提升公開演講與簡報能力\n• 學習如何授權並信任他人的工作成果",
+                lblCareerGoals: "長期職涯目標：",
+                phCareerGoals: "• 18 個月內晉升為 Technical Lead\n• 最終目標是擔任工程經理\n• 對產品策略與客戶影響力有興趣\n• 希望能建立並帶領高績效團隊",
+                lblSupportNeeded: "所需支援：",
+                phSupportNeeded: "• 更多參與高階主管會議的機會\n• 來自現任 tech lead 的結構化指導\n• 課程/研討會的專業發展預算\n• 對更多聽眾發表簡報的機會",
+                sectionReviewSchedule: "檢視排程",
+                reviewHeaders: { type: "檢視類型", frequency: "頻率", nextDate: "下次檢視日期", focusAreas: "聚焦領域", participants: "參與者" },
+                reviewRows: {
+                    1: { type: "每週 1:1", frequency: "每週", date: "2024/4/5", focus: "進度確認、排除障礙", participants: "主管、員工" },
+                    2: { type: "每月目標檢視", frequency: "每月", date: "2024/4/30", focus: "目標進度、計畫調整", participants: "主管、員工" },
+                    3: { type: "每季發展檢視", frequency: "每季", date: "2024/6/30", focus: "完整技能評估", participants: "主管、員工、Skip-level" },
+                    4: { type: "年度績效考核", frequency: "每年", date: "2024/12/31", focus: "完整績效評估", participants: "主管、員工、HR" }
+                },
+                successPrinciplesLabel: "教練輔導成功原則：",
+                successPrinciplesBody: "定期關心對話．明確的期待．以成長為導向的對話．肯定進步．儘早處理問題",
+                templateCreatedLabel: "範本建立日期：",
+                newGoalPrompts: {
+                    goal: "請輸入新目標：",
+                    category: "請輸入類別（例如：技術領導力、人才發展）：",
+                    date: "請輸入目標日期（例如：2024 Q4）：",
+                    priority: "請輸入優先順序（高、中、低）："
+                },
+                newGoalDefaultStatus: "尚未開始"
+            }
+        };
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        // ---------------------------------------------------------------
+        // Language switching / rendering
+        // ---------------------------------------------------------------
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+            document.getElementById('pageTitle').textContent = dict.pageTitle;
+            document.title = dict.pageTitle;
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            document.getElementById('btnPrint').textContent = dict.btnPrint;
+            document.getElementById('headerTitle').textContent = dict.headerTitle;
+            document.getElementById('purposeLabel').textContent = dict.purposeLabel;
+            document.getElementById('purposeBody').textContent = dict.purposeBody;
+            document.getElementById('benefitsLabel').textContent = dict.benefitsLabel;
+            document.getElementById('benefitsBody').textContent = dict.benefitsBody;
+
+            document.getElementById('sectionEmployeeInfo').textContent = dict.sectionEmployeeInfo;
+            document.getElementById('lblEmployeeName').textContent = dict.lblEmployeeName;
+            document.getElementById('employee-name').placeholder = dict.phEmployeeName;
+            document.getElementById('lblEmployeeRole').textContent = dict.lblEmployeeRole;
+            document.getElementById('employee-role').placeholder = dict.phEmployeeRole;
+            document.getElementById('lblHireDate').textContent = dict.lblHireDate;
+            document.getElementById('lblManagerName').textContent = dict.lblManagerName;
+            document.getElementById('manager-name').placeholder = dict.phManagerName;
+            document.getElementById('lblCoachingStart').textContent = dict.lblCoachingStart;
+            document.getElementById('lblReviewCycle').textContent = dict.lblReviewCycle;
+            Object.keys(dict.reviewOptions).forEach(key => {
+                const el = document.getElementById(`reviewOpt-${key}`);
+                if (el) el.textContent = dict.reviewOptions[key];
+            });
+
+            document.getElementById('sectionGoals').textContent = dict.sectionGoals;
+            document.getElementById('goalsTh-goal').textContent = dict.goalsHeaders.goal;
+            document.getElementById('goalsTh-category').textContent = dict.goalsHeaders.category;
+            document.getElementById('goalsTh-targetDate').textContent = dict.goalsHeaders.targetDate;
+            document.getElementById('goalsTh-progress').textContent = dict.goalsHeaders.progress;
+            document.getElementById('goalsTh-status').textContent = dict.goalsHeaders.status;
+            document.getElementById('goalsTh-priority').textContent = dict.goalsHeaders.priority;
+            Object.keys(dict.goalRows).forEach(num => {
+                const row = dict.goalRows[num];
+                document.getElementById(`goalRow${num}-goal`).textContent = row.goal;
+                document.getElementById(`goalRow${num}-category`).textContent = row.category;
+                document.getElementById(`goalRow${num}-date`).textContent = row.date;
+                document.getElementById(`goalRow${num}-status`).textContent = row.status;
+                document.getElementById(`goalRow${num}-priority`).textContent = row.priority;
+            });
+            document.getElementById('btnAddGoal').textContent = dict.btnAddGoal;
+
+            document.getElementById('sectionSkills').textContent = dict.sectionSkills;
+            Object.keys(dict.skillNames).forEach(key => {
+                const nameEl = document.getElementById(`skillName-${key}`);
+                if (nameEl) nameEl.textContent = dict.skillNames[key];
+                const levelEl = document.getElementById(`skillLevel-${key}`);
+                if (levelEl) levelEl.textContent = dict.skillLevels[key];
+            });
+
+            document.getElementById('sectionActionItems').innerHTML = dict.sectionActionItems;
+            Object.keys(dict.actions).forEach(num => {
+                document.getElementById(`action${num}-title`).textContent = dict.actions[num].title;
+                document.getElementById(`action${num}-details`).textContent = dict.actions[num].details;
+            });
+
+            document.getElementById('sectionSessionLog').textContent = dict.sectionSessionLog;
+            document.getElementById('focusLabel1').textContent = dict.focusLabel;
+            document.getElementById('focusLabel2').textContent = dict.focusLabel;
+            document.getElementById('discussionLabel1').textContent = dict.discussionLabel;
+            document.getElementById('discussionLabel2').textContent = dict.discussionLabel;
+            document.getElementById('actionItemsLabel1').textContent = dict.actionItemsLabel;
+            document.getElementById('actionItemsLabel2').textContent = dict.actionItemsLabel;
+            document.getElementById('nextSessionLabel1').textContent = dict.nextSessionLabel;
+            document.getElementById('nextSessionLabel2').textContent = dict.nextSessionLabel;
+
+            document.getElementById('session1-heading').textContent = dict.session1.heading;
+            document.getElementById('session1-focus').textContent = dict.session1.focus;
+            document.getElementById('session1-point1').textContent = dict.session1.points[0];
+            document.getElementById('session1-point2').textContent = dict.session1.points[1];
+            document.getElementById('session1-point3').textContent = dict.session1.points[2];
+            document.getElementById('session1-actions').textContent = dict.session1.actions;
+            document.getElementById('session1-next').textContent = dict.session1.next;
+
+            document.getElementById('session2-heading').textContent = dict.session2.heading;
+            document.getElementById('session2-focus').textContent = dict.session2.focus;
+            document.getElementById('session2-point1').textContent = dict.session2.points[0];
+            document.getElementById('session2-point2').textContent = dict.session2.points[1];
+            document.getElementById('session2-point3').textContent = dict.session2.points[2];
+            document.getElementById('session2-actions').textContent = dict.session2.actions;
+            document.getElementById('session2-next').textContent = dict.session2.next;
+
+            document.getElementById('notesHeading').innerHTML = dict.notesHeading;
+            document.getElementById('coaching-notes-textarea').placeholder = dict.notesPlaceholder;
+
+            document.getElementById('sectionSummary').textContent = dict.sectionSummary;
+            document.getElementById('lblStrengths').textContent = dict.lblStrengths;
+            document.getElementById('strengths').placeholder = dict.phStrengths;
+            document.getElementById('lblGrowthAreas').textContent = dict.lblGrowthAreas;
+            document.getElementById('growth-areas').placeholder = dict.phGrowthAreas;
+            document.getElementById('lblCareerGoals').textContent = dict.lblCareerGoals;
+            document.getElementById('career-goals').placeholder = dict.phCareerGoals;
+            document.getElementById('lblSupportNeeded').textContent = dict.lblSupportNeeded;
+            document.getElementById('support-needed').placeholder = dict.phSupportNeeded;
+
+            document.getElementById('sectionReviewSchedule').textContent = dict.sectionReviewSchedule;
+            document.getElementById('reviewTh-type').textContent = dict.reviewHeaders.type;
+            document.getElementById('reviewTh-frequency').textContent = dict.reviewHeaders.frequency;
+            document.getElementById('reviewTh-nextDate').textContent = dict.reviewHeaders.nextDate;
+            document.getElementById('reviewTh-focusAreas').textContent = dict.reviewHeaders.focusAreas;
+            document.getElementById('reviewTh-participants').textContent = dict.reviewHeaders.participants;
+            Object.keys(dict.reviewRows).forEach(num => {
+                const row = dict.reviewRows[num];
+                document.getElementById(`reviewRow${num}-type`).textContent = row.type;
+                document.getElementById(`reviewRow${num}-frequency`).textContent = row.frequency;
+                document.getElementById(`reviewRow${num}-date`).textContent = row.date;
+                document.getElementById(`reviewRow${num}-focus`).textContent = row.focus;
+                document.getElementById(`reviewRow${num}-participants`).textContent = row.participants;
+            });
+
+            document.getElementById('successPrinciplesLabel').textContent = dict.successPrinciplesLabel;
+            document.getElementById('successPrinciplesBody').textContent = dict.successPrinciplesBody;
+            document.getElementById('templateCreatedLabel').textContent = dict.templateCreatedLabel;
+        }
+
+        // ---------------------------------------------------------------
+        // Dynamic behavior
+        // ---------------------------------------------------------------
         document.getElementById('created-date').textContent = new Date().toLocaleDateString();
+
+        function addGoal() {
+            const dict = t();
+            const goal = prompt(dict.newGoalPrompts.goal);
+            if (!goal) return;
+            const category = prompt(dict.newGoalPrompts.category) || '';
+            const date = prompt(dict.newGoalPrompts.date) || '';
+            const priority = prompt(dict.newGoalPrompts.priority) || '';
+
+            const tbody = document.querySelector('.goals-table tbody');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${goal}</td>
+                <td>${category}</td>
+                <td>${date}</td>
+                <td>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 0%;"></div>
+                        <div class="progress-text">0%</div>
+                    </div>
+                </td>
+                <td><span class="status-badge status-not-started">${dict.newGoalDefaultStatus}</span></td>
+                <td>${priority}</td>
+            `;
+            tbody.appendChild(row);
+        }
 
         // Add dynamic functionality for progress tracking
         document.addEventListener('DOMContentLoaded', function() {
+            renderLanguage();
+
             // Update progress bars based on input
             const progressBars = document.querySelectorAll('.progress-bar');
             progressBars.forEach(bar => {
@@ -736,6 +1143,12 @@ Example notes:
                     }
                 });
             });
+
+            // Wire up the "Add New Goal" button
+            const addGoalBtn = document.getElementById('btnAddGoal');
+            if (addGoalBtn) {
+                addGoalBtn.addEventListener('click', addGoal);
+            }
         });
     </script>
 </body>

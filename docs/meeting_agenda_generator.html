@@ -810,7 +810,7 @@ System: [NAME] | Reviewer: [ARCHITECT]
 
     <script>
         let selectedMeetingType = null;
-        let currentLang = localStorage.getItem('magLang') || 'en';
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
 
         // ---------------------------------------------------------------
         // i18n dictionaries
@@ -1335,7 +1335,7 @@ System: [NAME] | Reviewer: [ARCHITECT]
         // ---------------------------------------------------------------
         function setLanguage(lang) {
             currentLang = lang;
-            localStorage.setItem('magLang', lang);
+            localStorage.setItem('emToolsLang', lang);
             renderLanguage();
         }
 

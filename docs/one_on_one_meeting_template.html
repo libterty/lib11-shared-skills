@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1:1 Meeting Agenda & Notes Template</title>
+    <title id="pageTitle">1:1 Meeting Agenda &amp; Notes Template</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,6 +19,39 @@
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+        }
+
+        .title-bar {
+            position: relative;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: white;
+            color: #3498db;
+            border: 1px solid #3498db;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:hover {
+            background: #eaf4fc;
+        }
+
+        .lang-btn.active {
+            background: #3498db;
+            color: white;
         }
 
         h1 {
@@ -421,6 +454,7 @@
             .container { box-shadow: none; padding: 0; }
             .actions, .template-chooser { display: none; }
             .agenda-section { break-inside: avoid; }
+            .lang-switcher { display: none; }
         }
 
         @media (max-width: 768px) {
@@ -430,72 +464,79 @@
             .summary-grid { grid-template-columns: repeat(2, 1fr); }
             .template-options { flex-direction: column; }
             .mood-scale { flex-direction: column; gap: 5px; }
+            .lang-switcher { position: static; justify-content: center; margin-bottom: 15px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🤝 1:1 Meeting Agenda & Notes</h1>
+        <div class="title-bar">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1>🤝 <span id="headerTitle">1:1 Meeting Agenda &amp; Notes</span></h1>
+        </div>
 
         <div class="description">
-            <strong>Purpose:</strong> This template helps engineering managers conduct structured, productive 1:1 meetings with team members. Use it to track discussions, document action items, monitor team member wellbeing, and maintain consistent meeting quality. Each section guides conversation flow and ensures important topics are covered.
+            <strong id="descLabel">Purpose:</strong> <span id="descBody">This template helps engineering managers conduct structured, productive 1:1 meetings with team members. Use it to track discussions, document action items, monitor team member wellbeing, and maintain consistent meeting quality. Each section guides conversation flow and ensures important topics are covered.</span>
         </div>
 
         <!-- Template Chooser -->
         <div class="template-chooser">
-            <h4>📋 Quick Templates</h4>
-            <p>Choose a pre-filled template or start with a blank agenda:</p>
+            <h4>📋 <span id="tplChooserHeading">Quick Templates</span></h4>
+            <p id="tplChooserBody">Choose a pre-filled template or start with a blank agenda:</p>
             <div class="template-options">
-                <button class="template-btn" onclick="loadTemplate('weekly')">Weekly Check-in</button>
-                <button class="template-btn" onclick="loadTemplate('career')">Career Development</button>
-                <button class="template-btn" onclick="loadTemplate('performance')">Performance Review</button>
-                <button class="template-btn" onclick="loadTemplate('project')">Project Focus</button>
-                <button class="template-btn" onclick="loadTemplate('wellbeing')">Wellbeing Check</button>
-                <button class="template-btn active" onclick="loadTemplate('blank')">Blank Template</button>
+                <button class="template-btn" onclick="loadTemplate('weekly')" id="tplBtn-weekly">Weekly Check-in</button>
+                <button class="template-btn" onclick="loadTemplate('career')" id="tplBtn-career">Career Development</button>
+                <button class="template-btn" onclick="loadTemplate('performance')" id="tplBtn-performance">Performance Review</button>
+                <button class="template-btn" onclick="loadTemplate('project')" id="tplBtn-project">Project Focus</button>
+                <button class="template-btn" onclick="loadTemplate('wellbeing')" id="tplBtn-wellbeing">Wellbeing Check</button>
+                <button class="template-btn active" onclick="loadTemplate('blank')" id="tplBtn-blank">Blank Template</button>
             </div>
         </div>
 
         <!-- Meeting Header -->
         <div class="meeting-header">
-            <h3>Meeting Information</h3>
+            <h3 id="meetingInfoHeading">Meeting Information</h3>
             <div class="header-grid">
                 <div class="field">
-                    <span class="field-label">Team Member:</span>
+                    <span class="field-label" id="lblTeamMember">Team Member:</span>
                     <input type="text" class="field-input" id="team-member" placeholder="Employee name">
                 </div>
                 <div class="field">
-                    <span class="field-label">Manager:</span>
+                    <span class="field-label" id="lblManager">Manager:</span>
                     <input type="text" class="field-input" id="manager" placeholder="Your name">
                 </div>
                 <div class="field">
-                    <span class="field-label">Date:</span>
+                    <span class="field-label" id="lblDate">Date:</span>
                     <input type="date" class="field-input" id="meeting-date">
                 </div>
                 <div class="field">
-                    <span class="field-label">Duration:</span>
+                    <span class="field-label" id="lblDuration">Duration:</span>
                     <select class="field-select" id="duration">
-                        <option value="30 min">30 minutes</option>
-                        <option value="45 min">45 minutes</option>
-                        <option value="60 min">60 minutes</option>
+                        <option value="30 min" id="durOpt30">30 minutes</option>
+                        <option value="45 min" id="durOpt45">45 minutes</option>
+                        <option value="60 min" id="durOpt60">60 minutes</option>
                     </select>
                 </div>
                 <div class="field">
-                    <span class="field-label">Meeting Type:</span>
+                    <span class="field-label" id="lblMeetingType">Meeting Type:</span>
                     <select class="field-select" id="meeting-type">
-                        <option value="Regular 1:1">Regular 1:1</option>
-                        <option value="Career Development">Career Development</option>
-                        <option value="Performance Review">Performance Review</option>
-                        <option value="Project Review">Project Review</option>
-                        <option value="Check-in">Informal Check-in</option>
+                        <option value="Regular 1:1" id="mtypeOpt-regular">Regular 1:1</option>
+                        <option value="Career Development" id="mtypeOpt-career">Career Development</option>
+                        <option value="Performance Review" id="mtypeOpt-performance">Performance Review</option>
+                        <option value="Project Review" id="mtypeOpt-project">Project Review</option>
+                        <option value="Check-in" id="mtypeOpt-checkin">Informal Check-in</option>
                     </select>
                 </div>
                 <div class="field">
-                    <span class="field-label">Location:</span>
+                    <span class="field-label" id="lblLocation">Location:</span>
                     <select class="field-select" id="location">
-                        <option value="Video Call">Video Call</option>
-                        <option value="Office">In Office</option>
-                        <option value="Coffee Shop">Coffee Shop</option>
-                        <option value="Walking Meeting">Walking Meeting</option>
+                        <option value="Video Call" id="locOpt-video">Video Call</option>
+                        <option value="Office" id="locOpt-office">In Office</option>
+                        <option value="Coffee Shop" id="locOpt-coffee">Coffee Shop</option>
+                        <option value="Walking Meeting" id="locOpt-walking">Walking Meeting</option>
                     </select>
                 </div>
             </div>
@@ -504,34 +545,34 @@
         <!-- Employee Topics (First) -->
         <div class="agenda-section">
             <div class="section-header">
-                <span>💬 Employee Topics & Updates</span>
-                <span class="section-time">15-20 min</span>
+                <span>💬 <span id="empTopicsHeading">Employee Topics &amp; Updates</span></span>
+                <span class="section-time" id="empTopicsTime">15-20 min</span>
             </div>
             <div class="section-content">
-                <p><strong>Note:</strong> Always start with the team member's topics. This ensures their priorities are heard and addressed first.</p>
+                <p><strong id="empNoteLabel">Note:</strong> <span id="empNoteBody">Always start with the team member's topics. This ensures their priorities are heard and addressed first.</span></p>
 
                 <div class="topic-item">
                     <div class="topic-header">
-                        <div class="topic-title">What's on your mind this week?</div>
-                        <span class="priority-badge high-priority">Employee-Led</span>
+                        <div class="topic-title" id="topicTitle-mind">What's on your mind this week?</div>
+                        <span class="priority-badge high-priority" id="topicBadge-employeeLed">Employee-Led</span>
                     </div>
-                    <textarea class="topic-notes" placeholder="Let them share what's important to them - current challenges, successes, concerns, or questions..."></textarea>
+                    <textarea class="topic-notes" id="topic-mind" placeholder="Let them share what's important to them - current challenges, successes, concerns, or questions..."></textarea>
                 </div>
 
                 <div class="topic-item">
                     <div class="topic-header">
-                        <div class="topic-title">Current project status and blockers</div>
-                        <span class="priority-badge medium-priority">Work Focus</span>
+                        <div class="topic-title" id="topicTitle-project">Current project status and blockers</div>
+                        <span class="priority-badge medium-priority" id="topicBadge-workFocus">Work Focus</span>
                     </div>
-                    <textarea class="topic-notes" placeholder="What projects are they working on? Any blockers or support needed?"></textarea>
+                    <textarea class="topic-notes" id="topic-project" placeholder="What projects are they working on? Any blockers or support needed?"></textarea>
                 </div>
 
                 <div class="topic-item">
                     <div class="topic-header">
-                        <div class="topic-title">Team dynamics and collaboration</div>
-                        <span class="priority-badge medium-priority">Team Health</span>
+                        <div class="topic-title" id="topicTitle-teamDynamics">Team dynamics and collaboration</div>
+                        <span class="priority-badge medium-priority" id="topicBadge-teamHealth">Team Health</span>
                     </div>
-                    <textarea class="topic-notes" placeholder="How are they feeling about team interactions, communication, and collaboration?"></textarea>
+                    <textarea class="topic-notes" id="topic-teamDynamics" placeholder="How are they feeling about team interactions, communication, and collaboration?"></textarea>
                 </div>
             </div>
         </div>
@@ -539,32 +580,32 @@
         <!-- Manager Topics -->
         <div class="agenda-section">
             <div class="section-header">
-                <span>📣 Manager Topics & Feedback</span>
-                <span class="section-time">10-15 min</span>
+                <span>📣 <span id="mgrTopicsHeading">Manager Topics &amp; Feedback</span></span>
+                <span class="section-time" id="mgrTopicsTime">10-15 min</span>
             </div>
             <div class="section-content">
                 <div class="topic-item">
                     <div class="topic-header">
-                        <div class="topic-title">Performance feedback and recognition</div>
-                        <span class="priority-badge high-priority">Feedback</span>
+                        <div class="topic-title" id="topicTitle-perfFeedback">Performance feedback and recognition</div>
+                        <span class="priority-badge high-priority" id="topicBadge-feedback">Feedback</span>
                     </div>
-                    <textarea class="topic-notes" placeholder="Specific feedback on recent work, achievements to recognize, areas for improvement..."></textarea>
+                    <textarea class="topic-notes" id="topic-perfFeedback" placeholder="Specific feedback on recent work, achievements to recognize, areas for improvement..."></textarea>
                 </div>
 
                 <div class="topic-item">
                     <div class="topic-header">
-                        <div class="topic-title">Organizational updates and context</div>
-                        <span class="priority-badge medium-priority">Information</span>
+                        <div class="topic-title" id="topicTitle-orgUpdates">Organizational updates and context</div>
+                        <span class="priority-badge medium-priority" id="topicBadge-information">Information</span>
                     </div>
-                    <textarea class="topic-notes" placeholder="Company updates, team changes, strategic direction that affects their work..."></textarea>
+                    <textarea class="topic-notes" id="topic-orgUpdates" placeholder="Company updates, team changes, strategic direction that affects their work..."></textarea>
                 </div>
 
                 <div class="topic-item">
                     <div class="topic-header">
-                        <div class="topic-title">Goals and priorities alignment</div>
-                        <span class="priority-badge high-priority">Goals</span>
+                        <div class="topic-title" id="topicTitle-goalsAlignment">Goals and priorities alignment</div>
+                        <span class="priority-badge high-priority" id="topicBadge-goals">Goals</span>
                     </div>
-                    <textarea class="topic-notes" placeholder="Are current priorities clear? Any adjustments needed to goals or expectations?"></textarea>
+                    <textarea class="topic-notes" id="topic-goalsAlignment" placeholder="Are current priorities clear? Any adjustments needed to goals or expectations?"></textarea>
                 </div>
             </div>
         </div>
@@ -572,88 +613,88 @@
         <!-- Career Development -->
         <div class="agenda-section">
             <div class="section-header">
-                <span>🚀 Career Development & Growth</span>
-                <span class="section-time">10 min</span>
+                <span>🚀 <span id="careerHeading">Career Development &amp; Growth</span></span>
+                <span class="section-time" id="careerTime">10 min</span>
             </div>
             <div class="section-content">
                 <div class="topic-item">
                     <div class="topic-header">
-                        <div class="topic-title">Learning and skill development</div>
-                        <span class="priority-badge medium-priority">Growth</span>
+                        <div class="topic-title" id="topicTitle-learning">Learning and skill development</div>
+                        <span class="priority-badge medium-priority" id="topicBadge-growth">Growth</span>
                     </div>
-                    <textarea class="topic-notes" placeholder="What skills are they interested in developing? Any courses, certifications, or learning opportunities?"></textarea>
+                    <textarea class="topic-notes" id="topic-learning" placeholder="What skills are they interested in developing? Any courses, certifications, or learning opportunities?"></textarea>
                 </div>
 
                 <div class="topic-item">
                     <div class="topic-header">
-                        <div class="topic-title">Career aspirations and next steps</div>
-                        <span class="priority-badge medium-priority">Future</span>
+                        <div class="topic-title" id="topicTitle-aspirations">Career aspirations and next steps</div>
+                        <span class="priority-badge medium-priority" id="topicBadge-future">Future</span>
                     </div>
-                    <textarea class="topic-notes" placeholder="Where do they see their career going? How can you help them get there?"></textarea>
+                    <textarea class="topic-notes" id="topic-aspirations" placeholder="Where do they see their career going? How can you help them get there?"></textarea>
                 </div>
             </div>
         </div>
 
         <!-- Quick Check-in Questions -->
         <div class="quick-questions">
-            <h4>💡 Quick Check-in Questions (Choose 1-2)</h4>
-            <p>Select questions to spark deeper conversations when needed:</p>
+            <h4>💡 <span id="quickQHeading">Quick Check-in Questions (Choose 1-2)</span></h4>
+            <p id="quickQBody">Select questions to spark deeper conversations when needed:</p>
             <ul class="question-list">
-                <li class="question-item" onclick="toggleQuestion(this)">What's energizing you most about your work right now?</li>
-                <li class="question-item" onclick="toggleQuestion(this)">What's been your biggest challenge this week?</li>
-                <li class="question-item" onclick="toggleQuestion(this)">Is there anything I should be doing differently as your manager?</li>
-                <li class="question-item" onclick="toggleQuestion(this)">What would make your job easier or more enjoyable?</li>
-                <li class="question-item" onclick="toggleQuestion(this)">How connected do you feel to the team's mission and goals?</li>
-                <li class="question-item" onclick="toggleQuestion(this)">What's one thing you'd like to improve about our team?</li>
-                <li class="question-item" onclick="toggleQuestion(this)">Is there anyone on the team you'd like to work with more?</li>
-                <li class="question-item" onclick="toggleQuestion(this)">What's been the highlight of your month so far?</li>
+                <li class="question-item" onclick="toggleQuestion(this)" id="q1">What's energizing you most about your work right now?</li>
+                <li class="question-item" onclick="toggleQuestion(this)" id="q2">What's been your biggest challenge this week?</li>
+                <li class="question-item" onclick="toggleQuestion(this)" id="q3">Is there anything I should be doing differently as your manager?</li>
+                <li class="question-item" onclick="toggleQuestion(this)" id="q4">What would make your job easier or more enjoyable?</li>
+                <li class="question-item" onclick="toggleQuestion(this)" id="q5">How connected do you feel to the team's mission and goals?</li>
+                <li class="question-item" onclick="toggleQuestion(this)" id="q6">What's one thing you'd like to improve about our team?</li>
+                <li class="question-item" onclick="toggleQuestion(this)" id="q7">Is there anyone on the team you'd like to work with more?</li>
+                <li class="question-item" onclick="toggleQuestion(this)" id="q8">What's been the highlight of your month so far?</li>
             </ul>
         </div>
 
         <!-- Mood & Wellbeing Tracker -->
         <div class="mood-tracker">
-            <h4>🙂 Wellbeing Check</h4>
-            <p>How are you feeling overall this week?</p>
+            <h4>🙂 <span id="moodHeading">Wellbeing Check</span></h4>
+            <p id="moodBody">How are you feeling overall this week?</p>
             <div class="mood-scale">
                 <div class="mood-option" data-mood="1" onclick="selectMood(1)">
                     <span class="mood-emoji">😰</span>
-                    <div class="mood-label">Stressed</div>
+                    <div class="mood-label" id="moodLabel-1">Stressed</div>
                 </div>
                 <div class="mood-option" data-mood="2" onclick="selectMood(2)">
                     <span class="mood-emoji">😔</span>
-                    <div class="mood-label">Struggling</div>
+                    <div class="mood-label" id="moodLabel-2">Struggling</div>
                 </div>
                 <div class="mood-option" data-mood="3" onclick="selectMood(3)">
                     <span class="mood-emoji">😐</span>
-                    <div class="mood-label">Neutral</div>
+                    <div class="mood-label" id="moodLabel-3">Neutral</div>
                 </div>
                 <div class="mood-option" data-mood="4" onclick="selectMood(4)">
                     <span class="mood-emoji">🙂</span>
-                    <div class="mood-label">Good</div>
+                    <div class="mood-label" id="moodLabel-4">Good</div>
                 </div>
                 <div class="mood-option" data-mood="5" onclick="selectMood(5)">
                     <span class="mood-emoji">😄</span>
-                    <div class="mood-label">Thriving</div>
+                    <div class="mood-label" id="moodLabel-5">Thriving</div>
                 </div>
             </div>
             <div class="notes-section">
-                <textarea class="notes-textarea" placeholder="Any context about their mood or wellbeing? Work-life balance concerns? Stress factors?"></textarea>
+                <textarea class="notes-textarea" id="mood-notes" placeholder="Any context about their mood or wellbeing? Work-life balance concerns? Stress factors?"></textarea>
             </div>
         </div>
 
         <!-- Action Items -->
         <div class="action-items-section">
-            <h4>✅ Action Items & Follow-ups</h4>
-            <p>Document specific commitments and next steps:</p>
+            <h4>✅ <span id="actionHeading">Action Items &amp; Follow-ups</span></h4>
+            <p id="actionBody">Document specific commitments and next steps:</p>
 
             <div class="action-item">
                 <input type="checkbox" class="action-checkbox">
                 <div class="action-content">
                     <div class="action-text">
-                        <input type="text" class="field-input" placeholder="What needs to be done? Be specific...">
+                        <input type="text" class="field-input" id="action-text-0" placeholder="What needs to be done? Be specific...">
                     </div>
                     <div class="action-details">
-                        <input type="text" class="field-input action-owner" placeholder="Owner" style="width: 150px;">
+                        <input type="text" class="field-input action-owner" id="action-owner-0" placeholder="Owner" style="width: 150px;">
                         <input type="date" class="field-input action-due" style="width: 150px;">
                     </div>
                 </div>
@@ -663,10 +704,10 @@
                 <input type="checkbox" class="action-checkbox">
                 <div class="action-content">
                     <div class="action-text">
-                        <input type="text" class="field-input" placeholder="Add another action item...">
+                        <input type="text" class="field-input" id="action-text-1" placeholder="Add another action item...">
                     </div>
                     <div class="action-details">
-                        <input type="text" class="field-input action-owner" placeholder="Owner" style="width: 150px;">
+                        <input type="text" class="field-input action-owner" id="action-owner-1" placeholder="Owner" style="width: 150px;">
                         <input type="date" class="field-input action-due" style="width: 150px;">
                     </div>
                 </div>
@@ -676,75 +717,449 @@
                 <input type="checkbox" class="action-checkbox">
                 <div class="action-content">
                     <div class="action-text">
-                        <input type="text" class="field-input" placeholder="Add another action item...">
+                        <input type="text" class="field-input" id="action-text-2" placeholder="Add another action item...">
                     </div>
                     <div class="action-details">
-                        <input type="text" class="field-input action-owner" placeholder="Owner" style="width: 150px;">
+                        <input type="text" class="field-input action-owner" id="action-owner-2" placeholder="Owner" style="width: 150px;">
                         <input type="date" class="field-input action-due" style="width: 150px;">
                     </div>
                 </div>
             </div>
 
-            <button class="btn btn-secondary" onclick="addActionItem()" style="margin-top: 15px;">+ Add Action Item</button>
+            <button class="btn btn-secondary" onclick="addActionItem()" style="margin-top: 15px;" id="btnAddAction">+ Add Action Item</button>
         </div>
 
         <!-- Meeting Summary -->
         <div class="meeting-summary">
-            <h4>📊 Meeting Summary</h4>
+            <h4>📊 <span id="summaryHeading">Meeting Summary</span></h4>
             <div class="summary-grid">
                 <div class="summary-card">
                     <div class="summary-number" id="mood-score">-</div>
-                    <div class="summary-label">Mood Score</div>
+                    <div class="summary-label" id="summaryLabel-mood">Mood Score</div>
                 </div>
                 <div class="summary-card">
                     <div class="summary-number" id="action-count">0</div>
-                    <div class="summary-label">Action Items</div>
+                    <div class="summary-label" id="summaryLabel-actions">Action Items</div>
                 </div>
                 <div class="summary-card">
                     <div class="summary-number" id="questions-selected">0</div>
-                    <div class="summary-label">Topics Covered</div>
+                    <div class="summary-label" id="summaryLabel-topics">Topics Covered</div>
                 </div>
                 <div class="summary-card">
                     <div class="summary-number" id="meeting-quality">-</div>
-                    <div class="summary-label">Meeting Rating</div>
+                    <div class="summary-label" id="summaryLabel-quality">Meeting Rating</div>
                 </div>
             </div>
 
             <div class="notes-section">
-                <h5>Key Takeaways & Overall Notes</h5>
-                <textarea class="notes-textarea" placeholder="Summarize the most important insights, themes, or concerns from this meeting. What should you remember for next time?"></textarea>
+                <h5 id="takeawaysHeading">Key Takeaways &amp; Overall Notes</h5>
+                <textarea class="notes-textarea" id="takeaways-notes" placeholder="Summarize the most important insights, themes, or concerns from this meeting. What should you remember for next time?"></textarea>
             </div>
         </div>
 
         <!-- Next Meeting Planning -->
         <div class="next-meeting">
-            <h4>📅 Next Meeting Planning</h4>
+            <h4>📅 <span id="nextMeetingHeading">Next Meeting Planning</span></h4>
             <div class="header-grid">
                 <div class="field">
-                    <span class="field-label">Next Meeting Date:</span>
+                    <span class="field-label" id="lblNextDate">Next Meeting Date:</span>
                     <input type="date" class="field-input" id="next-date">
                 </div>
                 <div class="field">
-                    <span class="field-label">Topics to Prepare:</span>
-                    <input type="text" class="field-input" placeholder="What should you both prepare for next time?">
+                    <span class="field-label" id="lblTopicsToPrepare">Topics to Prepare:</span>
+                    <input type="text" class="field-input" id="next-topics" placeholder="What should you both prepare for next time?">
                 </div>
             </div>
             <div class="notes-section">
-                <textarea class="notes-textarea" placeholder="Any follow-up items to check on? Commitments to review? Topics to explore further?"></textarea>
+                <textarea class="notes-textarea" id="next-notes" placeholder="Any follow-up items to check on? Commitments to review? Topics to explore further?"></textarea>
             </div>
         </div>
 
         <div class="actions">
-            <button class="btn btn-success" onclick="updateSummary()">Update Summary</button>
-            <button class="btn" onclick="window.print()">Print Notes</button>
-            <button class="btn btn-secondary" onclick="downloadNotes()">Download Notes</button>
-            <button class="btn btn-secondary" onclick="resetForm()">New Meeting</button>
+            <button class="btn btn-success" onclick="updateSummary()" id="btnUpdateSummary">Update Summary</button>
+            <button class="btn" onclick="window.print()" id="btnPrintNotes">Print Notes</button>
+            <button class="btn btn-secondary" onclick="downloadNotes()" id="btnDownloadNotes">Download Notes</button>
+            <button class="btn btn-secondary" onclick="resetForm()" id="btnNewMeeting">New Meeting</button>
         </div>
     </div>
 
     <script>
         let selectedMood = null;
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
 
+        // ---------------------------------------------------------------
+        // i18n dictionary
+        // ---------------------------------------------------------------
+        const I18N = {
+            en: {
+                pageTitle: "1:1 Meeting Agenda & Notes Template",
+                headerTitle: "1:1 Meeting Agenda & Notes",
+                descLabel: "Purpose:",
+                descBody: "This template helps engineering managers conduct structured, productive 1:1 meetings with team members. Use it to track discussions, document action items, monitor team member wellbeing, and maintain consistent meeting quality. Each section guides conversation flow and ensures important topics are covered.",
+                tplChooserHeading: "Quick Templates",
+                tplChooserBody: "Choose a pre-filled template or start with a blank agenda:",
+                tplBtnWeekly: "Weekly Check-in",
+                tplBtnCareer: "Career Development",
+                tplBtnPerformance: "Performance Review",
+                tplBtnProject: "Project Focus",
+                tplBtnWellbeing: "Wellbeing Check",
+                tplBtnBlank: "Blank Template",
+                meetingInfoHeading: "Meeting Information",
+                lblTeamMember: "Team Member:",
+                lblManager: "Manager:",
+                lblDate: "Date:",
+                lblDuration: "Duration:",
+                lblMeetingType: "Meeting Type:",
+                lblLocation: "Location:",
+                phTeamMember: "Employee name",
+                phManager: "Your name",
+                durOpt30: "30 minutes",
+                durOpt45: "45 minutes",
+                durOpt60: "60 minutes",
+                mtypeOptRegular: "Regular 1:1",
+                mtypeOptCareer: "Career Development",
+                mtypeOptPerformance: "Performance Review",
+                mtypeOptProject: "Project Review",
+                mtypeOptCheckin: "Informal Check-in",
+                locOptVideo: "Video Call",
+                locOptOffice: "In Office",
+                locOptCoffee: "Coffee Shop",
+                locOptWalking: "Walking Meeting",
+                empTopicsHeading: "Employee Topics & Updates",
+                empTopicsTime: "15-20 min",
+                empNoteLabel: "Note:",
+                empNoteBody: "Always start with the team member's topics. This ensures their priorities are heard and addressed first.",
+                topicTitleMind: "What's on your mind this week?",
+                topicBadgeEmployeeLed: "Employee-Led",
+                phTopicMind: "Let them share what's important to them - current challenges, successes, concerns, or questions...",
+                topicTitleProject: "Current project status and blockers",
+                topicBadgeWorkFocus: "Work Focus",
+                phTopicProject: "What projects are they working on? Any blockers or support needed?",
+                topicTitleTeamDynamics: "Team dynamics and collaboration",
+                topicBadgeTeamHealth: "Team Health",
+                phTopicTeamDynamics: "How are they feeling about team interactions, communication, and collaboration?",
+                mgrTopicsHeading: "Manager Topics & Feedback",
+                mgrTopicsTime: "10-15 min",
+                topicTitlePerfFeedback: "Performance feedback and recognition",
+                topicBadgeFeedback: "Feedback",
+                phTopicPerfFeedback: "Specific feedback on recent work, achievements to recognize, areas for improvement...",
+                topicTitleOrgUpdates: "Organizational updates and context",
+                topicBadgeInformation: "Information",
+                phTopicOrgUpdates: "Company updates, team changes, strategic direction that affects their work...",
+                topicTitleGoalsAlignment: "Goals and priorities alignment",
+                topicBadgeGoals: "Goals",
+                phTopicGoalsAlignment: "Are current priorities clear? Any adjustments needed to goals or expectations?",
+                careerHeading: "Career Development & Growth",
+                careerTime: "10 min",
+                topicTitleLearning: "Learning and skill development",
+                topicBadgeGrowth: "Growth",
+                phTopicLearning: "What skills are they interested in developing? Any courses, certifications, or learning opportunities?",
+                topicTitleAspirations: "Career aspirations and next steps",
+                topicBadgeFuture: "Future",
+                phTopicAspirations: "Where do they see their career going? How can you help them get there?",
+                quickQHeading: "Quick Check-in Questions (Choose 1-2)",
+                quickQBody: "Select questions to spark deeper conversations when needed:",
+                questions: [
+                    "What's energizing you most about your work right now?",
+                    "What's been your biggest challenge this week?",
+                    "Is there anything I should be doing differently as your manager?",
+                    "What would make your job easier or more enjoyable?",
+                    "How connected do you feel to the team's mission and goals?",
+                    "What's one thing you'd like to improve about our team?",
+                    "Is there anyone on the team you'd like to work with more?",
+                    "What's been the highlight of your month so far?"
+                ],
+                moodHeading: "Wellbeing Check",
+                moodBody: "How are you feeling overall this week?",
+                moodLabel1: "Stressed",
+                moodLabel2: "Struggling",
+                moodLabel3: "Neutral",
+                moodLabel4: "Good",
+                moodLabel5: "Thriving",
+                phMoodNotes: "Any context about their mood or wellbeing? Work-life balance concerns? Stress factors?",
+                actionHeading: "Action Items & Follow-ups",
+                actionBody: "Document specific commitments and next steps:",
+                phActionFirst: "What needs to be done? Be specific...",
+                phActionAnother: "Add another action item...",
+                phOwner: "Owner",
+                btnAddAction: "+ Add Action Item",
+                summaryHeading: "Meeting Summary",
+                summaryLabelMood: "Mood Score",
+                summaryLabelActions: "Action Items",
+                summaryLabelTopics: "Topics Covered",
+                summaryLabelQuality: "Meeting Rating",
+                takeawaysHeading: "Key Takeaways & Overall Notes",
+                phTakeaways: "Summarize the most important insights, themes, or concerns from this meeting. What should you remember for next time?",
+                nextMeetingHeading: "Next Meeting Planning",
+                lblNextDate: "Next Meeting Date:",
+                lblTopicsToPrepare: "Topics to Prepare:",
+                phNextTopics: "What should you both prepare for next time?",
+                phNextNotes: "Any follow-up items to check on? Commitments to review? Topics to explore further?",
+                btnUpdateSummary: "Update Summary",
+                btnPrintNotes: "Print Notes",
+                btnDownloadNotes: "Download Notes",
+                btnNewMeeting: "New Meeting",
+                confirmNewMeeting: "Start a new meeting? This will clear all current data."
+            },
+            zh: {
+                pageTitle: "1:1 會議議程與筆記範本",
+                headerTitle: "1:1 會議議程與筆記",
+                descLabel: "用途說明：",
+                descBody: "這個範本協助工程主管進行結構化、有成效的 1:1 會議。用它來追蹤討論內容、記錄 action item、關心團隊成員的身心狀態，並維持一致的會議品質。每個段落都能引導對話方向，確保重要議題都有被涵蓋到。",
+                tplChooserHeading: "快速範本",
+                tplChooserBody: "選擇一個預填範本，或從空白議程開始：",
+                tplBtnWeekly: "週例行檢視",
+                tplBtnCareer: "職涯發展",
+                tplBtnPerformance: "績效檢視",
+                tplBtnProject: "專案聚焦",
+                tplBtnWellbeing: "身心狀態關心",
+                tplBtnBlank: "空白範本",
+                meetingInfoHeading: "會議基本資訊",
+                lblTeamMember: "團隊成員：",
+                lblManager: "主管：",
+                lblDate: "日期：",
+                lblDuration: "時長：",
+                lblMeetingType: "會議類型：",
+                lblLocation: "地點：",
+                phTeamMember: "員工姓名",
+                phManager: "你的姓名",
+                durOpt30: "30 分鐘",
+                durOpt45: "45 分鐘",
+                durOpt60: "60 分鐘",
+                mtypeOptRegular: "定期 1:1",
+                mtypeOptCareer: "職涯發展",
+                mtypeOptPerformance: "績效檢視",
+                mtypeOptProject: "專案檢視",
+                mtypeOptCheckin: "非正式關心",
+                locOptVideo: "視訊會議",
+                locOptOffice: "辦公室",
+                locOptCoffee: "咖啡廳",
+                locOptWalking: "邊走邊聊",
+                empTopicsHeading: "員工議題與近況更新",
+                empTopicsTime: "15-20 分鐘",
+                empNoteLabel: "提醒：",
+                empNoteBody: "永遠先從團隊成員自己的議題開始，確保他們的優先事項被聽見、被處理。",
+                topicTitleMind: "這週你在想什麼？",
+                topicBadgeEmployeeLed: "員工主導",
+                phTopicMind: "讓他們分享對自己重要的事——目前的挑戰、成就、擔憂或疑問……",
+                topicTitleProject: "目前專案狀態與阻礙",
+                topicBadgeWorkFocus: "工作重點",
+                phTopicProject: "他們目前在做哪些專案？有沒有 blocker 或需要的支援？",
+                topicTitleTeamDynamics: "團隊互動與協作",
+                topicBadgeTeamHealth: "團隊健康度",
+                phTopicTeamDynamics: "他們對團隊互動、溝通與協作的感受如何？",
+                mgrTopicsHeading: "主管議題與回饋",
+                mgrTopicsTime: "10-15 分鐘",
+                topicTitlePerfFeedback: "績效回饋與肯定",
+                topicBadgeFeedback: "回饋",
+                phTopicPerfFeedback: "針對近期工作的具體回饋、值得肯定的成就、待改善的地方……",
+                topicTitleOrgUpdates: "組織更新與背景資訊",
+                topicBadgeInformation: "資訊同步",
+                phTopicOrgUpdates: "公司更新、團隊異動、影響他們工作的策略方向……",
+                topicTitleGoalsAlignment: "目標與優先順序對齊",
+                topicBadgeGoals: "目標",
+                phTopicGoalsAlignment: "目前的優先事項是否清楚？目標或期待是否需要調整？",
+                careerHeading: "職涯發展與成長",
+                careerTime: "10 分鐘",
+                topicTitleLearning: "學習與技能發展",
+                topicBadgeGrowth: "成長",
+                phTopicLearning: "他們對哪些技能有興趣？有沒有想上的課程、證照或學習機會？",
+                topicTitleAspirations: "職涯志向與下一步",
+                topicBadgeFuture: "未來",
+                phTopicAspirations: "他們對自己的職涯方向有什麼想法？你可以怎麼幫助他們達成？",
+                quickQHeading: "快速關心問題（挑 1-2 個）",
+                quickQBody: "需要時可以挑選以下問題，引導更深入的對話：",
+                questions: [
+                    "現在工作中最讓你有動力的是什麼？",
+                    "這週遇到最大的挑戰是什麼？",
+                    "身為你的主管，有沒有什麼我可以做得不一樣的地方？",
+                    "什麼會讓你的工作更輕鬆或更有樂趣？",
+                    "你覺得自己跟團隊的使命與目標連結有多深？",
+                    "有沒有一件事是你希望我們團隊可以改善的？",
+                    "團隊裡有沒有你想多合作的人？",
+                    "這個月目前為止最棒的亮點是什麼？"
+                ],
+                moodHeading: "身心狀態關心",
+                moodBody: "這週整體感覺怎麼樣？",
+                moodLabel1: "壓力很大",
+                moodLabel2: "有點吃力",
+                moodLabel3: "普通",
+                moodLabel4: "還不錯",
+                moodLabel5: "狀態很好",
+                phMoodNotes: "關於他們的心情或身心狀態有什麼背景資訊嗎？工作與生活平衡的疑慮？壓力來源？",
+                actionHeading: "Action Item 與後續追蹤",
+                actionBody: "記錄具體的承諾事項與下一步：",
+                phActionFirst: "需要做什麼？請具體描述……",
+                phActionAnother: "新增另一個 action item……",
+                phOwner: "負責人",
+                btnAddAction: "+ 新增 Action Item",
+                summaryHeading: "會議摘要",
+                summaryLabelMood: "心情分數",
+                summaryLabelActions: "Action Item 數",
+                summaryLabelTopics: "涵蓋議題數",
+                summaryLabelQuality: "會議評分",
+                takeawaysHeading: "重點收穫與整體筆記",
+                phTakeaways: "總結這次會議最重要的洞察、主題或疑慮。下次應該記得什麼？",
+                nextMeetingHeading: "下次會議規劃",
+                lblNextDate: "下次會議日期：",
+                lblTopicsToPrepare: "需要準備的議題：",
+                phNextTopics: "雙方下次應該準備什麼？",
+                phNextNotes: "有沒有需要追蹤的後續事項？要回顧的承諾？值得再深入討論的議題？",
+                btnUpdateSummary: "更新摘要",
+                btnPrintNotes: "列印筆記",
+                btnDownloadNotes: "下載筆記",
+                btnNewMeeting: "開新會議",
+                confirmNewMeeting: "要開始一場新的會議嗎？這會清除目前所有資料。"
+            }
+        };
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        // ---------------------------------------------------------------
+        // Language switching / rendering
+        // ---------------------------------------------------------------
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        // Maps of id -> dict key for simple textContent / placeholder assignments
+        const TEXT_MAP = {
+            headerTitle: 'headerTitle',
+            descLabel: 'descLabel',
+            descBody: 'descBody',
+            tplChooserHeading: 'tplChooserHeading',
+            tplChooserBody: 'tplChooserBody',
+            'tplBtn-weekly': 'tplBtnWeekly',
+            'tplBtn-career': 'tplBtnCareer',
+            'tplBtn-performance': 'tplBtnPerformance',
+            'tplBtn-project': 'tplBtnProject',
+            'tplBtn-wellbeing': 'tplBtnWellbeing',
+            'tplBtn-blank': 'tplBtnBlank',
+            meetingInfoHeading: 'meetingInfoHeading',
+            lblTeamMember: 'lblTeamMember',
+            lblManager: 'lblManager',
+            lblDate: 'lblDate',
+            lblDuration: 'lblDuration',
+            lblMeetingType: 'lblMeetingType',
+            lblLocation: 'lblLocation',
+            durOpt30: 'durOpt30',
+            durOpt45: 'durOpt45',
+            durOpt60: 'durOpt60',
+            'mtypeOpt-regular': 'mtypeOptRegular',
+            'mtypeOpt-career': 'mtypeOptCareer',
+            'mtypeOpt-performance': 'mtypeOptPerformance',
+            'mtypeOpt-project': 'mtypeOptProject',
+            'mtypeOpt-checkin': 'mtypeOptCheckin',
+            'locOpt-video': 'locOptVideo',
+            'locOpt-office': 'locOptOffice',
+            'locOpt-coffee': 'locOptCoffee',
+            'locOpt-walking': 'locOptWalking',
+            empTopicsHeading: 'empTopicsHeading',
+            empTopicsTime: 'empTopicsTime',
+            empNoteLabel: 'empNoteLabel',
+            empNoteBody: 'empNoteBody',
+            'topicTitle-mind': 'topicTitleMind',
+            'topicBadge-employeeLed': 'topicBadgeEmployeeLed',
+            'topicTitle-project': 'topicTitleProject',
+            'topicBadge-workFocus': 'topicBadgeWorkFocus',
+            'topicTitle-teamDynamics': 'topicTitleTeamDynamics',
+            'topicBadge-teamHealth': 'topicBadgeTeamHealth',
+            mgrTopicsHeading: 'mgrTopicsHeading',
+            mgrTopicsTime: 'mgrTopicsTime',
+            'topicTitle-perfFeedback': 'topicTitlePerfFeedback',
+            'topicBadge-feedback': 'topicBadgeFeedback',
+            'topicTitle-orgUpdates': 'topicTitleOrgUpdates',
+            'topicBadge-information': 'topicBadgeInformation',
+            'topicTitle-goalsAlignment': 'topicTitleGoalsAlignment',
+            'topicBadge-goals': 'topicBadgeGoals',
+            careerHeading: 'careerHeading',
+            careerTime: 'careerTime',
+            'topicTitle-learning': 'topicTitleLearning',
+            'topicBadge-growth': 'topicBadgeGrowth',
+            'topicTitle-aspirations': 'topicTitleAspirations',
+            'topicBadge-future': 'topicBadgeFuture',
+            quickQHeading: 'quickQHeading',
+            quickQBody: 'quickQBody',
+            moodHeading: 'moodHeading',
+            moodBody: 'moodBody',
+            'moodLabel-1': 'moodLabel1',
+            'moodLabel-2': 'moodLabel2',
+            'moodLabel-3': 'moodLabel3',
+            'moodLabel-4': 'moodLabel4',
+            'moodLabel-5': 'moodLabel5',
+            actionHeading: 'actionHeading',
+            actionBody: 'actionBody',
+            btnAddAction: 'btnAddAction',
+            summaryHeading: 'summaryHeading',
+            'summaryLabel-mood': 'summaryLabelMood',
+            'summaryLabel-actions': 'summaryLabelActions',
+            'summaryLabel-topics': 'summaryLabelTopics',
+            'summaryLabel-quality': 'summaryLabelQuality',
+            takeawaysHeading: 'takeawaysHeading',
+            nextMeetingHeading: 'nextMeetingHeading',
+            lblNextDate: 'lblNextDate',
+            lblTopicsToPrepare: 'lblTopicsToPrepare',
+            btnUpdateSummary: 'btnUpdateSummary',
+            btnPrintNotes: 'btnPrintNotes',
+            btnDownloadNotes: 'btnDownloadNotes',
+            btnNewMeeting: 'btnNewMeeting'
+        };
+
+        const PLACEHOLDER_MAP = {
+            'team-member': 'phTeamMember',
+            manager: 'phManager',
+            'topic-mind': 'phTopicMind',
+            'topic-project': 'phTopicProject',
+            'topic-teamDynamics': 'phTopicTeamDynamics',
+            'topic-perfFeedback': 'phTopicPerfFeedback',
+            'topic-orgUpdates': 'phTopicOrgUpdates',
+            'topic-goalsAlignment': 'phTopicGoalsAlignment',
+            'topic-learning': 'phTopicLearning',
+            'topic-aspirations': 'phTopicAspirations',
+            'mood-notes': 'phMoodNotes',
+            'action-text-0': 'phActionFirst',
+            'action-text-1': 'phActionAnother',
+            'action-text-2': 'phActionAnother',
+            'action-owner-0': 'phOwner',
+            'action-owner-1': 'phOwner',
+            'action-owner-2': 'phOwner',
+            'takeaways-notes': 'phTakeaways',
+            'next-topics': 'phNextTopics',
+            'next-notes': 'phNextNotes'
+        };
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+            document.getElementById('pageTitle').textContent = dict.pageTitle;
+            document.title = dict.pageTitle;
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            Object.keys(TEXT_MAP).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = dict[TEXT_MAP[id]];
+            });
+
+            Object.keys(PLACEHOLDER_MAP).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.placeholder = dict[PLACEHOLDER_MAP[id]];
+            });
+
+            dict.questions.forEach((text, i) => {
+                const el = document.getElementById(`q${i + 1}`);
+                if (el) el.textContent = text;
+            });
+        }
+
+        // ---------------------------------------------------------------
+        // Behavior (unchanged, plus bilingual text hooks)
+        // ---------------------------------------------------------------
         function loadTemplate(templateType) {
             // Clear current content first
             resetForm();
@@ -819,6 +1234,7 @@
         }
 
         function addActionItem() {
+            const dict = t();
             const actionItemsSection = document.querySelector('.action-items-section');
             const newActionItem = document.createElement('div');
             newActionItem.className = 'action-item';
@@ -826,10 +1242,10 @@
                 <input type="checkbox" class="action-checkbox">
                 <div class="action-content">
                     <div class="action-text">
-                        <input type="text" class="field-input" placeholder="Add another action item...">
+                        <input type="text" class="field-input" placeholder="${dict.phActionAnother}">
                     </div>
                     <div class="action-details">
-                        <input type="text" class="field-input action-owner" placeholder="Owner" style="width: 150px;">
+                        <input type="text" class="field-input action-owner" placeholder="${dict.phOwner}" style="width: 150px;">
                         <input type="date" class="field-input action-due" style="width: 150px;">
                     </div>
                 </div>
@@ -941,7 +1357,7 @@
         }
 
         function resetForm() {
-            if (confirm('Start a new meeting? This will clear all current data.')) {
+            if (confirm(t().confirmNewMeeting)) {
                 localStorage.removeItem('oneOnOneMeeting');
                 location.reload();
             }
@@ -949,6 +1365,8 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
+            renderLanguage();
+
             // Set default date to today
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('meeting-date').value = today;

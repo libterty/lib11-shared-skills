@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Career Path Suggestion Prompt - Engineering Management Tool</title>
+    <title id="pageTitle">AI Career Path Suggestion Prompt - Engineering Management Tool</title>
     <style>
         * {
             margin: 0;
@@ -34,6 +34,36 @@
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 3px solid #2c5aa0;
+            position: relative;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: rgba(44, 90, 160, 0.08);
+            color: #2c5aa0;
+            border: 1px solid rgba(44, 90, 160, 0.4);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:hover {
+            background: rgba(44, 90, 160, 0.18);
+        }
+
+        .lang-btn.active {
+            background: #2c5aa0;
+            color: white;
         }
 
         .header h1 {
@@ -251,6 +281,7 @@
             display: flex;
             gap: 5px;
             margin-top: 10px;
+            flex-wrap: wrap;
         }
 
         .path-level {
@@ -420,6 +451,9 @@
             .action-buttons {
                 display: none;
             }
+            .lang-switcher {
+                display: none;
+            }
         }
 
         @media (max-width: 768px) {
@@ -431,6 +465,11 @@
             }
             .header h1 {
                 font-size: 1.8em;
+            }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
             }
             .employee-grid {
                 grid-template-columns: 1fr;
@@ -447,67 +486,71 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🧭 AI Career Path Suggestion Prompt</h1>
-            <div class="subtitle">Personalized Career Guidance & Promotion Roadmaps with AI</div>
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1>🧭 <span id="headerTitle">AI Career Path Suggestion Prompt</span></h1>
+            <div class="subtitle" id="headerSubtitle">Personalized Career Guidance &amp; Promotion Roadmaps with AI</div>
         </div>
 
         <div class="description">
-            <h2>🎯 What is this tool?</h2>
-            <p>This template helps engineering managers create comprehensive AI prompts that generate personalized career path recommendations, promotion roadmaps, and skill development plans for their team members. By analyzing current skills, aspirations, and company needs, AI can suggest specific next steps, learning opportunities, and timeline expectations for career growth.</p>
+            <h2>🎯 <span id="whatIsHeading">What is this tool?</span></h2>
+            <p id="whatIsBody">This template helps engineering managers create comprehensive AI prompts that generate personalized career path recommendations, promotion roadmaps, and skill development plans for their team members. By analyzing current skills, aspirations, and company needs, AI can suggest specific next steps, learning opportunities, and timeline expectations for career growth.</p>
 
-            <p><strong>Why use this:</strong> Provides data-driven career guidance, identifies skill gaps and development opportunities, creates clear promotion pathways, suggests relevant learning resources, and helps align individual goals with business needs and industry trends.</p>
+            <p id="whyUseBody"><strong>Why use this:</strong> Provides data-driven career guidance, identifies skill gaps and development opportunities, creates clear promotion pathways, suggests relevant learning resources, and helps align individual goals with business needs and industry trends.</p>
         </div>
 
         <div class="section">
-            <div class="section-title">👤 Employee Profile</div>
+            <div class="section-title">👤 <span id="sectionEmployeeProfile">Employee Profile</span></div>
 
             <div class="employee-grid">
                 <div class="form-group">
-                    <label for="employee-name">Employee Name:</label>
+                    <label for="employee-name" id="lblEmployeeName">Employee Name:</label>
                     <input type="text" id="employee-name" placeholder="e.g., Maria Santos">
                 </div>
 
                 <div class="form-group">
-                    <label for="current-role">Current Role & Level:</label>
+                    <label for="current-role" id="lblCurrentRole">Current Role &amp; Level:</label>
                     <input type="text" id="current-role" placeholder="e.g., Mid-level Software Engineer, Level 4">
                 </div>
 
                 <div class="form-group">
-                    <label for="tenure">Time in Current Role:</label>
+                    <label for="tenure" id="lblTenure">Time in Current Role:</label>
                     <input type="text" id="tenure" placeholder="e.g., 2 years">
                 </div>
 
                 <div class="form-group">
-                    <label for="total-experience">Total Industry Experience:</label>
+                    <label for="total-experience" id="lblTotalExperience">Total Industry Experience:</label>
                     <input type="text" id="total-experience" placeholder="e.g., 5 years">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="team-context">Team & Technology Context:</label>
+                <label for="team-context" id="lblTeamContext">Team &amp; Technology Context:</label>
                 <textarea id="team-context" placeholder="e.g., Works on mobile app team using React Native, Node.js, and AWS. Team of 6 engineers supporting 2M+ active users. Focus on performance optimization and user experience improvements."></textarea>
             </div>
 
             <div class="form-group">
-                <label for="recent-achievements">Recent Achievements & Performance:</label>
+                <label for="recent-achievements" id="lblRecentAchievements">Recent Achievements &amp; Performance:</label>
                 <textarea id="recent-achievements" placeholder="e.g., Led mobile app performance optimization reducing load times by 50%. Mentored 2 junior engineers. Consistently exceeds sprint commitments. Received 'Outstanding Performer' rating in last review."></textarea>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">📊 Current Skills Assessment</div>
+            <div class="section-title">📊 <span id="sectionSkillsAssessment">Current Skills Assessment</span></div>
 
             <div class="current-level-card">
                 <div class="level-header">
-                    <div class="level-title">Technical Skills Evaluation</div>
-                    <div class="level-badge">Current Level Assessment</div>
+                    <div class="level-title" id="levelTitle">Technical Skills Evaluation</div>
+                    <div class="level-badge" id="levelBadge">Current Level Assessment</div>
                 </div>
 
                 <div class="skills-matrix">
                     <div class="skill-category">
-                        <h4>Programming & Architecture</h4>
+                        <h4 id="skillCatProgramming">Programming &amp; Architecture</h4>
                         <div class="skill-item">
-                            <span class="skill-name">Primary Language Mastery</span>
+                            <span class="skill-name" id="skillName-primaryLang">Primary Language Mastery</span>
                             <div class="skill-level" data-skill="primary-lang">
                                 <div class="level-indicator" data-level="1"></div>
                                 <div class="level-indicator" data-level="2"></div>
@@ -517,7 +560,7 @@
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span class="skill-name">System Design & Architecture</span>
+                            <span class="skill-name" id="skillName-systemDesign">System Design &amp; Architecture</span>
                             <div class="skill-level" data-skill="system-design">
                                 <div class="level-indicator" data-level="1"></div>
                                 <div class="level-indicator" data-level="2"></div>
@@ -527,7 +570,7 @@
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span class="skill-name">Database Design & Optimization</span>
+                            <span class="skill-name" id="skillName-database">Database Design &amp; Optimization</span>
                             <div class="skill-level" data-skill="database">
                                 <div class="level-indicator" data-level="1"></div>
                                 <div class="level-indicator" data-level="2"></div>
@@ -537,7 +580,7 @@
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span class="skill-name">Testing & Quality Assurance</span>
+                            <span class="skill-name" id="skillName-testing">Testing &amp; Quality Assurance</span>
                             <div class="skill-level" data-skill="testing">
                                 <div class="level-indicator" data-level="1"></div>
                                 <div class="level-indicator" data-level="2"></div>
@@ -549,9 +592,9 @@
                     </div>
 
                     <div class="skill-category">
-                        <h4>Platform & Tools</h4>
+                        <h4 id="skillCatPlatform">Platform &amp; Tools</h4>
                         <div class="skill-item">
-                            <span class="skill-name">Cloud Platforms (AWS/GCP/Azure)</span>
+                            <span class="skill-name" id="skillName-cloud">Cloud Platforms (AWS/GCP/Azure)</span>
                             <div class="skill-level" data-skill="cloud">
                                 <div class="level-indicator" data-level="1"></div>
                                 <div class="level-indicator" data-level="2"></div>
@@ -561,7 +604,7 @@
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span class="skill-name">DevOps & CI/CD</span>
+                            <span class="skill-name" id="skillName-devops">DevOps &amp; CI/CD</span>
                             <div class="skill-level" data-skill="devops">
                                 <div class="level-indicator" data-level="1"></div>
                                 <div class="level-indicator" data-level="2"></div>
@@ -571,7 +614,7 @@
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span class="skill-name">Monitoring & Observability</span>
+                            <span class="skill-name" id="skillName-monitoring">Monitoring &amp; Observability</span>
                             <div class="skill-level" data-skill="monitoring">
                                 <div class="level-indicator" data-level="1"></div>
                                 <div class="level-indicator" data-level="2"></div>
@@ -581,7 +624,7 @@
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span class="skill-name">Security Best Practices</span>
+                            <span class="skill-name" id="skillName-security">Security Best Practices</span>
                             <div class="skill-level" data-skill="security">
                                 <div class="level-indicator" data-level="1"></div>
                                 <div class="level-indicator" data-level="2"></div>
@@ -593,9 +636,9 @@
                     </div>
 
                     <div class="skill-category">
-                        <h4>Leadership & Communication</h4>
+                        <h4 id="skillCatLeadership">Leadership &amp; Communication</h4>
                         <div class="skill-item">
-                            <span class="skill-name">Technical Mentoring</span>
+                            <span class="skill-name" id="skillName-mentoring">Technical Mentoring</span>
                             <div class="skill-level" data-skill="mentoring">
                                 <div class="level-indicator" data-level="1"></div>
                                 <div class="level-indicator" data-level="2"></div>
@@ -605,7 +648,7 @@
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span class="skill-name">Cross-functional Collaboration</span>
+                            <span class="skill-name" id="skillName-collaboration">Cross-functional Collaboration</span>
                             <div class="skill-level" data-skill="collaboration">
                                 <div class="level-indicator" data-level="1"></div>
                                 <div class="level-indicator" data-level="2"></div>
@@ -615,7 +658,7 @@
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span class="skill-name">Technical Communication</span>
+                            <span class="skill-name" id="skillName-communication">Technical Communication</span>
                             <div class="skill-level" data-skill="communication">
                                 <div class="level-indicator" data-level="1"></div>
                                 <div class="level-indicator" data-level="2"></div>
@@ -625,7 +668,7 @@
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span class="skill-name">Project Leadership</span>
+                            <span class="skill-name" id="skillName-projectLeadership">Project Leadership</span>
                             <div class="skill-level" data-skill="project-leadership">
                                 <div class="level-indicator" data-level="1"></div>
                                 <div class="level-indicator" data-level="2"></div>
@@ -640,18 +683,18 @@
         </div>
 
         <div class="section">
-            <div class="section-title">🛤️ Career Path Interest</div>
+            <div class="section-title">🛤️ <span id="sectionCareerPath">Career Path Interest</span></div>
 
             <div class="career-paths">
                 <div class="career-path" data-path="technical-leadership">
                     <div class="path-title">
                         <span class="path-icon">🔧</span>
-                        Technical Leadership
+                        <span id="cpTitle-technicalLeadership">Technical Leadership</span>
                     </div>
-                    <div class="path-description">
+                    <div class="path-description" id="cpDesc-technicalLeadership">
                         Focus on technical expertise, system architecture, and leading complex technical initiatives
                     </div>
-                    <div class="path-levels">
+                    <div class="path-levels" id="cpLevels-technicalLeadership">
                         <span class="path-level">Senior</span>
                         <span class="path-level">Staff</span>
                         <span class="path-level">Principal</span>
@@ -662,12 +705,12 @@
                 <div class="career-path" data-path="people-management">
                     <div class="path-title">
                         <span class="path-icon">👥</span>
-                        People Management
+                        <span id="cpTitle-peopleManagement">People Management</span>
                     </div>
-                    <div class="path-description">
+                    <div class="path-description" id="cpDesc-peopleManagement">
                         Lead and develop engineering teams, focus on people growth and organizational impact
                     </div>
-                    <div class="path-levels">
+                    <div class="path-levels" id="cpLevels-peopleManagement">
                         <span class="path-level">Tech Lead</span>
                         <span class="path-level">Engineering Manager</span>
                         <span class="path-level">Senior Manager</span>
@@ -678,12 +721,12 @@
                 <div class="career-path" data-path="product-technical">
                     <div class="path-title">
                         <span class="path-icon">📱</span>
-                        Product-Technical Hybrid
+                        <span id="cpTitle-productTechnical">Product-Technical Hybrid</span>
                     </div>
-                    <div class="path-description">
+                    <div class="path-description" id="cpDesc-productTechnical">
                         Combine technical skills with product strategy and user-focused engineering
                     </div>
-                    <div class="path-levels">
+                    <div class="path-levels" id="cpLevels-productTechnical">
                         <span class="path-level">Product Engineer</span>
                         <span class="path-level">Technical PM</span>
                         <span class="path-level">Principal PM</span>
@@ -694,12 +737,12 @@
                 <div class="career-path" data-path="architecture-specialist">
                     <div class="path-title">
                         <span class="path-icon">🏗️</span>
-                        Systems Architecture
+                        <span id="cpTitle-architectureSpecialist">Systems Architecture</span>
                     </div>
-                    <div class="path-description">
+                    <div class="path-description" id="cpDesc-architectureSpecialist">
                         Specialize in large-scale system design, platform engineering, and technical strategy
                     </div>
-                    <div class="path-levels">
+                    <div class="path-levels" id="cpLevels-architectureSpecialist">
                         <span class="path-level">Senior Engineer</span>
                         <span class="path-level">Solutions Architect</span>
                         <span class="path-level">Principal Architect</span>
@@ -710,12 +753,12 @@
                 <div class="career-path" data-path="consulting-advisory">
                     <div class="path-title">
                         <span class="path-icon">💼</span>
-                        Consulting & Advisory
+                        <span id="cpTitle-consultingAdvisory">Consulting &amp; Advisory</span>
                     </div>
-                    <div class="path-description">
+                    <div class="path-description" id="cpDesc-consultingAdvisory">
                         Internal or external consulting, technical advisory roles, and strategic guidance
                     </div>
-                    <div class="path-levels">
+                    <div class="path-levels" id="cpLevels-consultingAdvisory">
                         <span class="path-level">Senior Consultant</span>
                         <span class="path-level">Principal Consultant</span>
                         <span class="path-level">Partner</span>
@@ -726,12 +769,12 @@
                 <div class="career-path" data-path="entrepreneurship">
                     <div class="path-title">
                         <span class="path-icon">🚀</span>
-                        Entrepreneurship
+                        <span id="cpTitle-entrepreneurship">Entrepreneurship</span>
                     </div>
-                    <div class="path-description">
+                    <div class="path-description" id="cpDesc-entrepreneurship">
                         Startup founder, technical co-founder, or intrapreneurship within larger organizations
                     </div>
-                    <div class="path-levels">
+                    <div class="path-levels" id="cpLevels-entrepreneurship">
                         <span class="path-level">Side Project</span>
                         <span class="path-level">Co-founder</span>
                         <span class="path-level">Technical Founder</span>
@@ -742,104 +785,104 @@
         </div>
 
         <div class="section">
-            <div class="section-title">⏱️ Timeline & Goals</div>
+            <div class="section-title">⏱️ <span id="sectionTimeline">Timeline &amp; Goals</span></div>
 
             <div class="timeline-selector">
-                <label><strong>Career Development Timeline:</strong></label>
+                <label id="lblTimelineSelector"><strong>Career Development Timeline:</strong></label>
                 <div class="timeline-options">
                     <div class="timeline-option" data-timeline="immediate">
-                        <strong>3-6 Months</strong>
-                        <div style="font-size: 0.8em;">Immediate next steps</div>
+                        <strong id="tlTitle-immediate">3-6 Months</strong>
+                        <div style="font-size: 0.8em;" id="tlDesc-immediate">Immediate next steps</div>
                     </div>
                     <div class="timeline-option" data-timeline="short-term">
-                        <strong>6-12 Months</strong>
-                        <div style="font-size: 0.8em;">Short-term goals</div>
+                        <strong id="tlTitle-shortTerm">6-12 Months</strong>
+                        <div style="font-size: 0.8em;" id="tlDesc-shortTerm">Short-term goals</div>
                     </div>
                     <div class="timeline-option" data-timeline="medium-term">
-                        <strong>1-2 Years</strong>
-                        <div style="font-size: 0.8em;">Medium-term planning</div>
+                        <strong id="tlTitle-mediumTerm">1-2 Years</strong>
+                        <div style="font-size: 0.8em;" id="tlDesc-mediumTerm">Medium-term planning</div>
                     </div>
                     <div class="timeline-option" data-timeline="long-term">
-                        <strong>2-5 Years</strong>
-                        <div style="font-size: 0.8em;">Long-term vision</div>
+                        <strong id="tlTitle-longTerm">2-5 Years</strong>
+                        <div style="font-size: 0.8em;" id="tlDesc-longTerm">Long-term vision</div>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="career-aspirations">Specific Career Aspirations:</label>
+                <label for="career-aspirations" id="lblCareerAspirations">Specific Career Aspirations:</label>
                 <textarea id="career-aspirations" placeholder="e.g., Interested in becoming a Staff Engineer with focus on mobile platform architecture. Wants to lead technical initiatives across multiple teams and contribute to open source projects. Long-term interest in technical leadership at scale."></textarea>
             </div>
 
             <div class="form-group">
-                <label for="learning-preferences">Learning Style & Preferences:</label>
+                <label for="learning-preferences" id="lblLearningPreferences">Learning Style &amp; Preferences:</label>
                 <textarea id="learning-preferences" placeholder="e.g., Prefers hands-on learning through projects, enjoys conferences and technical talks, learns well from mentorship and pair programming. Interested in formal training programs and certifications."></textarea>
             </div>
 
             <div class="form-group">
-                <label for="constraints">Current Constraints & Considerations:</label>
+                <label for="constraints" id="lblConstraints">Current Constraints &amp; Considerations:</label>
                 <textarea id="constraints" placeholder="e.g., Limited availability for extensive travel, prefers remote learning options, needs to balance learning with current project commitments, interested in company-sponsored education programs."></textarea>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">🎯 Focus Areas for AI Guidance</div>
+            <div class="section-title">🎯 <span id="sectionFocusAreas">Focus Areas for AI Guidance</span></div>
 
             <div class="focus-areas">
-                <h4>🔍 Select areas where you want specific AI recommendations:</h4>
+                <h4 id="focusAreasHeading">🔍 Select areas where you want specific AI recommendations:</h4>
 
                 <div class="checkbox-grid">
                     <div class="checkbox-item">
                         <input type="checkbox" id="skill-gaps" checked>
-                        <label for="skill-gaps">Skill gap analysis and development priorities</label>
+                        <label for="skill-gaps" id="cbLabel-skillGaps">Skill gap analysis and development priorities</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="promotion-readiness" checked>
-                        <label for="promotion-readiness">Promotion readiness assessment and timeline</label>
+                        <label for="promotion-readiness" id="cbLabel-promotionReadiness">Promotion readiness assessment and timeline</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="learning-resources">
-                        <label for="learning-resources">Specific learning resources and courses</label>
+                        <label for="learning-resources" id="cbLabel-learningResources">Specific learning resources and courses</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="project-opportunities">
-                        <label for="project-opportunities">Project opportunities and stretch assignments</label>
+                        <label for="project-opportunities" id="cbLabel-projectOpportunities">Project opportunities and stretch assignments</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="networking">
-                        <label for="networking">Industry networking and community involvement</label>
+                        <label for="networking" id="cbLabel-networking">Industry networking and community involvement</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="certifications">
-                        <label for="certifications">Relevant certifications and credentials</label>
+                        <label for="certifications" id="cbLabel-certifications">Relevant certifications and credentials</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="mentorship">
-                        <label for="mentorship">Mentorship opportunities (giving and receiving)</label>
+                        <label for="mentorship" id="cbLabel-mentorship">Mentorship opportunities (giving and receiving)</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="visibility">
-                        <label for="visibility">Increasing visibility and thought leadership</label>
+                        <label for="visibility" id="cbLabel-visibility">Increasing visibility and thought leadership</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="lateral-moves">
-                        <label for="lateral-moves">Lateral move opportunities within company</label>
+                        <label for="lateral-moves" id="cbLabel-lateralMoves">Lateral move opportunities within company</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="market-trends">
-                        <label for="market-trends">Industry trends and emerging technologies</label>
+                        <label for="market-trends" id="cbLabel-marketTrends">Industry trends and emerging technologies</label>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="company-context">Company & Industry Context:</label>
+                <label for="company-context" id="lblCompanyContext">Company &amp; Industry Context:</label>
                 <textarea id="company-context" placeholder="e.g., Fast-growing fintech company, heavy focus on mobile-first solutions, planning expansion into new markets, emphasis on security and compliance, strong engineering culture with regular tech talks and learning stipends."></textarea>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">🤖 Generated AI Prompt</div>
+            <div class="section-title">🤖 <span id="sectionGeneratedPrompt">Generated AI Prompt</span></div>
 
             <div class="prompt-box" id="generated-prompt">
 Click "Generate Career Path Prompt" to create your customized AI prompt based on the employee information above.
@@ -847,38 +890,514 @@ Click "Generate Career Path Prompt" to create your customized AI prompt based on
         </div>
 
         <div class="example-section">
-            <h4>💡 Example AI Recommendations</h4>
-            <p><strong>Immediate Next Steps (3-6 months):</strong></p>
+            <h4 id="exampleHeading">💡 Example AI Recommendations</h4>
+            <p id="exampleImmediateLabel"><strong>Immediate Next Steps (3-6 months):</strong></p>
             <ul>
-                <li>Complete AWS Solutions Architect Associate certification</li>
-                <li>Lead architecture design for upcoming mobile feature</li>
-                <li>Begin mentoring one junior developer</li>
-                <li>Present technical talk at internal engineering all-hands</li>
+                <li id="exampleLi1">Complete AWS Solutions Architect Associate certification</li>
+                <li id="exampleLi2">Lead architecture design for upcoming mobile feature</li>
+                <li id="exampleLi3">Begin mentoring one junior developer</li>
+                <li id="exampleLi4">Present technical talk at internal engineering all-hands</li>
             </ul>
-            <p><strong>Medium-term Goals (1-2 years):</strong> Staff Engineer promotion, contribute to open source mobile frameworks, lead cross-team technical initiatives</p>
+            <p id="exampleMediumTerm"><strong>Medium-term Goals (1-2 years):</strong> Staff Engineer promotion, contribute to open source mobile frameworks, lead cross-team technical initiatives</p>
         </div>
 
         <div class="tips">
-            <h4>💡 Tips for Effective Career Path Guidance</h4>
+            <h4 id="tipsHeading">💡 Tips for Effective Career Path Guidance</h4>
             <ul>
-                <li><strong>Be Specific:</strong> Include concrete examples of current skills and achievements for accurate assessment</li>
-                <li><strong>Consider Multiple Paths:</strong> Don't limit to one career track - explore hybrid and emerging roles</li>
-                <li><strong>Timeline Reality:</strong> Set realistic expectations based on current level and company promotion cycles</li>
-                <li><strong>Skills vs. Experience:</strong> Balance learning new skills with gaining experience applying existing ones</li>
-                <li><strong>Company Alignment:</strong> Consider how career goals align with company needs and opportunities</li>
-                <li><strong>Regular Updates:</strong> Revisit and update career plans quarterly as skills and interests evolve</li>
+                <li id="tipsLi1"><strong>Be Specific:</strong> Include concrete examples of current skills and achievements for accurate assessment</li>
+                <li id="tipsLi2"><strong>Consider Multiple Paths:</strong> Don't limit to one career track - explore hybrid and emerging roles</li>
+                <li id="tipsLi3"><strong>Timeline Reality:</strong> Set realistic expectations based on current level and company promotion cycles</li>
+                <li id="tipsLi4"><strong>Skills vs. Experience:</strong> Balance learning new skills with gaining experience applying existing ones</li>
+                <li id="tipsLi5"><strong>Company Alignment:</strong> Consider how career goals align with company needs and opportunities</li>
+                <li id="tipsLi6"><strong>Regular Updates:</strong> Revisit and update career plans quarterly as skills and interests evolve</li>
             </ul>
         </div>
 
         <div class="action-buttons">
-            <button class="btn" onclick="generatePrompt()">✨ Generate Career Path Prompt</button>
-            <button class="btn btn-secondary" onclick="window.print()">🖨️ Print Template</button>
-            <button class="btn btn-secondary" onclick="clearForm()">🗑️ Clear Form</button>
+            <button class="btn" onclick="generatePrompt()" id="btnGenerate">✨ Generate Career Path Prompt</button>
+            <button class="btn btn-secondary" onclick="window.print()" id="btnPrint">🖨️ Print Template</button>
+            <button class="btn btn-secondary" onclick="clearForm()" id="btnClear">🗑️ Clear Form</button>
         </div>
     </div>
 
     <script>
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+        let promptGenerated = false;
+
+        // ---------------------------------------------------------------
+        // i18n dictionary
+        // ---------------------------------------------------------------
+        const I18N = {
+            en: {
+                pageTitle: "AI Career Path Suggestion Prompt - Engineering Management Tool",
+                headerTitle: "AI Career Path Suggestion Prompt",
+                headerSubtitle: "Personalized Career Guidance &amp; Promotion Roadmaps with AI",
+                whatIsHeading: "What is this tool?",
+                whatIsBody: "This template helps engineering managers create comprehensive AI prompts that generate personalized career path recommendations, promotion roadmaps, and skill development plans for their team members. By analyzing current skills, aspirations, and company needs, AI can suggest specific next steps, learning opportunities, and timeline expectations for career growth.",
+                whyUseBody: "<strong>Why use this:</strong> Provides data-driven career guidance, identifies skill gaps and development opportunities, creates clear promotion pathways, suggests relevant learning resources, and helps align individual goals with business needs and industry trends.",
+                sectionEmployeeProfile: "Employee Profile",
+                lblEmployeeName: "Employee Name:",
+                phEmployeeName: "e.g., Maria Santos",
+                lblCurrentRole: "Current Role &amp; Level:",
+                phCurrentRole: "e.g., Mid-level Software Engineer, Level 4",
+                lblTenure: "Time in Current Role:",
+                phTenure: "e.g., 2 years",
+                lblTotalExperience: "Total Industry Experience:",
+                phTotalExperience: "e.g., 5 years",
+                lblTeamContext: "Team &amp; Technology Context:",
+                phTeamContext: "e.g., Works on mobile app team using React Native, Node.js, and AWS. Team of 6 engineers supporting 2M+ active users. Focus on performance optimization and user experience improvements.",
+                lblRecentAchievements: "Recent Achievements &amp; Performance:",
+                phRecentAchievements: "e.g., Led mobile app performance optimization reducing load times by 50%. Mentored 2 junior engineers. Consistently exceeds sprint commitments. Received 'Outstanding Performer' rating in last review.",
+                sectionSkillsAssessment: "Current Skills Assessment",
+                levelTitle: "Technical Skills Evaluation",
+                levelBadge: "Current Level Assessment",
+                skillCatProgramming: "Programming &amp; Architecture",
+                skillCatPlatform: "Platform &amp; Tools",
+                skillCatLeadership: "Leadership &amp; Communication",
+                skillNames: {
+                    primaryLang: "Primary Language Mastery",
+                    systemDesign: "System Design &amp; Architecture",
+                    database: "Database Design &amp; Optimization",
+                    testing: "Testing &amp; Quality Assurance",
+                    cloud: "Cloud Platforms (AWS/GCP/Azure)",
+                    devops: "DevOps &amp; CI/CD",
+                    monitoring: "Monitoring &amp; Observability",
+                    security: "Security Best Practices",
+                    mentoring: "Technical Mentoring",
+                    collaboration: "Cross-functional Collaboration",
+                    communication: "Technical Communication",
+                    projectLeadership: "Project Leadership"
+                },
+                sectionCareerPath: "Career Path Interest",
+                careerPaths: {
+                    technicalLeadership: {
+                        title: "Technical Leadership",
+                        desc: "Focus on technical expertise, system architecture, and leading complex technical initiatives",
+                        levels: ["Senior", "Staff", "Principal", "Distinguished"]
+                    },
+                    peopleManagement: {
+                        title: "People Management",
+                        desc: "Lead and develop engineering teams, focus on people growth and organizational impact",
+                        levels: ["Tech Lead", "Engineering Manager", "Senior Manager", "Director"]
+                    },
+                    productTechnical: {
+                        title: "Product-Technical Hybrid",
+                        desc: "Combine technical skills with product strategy and user-focused engineering",
+                        levels: ["Product Engineer", "Technical PM", "Principal PM", "VP Product"]
+                    },
+                    architectureSpecialist: {
+                        title: "Systems Architecture",
+                        desc: "Specialize in large-scale system design, platform engineering, and technical strategy",
+                        levels: ["Senior Engineer", "Solutions Architect", "Principal Architect", "Chief Architect"]
+                    },
+                    consultingAdvisory: {
+                        title: "Consulting &amp; Advisory",
+                        desc: "Internal or external consulting, technical advisory roles, and strategic guidance",
+                        levels: ["Senior Consultant", "Principal Consultant", "Partner", "CTO Advisory"]
+                    },
+                    entrepreneurship: {
+                        title: "Entrepreneurship",
+                        desc: "Startup founder, technical co-founder, or intrapreneurship within larger organizations",
+                        levels: ["Side Project", "Co-founder", "Technical Founder", "CEO/CTO"]
+                    }
+                },
+                sectionTimeline: "Timeline &amp; Goals",
+                lblTimelineSelector: "<strong>Career Development Timeline:</strong>",
+                timelines: {
+                    immediate: { title: "3-6 Months", desc: "Immediate next steps" },
+                    shortTerm: { title: "6-12 Months", desc: "Short-term goals" },
+                    mediumTerm: { title: "1-2 Years", desc: "Medium-term planning" },
+                    longTerm: { title: "2-5 Years", desc: "Long-term vision" }
+                },
+                lblCareerAspirations: "Specific Career Aspirations:",
+                phCareerAspirations: "e.g., Interested in becoming a Staff Engineer with focus on mobile platform architecture. Wants to lead technical initiatives across multiple teams and contribute to open source projects. Long-term interest in technical leadership at scale.",
+                lblLearningPreferences: "Learning Style &amp; Preferences:",
+                phLearningPreferences: "e.g., Prefers hands-on learning through projects, enjoys conferences and technical talks, learns well from mentorship and pair programming. Interested in formal training programs and certifications.",
+                lblConstraints: "Current Constraints &amp; Considerations:",
+                phConstraints: "e.g., Limited availability for extensive travel, prefers remote learning options, needs to balance learning with current project commitments, interested in company-sponsored education programs.",
+                sectionFocusAreas: "Focus Areas for AI Guidance",
+                focusAreasHeading: "🔍 Select areas where you want specific AI recommendations:",
+                checkboxes: {
+                    skillGaps: "Skill gap analysis and development priorities",
+                    promotionReadiness: "Promotion readiness assessment and timeline",
+                    learningResources: "Specific learning resources and courses",
+                    projectOpportunities: "Project opportunities and stretch assignments",
+                    networking: "Industry networking and community involvement",
+                    certifications: "Relevant certifications and credentials",
+                    mentorship: "Mentorship opportunities (giving and receiving)",
+                    visibility: "Increasing visibility and thought leadership",
+                    lateralMoves: "Lateral move opportunities within company",
+                    marketTrends: "Industry trends and emerging technologies"
+                },
+                lblCompanyContext: "Company &amp; Industry Context:",
+                phCompanyContext: "e.g., Fast-growing fintech company, heavy focus on mobile-first solutions, planning expansion into new markets, emphasis on security and compliance, strong engineering culture with regular tech talks and learning stipends.",
+                sectionGeneratedPrompt: "Generated AI Prompt",
+                promptPlaceholder: "Click \"Generate Career Path Prompt\" to create your customized AI prompt based on the employee information above.",
+                exampleHeading: "💡 Example AI Recommendations",
+                exampleImmediateLabel: "<strong>Immediate Next Steps (3-6 months):</strong>",
+                exampleLi1: "Complete AWS Solutions Architect Associate certification",
+                exampleLi2: "Lead architecture design for upcoming mobile feature",
+                exampleLi3: "Begin mentoring one junior developer",
+                exampleLi4: "Present technical talk at internal engineering all-hands",
+                exampleMediumTerm: "<strong>Medium-term Goals (1-2 years):</strong> Staff Engineer promotion, contribute to open source mobile frameworks, lead cross-team technical initiatives",
+                tipsHeading: "💡 Tips for Effective Career Path Guidance",
+                tipsLi1: "<strong>Be Specific:</strong> Include concrete examples of current skills and achievements for accurate assessment",
+                tipsLi2: "<strong>Consider Multiple Paths:</strong> Don't limit to one career track - explore hybrid and emerging roles",
+                tipsLi3: "<strong>Timeline Reality:</strong> Set realistic expectations based on current level and company promotion cycles",
+                tipsLi4: "<strong>Skills vs. Experience:</strong> Balance learning new skills with gaining experience applying existing ones",
+                tipsLi5: "<strong>Company Alignment:</strong> Consider how career goals align with company needs and opportunities",
+                tipsLi6: "<strong>Regular Updates:</strong> Revisit and update career plans quarterly as skills and interests evolve",
+                btnGenerate: "✨ Generate Career Path Prompt",
+                btnPrint: "🖨️ Print Template",
+                btnClear: "🗑️ Clear Form",
+                clearConfirm: "Are you sure you want to clear all form data?",
+                copySuccessAlert: "✅ Career Path Suggestion Prompt generated and copied to clipboard! You can now paste it into your preferred AI tool.",
+                copyFailAlert: "ℹ️ Career Path Suggestion Prompt generated! You can copy it from the text box below.",
+                placeholders: {
+                    employeeName: "[Employee Name]",
+                    currentRole: "[Current Role & Level]",
+                    tenure: "[Time in Current Role]",
+                    totalExperience: "[Total Experience]",
+                    teamContext: "[Team & Technology Context]",
+                    recentAchievements: "[Recent Achievements]",
+                    careerAspirations: "[Career Aspirations]",
+                    learningPreferences: "[Learning Preferences]",
+                    constraints: "[Constraints]",
+                    companyContext: "[Company Context]",
+                    careerPath: "[Career Path Interest]",
+                    timeline: "[Timeline]"
+                },
+                skillAssessmentHeader: "Current Skill Assessment (1-5 scale):",
+                promptIntro: "You are an experienced engineering career advisor and talent development expert. Please provide comprehensive, actionable career path recommendations for the following engineer.",
+                promptLabels: {
+                    employeeProfile: "**Employee Profile:**",
+                    name: "Name:",
+                    currentRole: "Current Role:",
+                    timeInRole: "Time in Role:",
+                    totalExperience: "Total Experience:",
+                    teamContext: "Team Context:",
+                    performance: "**Current Performance &amp; Achievements:**",
+                    skillAssessment: "**Skill Assessment:**",
+                    careerInterests: "**Career Interests &amp; Goals:**",
+                    primaryPathInterest: "Primary Career Path Interest:",
+                    specificAspirations: "Specific Aspirations:",
+                    developmentTimeline: "Development Timeline:",
+                    learningPreferences: "Learning Preferences:",
+                    constraints: "Constraints &amp; Considerations:",
+                    companyContext: "**Company Context:**",
+                    focusAreas: "**Focus Areas for Recommendations:**"
+                },
+                promptRequestIntro: "Please provide detailed, specific recommendations in the following areas:",
+                promptSections: [
+                    { title: "**Career Path Analysis**", items: ["Assessment of current readiness for next level", "Realistic timeline for promotion/advancement", "Alternative paths to consider based on skills and interests"] },
+                    { title: "**Skill Gap Analysis**", items: ["Critical skills needed for next career level", "Priority order for skill development", "Current strengths to leverage and build upon"] },
+                    { title: "**Immediate Action Plan (Next 3-6 Months)**", items: ["Specific projects or initiatives to pursue", "Learning goals and resources", "Networking and visibility opportunities"] },
+                    { title: "**Medium-term Development Strategy (6-18 Months)**", items: ["Key milestones and achievements to target", "Leadership opportunities and stretch assignments", "Certification or formal learning programs"] },
+                    { title: "**Long-term Career Roadmap (1-3 Years)**", items: ["Progression pathway with concrete steps", "Skills mastery goals and technical expertise areas", "Leadership and impact objectives"] },
+                    { title: "**Specific Learning Resources**", items: ["Recommended courses, books, and training programs", "Conferences, meetups, and community involvement", "Mentorship opportunities (both giving and receiving)"] },
+                    { title: "**Project &amp; Assignment Recommendations**", items: ["Internal projects that align with career goals", "Cross-functional collaboration opportunities", "Technical leadership roles to pursue"] },
+                    { title: "**Promotion Readiness Assessment**", items: ["Current gaps preventing advancement", "Timeline and prerequisites for next level", "Key indicators of readiness to track"] },
+                    { title: "**Industry &amp; Market Considerations**", items: ["Relevant technology trends to follow", "Market demand for skills and roles", "Emerging opportunities in the field"] },
+                    { title: "**Success Metrics &amp; Tracking**", items: ["How to measure progress toward goals", "Regular checkpoint and review cadence", "Adjustment strategies based on results"] }
+                ],
+                promptClosing: "Make all recommendations specific, actionable, and tailored to their current situation, interests, and constraints. Include concrete timelines, resources, and next steps they can implement immediately.",
+                promptNote: "Note: this is advisory input for the manager's own coaching and planning purposes, not an official promotion decision or HR record — actual promotion readiness is determined through the manager's judgment and the company's calibration process."
+            },
+            zh: {
+                pageTitle: "AI 職涯發展 Prompt 產生器 - 工程管理工具",
+                headerTitle: "AI 職涯發展建議 Prompt",
+                headerSubtitle: "透過 AI 打造個人化職涯指引與晉升路徑規劃",
+                whatIsHeading: "這個工具是做什麼的？",
+                whatIsBody: "這個範本協助工程主管建立完整的 AI prompt，為團隊成員產生個人化的職涯發展建議、晉升路徑與技能發展計畫。透過分析目前技能、個人志向與公司需求，AI 可以建議具體的下一步行動、學習機會，以及職涯成長的時程預期。",
+                whyUseBody: "<strong>為什麼要用這個工具：</strong>提供有數據支撐的職涯指引、找出技能落差與發展機會、建立清楚的晉升路徑、建議相關學習資源，並協助個人目標與公司需求及產業趨勢對齊。",
+                sectionEmployeeProfile: "員工基本資料",
+                lblEmployeeName: "員工姓名：",
+                phEmployeeName: "例如：王小明",
+                lblCurrentRole: "目前職稱與職級：",
+                phCurrentRole: "例如：中階軟體工程師，Level 4",
+                lblTenure: "在目前職務的年資：",
+                phTenure: "例如：2 年",
+                lblTotalExperience: "業界總年資：",
+                phTotalExperience: "例如：5 年",
+                lblTeamContext: "團隊與技術背景：",
+                phTeamContext: "例如：在行動 App 團隊，使用 React Native、Node.js、AWS。團隊 6 名工程師，服務超過 200 萬活躍用戶。專注於效能優化與使用者體驗改善。",
+                lblRecentAchievements: "近期成就與績效表現：",
+                phRecentAchievements: "例如：主導行動 App 效能優化，將載入時間縮短 50%。指導 2 位資淺工程師。持續超越 sprint 承諾。上次績效考核獲得「傑出表現」評等。",
+                sectionSkillsAssessment: "目前技能評估",
+                levelTitle: "技術技能評量",
+                levelBadge: "目前等級評估",
+                skillCatProgramming: "程式開發與架構",
+                skillCatPlatform: "平台與工具",
+                skillCatLeadership: "領導力與溝通",
+                skillNames: {
+                    primaryLang: "主要語言熟練度",
+                    systemDesign: "系統設計與架構",
+                    database: "資料庫設計與優化",
+                    testing: "測試與品質保證",
+                    cloud: "雲端平台（AWS/GCP/Azure）",
+                    devops: "DevOps 與 CI/CD",
+                    monitoring: "監控與可觀測性",
+                    security: "資安最佳實務",
+                    mentoring: "技術指導能力",
+                    collaboration: "跨部門協作",
+                    communication: "技術溝通能力",
+                    projectLeadership: "專案領導力"
+                },
+                sectionCareerPath: "職涯路徑興趣",
+                careerPaths: {
+                    technicalLeadership: {
+                        title: "技術領導路線",
+                        desc: "專注於技術專精、系統架構，並主導複雜的技術專案",
+                        levels: ["Senior", "Staff", "Principal", "Distinguished"]
+                    },
+                    peopleManagement: {
+                        title: "團隊管理路線",
+                        desc: "帶領並培育工程團隊，專注於人才成長與組織影響力",
+                        levels: ["Tech Lead", "工程經理", "資深經理", "總監"]
+                    },
+                    productTechnical: {
+                        title: "產品技術混合路線",
+                        desc: "結合技術能力與產品策略，以使用者為中心的工程實踐",
+                        levels: ["產品工程師", "技術 PM", "Principal PM", "VP Product"]
+                    },
+                    architectureSpecialist: {
+                        title: "系統架構專精路線",
+                        desc: "專精於大型系統設計、平台工程與技術策略",
+                        levels: ["資深工程師", "解決方案架構師", "Principal Architect", "Chief Architect"]
+                    },
+                    consultingAdvisory: {
+                        title: "顧問諮詢路線",
+                        desc: "內部或外部顧問、技術諮詢角色，提供策略性指引",
+                        levels: ["資深顧問", "首席顧問", "合夥人", "CTO 顧問"]
+                    },
+                    entrepreneurship: {
+                        title: "創業路線",
+                        desc: "新創公司創辦人、技術共同創辦人，或在大型組織內部創業",
+                        levels: ["側專案", "共同創辦人", "技術創辦人", "CEO/CTO"]
+                    }
+                },
+                sectionTimeline: "時程與目標",
+                lblTimelineSelector: "<strong>職涯發展時程：</strong>",
+                timelines: {
+                    immediate: { title: "3-6 個月", desc: "近期的下一步" },
+                    shortTerm: { title: "6-12 個月", desc: "短期目標" },
+                    mediumTerm: { title: "1-2 年", desc: "中期規劃" },
+                    longTerm: { title: "2-5 年", desc: "長期願景" }
+                },
+                lblCareerAspirations: "具體職涯志向：",
+                phCareerAspirations: "例如：有興趣成為 Staff Engineer，專注於行動平台架構。希望主導跨團隊的技術專案並貢獻開源專案。長期對大規模技術領導有興趣。",
+                lblLearningPreferences: "學習風格與偏好：",
+                phLearningPreferences: "例如：偏好透過實作專案來學習，喜歡參加研討會與技術演講，透過 mentorship 與 pair programming 學習效果佳。對正式培訓課程與證照有興趣。",
+                lblConstraints: "目前的限制與考量：",
+                phConstraints: "例如：可出差時間有限、偏好遠距學習方式、需要平衡學習與目前專案的承諾、對公司補助的教育專案有興趣。",
+                sectionFocusAreas: "AI 建議聚焦領域",
+                focusAreasHeading: "🔍 選擇你希望 AI 給出具體建議的領域：",
+                checkboxes: {
+                    skillGaps: "技能落差分析與發展優先順序",
+                    promotionReadiness: "晉升準備度評估與時程",
+                    learningResources: "具體的學習資源與課程",
+                    projectOpportunities: "專案機會與挑戰型任務",
+                    networking: "產業人脈拓展與社群參與",
+                    certifications: "相關證照與認證",
+                    mentorship: "Mentorship 機會（給予與接受）",
+                    visibility: "提升能見度與 thought leadership",
+                    lateralMoves: "公司內部的橫向轉調機會",
+                    marketTrends: "產業趨勢與新興技術"
+                },
+                lblCompanyContext: "公司與產業背景：",
+                phCompanyContext: "例如：快速成長的金融科技公司，高度聚焦行動優先的解決方案，正計畫拓展新市場，重視資安與法規遵循，工程文化強調定期技術分享與學習補助。",
+                sectionGeneratedPrompt: "產生的 AI Prompt",
+                promptPlaceholder: "點擊「產生職涯發展 Prompt」，根據上方的員工資訊建立你的客製化 AI prompt。",
+                exampleHeading: "💡 AI 建議範例",
+                exampleImmediateLabel: "<strong>近期下一步（3-6 個月）：</strong>",
+                exampleLi1: "完成 AWS Solutions Architect Associate 證照",
+                exampleLi2: "主導即將上線的行動功能架構設計",
+                exampleLi3: "開始指導一位資淺工程師",
+                exampleLi4: "在內部工程全員大會上發表技術演講",
+                exampleMediumTerm: "<strong>中期目標（1-2 年）：</strong>晉升為 Staff Engineer、貢獻開源行動框架、主導跨團隊技術專案",
+                tipsHeading: "💡 有效職涯指引的建議",
+                tipsLi1: "<strong>具體明確：</strong>提供目前技能與成就的具體例子，以利精準評估",
+                tipsLi2: "<strong>考慮多元路徑：</strong>不要只侷限於單一職涯路線——探索混合型與新興角色",
+                tipsLi3: "<strong>時程要務實：</strong>根據目前職級與公司晉升週期設定合理期待",
+                tipsLi4: "<strong>技能與經驗並重：</strong>平衡學習新技能與累積應用既有技能的經驗",
+                tipsLi5: "<strong>與公司對齊：</strong>思考職涯目標如何與公司需求及機會對齊",
+                tipsLi6: "<strong>定期更新：</strong>隨著技能與興趣演進，每季重新檢視並更新職涯計畫",
+                btnGenerate: "✨ 產生職涯發展 Prompt",
+                btnPrint: "🖨️ 列印範本",
+                btnClear: "🗑️ 清除表單",
+                clearConfirm: "確定要清除所有表單資料嗎？",
+                copySuccessAlert: "✅ 職涯發展建議 Prompt 已產生並複製到剪貼簿！你現在可以貼到你偏好的 AI 工具中使用。",
+                copyFailAlert: "ℹ️ 職涯發展建議 Prompt 已產生！你可以從下方的文字框複製。",
+                placeholders: {
+                    employeeName: "[員工姓名]",
+                    currentRole: "[目前職稱與職級]",
+                    tenure: "[在目前職務的年資]",
+                    totalExperience: "[總年資]",
+                    teamContext: "[團隊與技術背景]",
+                    recentAchievements: "[近期成就]",
+                    careerAspirations: "[職涯志向]",
+                    learningPreferences: "[學習偏好]",
+                    constraints: "[限制與考量]",
+                    companyContext: "[公司背景]",
+                    careerPath: "[職涯路徑興趣]",
+                    timeline: "[時程]"
+                },
+                skillAssessmentHeader: "目前技能自評（1-5 分）：",
+                promptIntro: "你是一位經驗豐富的工程職涯顧問與人才發展專家。請針對以下這位工程師，提供完整、可執行的職涯發展建議。",
+                promptLabels: {
+                    employeeProfile: "**員工基本資料：**",
+                    name: "姓名：",
+                    currentRole: "目前職稱：",
+                    timeInRole: "在職時間：",
+                    totalExperience: "總年資：",
+                    teamContext: "團隊背景：",
+                    performance: "**目前績效與成就：**",
+                    skillAssessment: "**技能評估：**",
+                    careerInterests: "**職涯興趣與目標：**",
+                    primaryPathInterest: "主要職涯路徑興趣：",
+                    specificAspirations: "具體志向：",
+                    developmentTimeline: "發展時程：",
+                    learningPreferences: "學習偏好：",
+                    constraints: "限制與考量：",
+                    companyContext: "**公司背景：**",
+                    focusAreas: "**建議聚焦領域：**"
+                },
+                promptRequestIntro: "請針對以下領域提供詳細、具體的建議：",
+                promptSections: [
+                    { title: "**職涯路徑分析**", items: ["評估目前是否已具備晉升下一階段的準備度", "務實的晉升/成長時程", "根據技能與興趣考慮的其他替代路徑"] },
+                    { title: "**技能落差分析**", items: ["晉升下一職級所需的關鍵技能", "技能發展的優先順序", "可運用並持續強化的現有優勢"] },
+                    { title: "**近期行動計畫（未來 3-6 個月）**", items: ["可以推動的具體專案或任務", "學習目標與資源", "人脈拓展與能見度提升機會"] },
+                    { title: "**中期發展策略（6-18 個月）**", items: ["要達成的關鍵里程碑與成就", "領導機會與挑戰型任務", "證照或正式學習專案"] },
+                    { title: "**長期職涯藍圖（1-3 年）**", items: ["具體的晉升路徑步驟", "技能精通目標與技術專精領域", "領導力與影響力目標"] },
+                    { title: "**具體學習資源**", items: ["建議的課程、書籍與培訓專案", "研討會、聚會與社群參與", "Mentorship 機會（給予與接受）"] },
+                    { title: "**專案與任務建議**", items: ["與職涯目標一致的內部專案", "跨部門協作機會", "可爭取的技術領導角色"] },
+                    { title: "**晉升準備度評估**", items: ["目前阻礙晉升的落差", "下一職級的時程與必要條件", "可追蹤的準備度關鍵指標"] },
+                    { title: "**產業與市場考量**", items: ["值得關注的相關技術趨勢", "技能與職務的市場需求", "該領域中新興的機會"] },
+                    { title: "**成功指標與追蹤**", items: ["如何衡量目標達成進度", "定期檢核與回顧的頻率", "根據結果調整策略的方式"] }
+                ],
+                promptClosing: "請確保所有建議都具體、可執行，並貼合這位工程師目前的處境、興趣與限制。請附上具體的時程、資源，以及可以立即開始執行的下一步。",
+                promptNote: "備註：這是給主管做教練輔導與規劃用的參考建議，不是正式的晉升決定或人資紀錄——實際的晉升準備度仍須由主管的判斷與公司的校準（calibration）流程決定。"
+            }
+        };
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        // ---------------------------------------------------------------
+        // Language switching / rendering
+        // ---------------------------------------------------------------
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+            document.getElementById('pageTitle').textContent = dict.pageTitle;
+            document.title = dict.pageTitle;
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            document.getElementById('headerTitle').textContent = dict.headerTitle;
+            document.getElementById('headerSubtitle').innerHTML = dict.headerSubtitle;
+            document.getElementById('whatIsHeading').textContent = dict.whatIsHeading;
+            document.getElementById('whatIsBody').textContent = dict.whatIsBody;
+            document.getElementById('whyUseBody').innerHTML = dict.whyUseBody;
+
+            document.getElementById('sectionEmployeeProfile').textContent = dict.sectionEmployeeProfile;
+            document.getElementById('lblEmployeeName').innerHTML = dict.lblEmployeeName;
+            document.getElementById('employee-name').placeholder = dict.phEmployeeName;
+            document.getElementById('lblCurrentRole').innerHTML = dict.lblCurrentRole;
+            document.getElementById('current-role').placeholder = dict.phCurrentRole;
+            document.getElementById('lblTenure').textContent = dict.lblTenure;
+            document.getElementById('tenure').placeholder = dict.phTenure;
+            document.getElementById('lblTotalExperience').textContent = dict.lblTotalExperience;
+            document.getElementById('total-experience').placeholder = dict.phTotalExperience;
+            document.getElementById('lblTeamContext').innerHTML = dict.lblTeamContext;
+            document.getElementById('team-context').placeholder = dict.phTeamContext;
+            document.getElementById('lblRecentAchievements').innerHTML = dict.lblRecentAchievements;
+            document.getElementById('recent-achievements').placeholder = dict.phRecentAchievements;
+
+            document.getElementById('sectionSkillsAssessment').textContent = dict.sectionSkillsAssessment;
+            document.getElementById('levelTitle').textContent = dict.levelTitle;
+            document.getElementById('levelBadge').textContent = dict.levelBadge;
+            document.getElementById('skillCatProgramming').innerHTML = dict.skillCatProgramming;
+            document.getElementById('skillCatPlatform').innerHTML = dict.skillCatPlatform;
+            document.getElementById('skillCatLeadership').innerHTML = dict.skillCatLeadership;
+            Object.keys(dict.skillNames).forEach(key => {
+                const el = document.getElementById(`skillName-${key}`);
+                if (el) el.innerHTML = dict.skillNames[key];
+            });
+
+            document.getElementById('sectionCareerPath').textContent = dict.sectionCareerPath;
+            Object.keys(dict.careerPaths).forEach(key => {
+                const cp = dict.careerPaths[key];
+                const titleEl = document.getElementById(`cpTitle-${key}`);
+                const descEl = document.getElementById(`cpDesc-${key}`);
+                const levelsEl = document.getElementById(`cpLevels-${key}`);
+                if (titleEl) titleEl.innerHTML = cp.title;
+                if (descEl) descEl.textContent = cp.desc;
+                if (levelsEl) levelsEl.innerHTML = cp.levels.map(l => `<span class="path-level">${l}</span>`).join('');
+            });
+
+            document.getElementById('sectionTimeline').innerHTML = dict.sectionTimeline;
+            document.getElementById('lblTimelineSelector').innerHTML = dict.lblTimelineSelector;
+            Object.keys(dict.timelines).forEach(key => {
+                const tl = dict.timelines[key];
+                const titleEl = document.getElementById(`tlTitle-${key}`);
+                const descEl = document.getElementById(`tlDesc-${key}`);
+                if (titleEl) titleEl.textContent = tl.title;
+                if (descEl) descEl.textContent = tl.desc;
+            });
+            document.getElementById('lblCareerAspirations').innerHTML = dict.lblCareerAspirations;
+            document.getElementById('career-aspirations').placeholder = dict.phCareerAspirations;
+            document.getElementById('lblLearningPreferences').innerHTML = dict.lblLearningPreferences;
+            document.getElementById('learning-preferences').placeholder = dict.phLearningPreferences;
+            document.getElementById('lblConstraints').innerHTML = dict.lblConstraints;
+            document.getElementById('constraints').placeholder = dict.phConstraints;
+
+            document.getElementById('sectionFocusAreas').textContent = dict.sectionFocusAreas;
+            document.getElementById('focusAreasHeading').textContent = dict.focusAreasHeading;
+            Object.keys(dict.checkboxes).forEach(key => {
+                const el = document.getElementById(`cbLabel-${key}`);
+                if (el) el.textContent = dict.checkboxes[key];
+            });
+            document.getElementById('lblCompanyContext').innerHTML = dict.lblCompanyContext;
+            document.getElementById('company-context').placeholder = dict.phCompanyContext;
+
+            document.getElementById('sectionGeneratedPrompt').textContent = dict.sectionGeneratedPrompt;
+            if (!promptGenerated) {
+                document.getElementById('generated-prompt').textContent = dict.promptPlaceholder;
+            }
+
+            document.getElementById('exampleHeading').textContent = dict.exampleHeading;
+            document.getElementById('exampleImmediateLabel').innerHTML = dict.exampleImmediateLabel;
+            document.getElementById('exampleLi1').textContent = dict.exampleLi1;
+            document.getElementById('exampleLi2').textContent = dict.exampleLi2;
+            document.getElementById('exampleLi3').textContent = dict.exampleLi3;
+            document.getElementById('exampleLi4').textContent = dict.exampleLi4;
+            document.getElementById('exampleMediumTerm').innerHTML = dict.exampleMediumTerm;
+
+            document.getElementById('tipsHeading').textContent = dict.tipsHeading;
+            document.getElementById('tipsLi1').innerHTML = dict.tipsLi1;
+            document.getElementById('tipsLi2').innerHTML = dict.tipsLi2;
+            document.getElementById('tipsLi3').innerHTML = dict.tipsLi3;
+            document.getElementById('tipsLi4').innerHTML = dict.tipsLi4;
+            document.getElementById('tipsLi5').innerHTML = dict.tipsLi5;
+            document.getElementById('tipsLi6').innerHTML = dict.tipsLi6;
+
+            document.getElementById('btnGenerate').textContent = dict.btnGenerate;
+            document.getElementById('btnPrint').textContent = dict.btnPrint;
+            document.getElementById('btnClear').textContent = dict.btnClear;
+        }
+
+        // ---------------------------------------------------------------
         // Skill level indicators
+        // ---------------------------------------------------------------
         document.querySelectorAll('.level-indicator').forEach(indicator => {
             indicator.addEventListener('click', function() {
                 const skillLevel = this.parentElement;
@@ -923,28 +1442,31 @@ Click "Generate Career Path Prompt" to create your customized AI prompt based on
         }
 
         function generatePrompt() {
-            const employeeName = document.getElementById('employee-name').value || '[Employee Name]';
-            const currentRole = document.getElementById('current-role').value || '[Current Role & Level]';
-            const tenure = document.getElementById('tenure').value || '[Time in Current Role]';
-            const totalExperience = document.getElementById('total-experience').value || '[Total Experience]';
-            const teamContext = document.getElementById('team-context').value || '[Team & Technology Context]';
-            const recentAchievements = document.getElementById('recent-achievements').value || '[Recent Achievements]';
-            const careerAspirations = document.getElementById('career-aspirations').value || '[Career Aspirations]';
-            const learningPreferences = document.getElementById('learning-preferences').value || '[Learning Preferences]';
-            const constraints = document.getElementById('constraints').value || '[Constraints]';
-            const companyContext = document.getElementById('company-context').value || '[Company Context]';
+            const dict = t();
+            const ph = dict.placeholders;
+
+            const employeeName = document.getElementById('employee-name').value || ph.employeeName;
+            const currentRole = document.getElementById('current-role').value || ph.currentRole;
+            const tenure = document.getElementById('tenure').value || ph.tenure;
+            const totalExperience = document.getElementById('total-experience').value || ph.totalExperience;
+            const teamContext = document.getElementById('team-context').value || ph.teamContext;
+            const recentAchievements = document.getElementById('recent-achievements').value || ph.recentAchievements;
+            const careerAspirations = document.getElementById('career-aspirations').value || ph.careerAspirations;
+            const learningPreferences = document.getElementById('learning-preferences').value || ph.learningPreferences;
+            const constraints = document.getElementById('constraints').value || ph.constraints;
+            const companyContext = document.getElementById('company-context').value || ph.companyContext;
 
             // Get selected career path
             const selectedPath = document.querySelector('.career-path.selected');
-            const careerPath = selectedPath ? selectedPath.querySelector('.path-title').textContent.trim() : '[Career Path Interest]';
+            const careerPath = selectedPath ? selectedPath.querySelector('.path-title').textContent.trim() : ph.careerPath;
 
             // Get selected timeline
             const selectedTimeline = document.querySelector('.timeline-option.selected');
-            const timeline = selectedTimeline ? selectedTimeline.querySelector('strong').textContent : '[Timeline]';
+            const timeline = selectedTimeline ? selectedTimeline.querySelector('strong').textContent : ph.timeline;
 
             // Get skill levels
             const skills = getSkillLevels();
-            let skillsText = 'Current Skill Assessment (1-5 scale):\n';
+            let skillsText = dict.skillAssessmentHeader + '\n';
             Object.entries(skills).forEach(([skill, level]) => {
                 skillsText += `  - ${skill}: ${level}/5\n`;
             });
@@ -955,102 +1477,61 @@ Click "Generate Career Path Prompt" to create your customized AI prompt based on
                 focusAreas.push('• ' + checkbox.nextElementSibling.textContent);
             });
 
-            const prompt = `You are an experienced engineering career advisor and talent development expert. Please provide comprehensive, actionable career path recommendations for the following engineer.
+            const pl = dict.promptLabels;
+            const sectionsText = dict.promptSections.map((section, idx) => {
+                const items = section.items.map(item => `   • ${item}`).join('\n');
+                return `${idx + 1}. ${section.title}\n${items}`;
+            }).join('\n\n');
 
-**Employee Profile:**
-Name: ${employeeName}
-Current Role: ${currentRole}
-Time in Role: ${tenure}
-Total Experience: ${totalExperience}
-Team Context: ${teamContext}
+            const prompt = `${dict.promptIntro}
 
-**Current Performance & Achievements:**
+${pl.employeeProfile}
+${pl.name} ${employeeName}
+${pl.currentRole} ${currentRole}
+${pl.timeInRole} ${tenure}
+${pl.totalExperience} ${totalExperience}
+${pl.teamContext} ${teamContext}
+
+${pl.performance}
 ${recentAchievements}
 
-**Skill Assessment:**
+${pl.skillAssessment}
 ${skillsText}
+${pl.careerInterests}
+${pl.primaryPathInterest} ${careerPath}
+${pl.specificAspirations} ${careerAspirations}
+${pl.developmentTimeline} ${timeline}
+${pl.learningPreferences} ${learningPreferences}
+${pl.constraints} ${constraints}
 
-**Career Interests & Goals:**
-Primary Career Path Interest: ${careerPath}
-Specific Aspirations: ${careerAspirations}
-Development Timeline: ${timeline}
-Learning Preferences: ${learningPreferences}
-Constraints & Considerations: ${constraints}
-
-**Company Context:**
+${pl.companyContext}
 ${companyContext}
 
-**Focus Areas for Recommendations:**
+${pl.focusAreas}
 ${focusAreas.join('\n')}
 
-Please provide detailed, specific recommendations in the following areas:
+${dict.promptRequestIntro}
 
-1. **Career Path Analysis**
-   - Assessment of current readiness for next level
-   - Realistic timeline for promotion/advancement
-   - Alternative paths to consider based on skills and interests
+${sectionsText}
 
-2. **Skill Gap Analysis**
-   - Critical skills needed for next career level
-   - Priority order for skill development
-   - Current strengths to leverage and build upon
+${dict.promptClosing}
 
-3. **Immediate Action Plan (Next 3-6 Months)**
-   - Specific projects or initiatives to pursue
-   - Learning goals and resources
-   - Networking and visibility opportunities
-
-4. **Medium-term Development Strategy (6-18 Months)**
-   - Key milestones and achievements to target
-   - Leadership opportunities and stretch assignments
-   - Certification or formal learning programs
-
-5. **Long-term Career Roadmap (1-3 Years)**
-   - Progression pathway with concrete steps
-   - Skills mastery goals and technical expertise areas
-   - Leadership and impact objectives
-
-6. **Specific Learning Resources**
-   - Recommended courses, books, and training programs
-   - Conferences, meetups, and community involvement
-   - Mentorship opportunities (both giving and receiving)
-
-7. **Project & Assignment Recommendations**
-   - Internal projects that align with career goals
-   - Cross-functional collaboration opportunities
-   - Technical leadership roles to pursue
-
-8. **Promotion Readiness Assessment**
-   - Current gaps preventing advancement
-   - Timeline and prerequisites for next level
-   - Key indicators of readiness to track
-
-9. **Industry & Market Considerations**
-   - Relevant technology trends to follow
-   - Market demand for skills and roles
-   - Emerging opportunities in the field
-
-10. **Success Metrics & Tracking**
-    - How to measure progress toward goals
-    - Regular checkpoint and review cadence
-    - Adjustment strategies based on results
-
-Make all recommendations specific, actionable, and tailored to their current situation, interests, and constraints. Include concrete timelines, resources, and next steps they can implement immediately.
-
-Note: this is advisory input for the manager's own coaching and planning purposes, not an official promotion decision or HR record — actual promotion readiness is determined through the manager's judgment and the company's calibration process.`;
+${dict.promptNote}`;
 
             document.getElementById('generated-prompt').textContent = prompt;
+            promptGenerated = true;
 
             // Copy to clipboard
             navigator.clipboard.writeText(prompt).then(() => {
-                alert('✅ Career Path Suggestion Prompt generated and copied to clipboard! You can now paste it into your preferred AI tool.');
+                alert(dict.copySuccessAlert);
             }).catch(() => {
-                alert('ℹ️ Career Path Suggestion Prompt generated! You can copy it from the text box below.');
+                alert(dict.copyFailAlert);
             });
         }
 
         function clearForm() {
-            if (confirm('Are you sure you want to clear all form data?')) {
+            const dict = t();
+            if (confirm(dict.clearConfirm)) {
                 // Clear all inputs
                 document.querySelectorAll('input, textarea, select').forEach(element => {
                     if (element.type === 'checkbox') {
@@ -1079,9 +1560,15 @@ Note: this is advisory input for the manager's own coaching and planning purpose
                     option.classList.remove('selected');
                 });
 
-                document.getElementById('generated-prompt').textContent = 'Click "Generate Career Path Prompt" to create your customized AI prompt based on the employee information above.';
+                promptGenerated = false;
+                document.getElementById('generated-prompt').textContent = dict.promptPlaceholder;
             }
         }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderLanguage();
+        });
     </script>
 </body>
 </html>

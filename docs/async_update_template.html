@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Async Update Template</title>
+    <title id="pageTitle">Async Update Template</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -28,6 +28,45 @@
             padding-bottom: 20px;
             margin-bottom: 30px;
             font-size: 2.2em;
+        }
+
+        .header-bar {
+            position: relative;
+        }
+
+        .header-bar h1 {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: -6px;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: white;
+            color: #4299e1;
+            border: 1px solid #4299e1;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:hover {
+            background: #ebf8ff;
+        }
+
+        .lang-btn.active {
+            background: #4299e1;
+            color: white;
         }
 
         .description {
@@ -421,6 +460,7 @@
             .container { box-shadow: none; padding: 0; }
             .actions, .frequency-selector, .quick-actions { display: none; }
             .update-section { break-inside: avoid; }
+            .lang-switcher { display: none; }
         }
 
         @media (max-width: 768px) {
@@ -429,54 +469,61 @@
             .header-grid { grid-template-columns: 1fr; }
             .metrics-grid { grid-template-columns: repeat(2, 1fr); }
             .frequency-options, .action-buttons { flex-direction: column; }
+            .lang-switcher { position: static; justify-content: center; margin-bottom: 15px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🔄 Async Update Template</h1>
+        <div class="header-bar">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1>🔄 <span id="headerTitle">Async Update Template</span></h1>
+        </div>
 
-        <div class="description">
+        <div class="description" id="descriptionText">
             <strong>Purpose:</strong> This template enables engineering teams to share progress, blockers, and updates asynchronously, reducing meeting overhead while keeping everyone informed. Use it for daily/weekly standups, sprint updates, or project status reports that can be shared via Slack, email, or team communication tools.
         </div>
 
         <!-- Update Frequency Selector -->
         <div class="frequency-selector">
-            <h4>⏰ Update Frequency</h4>
-            <p>Choose your update cadence (affects template suggestions):</p>
+            <h4>⏰ <span id="freqHeading">Update Frequency</span></h4>
+            <p id="freqBody">Choose your update cadence (affects template suggestions):</p>
             <div class="frequency-options">
-                <button class="frequency-btn active" onclick="setFrequency('daily')">Daily Standup</button>
-                <button class="frequency-btn" onclick="setFrequency('weekly')">Weekly Update</button>
-                <button class="frequency-btn" onclick="setFrequency('sprint')">Sprint Report</button>
-                <button class="frequency-btn" onclick="setFrequency('monthly')">Monthly Summary</button>
-                <button class="frequency-btn" onclick="setFrequency('project')">Project Milestone</button>
+                <button class="frequency-btn active" onclick="setFrequency('daily')" id="freqBtn-daily">Daily Standup</button>
+                <button class="frequency-btn" onclick="setFrequency('weekly')" id="freqBtn-weekly">Weekly Update</button>
+                <button class="frequency-btn" onclick="setFrequency('sprint')" id="freqBtn-sprint">Sprint Report</button>
+                <button class="frequency-btn" onclick="setFrequency('monthly')" id="freqBtn-monthly">Monthly Summary</button>
+                <button class="frequency-btn" onclick="setFrequency('project')" id="freqBtn-project">Project Milestone</button>
             </div>
         </div>
 
         <!-- Update Header -->
         <div class="update-header">
-            <h3>Update Information</h3>
+            <h3 id="updateInfoHeading">Update Information</h3>
             <div class="header-grid">
                 <div class="field">
-                    <span class="field-label">Team Member:</span>
+                    <span class="field-label" id="lblTeamMember">Team Member:</span>
                     <input type="text" class="field-input" id="team-member" placeholder="Your name">
                 </div>
                 <div class="field">
-                    <span class="field-label">Date:</span>
+                    <span class="field-label" id="lblDate">Date:</span>
                     <input type="date" class="field-input" id="update-date">
                 </div>
                 <div class="field">
-                    <span class="field-label">Update Type:</span>
+                    <span class="field-label" id="lblUpdateType">Update Type:</span>
                     <select class="field-select" id="update-type">
-                        <option value="Daily Standup">Daily Standup</option>
-                        <option value="Weekly Update">Weekly Update</option>
-                        <option value="Sprint Report">Sprint Report</option>
-                        <option value="Project Update">Project Update</option>
-                        <option value="Monthly Summary">Monthly Summary</option>
+                        <option value="Daily Standup" id="typeOpt-dailyStandup">Daily Standup</option>
+                        <option value="Weekly Update" id="typeOpt-weeklyUpdate">Weekly Update</option>
+                        <option value="Sprint Report" id="typeOpt-sprintReport">Sprint Report</option>
+                        <option value="Project Update" id="typeOpt-projectUpdate">Project Update</option>
+                        <option value="Monthly Summary" id="typeOpt-monthlySummary">Monthly Summary</option>
                     </select>
                 </div>
                 <div class="field">
-                    <span class="field-label">Team/Project:</span>
+                    <span class="field-label" id="lblTeamProject">Team/Project:</span>
                     <input type="text" class="field-input" id="team-project" placeholder="e.g., Platform Team, Project Apollo">
                 </div>
             </div>
@@ -485,14 +532,14 @@
         <!-- Progress & Completed Work -->
         <div class="update-section">
             <div class="section-header progress-header">
-                <span><span class="section-icon">✅</span>Progress & Completed Work</span>
+                <span><span class="section-icon">✅</span><span id="progressHeading">Progress & Completed Work</span></span>
             </div>
             <div class="section-content">
-                <p><em>What have you accomplished since your last update?</em></p>
+                <p><em id="progressPrompt">What have you accomplished since your last update?</em></p>
 
                 <div class="update-item">
                     <div class="item-header">
-                        <input type="text" class="field-input item-title" placeholder="Task/Project name">
+                        <input type="text" class="field-input item-title" id="progItem1Title" placeholder="Task/Project name">
                         <select class="field-select status-badge" style="width: auto;">
                             <option value="completed" class="completed">Completed</option>
                             <option value="on-track" class="on-track">On Track</option>
@@ -503,15 +550,15 @@
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 100%"></div>
                     </div>
-                    <div class="progress-text">100% Complete</div>
+                    <div class="progress-text" id="progItem1ProgressText">100% Complete</div>
                     <div class="item-details">
-                        <textarea class="item-textarea" placeholder="Describe what was accomplished, key decisions made, or milestones reached..."></textarea>
+                        <textarea class="item-textarea" id="progItem1Textarea" placeholder="Describe what was accomplished, key decisions made, or milestones reached..."></textarea>
                     </div>
                 </div>
 
                 <div class="update-item">
                     <div class="item-header">
-                        <input type="text" class="field-input item-title" placeholder="Another task or project">
+                        <input type="text" class="field-input item-title" id="progItem2Title" placeholder="Another task or project">
                         <select class="field-select status-badge" style="width: auto;">
                             <option value="on-track" class="on-track">On Track</option>
                             <option value="completed" class="completed">Completed</option>
@@ -522,27 +569,27 @@
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 75%"></div>
                     </div>
-                    <div class="progress-text">75% Complete</div>
+                    <div class="progress-text" id="progItem2ProgressText">75% Complete</div>
                     <div class="item-details">
-                        <textarea class="item-textarea" placeholder="Progress details, challenges overcome, next steps..."></textarea>
+                        <textarea class="item-textarea" id="progItem2Textarea" placeholder="Progress details, challenges overcome, next steps..."></textarea>
                     </div>
                 </div>
 
-                <button class="btn btn-secondary" onclick="addProgressItem()">+ Add Progress Item</button>
+                <button class="btn btn-secondary" onclick="addProgressItem()" id="btnAddProgress">+ Add Progress Item</button>
             </div>
         </div>
 
         <!-- Blockers & Issues -->
         <div class="update-section">
             <div class="section-header blockers-header">
-                <span><span class="section-icon">🚫</span>Blockers & Issues</span>
+                <span><span class="section-icon">🚫</span><span id="blockersHeading">Blockers & Issues</span></span>
             </div>
             <div class="section-content">
-                <p><em>What's blocking your progress? What help do you need?</em></p>
+                <p><em id="blockersPrompt">What's blocking your progress? What help do you need?</em></p>
 
                 <div class="update-item blocker-item">
                     <div class="item-header">
-                        <input type="text" class="field-input item-title" placeholder="Describe the blocker or issue">
+                        <input type="text" class="field-input item-title" id="blocker1Title" placeholder="Describe the blocker or issue">
                         <div class="blocker-severity">
                             <label class="severity-option high-severity">
                                 <input type="radio" name="blocker1-severity" value="high">
@@ -559,13 +606,13 @@
                         </div>
                     </div>
                     <div class="item-details">
-                        <textarea class="item-textarea" placeholder="Explain the blocker, impact on timeline, who can help resolve it, what you've tried..."></textarea>
+                        <textarea class="item-textarea" id="blocker1Textarea" placeholder="Explain the blocker, impact on timeline, who can help resolve it, what you've tried..."></textarea>
                     </div>
                 </div>
 
                 <div class="update-item blocker-item">
                     <div class="item-header">
-                        <input type="text" class="field-input item-title" placeholder="Another blocker (if any)">
+                        <input type="text" class="field-input item-title" id="blocker2Title" placeholder="Another blocker (if any)">
                         <div class="blocker-severity">
                             <label class="severity-option high-severity">
                                 <input type="radio" name="blocker2-severity" value="high">
@@ -582,25 +629,25 @@
                         </div>
                     </div>
                     <div class="item-details">
-                        <textarea class="item-textarea" placeholder="Additional blocker details..."></textarea>
+                        <textarea class="item-textarea" id="blocker2Textarea" placeholder="Additional blocker details..."></textarea>
                     </div>
                 </div>
 
-                <button class="btn btn-secondary" onclick="addBlockerItem()">+ Add Blocker</button>
+                <button class="btn btn-secondary" onclick="addBlockerItem()" id="btnAddBlocker">+ Add Blocker</button>
             </div>
         </div>
 
         <!-- Upcoming Work & Priorities -->
         <div class="update-section">
             <div class="section-header upcoming-header">
-                <span><span class="section-icon">📅</span>Upcoming Work & Priorities</span>
+                <span><span class="section-icon">📅</span><span id="upcomingHeading">Upcoming Work & Priorities</span></span>
             </div>
             <div class="section-content">
-                <p><em>What are you planning to work on next? What are your priorities?</em></p>
+                <p><em id="upcomingPrompt">What are you planning to work on next? What are your priorities?</em></p>
 
                 <div class="update-item">
                     <div class="item-header">
-                        <input type="text" class="field-input item-title" placeholder="Next priority or task">
+                        <input type="text" class="field-input item-title" id="upcoming1Title" placeholder="Next priority or task">
                         <select class="field-select status-badge" style="width: auto;">
                             <option value="high-priority" class="at-risk">High Priority</option>
                             <option value="medium-priority" class="on-track">Medium Priority</option>
@@ -608,13 +655,13 @@
                         </select>
                     </div>
                     <div class="item-details">
-                        <textarea class="item-textarea" placeholder="Describe the upcoming work, expected timeline, dependencies, or resources needed..."></textarea>
+                        <textarea class="item-textarea" id="upcoming1Textarea" placeholder="Describe the upcoming work, expected timeline, dependencies, or resources needed..."></textarea>
                     </div>
                 </div>
 
                 <div class="update-item">
                     <div class="item-header">
-                        <input type="text" class="field-input item-title" placeholder="Additional upcoming work">
+                        <input type="text" class="field-input item-title" id="upcoming2Title" placeholder="Additional upcoming work">
                         <select class="field-select status-badge" style="width: auto;">
                             <option value="medium-priority" class="on-track">Medium Priority</option>
                             <option value="high-priority" class="at-risk">High Priority</option>
@@ -622,31 +669,31 @@
                         </select>
                     </div>
                     <div class="item-details">
-                        <textarea class="item-textarea" placeholder="More upcoming work details..."></textarea>
+                        <textarea class="item-textarea" id="upcoming2Textarea" placeholder="More upcoming work details..."></textarea>
                     </div>
                 </div>
 
-                <button class="btn btn-secondary" onclick="addUpcomingItem()">+ Add Upcoming Work</button>
+                <button class="btn btn-secondary" onclick="addUpcomingItem()" id="btnAddUpcoming">+ Add Upcoming Work</button>
             </div>
         </div>
 
         <!-- Team Collaboration & Mentions -->
         <div class="update-section">
             <div class="section-header team-header">
-                <span><span class="section-icon">👥</span>Team Collaboration & Mentions</span>
+                <span><span class="section-icon">👥</span><span id="teamHeading">Team Collaboration & Mentions</span></span>
             </div>
             <div class="section-content">
-                <p><em>Who did you collaborate with? Who should be aware of your updates?</em></p>
+                <p><em id="teamPrompt">Who did you collaborate with? Who should be aware of your updates?</em></p>
 
                 <div class="team-mentions">
                     <div class="field">
-                        <span class="field-label">Collaboration Highlights:</span>
-                        <textarea class="item-textarea" placeholder="Mention key collaborations, pair programming sessions, design reviews, or cross-team work..."></textarea>
+                        <span class="field-label" id="lblCollabHighlights">Collaboration Highlights:</span>
+                        <textarea class="item-textarea" id="collabTextarea" placeholder="Mention key collaborations, pair programming sessions, design reviews, or cross-team work..."></textarea>
                     </div>
 
                     <div class="field">
-                        <span class="field-label">Team Members to Tag/Notify:</span>
-                        <input type="text" class="field-input" placeholder="@alice, @bob, @charlie - who should see this update?">
+                        <span class="field-label" id="lblTeamTag">Team Members to Tag/Notify:</span>
+                        <input type="text" class="field-input" id="teamTagInput" placeholder="@alice, @bob, @charlie - who should see this update?">
                     </div>
 
                     <div class="mention-tags">
@@ -656,8 +703,8 @@
                     </div>
 
                     <div class="field" style="margin-top: 15px;">
-                        <span class="field-label">Knowledge Sharing:</span>
-                        <textarea class="item-textarea" placeholder="Any learnings, solutions, or insights worth sharing with the team?"></textarea>
+                        <span class="field-label" id="lblKnowledgeSharing">Knowledge Sharing:</span>
+                        <textarea class="item-textarea" id="knowledgeTextarea" placeholder="Any learnings, solutions, or insights worth sharing with the team?"></textarea>
                     </div>
                 </div>
             </div>
@@ -666,10 +713,10 @@
         <!-- Metrics & KPIs (Optional) -->
         <div class="update-section">
             <div class="section-header metrics-header">
-                <span><span class="section-icon">📊</span>Metrics & KPIs (Optional)</span>
+                <span><span class="section-icon">📊</span><span id="metricsHeading">Metrics & KPIs (Optional)</span></span>
             </div>
             <div class="section-content">
-                <p><em>Track relevant metrics for your work or team goals:</em></p>
+                <p><em id="metricsPrompt">Track relevant metrics for your work or team goals:</em></p>
 
                 <div class="metrics-grid">
                     <div class="metric-card">
@@ -677,9 +724,9 @@
                             <input type="text" class="field-input" placeholder="85%" style="border: none; background: transparent; text-align: center; font-size: 1.8em; font-weight: bold;">
                         </div>
                         <div class="metric-label">
-                            <input type="text" class="field-input" placeholder="Test Coverage" style="border: none; background: transparent; text-align: center; font-size: 0.9em;">
+                            <input type="text" class="field-input" id="metricLabel1" placeholder="Test Coverage" style="border: none; background: transparent; text-align: center; font-size: 0.9em;">
                         </div>
-                        <div class="metric-trend trend-up">↑ +2% from last week</div>
+                        <div class="metric-trend trend-up" id="metricTrend1">↑ +2% from last week</div>
                     </div>
 
                     <div class="metric-card">
@@ -687,9 +734,9 @@
                             <input type="text" class="field-input" placeholder="12" style="border: none; background: transparent; text-align: center; font-size: 1.8em; font-weight: bold;">
                         </div>
                         <div class="metric-label">
-                            <input type="text" class="field-input" placeholder="Stories Completed" style="border: none; background: transparent; text-align: center; font-size: 0.9em;">
+                            <input type="text" class="field-input" id="metricLabel2" placeholder="Stories Completed" style="border: none; background: transparent; text-align: center; font-size: 0.9em;">
                         </div>
-                        <div class="metric-trend trend-stable">→ On track</div>
+                        <div class="metric-trend trend-stable" id="metricTrend2">→ On track</div>
                     </div>
 
                     <div class="metric-card">
@@ -697,9 +744,9 @@
                             <input type="text" class="field-input" placeholder="3" style="border: none; background: transparent; text-align: center; font-size: 1.8em; font-weight: bold;">
                         </div>
                         <div class="metric-label">
-                            <input type="text" class="field-input" placeholder="Open Issues" style="border: none; background: transparent; text-align: center; font-size: 0.9em;">
+                            <input type="text" class="field-input" id="metricLabel3" placeholder="Open Issues" style="border: none; background: transparent; text-align: center; font-size: 0.9em;">
                         </div>
-                        <div class="metric-trend trend-down">↓ -2 from last week</div>
+                        <div class="metric-trend trend-down" id="metricTrend3">↓ -2 from last week</div>
                     </div>
                 </div>
             </div>
@@ -707,57 +754,410 @@
 
         <!-- Quick Actions -->
         <div class="quick-actions">
-            <h4>⚡ Quick Actions</h4>
-            <p>Make your update more effective:</p>
+            <h4>⚡ <span id="quickActionsHeading">Quick Actions</span></h4>
+            <p id="quickActionsPrompt">Make your update more effective:</p>
             <div class="action-buttons">
-                <button class="action-btn" onclick="copyForSlack()">📱 Copy for Slack</button>
-                <button class="action-btn" onclick="copyForEmail()">📧 Copy for Email</button>
-                <button class="action-btn" onclick="generateSummary()">📝 Generate Summary</button>
-                <button class="action-btn" onclick="checkCompleteness()">✔️ Check Completeness</button>
+                <button class="action-btn" onclick="copyForSlack()" id="btnCopySlack">📱 Copy for Slack</button>
+                <button class="action-btn" onclick="copyForEmail()" id="btnCopyEmail">📧 Copy for Email</button>
+                <button class="action-btn" onclick="generateSummary()" id="btnGenerateSummary">📝 Generate Summary</button>
+                <button class="action-btn" onclick="checkCompleteness()" id="btnCheckCompleteness">✔️ Check Completeness</button>
             </div>
         </div>
 
         <!-- Usage Tips -->
         <div class="template-tips">
-            <h4>💡 Tips for Effective Async Updates</h4>
+            <h4>💡 <span id="tipsHeading">Tips for Effective Async Updates</span></h4>
             <ul class="tip-list">
                 <li class="tip-item">
                     <div class="tip-icon">1</div>
-                    <div><strong>Be Specific:</strong> Use concrete details, numbers, and outcomes rather than vague statements like "made progress."</div>
+                    <div id="tip1"><strong>Be Specific:</strong> Use concrete details, numbers, and outcomes rather than vague statements like "made progress."</div>
                 </li>
                 <li class="tip-item">
                     <div class="tip-icon">2</div>
-                    <div><strong>Context Matters:</strong> Explain the "why" behind your work and how it connects to team/company goals.</div>
+                    <div id="tip2"><strong>Context Matters:</strong> Explain the "why" behind your work and how it connects to team/company goals.</div>
                 </li>
                 <li class="tip-item">
                     <div class="tip-icon">3</div>
-                    <div><strong>Call for Help:</strong> Be explicit about what kind of help you need and who can provide it.</div>
+                    <div id="tip3"><strong>Call for Help:</strong> Be explicit about what kind of help you need and who can provide it.</div>
                 </li>
                 <li class="tip-item">
                     <div class="tip-icon">4</div>
-                    <div><strong>Consistent Timing:</strong> Share updates at the same time each day/week so teammates know when to expect them.</div>
+                    <div id="tip4"><strong>Consistent Timing:</strong> Share updates at the same time each day/week so teammates know when to expect them.</div>
                 </li>
                 <li class="tip-item">
                     <div class="tip-icon">5</div>
-                    <div><strong>Use @mentions:</strong> Tag relevant team members to ensure important updates reach the right people.</div>
+                    <div id="tip5"><strong>Use @mentions:</strong> Tag relevant team members to ensure important updates reach the right people.</div>
                 </li>
                 <li class="tip-item">
                     <div class="tip-icon">6</div>
-                    <div><strong>Link Resources:</strong> Include links to PRs, tickets, documents, or demos to provide more context.</div>
+                    <div id="tip6"><strong>Link Resources:</strong> Include links to PRs, tickets, documents, or demos to provide more context.</div>
                 </li>
             </ul>
         </div>
 
         <div class="actions">
-            <button class="btn btn-success" onclick="validateUpdate()">✅ Validate Update</button>
-            <button class="btn" onclick="window.print()">Print Update</button>
-            <button class="btn btn-secondary" onclick="downloadUpdate()">Download Template</button>
-            <button class="btn btn-secondary" onclick="resetTemplate()">New Update</button>
+            <button class="btn btn-success" onclick="validateUpdate()" id="btnValidate">✅ Validate Update</button>
+            <button class="btn" onclick="window.print()" id="btnPrint">Print Update</button>
+            <button class="btn btn-secondary" onclick="downloadUpdate()" id="btnDownload">Download Template</button>
+            <button class="btn btn-secondary" onclick="resetTemplate()" id="btnNewUpdate">New Update</button>
         </div>
     </div>
 
     <script>
         let currentFrequency = 'daily';
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        // ---------------------------------------------------------------
+        // i18n dictionary
+        // ---------------------------------------------------------------
+        const I18N = {
+            en: {
+                pageTitle: "Async Update Template",
+                headerTitle: "Async Update Template",
+                descriptionText: '<strong>Purpose:</strong> This template enables engineering teams to share progress, blockers, and updates asynchronously, reducing meeting overhead while keeping everyone informed. Use it for daily/weekly standups, sprint updates, or project status reports that can be shared via Slack, email, or team communication tools.',
+                freqHeading: "Update Frequency",
+                freqBody: "Choose your update cadence (affects template suggestions):",
+                freqBtn: { daily: "Daily Standup", weekly: "Weekly Update", sprint: "Sprint Report", monthly: "Monthly Summary", project: "Project Milestone" },
+                updateInfoHeading: "Update Information",
+                lblTeamMember: "Team Member:",
+                lblDate: "Date:",
+                lblUpdateType: "Update Type:",
+                lblTeamProject: "Team/Project:",
+                phTeamMember: "Your name",
+                phTeamProject: "e.g., Platform Team, Project Apollo",
+                typeOptions: { dailyStandup: "Daily Standup", weeklyUpdate: "Weekly Update", sprintReport: "Sprint Report", projectUpdate: "Project Update", monthlySummary: "Monthly Summary" },
+                progressHeading: "Progress & Completed Work",
+                progressPrompt: "What have you accomplished since your last update?",
+                progItem1Title: "Task/Project name",
+                progItem1ProgressText: "100% Complete",
+                progItem1Textarea: "Describe what was accomplished, key decisions made, or milestones reached...",
+                progItem2Title: "Another task or project",
+                progItem2ProgressText: "75% Complete",
+                progItem2Textarea: "Progress details, challenges overcome, next steps...",
+                btnAddProgress: "+ Add Progress Item",
+                statusLabels: { completed: "Completed", "on-track": "On Track", "at-risk": "At Risk", blocked: "Blocked" },
+                blockersHeading: "Blockers & Issues",
+                blockersPrompt: "What's blocking your progress? What help do you need?",
+                blocker1Title: "Describe the blocker or issue",
+                blocker1Textarea: "Explain the blocker, impact on timeline, who can help resolve it, what you've tried...",
+                blocker2Title: "Another blocker (if any)",
+                blocker2Textarea: "Additional blocker details...",
+                severityLabels: { high: "High", medium: "Medium", low: "Low" },
+                btnAddBlocker: "+ Add Blocker",
+                upcomingHeading: "Upcoming Work & Priorities",
+                upcomingPrompt: "What are you planning to work on next? What are your priorities?",
+                upcoming1Title: "Next priority or task",
+                upcoming1Textarea: "Describe the upcoming work, expected timeline, dependencies, or resources needed...",
+                upcoming2Title: "Additional upcoming work",
+                upcoming2Textarea: "More upcoming work details...",
+                btnAddUpcoming: "+ Add Upcoming Work",
+                priorityLabels: { "high-priority": "High Priority", "medium-priority": "Medium Priority", "low-priority": "Low Priority" },
+                teamHeading: "Team Collaboration & Mentions",
+                teamPrompt: "Who did you collaborate with? Who should be aware of your updates?",
+                lblCollabHighlights: "Collaboration Highlights:",
+                collabTextarea: "Mention key collaborations, pair programming sessions, design reviews, or cross-team work...",
+                lblTeamTag: "Team Members to Tag/Notify:",
+                teamTagInput: "@alice, @bob, @charlie - who should see this update?",
+                lblKnowledgeSharing: "Knowledge Sharing:",
+                knowledgeTextarea: "Any learnings, solutions, or insights worth sharing with the team?",
+                metricsHeading: "Metrics & KPIs (Optional)",
+                metricsPrompt: "Track relevant metrics for your work or team goals:",
+                metricLabel1: "Test Coverage",
+                metricTrend1: "↑ +2% from last week",
+                metricLabel2: "Stories Completed",
+                metricTrend2: "→ On track",
+                metricLabel3: "Open Issues",
+                metricTrend3: "↓ -2 from last week",
+                quickActionsHeading: "Quick Actions",
+                quickActionsPrompt: "Make your update more effective:",
+                btnCopySlack: "📱 Copy for Slack",
+                btnCopyEmail: "📧 Copy for Email",
+                btnGenerateSummary: "📝 Generate Summary",
+                btnCheckCompleteness: "✔️ Check Completeness",
+                tipsHeading: "Tips for Effective Async Updates",
+                tips: {
+                    tip1: '<strong>Be Specific:</strong> Use concrete details, numbers, and outcomes rather than vague statements like "made progress."',
+                    tip2: '<strong>Context Matters:</strong> Explain the "why" behind your work and how it connects to team/company goals.',
+                    tip3: '<strong>Call for Help:</strong> Be explicit about what kind of help you need and who can provide it.',
+                    tip4: '<strong>Consistent Timing:</strong> Share updates at the same time each day/week so teammates know when to expect them.',
+                    tip5: '<strong>Use @mentions:</strong> Tag relevant team members to ensure important updates reach the right people.',
+                    tip6: '<strong>Link Resources:</strong> Include links to PRs, tickets, documents, or demos to provide more context.'
+                },
+                btnValidate: "✅ Validate Update",
+                btnPrint: "Print Update",
+                btnDownload: "Download Template",
+                btnNewUpdate: "New Update",
+                itemTitlePlaceholder: "Task/Project name",
+                itemDetailsPlaceholder: "Details...",
+                itemProgressText: pct => `${pct}% Complete`,
+                blockerTitlePlaceholder: "Describe the blocker or issue",
+                blockerDetailsPlaceholder: "Explain the blocker, impact, and what help you need...",
+                notifySlack: "Update copied for Slack! 📱",
+                notifyEmail: "Update copied for email! 📧",
+                notifyComplete: "Update is complete! ✅",
+                missingTeamMember: "Team Member name",
+                missingDate: "Update date",
+                missingProgress: "At least one progress item",
+                missingInfoPrefix: "Missing information:\n• ",
+                confirmReset: "Start a new update? This will clear all current data.",
+                slackSectionProgress: "✅ Progress & Completed:",
+                slackSectionBlockers: "🚫 Blockers:",
+                slackSectionUpcoming: "📅 Upcoming Work:",
+                slackSectionCollab: "👥 Collaboration:",
+                emailSubjectPrefix: "Subject:",
+                emailGreeting: "Hi team,",
+                emailIntro: (type, date) => `Here's my ${type.toLowerCase()} for ${date}:`,
+                emailSectionProgress: "Progress & Completed Work:",
+                emailSectionBlockers: "Blockers & Issues:",
+                emailSectionUpcoming: "Upcoming Work:",
+                emailAddProgress: "• [Add items here]",
+                emailAddBlockers: "• [Add blockers here]",
+                emailAddUpcoming: "• [Add upcoming work here]",
+                emailSignoff: "Best regards,",
+                summaryTitle: "Update Summary:",
+                summaryProgress: n => `• ${n} progress items`,
+                summaryBlockers: n => `• ${n} blockers`,
+                summaryUpcoming: n => `• ${n} upcoming tasks`,
+                typeLabel: { "Daily Standup": "Daily Standup", "Weekly Update": "Weekly Update", "Sprint Report": "Sprint Report", "Project Update": "Project Update", "Monthly Summary": "Monthly Summary" }
+            },
+            zh: {
+                pageTitle: "非同步進度更新範本",
+                headerTitle: "非同步進度更新範本",
+                descriptionText: '<strong>用途：</strong>這份範本讓工程團隊能以非同步方式分享進度、blocker 與更新，減少會議負擔，同時讓所有人都能掌握現況。可用於每日/每週站會、sprint 更新，或透過 Slack、email、團隊溝通工具分享的專案狀態報告。',
+                freqHeading: "更新頻率",
+                freqBody: "選擇你的更新週期（會影響範本建議內容）：",
+                freqBtn: { daily: "每日站會", weekly: "每週更新", sprint: "Sprint 報告", monthly: "月報總結", project: "專案里程碑" },
+                updateInfoHeading: "更新基本資訊",
+                lblTeamMember: "團隊成員：",
+                lblDate: "日期：",
+                lblUpdateType: "更新類型：",
+                lblTeamProject: "團隊/專案：",
+                phTeamMember: "你的姓名",
+                phTeamProject: "例如：平台團隊、Apollo 專案",
+                typeOptions: { dailyStandup: "每日站會", weeklyUpdate: "每週更新", sprintReport: "Sprint 報告", projectUpdate: "專案更新", monthlySummary: "月報總結" },
+                progressHeading: "進度與已完成工作",
+                progressPrompt: "自上次更新以來，你完成了哪些事？",
+                progItem1Title: "任務/專案名稱",
+                progItem1ProgressText: "已完成 100%",
+                progItem1Textarea: "描述完成的工作、關鍵決策，或達成的里程碑...",
+                progItem2Title: "另一項任務或專案",
+                progItem2ProgressText: "已完成 75%",
+                progItem2Textarea: "進度細節、克服的挑戰、下一步...",
+                btnAddProgress: "+ 新增進度項目",
+                statusLabels: { completed: "已完成", "on-track": "進度正常", "at-risk": "有風險", blocked: "已卡住" },
+                blockersHeading: "Blocker 與問題",
+                blockersPrompt: "什麼卡住了你的進度？你需要什麼協助？",
+                blocker1Title: "描述 blocker 或問題",
+                blocker1Textarea: "說明這個 blocker、對時程的影響、誰能幫忙解決，以及你已經試過什麼...",
+                blocker2Title: "其他 blocker（如果有）",
+                blocker2Textarea: "其他 blocker 細節...",
+                severityLabels: { high: "高", medium: "中", low: "低" },
+                btnAddBlocker: "+ 新增 Blocker",
+                upcomingHeading: "接下來的工作與優先事項",
+                upcomingPrompt: "你接下來打算做什麼？優先順序是什麼？",
+                upcoming1Title: "下一個優先事項或任務",
+                upcoming1Textarea: "描述接下來的工作、預期時程、相依關係，或需要的資源...",
+                upcoming2Title: "其他接下來的工作",
+                upcoming2Textarea: "更多接下來的工作細節...",
+                btnAddUpcoming: "+ 新增接下來的工作",
+                priorityLabels: { "high-priority": "高優先", "medium-priority": "中優先", "low-priority": "低優先" },
+                teamHeading: "團隊協作與提及",
+                teamPrompt: "你和誰協作過？誰應該知道你的更新？",
+                lblCollabHighlights: "協作亮點：",
+                collabTextarea: "提及重要的協作、pair programming、設計審查，或跨團隊合作...",
+                lblTeamTag: "要標記/通知的團隊成員：",
+                teamTagInput: "@alice, @bob, @charlie - 誰應該看到這則更新？",
+                lblKnowledgeSharing: "知識分享：",
+                knowledgeTextarea: "有沒有值得跟團隊分享的學習心得、解法或洞察？",
+                metricsHeading: "指標與 KPI（選填）",
+                metricsPrompt: "追蹤與你的工作或團隊目標相關的指標：",
+                metricLabel1: "測試覆蓋率",
+                metricTrend1: "↑ 較上週 +2%",
+                metricLabel2: "已完成 Story 數",
+                metricTrend2: "→ 進度正常",
+                metricLabel3: "未解決議題數",
+                metricTrend3: "↓ 較上週 -2",
+                quickActionsHeading: "快速操作",
+                quickActionsPrompt: "讓你的更新更有效：",
+                btnCopySlack: "📱 複製為 Slack 格式",
+                btnCopyEmail: "📧 複製為 Email 格式",
+                btnGenerateSummary: "📝 產生摘要",
+                btnCheckCompleteness: "✔️ 檢查完整性",
+                tipsHeading: "有效非同步更新的技巧",
+                tips: {
+                    tip1: '<strong>具體明確：</strong>使用具體的細節、數字與成果，而不是「有一些進展」這類模糊的說法。',
+                    tip2: '<strong>脈絡很重要：</strong>說明工作背後的「為什麼」，以及它如何連結到團隊/公司目標。',
+                    tip3: '<strong>主動求助：</strong>明確說出你需要什麼樣的協助、誰能提供。',
+                    tip4: '<strong>固定時間：</strong>每天/每週在固定時間分享更新，讓同事知道何時該期待。',
+                    tip5: '<strong>善用 @mentions：</strong>標記相關團隊成員，確保重要更新能傳達給對的人。',
+                    tip6: '<strong>附上連結：</strong>附上 PR、ticket、文件或 demo 的連結，提供更多脈絡。'
+                },
+                btnValidate: "✅ 驗證更新",
+                btnPrint: "列印更新",
+                btnDownload: "下載範本",
+                btnNewUpdate: "開始新更新",
+                itemTitlePlaceholder: "任務/專案名稱",
+                itemDetailsPlaceholder: "細節...",
+                itemProgressText: pct => `已完成 ${pct}%`,
+                blockerTitlePlaceholder: "描述 blocker 或問題",
+                blockerDetailsPlaceholder: "說明這個 blocker、影響，以及你需要什麼協助...",
+                notifySlack: "已複製 Slack 格式的更新！📱",
+                notifyEmail: "已複製 email 格式的更新！📧",
+                notifyComplete: "更新已完整！✅",
+                missingTeamMember: "團隊成員姓名",
+                missingDate: "更新日期",
+                missingProgress: "至少一項進度項目",
+                missingInfoPrefix: "缺少以下資訊：\n• ",
+                confirmReset: "要開始新的更新嗎？這會清除目前所有資料。",
+                slackSectionProgress: "✅ 進度與已完成：",
+                slackSectionBlockers: "🚫 Blocker：",
+                slackSectionUpcoming: "📅 接下來的工作：",
+                slackSectionCollab: "👥 協作：",
+                emailSubjectPrefix: "主旨：",
+                emailGreeting: "Hi team，",
+                emailIntro: (typeLower, date) => `這是我在 ${date} 的${typeLower}：`,
+                emailSectionProgress: "進度與已完成工作：",
+                emailSectionBlockers: "Blocker 與問題：",
+                emailSectionUpcoming: "接下來的工作：",
+                emailAddProgress: "• [請在這裡新增項目]",
+                emailAddBlockers: "• [請在這裡新增 blocker]",
+                emailAddUpcoming: "• [請在這裡新增接下來的工作]",
+                emailSignoff: "祝好，",
+                summaryTitle: "更新摘要：",
+                summaryProgress: n => `• ${n} 項進度項目`,
+                summaryBlockers: n => `• ${n} 個 blocker`,
+                summaryUpcoming: n => `• ${n} 項接下來的工作`,
+                typeLabel: { "Daily Standup": "每日站會", "Weekly Update": "每週更新", "Sprint Report": "Sprint 報告", "Project Update": "專案更新", "Monthly Summary": "月報總結" }
+            }
+        };
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        // ---------------------------------------------------------------
+        // Language switching / rendering
+        // ---------------------------------------------------------------
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        function translateDynamicLabels() {
+            const dict = t();
+            Object.keys(dict.statusLabels).forEach(val => {
+                document.querySelectorAll(`select.status-badge option[value="${val}"]`).forEach(opt => {
+                    opt.textContent = dict.statusLabels[val];
+                });
+            });
+            Object.keys(dict.priorityLabels).forEach(val => {
+                document.querySelectorAll(`select.status-badge option[value="${val}"]`).forEach(opt => {
+                    opt.textContent = dict.priorityLabels[val];
+                });
+            });
+            document.querySelectorAll('.high-severity span').forEach(el => el.textContent = dict.severityLabels.high);
+            document.querySelectorAll('.medium-severity span').forEach(el => el.textContent = dict.severityLabels.medium);
+            document.querySelectorAll('.low-severity span').forEach(el => el.textContent = dict.severityLabels.low);
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+            document.getElementById('pageTitle').textContent = dict.pageTitle;
+            document.title = dict.pageTitle;
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            document.getElementById('headerTitle').textContent = dict.headerTitle;
+            document.getElementById('descriptionText').innerHTML = dict.descriptionText;
+
+            document.getElementById('freqHeading').textContent = dict.freqHeading;
+            document.getElementById('freqBody').textContent = dict.freqBody;
+            document.getElementById('freqBtn-daily').textContent = dict.freqBtn.daily;
+            document.getElementById('freqBtn-weekly').textContent = dict.freqBtn.weekly;
+            document.getElementById('freqBtn-sprint').textContent = dict.freqBtn.sprint;
+            document.getElementById('freqBtn-monthly').textContent = dict.freqBtn.monthly;
+            document.getElementById('freqBtn-project').textContent = dict.freqBtn.project;
+
+            document.getElementById('updateInfoHeading').textContent = dict.updateInfoHeading;
+            document.getElementById('lblTeamMember').textContent = dict.lblTeamMember;
+            document.getElementById('lblDate').textContent = dict.lblDate;
+            document.getElementById('lblUpdateType').textContent = dict.lblUpdateType;
+            document.getElementById('lblTeamProject').textContent = dict.lblTeamProject;
+            document.getElementById('team-member').placeholder = dict.phTeamMember;
+            document.getElementById('team-project').placeholder = dict.phTeamProject;
+            document.getElementById('typeOpt-dailyStandup').textContent = dict.typeOptions.dailyStandup;
+            document.getElementById('typeOpt-weeklyUpdate').textContent = dict.typeOptions.weeklyUpdate;
+            document.getElementById('typeOpt-sprintReport').textContent = dict.typeOptions.sprintReport;
+            document.getElementById('typeOpt-projectUpdate').textContent = dict.typeOptions.projectUpdate;
+            document.getElementById('typeOpt-monthlySummary').textContent = dict.typeOptions.monthlySummary;
+
+            document.getElementById('progressHeading').textContent = dict.progressHeading;
+            document.getElementById('progressPrompt').textContent = dict.progressPrompt;
+            document.getElementById('progItem1Title').placeholder = dict.progItem1Title;
+            document.getElementById('progItem1ProgressText').textContent = dict.progItem1ProgressText;
+            document.getElementById('progItem1Textarea').placeholder = dict.progItem1Textarea;
+            document.getElementById('progItem2Title').placeholder = dict.progItem2Title;
+            document.getElementById('progItem2ProgressText').textContent = dict.progItem2ProgressText;
+            document.getElementById('progItem2Textarea').placeholder = dict.progItem2Textarea;
+            document.getElementById('btnAddProgress').textContent = dict.btnAddProgress;
+
+            document.getElementById('blockersHeading').textContent = dict.blockersHeading;
+            document.getElementById('blockersPrompt').textContent = dict.blockersPrompt;
+            document.getElementById('blocker1Title').placeholder = dict.blocker1Title;
+            document.getElementById('blocker1Textarea').placeholder = dict.blocker1Textarea;
+            document.getElementById('blocker2Title').placeholder = dict.blocker2Title;
+            document.getElementById('blocker2Textarea').placeholder = dict.blocker2Textarea;
+            document.getElementById('btnAddBlocker').textContent = dict.btnAddBlocker;
+
+            document.getElementById('upcomingHeading').textContent = dict.upcomingHeading;
+            document.getElementById('upcomingPrompt').textContent = dict.upcomingPrompt;
+            document.getElementById('upcoming1Title').placeholder = dict.upcoming1Title;
+            document.getElementById('upcoming1Textarea').placeholder = dict.upcoming1Textarea;
+            document.getElementById('upcoming2Title').placeholder = dict.upcoming2Title;
+            document.getElementById('upcoming2Textarea').placeholder = dict.upcoming2Textarea;
+            document.getElementById('btnAddUpcoming').textContent = dict.btnAddUpcoming;
+
+            document.getElementById('teamHeading').textContent = dict.teamHeading;
+            document.getElementById('teamPrompt').textContent = dict.teamPrompt;
+            document.getElementById('lblCollabHighlights').textContent = dict.lblCollabHighlights;
+            document.getElementById('collabTextarea').placeholder = dict.collabTextarea;
+            document.getElementById('lblTeamTag').textContent = dict.lblTeamTag;
+            document.getElementById('teamTagInput').placeholder = dict.teamTagInput;
+            document.getElementById('lblKnowledgeSharing').textContent = dict.lblKnowledgeSharing;
+            document.getElementById('knowledgeTextarea').placeholder = dict.knowledgeTextarea;
+
+            document.getElementById('metricsHeading').textContent = dict.metricsHeading;
+            document.getElementById('metricsPrompt').textContent = dict.metricsPrompt;
+            document.getElementById('metricLabel1').placeholder = dict.metricLabel1;
+            document.getElementById('metricTrend1').textContent = dict.metricTrend1;
+            document.getElementById('metricLabel2').placeholder = dict.metricLabel2;
+            document.getElementById('metricTrend2').textContent = dict.metricTrend2;
+            document.getElementById('metricLabel3').placeholder = dict.metricLabel3;
+            document.getElementById('metricTrend3').textContent = dict.metricTrend3;
+
+            document.getElementById('quickActionsHeading').textContent = dict.quickActionsHeading;
+            document.getElementById('quickActionsPrompt').textContent = dict.quickActionsPrompt;
+            document.getElementById('btnCopySlack').textContent = dict.btnCopySlack;
+            document.getElementById('btnCopyEmail').textContent = dict.btnCopyEmail;
+            document.getElementById('btnGenerateSummary').textContent = dict.btnGenerateSummary;
+            document.getElementById('btnCheckCompleteness').textContent = dict.btnCheckCompleteness;
+
+            document.getElementById('tipsHeading').textContent = dict.tipsHeading;
+            Object.keys(dict.tips).forEach(key => {
+                const el = document.getElementById(key);
+                if (el) el.innerHTML = dict.tips[key];
+            });
+
+            document.getElementById('btnValidate').textContent = dict.btnValidate;
+            document.getElementById('btnPrint').textContent = dict.btnPrint;
+            document.getElementById('btnDownload').textContent = dict.btnDownload;
+            document.getElementById('btnNewUpdate').textContent = dict.btnNewUpdate;
+
+            translateDynamicLabels();
+        }
 
         function setFrequency(frequency) {
             // Update active button
@@ -802,26 +1202,27 @@
         function createUpdateItem(type) {
             const item = document.createElement('div');
             item.className = 'update-item';
+            const dict = t();
 
             let statusOptions = '';
             if (type === 'progress') {
                 statusOptions = `
-                    <option value="completed" class="completed">Completed</option>
-                    <option value="on-track" class="on-track">On Track</option>
-                    <option value="at-risk" class="at-risk">At Risk</option>
-                    <option value="blocked" class="blocked">Blocked</option>
+                    <option value="completed" class="completed">${dict.statusLabels.completed}</option>
+                    <option value="on-track" class="on-track">${dict.statusLabels['on-track']}</option>
+                    <option value="at-risk" class="at-risk">${dict.statusLabels['at-risk']}</option>
+                    <option value="blocked" class="blocked">${dict.statusLabels.blocked}</option>
                 `;
             } else if (type === 'upcoming') {
                 statusOptions = `
-                    <option value="high-priority" class="at-risk">High Priority</option>
-                    <option value="medium-priority" class="on-track">Medium Priority</option>
-                    <option value="low-priority" class="completed">Low Priority</option>
+                    <option value="high-priority" class="at-risk">${dict.priorityLabels['high-priority']}</option>
+                    <option value="medium-priority" class="on-track">${dict.priorityLabels['medium-priority']}</option>
+                    <option value="low-priority" class="completed">${dict.priorityLabels['low-priority']}</option>
                 `;
             }
 
             item.innerHTML = `
                 <div class="item-header">
-                    <input type="text" class="field-input item-title" placeholder="Task/Project name">
+                    <input type="text" class="field-input item-title" placeholder="${dict.itemTitlePlaceholder}">
                     <select class="field-select status-badge" style="width: auto;">
                         ${statusOptions}
                     </select>
@@ -830,10 +1231,10 @@
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 50%"></div>
                     </div>
-                    <div class="progress-text">50% Complete</div>
+                    <div class="progress-text">${dict.itemProgressText(50)}</div>
                 ` : ''}
                 <div class="item-details">
-                    <textarea class="item-textarea" placeholder="Details..."></textarea>
+                    <textarea class="item-textarea" placeholder="${dict.itemDetailsPlaceholder}"></textarea>
                 </div>
             `;
 
@@ -844,27 +1245,28 @@
             const item = document.createElement('div');
             item.className = 'update-item blocker-item';
             const randomId = Math.random().toString(36).substr(2, 9);
+            const dict = t();
 
             item.innerHTML = `
                 <div class="item-header">
-                    <input type="text" class="field-input item-title" placeholder="Describe the blocker or issue">
+                    <input type="text" class="field-input item-title" placeholder="${dict.blockerTitlePlaceholder}">
                     <div class="blocker-severity">
                         <label class="severity-option high-severity">
                             <input type="radio" name="blocker-${randomId}-severity" value="high">
-                            <span>High</span>
+                            <span>${dict.severityLabels.high}</span>
                         </label>
                         <label class="severity-option medium-severity">
                             <input type="radio" name="blocker-${randomId}-severity" value="medium" checked>
-                            <span>Medium</span>
+                            <span>${dict.severityLabels.medium}</span>
                         </label>
                         <label class="severity-option low-severity">
                             <input type="radio" name="blocker-${randomId}-severity" value="low">
-                            <span>Low</span>
+                            <span>${dict.severityLabels.low}</span>
                         </label>
                     </div>
                 </div>
                 <div class="item-details">
-                    <textarea class="item-textarea" placeholder="Explain the blocker, impact, and what help you need..."></textarea>
+                    <textarea class="item-textarea" placeholder="${dict.blockerDetailsPlaceholder}"></textarea>
                 </div>
             `;
 
@@ -874,70 +1276,74 @@
         function copyForSlack() {
             const text = generateUpdateText('slack');
             copyToClipboard(text);
-            showNotification('Update copied for Slack! 📱');
+            showNotification(t().notifySlack);
         }
 
         function copyForEmail() {
             const text = generateUpdateText('email');
             copyToClipboard(text);
-            showNotification('Update copied for email! 📧');
+            showNotification(t().notifyEmail);
         }
 
         function generateUpdateText(format) {
-            const teamMember = document.getElementById('team-member').value || 'Team Member';
+            const dict = t();
+            const teamMember = document.getElementById('team-member').value || (currentLang === 'zh' ? '團隊成員' : 'Team Member');
             const date = document.getElementById('update-date').value || new Date().toISOString().split('T')[0];
-            const updateType = document.getElementById('update-type').value;
+            const updateTypeValue = document.getElementById('update-type').value;
+            const updateType = dict.typeLabel[updateTypeValue] || updateTypeValue;
 
             let text = '';
 
             if (format === 'slack') {
                 text = `*${updateType} - ${date}*\n\n`;
-                text += `*✅ Progress & Completed:*\n`;
+                text += `*${dict.slackSectionProgress}*\n`;
                 // Add progress items
-                text += `\n*🚫 Blockers:*\n`;
+                text += `\n*${dict.slackSectionBlockers}*\n`;
                 // Add blocker items
-                text += `\n*📅 Upcoming Work:*\n`;
+                text += `\n*${dict.slackSectionUpcoming}*\n`;
                 // Add upcoming items
-                text += `\n*👥 Collaboration:*\n`;
+                text += `\n*${dict.slackSectionCollab}*\n`;
                 // Add collaboration notes
             } else {
-                text = `Subject: ${updateType} - ${teamMember} - ${date}\n\n`;
-                text += `Hi team,\n\nHere's my ${updateType.toLowerCase()} for ${date}:\n\n`;
-                text += `Progress & Completed Work:\n`;
-                text += `• [Add items here]\n\n`;
-                text += `Blockers & Issues:\n`;
-                text += `• [Add blockers here]\n\n`;
-                text += `Upcoming Work:\n`;
-                text += `• [Add upcoming work here]\n\n`;
-                text += `Best regards,\n${teamMember}`;
+                text = `${dict.emailSubjectPrefix} ${updateType} - ${teamMember} - ${date}\n\n`;
+                text += `${dict.emailGreeting}\n\n${dict.emailIntro(updateType, date)}\n\n`;
+                text += `${dict.emailSectionProgress}\n`;
+                text += `${dict.emailAddProgress}\n\n`;
+                text += `${dict.emailSectionBlockers}\n`;
+                text += `${dict.emailAddBlockers}\n\n`;
+                text += `${dict.emailSectionUpcoming}\n`;
+                text += `${dict.emailAddUpcoming}\n\n`;
+                text += `${dict.emailSignoff}\n${teamMember}`;
             }
 
             return text;
         }
 
         function generateSummary() {
+            const dict = t();
             const progressItems = document.querySelectorAll('.progress-header + .section-content .update-item').length;
             const blockerItems = document.querySelectorAll('.blockers-header + .section-content .update-item').length;
             const upcomingItems = document.querySelectorAll('.upcoming-header + .section-content .update-item').length;
 
-            const summary = `Update Summary:\n• ${progressItems} progress items\n• ${blockerItems} blockers\n• ${upcomingItems} upcoming tasks`;
+            const summary = `${dict.summaryTitle}\n${dict.summaryProgress(progressItems)}\n${dict.summaryBlockers(blockerItems)}\n${dict.summaryUpcoming(upcomingItems)}`;
 
             alert(summary);
         }
 
         function checkCompleteness() {
+            const dict = t();
             let missing = [];
 
-            if (!document.getElementById('team-member').value) missing.push('Team Member name');
-            if (!document.getElementById('update-date').value) missing.push('Update date');
+            if (!document.getElementById('team-member').value) missing.push(dict.missingTeamMember);
+            if (!document.getElementById('update-date').value) missing.push(dict.missingDate);
 
             const progressFilled = Array.from(document.querySelectorAll('.progress-header + .section-content .item-title')).some(input => input.value.trim());
-            if (!progressFilled) missing.push('At least one progress item');
+            if (!progressFilled) missing.push(dict.missingProgress);
 
             if (missing.length > 0) {
-                alert(`Missing information:\n• ${missing.join('\n• ')}`);
+                alert(`${dict.missingInfoPrefix}${missing.join('\n• ')}`);
             } else {
-                showNotification('Update is complete! ✅');
+                showNotification(dict.notifyComplete);
             }
         }
 
@@ -1045,7 +1451,7 @@
         }
 
         function resetTemplate() {
-            if (confirm('Start a new update? This will clear all current data.')) {
+            if (confirm(t().confirmReset)) {
                 localStorage.removeItem('asyncUpdate');
                 location.reload();
             }
@@ -1057,6 +1463,7 @@
             document.getElementById('update-date').value = new Date().toISOString().split('T')[0];
 
             loadSaved();
+            renderLanguage();
 
             // Auto-save on input changes
             document.addEventListener('input', autoSave);

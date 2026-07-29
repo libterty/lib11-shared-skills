@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 1:1 Prep Prompt Generator</title>
+    <title id="pageTitle">AI 1:1 Prep Prompt Generator</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,6 +19,39 @@
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+        }
+
+        .header-bar {
+            position: relative;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: white;
+            color: #6c5ce7;
+            border: 1px solid #6c5ce7;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:hover {
+            background: #f0edfe;
+        }
+
+        .lang-btn.active {
+            background: #6c5ce7;
+            color: white;
         }
 
         h1 {
@@ -207,64 +240,81 @@
             background: #218838;
         }
 
+        @media print {
+            .lang-switcher {
+                display: none;
+            }
+        }
+
         @media (max-width: 768px) {
             body { padding: 10px; }
             .container { padding: 20px; }
             .field-grid { grid-template-columns: 1fr; }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🤖 AI 1:1 Prep Prompt Generator</h1>
+        <div class="header-bar">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1>🤖 <span id="headerTitle">AI 1:1 Prep Prompt Generator</span></h1>
+        </div>
 
-        <div class="description">
+        <div class="description" id="descriptionText">
             <strong>Purpose:</strong> Fill in what you know about a team member, then generate a ready-to-paste prompt that asks an AI assistant to draft a personalized 1:1 agenda. This tool never talks to an AI itself — it only builds the prompt text for you to copy into whichever assistant you use.
         </div>
 
         <div class="compatible-tools">
-            <strong>🧩 Compatible AI Tools</strong>
+            <strong>🧩 <span id="toolsHeading">Compatible AI Tools</span></strong>
             <div class="tool-tags">
                 <span class="tool-tag">ChatGPT</span>
                 <span class="tool-tag">Claude</span>
                 <span class="tool-tag">Bard</span>
                 <span class="tool-tag">Copilot</span>
                 <span class="tool-tag">Gemini</span>
-                <span class="tool-tag">Custom LLMs</span>
+                <span class="tool-tag" id="toolTagCustom">Custom LLMs</span>
             </div>
         </div>
 
         <!-- Team Member Information -->
         <div class="form-section">
-            <div class="section-header">👤 Team Member Information</div>
+            <div class="section-header">👤 <span id="sectionMemberInfo">Team Member Information</span></div>
             <div class="section-content">
                 <div class="field-grid">
                     <div class="field">
-                        <span class="field-label">Name:</span>
+                        <span class="field-label" id="lblName">Name:</span>
                         <input type="text" class="field-input" id="member-name" placeholder="Team member's name">
                     </div>
                     <div class="field">
-                        <span class="field-label">Role:</span>
+                        <span class="field-label" id="lblRole">Role:</span>
                         <input type="text" class="field-input" id="member-role" placeholder="e.g. Senior Backend Engineer">
                     </div>
                     <div class="field">
-                        <span class="field-label">Time on Team:</span>
+                        <span class="field-label" id="lblTimeOnTeam">Time on Team:</span>
                         <input type="text" class="field-input" id="time-on-team" placeholder="e.g. 8 months">
                     </div>
                     <div class="field">
-                        <span class="field-label">Last 1:1 Date:</span>
+                        <span class="field-label" id="lblLastDate">Last 1:1 Date:</span>
                         <input type="date" class="field-input" id="last-1on1-date">
                     </div>
                     <div class="field">
-                        <span class="field-label">Upcoming 1:1 Date:</span>
+                        <span class="field-label" id="lblNextDate">Upcoming 1:1 Date:</span>
                         <input type="date" class="field-input" id="next-1on1-date">
                     </div>
                     <div class="field">
-                        <span class="field-label">Meeting Frequency:</span>
+                        <span class="field-label" id="lblFrequency">Meeting Frequency:</span>
                         <select class="field-select" id="frequency">
-                            <option value="Weekly">Weekly</option>
-                            <option value="Bi-weekly">Bi-weekly</option>
-                            <option value="Monthly">Monthly</option>
+                            <option value="Weekly" id="freqOpt-Weekly">Weekly</option>
+                            <option value="Bi-weekly" id="freqOpt-Biweekly">Bi-weekly</option>
+                            <option value="Monthly" id="freqOpt-Monthly">Monthly</option>
                         </select>
                     </div>
                 </div>
@@ -273,18 +323,18 @@
 
         <!-- Historical Context -->
         <div class="form-section">
-            <div class="section-header">📜 Historical Context & Previous Notes</div>
+            <div class="section-header">📜 <span id="sectionHistorical">Historical Context &amp; Previous Notes</span></div>
             <div class="section-content">
                 <div class="field">
-                    <span class="field-label">Previous discussion themes:</span>
+                    <span class="field-label" id="lblPrevThemes">Previous discussion themes:</span>
                     <textarea class="field-textarea" id="previous-themes" placeholder="What topics have come up repeatedly across past 1:1s?"></textarea>
                 </div>
                 <div class="field">
-                    <span class="field-label">Open action items:</span>
+                    <span class="field-label" id="lblOpenActions">Open action items:</span>
                     <textarea class="field-textarea" id="open-actions" placeholder="What commitments or follow-ups are still outstanding?"></textarea>
                 </div>
                 <div class="field">
-                    <span class="field-label">Performance history summary:</span>
+                    <span class="field-label" id="lblPerfHistory">Performance history summary:</span>
                     <textarea class="field-textarea" id="performance-history" placeholder="Brief, factual summary — recent review outcomes, notable strengths or growth areas"></textarea>
                 </div>
             </div>
@@ -292,18 +342,18 @@
 
         <!-- Current Context -->
         <div class="form-section">
-            <div class="section-header">📌 Current Work & Recent Context</div>
+            <div class="section-header">📌 <span id="sectionCurrent">Current Work &amp; Recent Context</span></div>
             <div class="section-content">
                 <div class="field">
-                    <span class="field-label">Current projects:</span>
+                    <span class="field-label" id="lblCurrentProjects">Current projects:</span>
                     <textarea class="field-textarea" id="current-projects" placeholder="What are they actively working on?"></textarea>
                 </div>
                 <div class="field">
-                    <span class="field-label">Recent events:</span>
+                    <span class="field-label" id="lblRecentEvents">Recent events:</span>
                     <textarea class="field-textarea" id="recent-events" placeholder="Anything notable that happened recently — wins, incidents, changes?"></textarea>
                 </div>
                 <div class="field">
-                    <span class="field-label">Team dynamics:</span>
+                    <span class="field-label" id="lblTeamDynamics">Team dynamics:</span>
                     <textarea class="field-textarea" id="team-dynamics" placeholder="Anything relevant about how they're interacting with the team right now?"></textarea>
                 </div>
             </div>
@@ -311,18 +361,18 @@
 
         <!-- Goals & Development -->
         <div class="form-section">
-            <div class="section-header">🎯 Goals & Development Focus</div>
+            <div class="section-header">🎯 <span id="sectionGoals">Goals &amp; Development Focus</span></div>
             <div class="section-content">
                 <div class="field">
-                    <span class="field-label">Career goals:</span>
+                    <span class="field-label" id="lblCareerGoals">Career goals:</span>
                     <textarea class="field-textarea" id="career-goals" placeholder="What are they working toward?"></textarea>
                 </div>
                 <div class="field">
-                    <span class="field-label">Development focus:</span>
+                    <span class="field-label" id="lblDevFocus">Development focus:</span>
                     <textarea class="field-textarea" id="development-focus" placeholder="What skills or areas are they currently developing?"></textarea>
                 </div>
                 <div class="field">
-                    <span class="field-label">Growth opportunities:</span>
+                    <span class="field-label" id="lblGrowthOpp">Growth opportunities:</span>
                     <textarea class="field-textarea" id="growth-opportunities" placeholder="Any specific opportunities you're considering for them?"></textarea>
                 </div>
             </div>
@@ -330,18 +380,18 @@
 
         <!-- Additional Context -->
         <div class="form-section">
-            <div class="section-header">⚠️ Important Context & Considerations</div>
+            <div class="section-header">⚠️ <span id="sectionAdditional">Important Context &amp; Considerations</span></div>
             <div class="section-content">
                 <div class="field">
-                    <span class="field-label">Concerns:</span>
+                    <span class="field-label" id="lblConcerns">Concerns:</span>
                     <textarea class="field-textarea" id="concerns" placeholder="Anything you're concerned about right now?"></textarea>
                 </div>
                 <div class="field">
-                    <span class="field-label">Organizational context:</span>
+                    <span class="field-label" id="lblOrgContext">Organizational context:</span>
                     <textarea class="field-textarea" id="org-context" placeholder="Reorgs, priority shifts, or other org-level factors that might affect them"></textarea>
                 </div>
                 <div class="field">
-                    <span class="field-label">Personal factors:</span>
+                    <span class="field-label" id="lblPersonalFactors">Personal factors:</span>
                     <textarea class="field-textarea" id="personal-factors" placeholder="Anything personal that's relevant and appropriate to keep in mind (optional)"></textarea>
                 </div>
             </div>
@@ -349,15 +399,15 @@
 
         <!-- Privacy Reminder -->
         <div class="privacy-note">
-            <strong>🔒 Privacy Reminder</strong>
-            <p>Before pasting this prompt into a third-party AI tool, review the details you've entered. Avoid including information that is confidential, sensitive, or that the team member wouldn't expect to be shared outside a private conversation — e.g. medical, legal, or compensation details. When in doubt, generalize or omit rather than paste as-is.</p>
+            <strong>🔒 <span id="privacyHeading">Privacy Reminder</span></strong>
+            <p id="privacyText">Before pasting this prompt into a third-party AI tool, review the details you've entered. Avoid including information that is confidential, sensitive, or that the team member wouldn't expect to be shared outside a private conversation — e.g. medical, legal, or compensation details. When in doubt, generalize or omit rather than paste as-is.</p>
         </div>
 
         <!-- Example Output -->
         <div class="example-output">
-            <strong>📋 Example AI-Generated 1:1 Agenda</strong>
-            <p>Once you paste the generated prompt into an AI tool, expect an output roughly like:</p>
-            <ul>
+            <strong>📋 <span id="exampleHeading">Example AI-Generated 1:1 Agenda</span></strong>
+            <p id="exampleIntro">Once you paste the generated prompt into an AI tool, expect an output roughly like:</p>
+            <ul id="exampleList">
                 <li>5-7 prioritized discussion points tailored to what you entered</li>
                 <li>A short rationale for why each point matters right now</li>
                 <li>Suggested open-ended questions for each point</li>
@@ -367,8 +417,8 @@
 
         <!-- Best Practices -->
         <div class="best-practices">
-            <strong>💡 Best Practices for AI-Generated 1:1 Prep</strong>
-            <ul>
+            <strong>💡 <span id="bestPracticesHeading">Best Practices for AI-Generated 1:1 Prep</span></strong>
+            <ul id="bestPracticesList">
                 <li>Treat the AI's output as a draft agenda, not a script — adapt it to how the conversation actually goes</li>
                 <li>Cross-check any suggested talking point against what you actually know to be true</li>
                 <li>Don't let the AI's phrasing replace your own judgment on sensitive topics (performance, conflict, personal matters)</li>
@@ -378,49 +428,332 @@
 
         <!-- Generated Prompt Output -->
         <div class="prompt-output-section">
-            <h3>Generated Prompt</h3>
+            <h3 id="generatedPromptHeading">Generated Prompt</h3>
             <div class="prompt-output" id="prompt-output">Fill in the fields above, then click "Generate Prompt" to see your custom AI prompt here.</div>
         </div>
 
         <div class="actions">
-            <button class="btn btn-success" onclick="generatePrompt()">Generate Prompt</button>
-            <button class="btn" onclick="copyPrompt()">Copy Prompt</button>
-            <button class="btn btn-secondary" onclick="downloadTemplate()">Download Template</button>
-            <button class="btn btn-secondary" onclick="resetForm()">Reset Form</button>
+            <button class="btn btn-success" onclick="generatePrompt()" id="btnGenerate">Generate Prompt</button>
+            <button class="btn" onclick="copyPrompt()" id="btnCopy">Copy Prompt</button>
+            <button class="btn btn-secondary" onclick="downloadTemplate()" id="btnDownload">Download Template</button>
+            <button class="btn btn-secondary" onclick="resetForm()" id="btnReset">Reset Form</button>
         </div>
     </div>
 
     <script>
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        // ---------------------------------------------------------------
+        // i18n dictionary
+        // ---------------------------------------------------------------
+        const I18N = {
+            en: {
+                pageTitle: "AI 1:1 Prep Prompt Generator",
+                headerTitle: "AI 1:1 Prep Prompt Generator",
+                descriptionHTML: "<strong>Purpose:</strong> Fill in what you know about a team member, then generate a ready-to-paste prompt that asks an AI assistant to draft a personalized 1:1 agenda. This tool never talks to an AI itself — it only builds the prompt text for you to copy into whichever assistant you use.",
+                toolsHeading: "Compatible AI Tools",
+                sectionMemberInfo: "Team Member Information",
+                lblName: "Name:",
+                lblRole: "Role:",
+                lblTimeOnTeam: "Time on Team:",
+                lblLastDate: "Last 1:1 Date:",
+                lblNextDate: "Upcoming 1:1 Date:",
+                lblFrequency: "Meeting Frequency:",
+                phMemberName: "Team member's name",
+                phMemberRole: "e.g. Senior Backend Engineer",
+                phTimeOnTeam: "e.g. 8 months",
+                freqOptions: { "Weekly": "Weekly", "Bi-weekly": "Bi-weekly", "Monthly": "Monthly" },
+                sectionHistorical: "Historical Context & Previous Notes",
+                lblPrevThemes: "Previous discussion themes:",
+                phPrevThemes: "What topics have come up repeatedly across past 1:1s?",
+                lblOpenActions: "Open action items:",
+                phOpenActions: "What commitments or follow-ups are still outstanding?",
+                lblPerfHistory: "Performance history summary:",
+                phPerfHistory: "Brief, factual summary — recent review outcomes, notable strengths or growth areas",
+                sectionCurrent: "Current Work & Recent Context",
+                lblCurrentProjects: "Current projects:",
+                phCurrentProjects: "What are they actively working on?",
+                lblRecentEvents: "Recent events:",
+                phRecentEvents: "Anything notable that happened recently — wins, incidents, changes?",
+                lblTeamDynamics: "Team dynamics:",
+                phTeamDynamics: "Anything relevant about how they're interacting with the team right now?",
+                sectionGoals: "Goals & Development Focus",
+                lblCareerGoals: "Career goals:",
+                phCareerGoals: "What are they working toward?",
+                lblDevFocus: "Development focus:",
+                phDevFocus: "What skills or areas are they currently developing?",
+                lblGrowthOpp: "Growth opportunities:",
+                phGrowthOpp: "Any specific opportunities you're considering for them?",
+                sectionAdditional: "Important Context & Considerations",
+                lblConcerns: "Concerns:",
+                phConcerns: "Anything you're concerned about right now?",
+                lblOrgContext: "Organizational context:",
+                phOrgContext: "Reorgs, priority shifts, or other org-level factors that might affect them",
+                lblPersonalFactors: "Personal factors:",
+                phPersonalFactors: "Anything personal that's relevant and appropriate to keep in mind (optional)",
+                privacyHeading: "Privacy Reminder",
+                privacyText: "Before pasting this prompt into a third-party AI tool, review the details you've entered. Avoid including information that is confidential, sensitive, or that the team member wouldn't expect to be shared outside a private conversation — e.g. medical, legal, or compensation details. When in doubt, generalize or omit rather than paste as-is.",
+                exampleHeading: "Example AI-Generated 1:1 Agenda",
+                exampleIntro: "Once you paste the generated prompt into an AI tool, expect an output roughly like:",
+                exampleList: [
+                    "5-7 prioritized discussion points tailored to what you entered",
+                    "A short rationale for why each point matters right now",
+                    "Suggested open-ended questions for each point",
+                    "A recommended closing question to check in on support needed"
+                ],
+                bestPracticesHeading: "Best Practices for AI-Generated 1:1 Prep",
+                bestPracticesList: [
+                    "Treat the AI's output as a draft agenda, not a script — adapt it to how the conversation actually goes",
+                    "Cross-check any suggested talking point against what you actually know to be true",
+                    "Don't let the AI's phrasing replace your own judgment on sensitive topics (performance, conflict, personal matters)",
+                    "Update the historical context fields after each 1:1 so future prompts stay accurate"
+                ],
+                generatedPromptHeading: "Generated Prompt",
+                promptPlaceholder: "Fill in the fields above, then click \"Generate Prompt\" to see your custom AI prompt here.",
+                btnGenerate: "Generate Prompt",
+                btnCopy: "Copy Prompt",
+                btnDownload: "Download Template",
+                btnReset: "Reset Form",
+                alertGenerateFirst: "Generate the prompt first.",
+                alertCopied: "Prompt copied to clipboard.",
+                confirmReset: "Clear all fields? This cannot be undone."
+            },
+            zh: {
+                pageTitle: "AI 1:1 會前準備 Prompt 產生器",
+                headerTitle: "AI 1:1 會前準備 Prompt 產生器",
+                descriptionHTML: "<strong>用途：</strong>填入你對這位團隊成員的了解，就能產生一段可直接複製貼上的 prompt，請 AI 助理幫你草擬個人化的 1:1 議程。這個工具本身不會跟任何 AI 對話——它只負責幫你組出 prompt 文字，讓你貼到自己慣用的 AI 工具裡。",
+                toolsHeading: "相容的 AI 工具",
+                sectionMemberInfo: "團隊成員資訊",
+                lblName: "姓名：",
+                lblRole: "職稱：",
+                lblTimeOnTeam: "在團隊的時間：",
+                lblLastDate: "上次 1:1 日期：",
+                lblNextDate: "下次 1:1 日期：",
+                lblFrequency: "會議頻率：",
+                phMemberName: "團隊成員姓名",
+                phMemberRole: "例如：資深後端工程師",
+                phTimeOnTeam: "例如：8 個月",
+                freqOptions: { "Weekly": "每週", "Bi-weekly": "雙週", "Monthly": "每月" },
+                sectionHistorical: "歷史脈絡與過去筆記",
+                lblPrevThemes: "過去反覆出現的討論主題：",
+                phPrevThemes: "過去幾次 1:1 有哪些議題反覆出現？",
+                lblOpenActions: "未結案的 action item：",
+                phOpenActions: "還有哪些承諾或後續事項尚未完成？",
+                lblPerfHistory: "績效歷史摘要：",
+                phPerfHistory: "簡短、客觀的摘要——近期考核結果、明顯的優勢或待成長領域",
+                sectionCurrent: "目前工作與近期狀況",
+                lblCurrentProjects: "目前專案：",
+                phCurrentProjects: "他們目前正在忙什麼？",
+                lblRecentEvents: "近期事件：",
+                phRecentEvents: "最近有沒有什麼值得留意的事——成果、事故、變動？",
+                lblTeamDynamics: "團隊互動狀況：",
+                phTeamDynamics: "目前他們跟團隊互動有沒有什麼值得留意的地方？",
+                sectionGoals: "目標與發展重點",
+                lblCareerGoals: "職涯目標：",
+                phCareerGoals: "他們正朝哪個方向努力？",
+                lblDevFocus: "發展重點：",
+                phDevFocus: "他們目前正在發展哪些技能或領域？",
+                lblGrowthOpp: "成長機會：",
+                phGrowthOpp: "有沒有你正在考慮給他們的具體機會？",
+                sectionAdditional: "重要脈絡與考量",
+                lblConcerns: "擔憂事項：",
+                phConcerns: "現在有沒有什麼讓你擔心的地方？",
+                lblOrgContext: "組織層面脈絡：",
+                phOrgContext: "組織改組、優先順序調整，或其他可能影響到他們的組織層面因素",
+                lblPersonalFactors: "個人因素：",
+                phPersonalFactors: "有沒有適合、且應該留意的個人相關因素（選填）",
+                privacyHeading: "隱私提醒",
+                privacyText: "在把這段 prompt 貼到第三方 AI 工具之前，請先檢查你填寫的內容。避免包含機密、敏感，或團隊成員不會預期被分享到私下對話以外的資訊——例如醫療、法律或薪酬細節。如果不確定，寧可概括描述或省略，也不要照實貼上。",
+                exampleHeading: "AI 產生的 1:1 議程範例",
+                exampleIntro: "把產生的 prompt 貼到 AI 工具後，大致會得到像這樣的輸出：",
+                exampleList: [
+                    "5-7 個依你填寫內容排序的討論重點",
+                    "每個重點附上簡短的「為什麼現在重要」理由",
+                    "每個重點附建議的開放式提問",
+                    "一個建議的結尾問題，用來確認對方需要什麼支援"
+                ],
+                bestPracticesHeading: "使用 AI 產生 1:1 會前準備的最佳實務",
+                bestPracticesList: [
+                    "把 AI 的輸出當成議程草稿，不是逐字稿——依實際對話走向調整",
+                    "把 AI 建議的討論點跟你實際掌握的事實交叉核對",
+                    "不要讓 AI 的措辭取代你在敏感議題（績效、衝突、個人事務）上的判斷",
+                    "每次 1:1 之後更新歷史脈絡欄位，讓未來產生的 prompt 保持準確"
+                ],
+                generatedPromptHeading: "產生的 Prompt",
+                promptPlaceholder: "先填寫上方欄位，再點擊「產生 Prompt」即可在這裡看到你的自訂 AI prompt。",
+                btnGenerate: "產生 Prompt",
+                btnCopy: "複製 Prompt",
+                btnDownload: "下載範本",
+                btnReset: "重設表單",
+                alertGenerateFirst: "請先產生 prompt。",
+                alertCopied: "Prompt 已複製到剪貼簿。",
+                confirmReset: "確定要清除所有欄位嗎？此動作無法復原。"
+            }
+        };
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        // ---------------------------------------------------------------
+        // Language switching / rendering
+        // ---------------------------------------------------------------
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+            document.getElementById('pageTitle').textContent = dict.pageTitle;
+            document.title = dict.pageTitle;
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            document.getElementById('headerTitle').textContent = dict.headerTitle;
+            document.getElementById('descriptionText').innerHTML = dict.descriptionHTML;
+            document.getElementById('toolsHeading').textContent = dict.toolsHeading;
+
+            document.getElementById('sectionMemberInfo').textContent = dict.sectionMemberInfo;
+            document.getElementById('lblName').textContent = dict.lblName;
+            document.getElementById('lblRole').textContent = dict.lblRole;
+            document.getElementById('lblTimeOnTeam').textContent = dict.lblTimeOnTeam;
+            document.getElementById('lblLastDate').textContent = dict.lblLastDate;
+            document.getElementById('lblNextDate').textContent = dict.lblNextDate;
+            document.getElementById('lblFrequency').textContent = dict.lblFrequency;
+            document.getElementById('member-name').placeholder = dict.phMemberName;
+            document.getElementById('member-role').placeholder = dict.phMemberRole;
+            document.getElementById('time-on-team').placeholder = dict.phTimeOnTeam;
+            document.getElementById('freqOpt-Weekly').textContent = dict.freqOptions['Weekly'];
+            document.getElementById('freqOpt-Biweekly').textContent = dict.freqOptions['Bi-weekly'];
+            document.getElementById('freqOpt-Monthly').textContent = dict.freqOptions['Monthly'];
+
+            document.getElementById('sectionHistorical').textContent = dict.sectionHistorical;
+            document.getElementById('lblPrevThemes').textContent = dict.lblPrevThemes;
+            document.getElementById('previous-themes').placeholder = dict.phPrevThemes;
+            document.getElementById('lblOpenActions').textContent = dict.lblOpenActions;
+            document.getElementById('open-actions').placeholder = dict.phOpenActions;
+            document.getElementById('lblPerfHistory').textContent = dict.lblPerfHistory;
+            document.getElementById('performance-history').placeholder = dict.phPerfHistory;
+
+            document.getElementById('sectionCurrent').textContent = dict.sectionCurrent;
+            document.getElementById('lblCurrentProjects').textContent = dict.lblCurrentProjects;
+            document.getElementById('current-projects').placeholder = dict.phCurrentProjects;
+            document.getElementById('lblRecentEvents').textContent = dict.lblRecentEvents;
+            document.getElementById('recent-events').placeholder = dict.phRecentEvents;
+            document.getElementById('lblTeamDynamics').textContent = dict.lblTeamDynamics;
+            document.getElementById('team-dynamics').placeholder = dict.phTeamDynamics;
+
+            document.getElementById('sectionGoals').textContent = dict.sectionGoals;
+            document.getElementById('lblCareerGoals').textContent = dict.lblCareerGoals;
+            document.getElementById('career-goals').placeholder = dict.phCareerGoals;
+            document.getElementById('lblDevFocus').textContent = dict.lblDevFocus;
+            document.getElementById('development-focus').placeholder = dict.phDevFocus;
+            document.getElementById('lblGrowthOpp').textContent = dict.lblGrowthOpp;
+            document.getElementById('growth-opportunities').placeholder = dict.phGrowthOpp;
+
+            document.getElementById('sectionAdditional').textContent = dict.sectionAdditional;
+            document.getElementById('lblConcerns').textContent = dict.lblConcerns;
+            document.getElementById('concerns').placeholder = dict.phConcerns;
+            document.getElementById('lblOrgContext').textContent = dict.lblOrgContext;
+            document.getElementById('org-context').placeholder = dict.phOrgContext;
+            document.getElementById('lblPersonalFactors').textContent = dict.lblPersonalFactors;
+            document.getElementById('personal-factors').placeholder = dict.phPersonalFactors;
+
+            document.getElementById('privacyHeading').textContent = dict.privacyHeading;
+            document.getElementById('privacyText').textContent = dict.privacyText;
+
+            document.getElementById('exampleHeading').textContent = dict.exampleHeading;
+            document.getElementById('exampleIntro').textContent = dict.exampleIntro;
+            document.getElementById('exampleList').innerHTML = dict.exampleList.map(i => `<li>${i}</li>`).join('');
+
+            document.getElementById('bestPracticesHeading').textContent = dict.bestPracticesHeading;
+            document.getElementById('bestPracticesList').innerHTML = dict.bestPracticesList.map(i => `<li>${i}</li>`).join('');
+
+            document.getElementById('generatedPromptHeading').textContent = dict.generatedPromptHeading;
+            const promptOutput = document.getElementById('prompt-output');
+            if (promptOutput && !promptOutput.dataset.generated) {
+                promptOutput.textContent = dict.promptPlaceholder;
+            }
+
+            document.getElementById('btnGenerate').textContent = dict.btnGenerate;
+            document.getElementById('btnCopy').textContent = dict.btnCopy;
+            document.getElementById('btnDownload').textContent = dict.btnDownload;
+            document.getElementById('btnReset').textContent = dict.btnReset;
+        }
+
         function getVal(id) {
             const el = document.getElementById(id);
             return el ? el.value.trim() : '';
         }
 
         function generatePrompt() {
-            const memberName = getVal('member-name') || '[team member name]';
-            const memberRole = getVal('member-role') || '[role]';
-            const timeOnTeam = getVal('time-on-team') || '[time on team]';
-            const lastDate = getVal('last-1on1-date') || '[unspecified]';
-            const nextDate = getVal('next-1on1-date') || '[unspecified]';
-            const frequency = getVal('frequency');
+            const zh = currentLang === 'zh';
+            const none = zh ? '未提供' : 'None noted';
+            const unspecified = zh ? '[未指定]' : '[unspecified]';
 
-            const previousThemes = getVal('previous-themes') || 'None noted';
-            const openActions = getVal('open-actions') || 'None noted';
-            const performanceHistory = getVal('performance-history') || 'None noted';
+            const memberName = getVal('member-name') || (zh ? '[團隊成員姓名]' : '[team member name]');
+            const memberRole = getVal('member-role') || (zh ? '[職稱]' : '[role]');
+            const timeOnTeam = getVal('time-on-team') || (zh ? '[在團隊的時間]' : '[time on team]');
+            const lastDate = getVal('last-1on1-date') || unspecified;
+            const nextDate = getVal('next-1on1-date') || unspecified;
+            const frequencyRaw = getVal('frequency');
+            const frequency = t().freqOptions[frequencyRaw] || frequencyRaw;
 
-            const currentProjects = getVal('current-projects') || 'None noted';
-            const recentEvents = getVal('recent-events') || 'None noted';
-            const teamDynamics = getVal('team-dynamics') || 'None noted';
+            const previousThemes = getVal('previous-themes') || none;
+            const openActions = getVal('open-actions') || none;
+            const performanceHistory = getVal('performance-history') || none;
 
-            const careerGoals = getVal('career-goals') || 'None noted';
-            const developmentFocus = getVal('development-focus') || 'None noted';
-            const growthOpportunities = getVal('growth-opportunities') || 'None noted';
+            const currentProjects = getVal('current-projects') || none;
+            const recentEvents = getVal('recent-events') || none;
+            const teamDynamics = getVal('team-dynamics') || none;
 
-            const concerns = getVal('concerns') || 'None noted';
-            const orgContext = getVal('org-context') || 'None noted';
-            const personalFactors = getVal('personal-factors') || 'None noted';
+            const careerGoals = getVal('career-goals') || none;
+            const developmentFocus = getVal('development-focus') || none;
+            const growthOpportunities = getVal('growth-opportunities') || none;
 
-            const prompt = `You are an experienced engineering manager helping me prepare for an upcoming 1:1 meeting. Based on the context below, generate a personalized 1:1 agenda with 5-7 prioritized discussion points. For each point, briefly explain why it matters right now and suggest an open-ended question I could ask. End with a suggested closing question that checks in on what support they need from me.
+            const concerns = getVal('concerns') || none;
+            const orgContext = getVal('org-context') || none;
+            const personalFactors = getVal('personal-factors') || none;
+
+            let prompt;
+            if (zh) {
+                prompt = `你是一位資深工程主管，正在協助我準備即將進行的 1:1 會議。請根據以下脈絡，產生一份個人化的 1:1 議程，列出 5-7 個依優先順序排列的討論重點。針對每個重點，請簡短說明為什麼現在重要，並建議一個可以問的開放式問題。最後請提出一個建議的結尾問題，用來確認對方需要我提供什麼支援。
+
+團隊成員
+- 姓名：${memberName}
+- 職稱：${memberRole}
+- 在團隊的時間：${timeOnTeam}
+- 會議頻率：${frequency}
+- 上次 1:1：${lastDate}
+- 下次 1:1：${nextDate}
+
+歷史脈絡
+- 過去反覆出現的討論主題：${previousThemes}
+- 未結案的 action item：${openActions}
+- 績效歷史摘要：${performanceHistory}
+
+目前狀況
+- 目前專案：${currentProjects}
+- 近期事件：${recentEvents}
+- 團隊互動狀況：${teamDynamics}
+
+目標與發展
+- 職涯目標：${careerGoals}
+- 發展重點：${developmentFocus}
+- 正在考慮的成長機會：${growthOpportunities}
+
+其他脈絡
+- 擔憂事項：${concerns}
+- 組織層面脈絡：${orgContext}
+- 個人因素：${personalFactors}
+
+請讓議程精簡到足以在單次 1:1 中討論完（不要為了湊數塞入低價值項目），也不要杜撰任何超出以上內容的事實。`;
+            } else {
+                prompt = `You are an experienced engineering manager helping me prepare for an upcoming 1:1 meeting. Based on the context below, generate a personalized 1:1 agenda with 5-7 prioritized discussion points. For each point, briefly explain why it matters right now and suggest an open-ended question I could ask. End with a suggested closing question that checks in on what support they need from me.
 
 TEAM MEMBER
 - Name: ${memberName}
@@ -451,19 +784,23 @@ ADDITIONAL CONTEXT
 - Personal factors: ${personalFactors}
 
 Keep the agenda concise enough to cover in a single 1:1 (do not pad it with low-value items), and do not fabricate any facts beyond what's provided above.`;
+            }
 
-            document.getElementById('prompt-output').textContent = prompt;
+            const promptOutput = document.getElementById('prompt-output');
+            promptOutput.textContent = prompt;
+            promptOutput.dataset.generated = 'true';
             autoSave();
         }
 
         function copyPrompt() {
-            const promptText = document.getElementById('prompt-output').textContent;
-            if (!promptText || promptText.startsWith('Fill in the fields')) {
-                alert('Generate the prompt first.');
+            const promptOutput = document.getElementById('prompt-output');
+            const promptText = promptOutput.textContent;
+            if (!promptOutput.dataset.generated) {
+                alert(t().alertGenerateFirst);
                 return;
             }
             navigator.clipboard.writeText(promptText).then(() => {
-                alert('Prompt copied to clipboard.');
+                alert(t().alertCopied);
             });
         }
 
@@ -500,7 +837,7 @@ Keep the agenda concise enough to cover in a single 1:1 (do not pad it with low-
         }
 
         function resetForm() {
-            if (confirm('Clear all fields? This cannot be undone.')) {
+            if (confirm(t().confirmReset)) {
                 localStorage.removeItem('ai1on1Prep');
                 location.reload();
             }
@@ -508,6 +845,7 @@ Keep the agenda concise enough to cover in a single 1:1 (do not pad it with low-
 
         document.addEventListener('DOMContentLoaded', function() {
             loadSaved();
+            renderLanguage();
             document.addEventListener('input', autoSave);
             document.addEventListener('change', autoSave);
         });

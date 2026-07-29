@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Update Email Draft Prompt Template</title>
+    <title id="pageTitle">Team Update Email Draft Prompt Template</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,6 +19,39 @@
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+        }
+
+        .header-bar {
+            position: relative;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: white;
+            color: #3182ce;
+            border: 1px solid #3182ce;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:hover {
+            background: #ebf8ff;
+        }
+
+        .lang-btn.active {
+            background: #3182ce;
+            color: white;
         }
 
         h1 {
@@ -502,6 +535,7 @@
             .container { box-shadow: none; padding: 0; }
             .actions { display: none; }
             .copy-button { display: none; }
+            .lang-switcher { display: none; }
         }
 
         @media (max-width: 768px) {
@@ -511,54 +545,65 @@
             .metrics-grid { grid-template-columns: repeat(2, 1fr); }
             .audience-tabs { flex-direction: column; }
             .style-options { grid-template-columns: 1fr; }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📧 Team Update Email Draft Generator</h1>
+        <div class="header-bar">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1>📧 <span id="headerTitle">Team Update Email Draft Generator</span></h1>
+        </div>
 
-        <div class="description">
+        <div class="description" id="descriptionText">
             <strong>Purpose:</strong> This template generates AI prompts that create professional, concise weekly team updates for stakeholders. Transform scattered project notes and metrics into polished email communications that keep leadership, product teams, and other stakeholders informed about your team's progress, challenges, and priorities.
         </div>
 
         <!-- Audience Selector -->
         <div class="audience-selector">
-            <h4>🎯 Target Audience</h4>
-            <p>Choose your primary audience (affects tone and detail level):</p>
+            <h4>🎯 <span id="audienceHeading">Target Audience</span></h4>
+            <p id="audienceIntro">Choose your primary audience (affects tone and detail level):</p>
             <div class="audience-tabs">
-                <button class="audience-tab active" onclick="setAudience('leadership')">Executive Leadership</button>
-                <button class="audience-tab" onclick="setAudience('product')">Product Teams</button>
-                <button class="audience-tab" onclick="setAudience('engineering')">Engineering Teams</button>
-                <button class="audience-tab" onclick="setAudience('cross-functional')">Cross-functional Teams</button>
-                <button class="audience-tab" onclick="setAudience('stakeholders')">General Stakeholders</button>
+                <button class="audience-tab active" onclick="setAudience('leadership')" id="audienceTab-leadership">Executive Leadership</button>
+                <button class="audience-tab" onclick="setAudience('product')" id="audienceTab-product">Product Teams</button>
+                <button class="audience-tab" onclick="setAudience('engineering')" id="audienceTab-engineering">Engineering Teams</button>
+                <button class="audience-tab" onclick="setAudience('cross-functional')" id="audienceTab-crossfunctional">Cross-functional Teams</button>
+                <button class="audience-tab" onclick="setAudience('stakeholders')" id="audienceTab-stakeholders">General Stakeholders</button>
             </div>
         </div>
 
         <!-- Update Header Information -->
         <div class="update-header">
-            <h3>📋 Update Information</h3>
+            <h3>📋 <span id="updateInfoHeading">Update Information</span></h3>
             <div class="header-grid">
                 <div class="field">
-                    <span class="field-label">Team Name:</span>
+                    <span class="field-label" id="lblTeamName">Team Name:</span>
                     <input type="text" class="field-input" id="team-name" placeholder="e.g., Platform Engineering Team">
                 </div>
                 <div class="field">
-                    <span class="field-label">Update Period:</span>
+                    <span class="field-label" id="lblUpdatePeriod">Update Period:</span>
                     <input type="text" class="field-input" id="update-period" placeholder="e.g., Week of March 4-8, 2024">
                 </div>
                 <div class="field">
-                    <span class="field-label">Your Name/Role:</span>
+                    <span class="field-label" id="lblSenderInfo">Your Name/Role:</span>
                     <input type="text" class="field-input" id="sender-info" placeholder="e.g., Sarah Chen, Engineering Manager">
                 </div>
                 <div class="field">
-                    <span class="field-label">Update Frequency:</span>
+                    <span class="field-label" id="lblUpdateFrequency">Update Frequency:</span>
                     <select class="field-select" id="update-frequency">
-                        <option value="Weekly">Weekly</option>
-                        <option value="Bi-weekly">Bi-weekly</option>
-                        <option value="Monthly">Monthly</option>
-                        <option value="Sprint-based">Sprint-based</option>
-                        <option value="Ad-hoc">Ad-hoc</option>
+                        <option value="Weekly" id="freqOpt-Weekly">Weekly</option>
+                        <option value="Bi-weekly" id="freqOpt-Biweekly">Bi-weekly</option>
+                        <option value="Monthly" id="freqOpt-Monthly">Monthly</option>
+                        <option value="Sprint-based" id="freqOpt-Sprintbased">Sprint-based</option>
+                        <option value="Ad-hoc" id="freqOpt-Adhoc">Ad-hoc</option>
                     </select>
                 </div>
             </div>
@@ -567,14 +612,14 @@
         <!-- Progress & Accomplishments -->
         <div class="content-section">
             <div class="section-header progress-header">
-                <span><span class="section-icon">✅</span>Progress & Key Accomplishments</span>
+                <span><span class="section-icon">✅</span><span id="progressHeaderText">Progress &amp; Key Accomplishments</span></span>
             </div>
             <div class="section-content">
-                <p><em>What did your team accomplish this period? Focus on outcomes and impact.</em></p>
+                <p><em id="progressIntro">What did your team accomplish this period? Focus on outcomes and impact.</em></p>
 
                 <div class="content-item">
                     <div class="item-header">
-                        <input type="text" class="field-input" placeholder="Achievement or milestone completed" style="flex: 1; margin-right: 15px;">
+                        <input type="text" class="field-input" id="acc-title-1" placeholder="Achievement or milestone completed" style="flex: 1; margin-right: 15px;">
                         <div class="item-priority">
                             <span class="priority-label">Priority:</span>
                             <label class="priority-option high-priority">
@@ -592,13 +637,13 @@
                         </div>
                     </div>
                     <div class="item-details">
-                        <textarea class="field-textarea" placeholder="Describe the impact, metrics, or significance of this accomplishment..."></textarea>
+                        <textarea class="field-textarea" id="acc-details-1" placeholder="Describe the impact, metrics, or significance of this accomplishment..."></textarea>
                     </div>
                 </div>
 
                 <div class="content-item">
                     <div class="item-header">
-                        <input type="text" class="field-input" placeholder="Another key accomplishment" style="flex: 1; margin-right: 15px;">
+                        <input type="text" class="field-input" id="acc-title-2" placeholder="Another key accomplishment" style="flex: 1; margin-right: 15px;">
                         <div class="item-priority">
                             <span class="priority-label">Priority:</span>
                             <label class="priority-option high-priority">
@@ -616,25 +661,25 @@
                         </div>
                     </div>
                     <div class="item-details">
-                        <textarea class="field-textarea" placeholder="Impact and details..."></textarea>
+                        <textarea class="field-textarea" id="acc-details-2" placeholder="Impact and details..."></textarea>
                     </div>
                 </div>
 
-                <button class="btn btn-secondary" onclick="addAccomplishmentItem()">+ Add Accomplishment</button>
+                <button class="btn btn-secondary" onclick="addAccomplishmentItem()" id="btnAddAccomplishment">+ Add Accomplishment</button>
             </div>
         </div>
 
         <!-- Challenges & Blockers -->
         <div class="content-section">
             <div class="section-header challenges-header">
-                <span><span class="section-icon">🚧</span>Challenges & Blockers</span>
+                <span><span class="section-icon">🚧</span><span id="challengesHeaderText">Challenges &amp; Blockers</span></span>
             </div>
             <div class="section-content">
-                <p><em>What challenges is your team facing? What support or decisions are needed?</em></p>
+                <p><em id="challengesIntro">What challenges is your team facing? What support or decisions are needed?</em></p>
 
                 <div class="content-item">
                     <div class="item-header">
-                        <input type="text" class="field-input" placeholder="Challenge or blocker description" style="flex: 1; margin-right: 15px;">
+                        <input type="text" class="field-input" id="chal-title-1" placeholder="Challenge or blocker description" style="flex: 1; margin-right: 15px;">
                         <div class="item-priority">
                             <span class="priority-label">Severity:</span>
                             <label class="priority-option high-priority">
@@ -652,13 +697,13 @@
                         </div>
                     </div>
                     <div class="item-details">
-                        <textarea class="field-textarea" placeholder="Explain the challenge, impact on timeline/goals, and what help is needed..."></textarea>
+                        <textarea class="field-textarea" id="chal-details-1" placeholder="Explain the challenge, impact on timeline/goals, and what help is needed..."></textarea>
                     </div>
                 </div>
 
                 <div class="content-item">
                     <div class="item-header">
-                        <input type="text" class="field-input" placeholder="Another challenge (if any)" style="flex: 1; margin-right: 15px;">
+                        <input type="text" class="field-input" id="chal-title-2" placeholder="Another challenge (if any)" style="flex: 1; margin-right: 15px;">
                         <div class="item-priority">
                             <span class="priority-label">Severity:</span>
                             <label class="priority-option high-priority">
@@ -676,25 +721,25 @@
                         </div>
                     </div>
                     <div class="item-details">
-                        <textarea class="field-textarea" placeholder="Challenge details and support needed..."></textarea>
+                        <textarea class="field-textarea" id="chal-details-2" placeholder="Challenge details and support needed..."></textarea>
                     </div>
                 </div>
 
-                <button class="btn btn-secondary" onclick="addChallengeItem()">+ Add Challenge</button>
+                <button class="btn btn-secondary" onclick="addChallengeItem()" id="btnAddChallenge">+ Add Challenge</button>
             </div>
         </div>
 
         <!-- Upcoming Work & Priorities -->
         <div class="content-section">
             <div class="section-header upcoming-header">
-                <span><span class="section-icon">📅</span>Upcoming Work & Priorities</span>
+                <span><span class="section-icon">📅</span><span id="upcomingHeaderText">Upcoming Work &amp; Priorities</span></span>
             </div>
             <div class="section-content">
-                <p><em>What is your team focusing on in the next period? What are the key priorities?</em></p>
+                <p><em id="upcomingIntro">What is your team focusing on in the next period? What are the key priorities?</em></p>
 
                 <div class="content-item">
                     <div class="item-header">
-                        <input type="text" class="field-input" placeholder="Upcoming project or priority" style="flex: 1; margin-right: 15px;">
+                        <input type="text" class="field-input" id="up-title-1" placeholder="Upcoming project or priority" style="flex: 1; margin-right: 15px;">
                         <div class="item-priority">
                             <span class="priority-label">Priority:</span>
                             <label class="priority-option high-priority">
@@ -712,13 +757,13 @@
                         </div>
                     </div>
                     <div class="item-details">
-                        <textarea class="field-textarea" placeholder="Describe the upcoming work, timeline, and expected outcomes..."></textarea>
+                        <textarea class="field-textarea" id="up-details-1" placeholder="Describe the upcoming work, timeline, and expected outcomes..."></textarea>
                     </div>
                 </div>
 
                 <div class="content-item">
                     <div class="item-header">
-                        <input type="text" class="field-input" placeholder="Additional upcoming work" style="flex: 1; margin-right: 15px;">
+                        <input type="text" class="field-input" id="up-title-2" placeholder="Additional upcoming work" style="flex: 1; margin-right: 15px;">
                         <div class="item-priority">
                             <span class="priority-label">Priority:</span>
                             <label class="priority-option high-priority">
@@ -736,238 +781,706 @@
                         </div>
                     </div>
                     <div class="item-details">
-                        <textarea class="field-textarea" placeholder="Upcoming work details..."></textarea>
+                        <textarea class="field-textarea" id="up-details-2" placeholder="Upcoming work details..."></textarea>
                     </div>
                 </div>
 
-                <button class="btn btn-secondary" onclick="addUpcomingItem()">+ Add Upcoming Work</button>
+                <button class="btn btn-secondary" onclick="addUpcomingItem()" id="btnAddUpcoming">+ Add Upcoming Work</button>
             </div>
         </div>
 
         <!-- Metrics & KPIs -->
         <div class="content-section">
             <div class="section-header metrics-header">
-                <span><span class="section-icon">📊</span>Key Metrics & Performance</span>
+                <span><span class="section-icon">📊</span><span id="metricsHeaderText">Key Metrics &amp; Performance</span></span>
             </div>
             <div class="section-content">
-                <p><em>Include relevant metrics that matter to your audience. Customize based on what your stakeholders track.</em></p>
+                <p><em id="metricsIntro">Include relevant metrics that matter to your audience. Customize based on what your stakeholders track.</em></p>
 
                 <div class="metrics-grid">
                     <div class="metric-input-group">
                         <div class="metric-value">
-                            <input type="text" class="metric-input" placeholder="85%" style="color: #38a169;">
+                            <input type="text" class="metric-input" id="metricVal-1" placeholder="85%" style="color: #38a169;">
                         </div>
                         <div class="metric-label">
-                            <input type="text" class="field-input" placeholder="Sprint Completion Rate" style="color: #6c757d;">
+                            <input type="text" class="field-input" id="metricLabel-1" placeholder="Sprint Completion Rate" style="color: #6c757d;">
                         </div>
                     </div>
 
                     <div class="metric-input-group">
                         <div class="metric-value">
-                            <input type="text" class="metric-input" placeholder="12" style="color: #3182ce;">
+                            <input type="text" class="metric-input" id="metricVal-2" placeholder="12" style="color: #3182ce;">
                         </div>
                         <div class="metric-label">
-                            <input type="text" class="field-input" placeholder="Features Delivered" style="color: #6c757d;">
+                            <input type="text" class="field-input" id="metricLabel-2" placeholder="Features Delivered" style="color: #6c757d;">
                         </div>
                     </div>
 
                     <div class="metric-input-group">
                         <div class="metric-value">
-                            <input type="text" class="metric-input" placeholder="2.1 days" style="color: #805ad5;">
+                            <input type="text" class="metric-input" id="metricVal-3" placeholder="2.1 days" style="color: #805ad5;">
                         </div>
                         <div class="metric-label">
-                            <input type="text" class="field-input" placeholder="Avg Bug Fix Time" style="color: #6c757d;">
+                            <input type="text" class="field-input" id="metricLabel-3" placeholder="Avg Bug Fix Time" style="color: #6c757d;">
                         </div>
                     </div>
 
                     <div class="metric-input-group">
                         <div class="metric-value">
-                            <input type="text" class="metric-input" placeholder="98.9%" style="color: #d69e2e;">
+                            <input type="text" class="metric-input" id="metricVal-4" placeholder="98.9%" style="color: #d69e2e;">
                         </div>
                         <div class="metric-label">
-                            <input type="text" class="field-input" placeholder="System Uptime" style="color: #6c757d;">
+                            <input type="text" class="field-input" id="metricLabel-4" placeholder="System Uptime" style="color: #6c757d;">
                         </div>
                     </div>
                 </div>
 
                 <div class="field" style="margin-top: 20px;">
-                    <span class="field-label">Metrics Context & Trends:</span>
-                    <textarea class="field-textarea" placeholder="Explain what the metrics mean, any trends, or context stakeholders should understand..."></textarea>
+                    <span class="field-label" id="lblMetricsContext">Metrics Context &amp; Trends:</span>
+                    <textarea class="field-textarea" id="metrics-context" placeholder="Explain what the metrics mean, any trends, or context stakeholders should understand..."></textarea>
                 </div>
             </div>
         </div>
 
         <!-- Email Style Selector -->
         <div class="email-style-selector">
-            <h4>✏️ Email Style & Tone</h4>
-            <p>Choose the communication style that fits your organization:</p>
+            <h4>✏️ <span id="styleHeading">Email Style &amp; Tone</span></h4>
+            <p id="styleIntro">Choose the communication style that fits your organization:</p>
             <div class="style-options">
                 <div class="style-option active" onclick="setEmailStyle('executive')" data-style="executive">
-                    <div class="style-title">Executive Summary</div>
-                    <div class="style-description">Concise, high-level, focused on business impact</div>
+                    <div class="style-title" id="styleTitle-executive">Executive Summary</div>
+                    <div class="style-description" id="styleDesc-executive">Concise, high-level, focused on business impact</div>
                 </div>
                 <div class="style-option" onclick="setEmailStyle('detailed')" data-style="detailed">
-                    <div class="style-title">Detailed Technical</div>
-                    <div class="style-description">Comprehensive with technical context and details</div>
+                    <div class="style-title" id="styleTitle-detailed">Detailed Technical</div>
+                    <div class="style-description" id="styleDesc-detailed">Comprehensive with technical context and details</div>
                 </div>
                 <div class="style-option" onclick="setEmailStyle('collaborative')" data-style="collaborative">
-                    <div class="style-title">Collaborative Update</div>
-                    <div class="style-description">Friendly tone, emphasizes teamwork and partnerships</div>
+                    <div class="style-title" id="styleTitle-collaborative">Collaborative Update</div>
+                    <div class="style-description" id="styleDesc-collaborative">Friendly tone, emphasizes teamwork and partnerships</div>
                 </div>
                 <div class="style-option" onclick="setEmailStyle('data-driven')" data-style="data-driven">
-                    <div class="style-title">Data-Driven Report</div>
-                    <div class="style-description">Metrics-focused, analytical, with clear trends</div>
+                    <div class="style-title" id="styleTitle-datadriven">Data-Driven Report</div>
+                    <div class="style-description" id="styleDesc-datadriven">Metrics-focused, analytical, with clear trends</div>
                 </div>
             </div>
         </div>
 
         <!-- Usage Instructions -->
         <div class="usage-steps">
-            <h4>How to Generate Your Update Email</h4>
+            <h4 id="usageHeading">How to Generate Your Update Email</h4>
             <div class="step-item">
                 <span class="step-number">1</span>
-                <span>Fill in your team information and update content above</span>
+                <span id="usageStep-1">Fill in your team information and update content above</span>
             </div>
             <div class="step-item">
                 <span class="step-number">2</span>
-                <span>Select your target audience and preferred email style</span>
+                <span id="usageStep-2">Select your target audience and preferred email style</span>
             </div>
             <div class="step-item">
                 <span class="step-number">3</span>
-                <span>Click "Generate Email Prompt" to create your AI prompt</span>
+                <span id="usageStep-3">Click "Generate Email Prompt" to create your AI prompt</span>
             </div>
             <div class="step-item">
                 <span class="step-number">4</span>
-                <span>Copy and paste the prompt into ChatGPT, Claude, or your AI tool</span>
+                <span id="usageStep-4">Copy and paste the prompt into ChatGPT, Claude, or your AI tool</span>
             </div>
             <div class="step-item">
                 <span class="step-number">5</span>
-                <span>Review and customize the generated email before sending</span>
+                <span id="usageStep-5">Review and customize the generated email before sending</span>
             </div>
         </div>
 
         <!-- Generated Prompt -->
         <div class="prompt-section">
             <div class="prompt-header">
-                <span>Generated AI Email Prompt</span>
+                <span id="promptHeading">Generated AI Email Prompt</span>
             </div>
             <div class="prompt-content">
                 <div class="prompt-box" id="generated-prompt">
 Fill out the team update information above and click "Generate Email Prompt" to create your customized AI prompt.
                 </div>
-                <button class="copy-button" onclick="copyPrompt()">Copy Prompt</button>
+                <button class="copy-button" onclick="copyPrompt()" id="btnCopyPrompt">Copy Prompt</button>
             </div>
         </div>
 
         <!-- Example Output -->
         <div class="example-section">
-            <h4>📧 Example AI-Generated Email</h4>
-            <p>Here's what the AI might generate for a Platform Engineering team update:</p>
+            <h4 id="exampleHeading">📧 Example AI-Generated Email</h4>
+            <p id="exampleIntro">Here's what the AI might generate for a Platform Engineering team update:</p>
 
             <div class="example-email">
                 <div class="email-header">
-                    <div class="email-subject">Weekly Update: Platform Engineering Team - March 4-8, 2024</div>
-                    <div>From: Sarah Chen, Engineering Manager | To: Engineering Leadership, Product Teams</div>
+                    <div class="email-subject" id="exampleSubject">Weekly Update: Platform Engineering Team - March 4-8, 2024</div>
+                    <div id="exampleFromTo">From: Sarah Chen, Engineering Manager | To: Engineering Leadership, Product Teams</div>
                 </div>
 
                 <div class="email-body">
-                    <p>Hi team,</p>
-                    <p>Here's our weekly update for the Platform Engineering team covering March 4-8, 2024.</p>
+                    <p id="exampleGreeting">Hi team,</p>
+                    <p id="exampleOpening">Here's our weekly update for the Platform Engineering team covering March 4-8, 2024.</p>
 
-                    <h4>✅ Key Accomplishments</h4>
-                    <ul>
+                    <h4 id="exampleAccHeading">✅ Key Accomplishments</h4>
+                    <ul id="exampleAccList">
                         <li><strong>API Gateway Migration Completed:</strong> Successfully migrated all services to the new API gateway, reducing latency by 35% and improving reliability</li>
                         <li><strong>Database Performance Optimization:</strong> Implemented query optimizations that reduced average response time from 200ms to 75ms</li>
                         <li><strong>Security Compliance Milestone:</strong> Completed SOC2 compliance requirements for our authentication service</li>
                     </ul>
 
-                    <h4>🚧 Current Challenges</h4>
-                    <ul>
+                    <h4 id="exampleChalHeading">🚧 Current Challenges</h4>
+                    <ul id="exampleChalList">
                         <li><strong>Third-party Integration Delays:</strong> Waiting on vendor API changes for payment processing integration (Medium priority - may impact Q2 timeline by 1-2 weeks)</li>
                         <li><strong>Infrastructure Scaling:</strong> Need decision on AWS capacity planning for Q2 growth projections (High priority - affects budget planning)</li>
                     </ul>
 
-                    <h4>🎯 Next Week Priorities</h4>
-                    <ul>
+                    <h4 id="examplePriHeading">🎯 Next Week Priorities</h4>
+                    <ul id="examplePriList">
                         <li><strong>Mobile App Performance:</strong> Focus on reducing app startup time by 40% through caching improvements</li>
                         <li><strong>Monitoring Enhancement:</strong> Deploy new alerting system to improve incident response time</li>
                         <li><strong>Team Onboarding:</strong> Complete setup for two new engineers joining next week</li>
                     </ul>
 
-                    <h4>📊 Key Metrics</h4>
-                    <ul>
+                    <h4 id="exampleMetricsHeading">📊 Key Metrics</h4>
+                    <ul id="exampleMetricsList">
                         <li>Sprint Completion: 85% (up from 78% last week)</li>
                         <li>System Uptime: 99.2% (exceeding our 99% SLA)</li>
                         <li>Average Bug Resolution: 2.1 days (target: &lt;3 days)</li>
                         <li>Features Delivered: 12 features completed this sprint</li>
                     </ul>
 
-                    <p>Questions or need clarification on anything? Feel free to reach out.</p>
+                    <p id="exampleClosingQ">Questions or need clarification on anything? Feel free to reach out.</p>
 
-                    <p>Best regards,<br>Sarah Chen<br>Engineering Manager, Platform Team</p>
+                    <p id="exampleSignoff">Best regards,<br>Sarah Chen<br>Engineering Manager, Platform Team</p>
                 </div>
             </div>
         </div>
 
         <!-- Tips Section -->
         <div class="tips-section">
-            <h4>💡 Tips for Effective Team Update Emails</h4>
+            <h4 id="tipsHeading">💡 Tips for Effective Team Update Emails</h4>
 
             <div class="tip-item">
                 <div class="tip-icon">1</div>
-                <div>
+                <div id="tip-1">
                     <strong>Keep it Scannable:</strong> Use bullet points, clear headers, and concise language. Busy stakeholders should get key info quickly.
                 </div>
             </div>
 
             <div class="tip-item">
                 <div class="tip-icon">2</div>
-                <div>
+                <div id="tip-2">
                     <strong>Lead with Impact:</strong> Start with outcomes and business value, not just activities. Show how work connects to company goals.
                 </div>
             </div>
 
             <div class="tip-item">
                 <div class="tip-icon">3</div>
-                <div>
+                <div id="tip-3">
                     <strong>Be Transparent about Challenges:</strong> Don't hide problems. Share challenges early with context and proposed solutions.
                 </div>
             </div>
 
             <div class="tip-item">
                 <div class="tip-icon">4</div>
-                <div>
+                <div id="tip-4">
                     <strong>Include Relevant Metrics:</strong> Choose 3-5 metrics that matter to your audience. Provide context for trends and changes.
                 </div>
             </div>
 
             <div class="tip-item">
                 <div class="tip-icon">5</div>
-                <div>
+                <div id="tip-5">
                     <strong>Call Out Dependencies:</strong> Highlight where you need decisions, resources, or support from other teams or leadership.
                 </div>
             </div>
 
             <div class="tip-item">
                 <div class="tip-icon">6</div>
-                <div>
+                <div id="tip-6">
                     <strong>Maintain Consistent Timing:</strong> Send updates on the same day/time each week so stakeholders know when to expect them.
                 </div>
             </div>
         </div>
 
         <div class="actions">
-            <button class="btn btn-success" onclick="generatePrompt()">Generate Email Prompt</button>
-            <button class="btn" onclick="window.print()">Print Template</button>
-            <button class="btn btn-secondary" onclick="downloadTemplate()">Download Template</button>
-            <button class="btn btn-secondary" onclick="resetForm()">Reset Form</button>
+            <button class="btn btn-success" onclick="generatePrompt()" id="btnGeneratePrompt">Generate Email Prompt</button>
+            <button class="btn" onclick="window.print()" id="btnPrint">Print Template</button>
+            <button class="btn btn-secondary" onclick="downloadTemplate()" id="btnDownload">Download Template</button>
+            <button class="btn btn-secondary" onclick="resetForm()" id="btnReset">Reset Form</button>
         </div>
     </div>
 
     <script>
         let selectedAudience = 'leadership';
         let selectedEmailStyle = 'executive';
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
 
+        // ---------------------------------------------------------------
+        // i18n dictionary
+        // ---------------------------------------------------------------
+        const I18N = {
+            en: {
+                pageTitle: "Team Update Email Draft Prompt Template",
+                headerTitle: "Team Update Email Draft Generator",
+                descriptionHTML: "<strong>Purpose:</strong> This template generates AI prompts that create professional, concise weekly team updates for stakeholders. Transform scattered project notes and metrics into polished email communications that keep leadership, product teams, and other stakeholders informed about your team's progress, challenges, and priorities.",
+                audienceHeading: "Target Audience",
+                audienceIntro: "Choose your primary audience (affects tone and detail level):",
+                audienceTabs: {
+                    leadership: "Executive Leadership",
+                    product: "Product Teams",
+                    engineering: "Engineering Teams",
+                    "cross-functional": "Cross-functional Teams",
+                    stakeholders: "General Stakeholders"
+                },
+                audienceDescriptions: {
+                    leadership: "executive leadership (focus on business impact, high-level outcomes, and strategic alignment)",
+                    product: "product teams (emphasize feature delivery, user impact, and cross-team collaboration)",
+                    engineering: "other engineering teams (include technical details, architecture decisions, and engineering metrics)",
+                    "cross-functional": "cross-functional teams (balance technical and business context, highlight dependencies)",
+                    stakeholders: "general stakeholders (clear, accessible language with business context)"
+                },
+                updateInfoHeading: "Update Information",
+                lblTeamName: "Team Name:",
+                lblUpdatePeriod: "Update Period:",
+                lblSenderInfo: "Your Name/Role:",
+                lblUpdateFrequency: "Update Frequency:",
+                phTeamName: "e.g., Platform Engineering Team",
+                phUpdatePeriod: "e.g., Week of March 4-8, 2024",
+                phSenderInfo: "e.g., Sarah Chen, Engineering Manager",
+                freqOptions: { "Weekly": "Weekly", "Bi-weekly": "Bi-weekly", "Monthly": "Monthly", "Sprint-based": "Sprint-based", "Ad-hoc": "Ad-hoc" },
+                progressHeaderText: "Progress & Key Accomplishments",
+                progressIntro: "What did your team accomplish this period? Focus on outcomes and impact.",
+                phAccTitle1: "Achievement or milestone completed",
+                phAccDetails1: "Describe the impact, metrics, or significance of this accomplishment...",
+                phAccTitle2: "Another key accomplishment",
+                phAccDetails2: "Impact and details...",
+                btnAddAccomplishment: "+ Add Accomplishment",
+                challengesHeaderText: "Challenges & Blockers",
+                challengesIntro: "What challenges is your team facing? What support or decisions are needed?",
+                phChalTitle1: "Challenge or blocker description",
+                phChalDetails1: "Explain the challenge, impact on timeline/goals, and what help is needed...",
+                phChalTitle2: "Another challenge (if any)",
+                phChalDetails2: "Challenge details and support needed...",
+                btnAddChallenge: "+ Add Challenge",
+                upcomingHeaderText: "Upcoming Work & Priorities",
+                upcomingIntro: "What is your team focusing on in the next period? What are the key priorities?",
+                phUpTitle1: "Upcoming project or priority",
+                phUpDetails1: "Describe the upcoming work, timeline, and expected outcomes...",
+                phUpTitle2: "Additional upcoming work",
+                phUpDetails2: "Upcoming work details...",
+                btnAddUpcoming: "+ Add Upcoming Work",
+                priorityLabel: "Priority:",
+                severityLabel: "Severity:",
+                high: "High",
+                med: "Med",
+                low: "Low",
+                metricsHeaderText: "Key Metrics & Performance",
+                metricsIntro: "Include relevant metrics that matter to your audience. Customize based on what your stakeholders track.",
+                phMetricVal1: "85%",
+                phMetricLabel1: "Sprint Completion Rate",
+                phMetricVal2: "12",
+                phMetricLabel2: "Features Delivered",
+                phMetricVal3: "2.1 days",
+                phMetricLabel3: "Avg Bug Fix Time",
+                phMetricVal4: "98.9%",
+                phMetricLabel4: "System Uptime",
+                lblMetricsContext: "Metrics Context & Trends:",
+                phMetricsContext: "Explain what the metrics mean, any trends, or context stakeholders should understand...",
+                styleHeading: "Email Style & Tone",
+                styleIntro: "Choose the communication style that fits your organization:",
+                styles: {
+                    executive: { title: "Executive Summary", desc: "Concise, high-level, focused on business impact" },
+                    detailed: { title: "Detailed Technical", desc: "Comprehensive with technical context and details" },
+                    collaborative: { title: "Collaborative Update", desc: "Friendly tone, emphasizes teamwork and partnerships" },
+                    "data-driven": { title: "Data-Driven Report", desc: "Metrics-focused, analytical, with clear trends" }
+                },
+                styleDescriptions: {
+                    executive: "concise executive summary style - bullet points, business impact focus, minimal technical jargon",
+                    detailed: "comprehensive technical style - detailed explanations, technical context, thorough coverage",
+                    collaborative: "friendly collaborative tone - emphasize teamwork, partnerships, and shared goals",
+                    "data-driven": "analytical report style - metrics-focused, trend analysis, data-driven insights"
+                },
+                usageHeading: "How to Generate Your Update Email",
+                usageSteps: [
+                    "Fill in your team information and update content above",
+                    "Select your target audience and preferred email style",
+                    "Click \"Generate Email Prompt\" to create your AI prompt",
+                    "Copy and paste the prompt into ChatGPT, Claude, or your AI tool",
+                    "Review and customize the generated email before sending"
+                ],
+                promptHeading: "Generated AI Email Prompt",
+                promptPlaceholder: "Fill out the team update information above and click \"Generate Email Prompt\" to create your customized AI prompt.",
+                btnCopyPrompt: "Copy Prompt",
+                btnCopied: "Copied!",
+                exampleHeading: "📧 Example AI-Generated Email",
+                exampleIntro: "Here's what the AI might generate for a Platform Engineering team update:",
+                exampleSubject: "Weekly Update: Platform Engineering Team - March 4-8, 2024",
+                exampleFromTo: "From: Sarah Chen, Engineering Manager | To: Engineering Leadership, Product Teams",
+                exampleGreeting: "Hi team,",
+                exampleOpening: "Here's our weekly update for the Platform Engineering team covering March 4-8, 2024.",
+                exampleAccHeading: "✅ Key Accomplishments",
+                exampleAccList: [
+                    "<strong>API Gateway Migration Completed:</strong> Successfully migrated all services to the new API gateway, reducing latency by 35% and improving reliability",
+                    "<strong>Database Performance Optimization:</strong> Implemented query optimizations that reduced average response time from 200ms to 75ms",
+                    "<strong>Security Compliance Milestone:</strong> Completed SOC2 compliance requirements for our authentication service"
+                ],
+                exampleChalHeading: "🚧 Current Challenges",
+                exampleChalList: [
+                    "<strong>Third-party Integration Delays:</strong> Waiting on vendor API changes for payment processing integration (Medium priority - may impact Q2 timeline by 1-2 weeks)",
+                    "<strong>Infrastructure Scaling:</strong> Need decision on AWS capacity planning for Q2 growth projections (High priority - affects budget planning)"
+                ],
+                examplePriHeading: "🎯 Next Week Priorities",
+                examplePriList: [
+                    "<strong>Mobile App Performance:</strong> Focus on reducing app startup time by 40% through caching improvements",
+                    "<strong>Monitoring Enhancement:</strong> Deploy new alerting system to improve incident response time",
+                    "<strong>Team Onboarding:</strong> Complete setup for two new engineers joining next week"
+                ],
+                exampleMetricsHeading: "📊 Key Metrics",
+                exampleMetricsList: [
+                    "Sprint Completion: 85% (up from 78% last week)",
+                    "System Uptime: 99.2% (exceeding our 99% SLA)",
+                    "Average Bug Resolution: 2.1 days (target: &lt;3 days)",
+                    "Features Delivered: 12 features completed this sprint"
+                ],
+                exampleClosingQ: "Questions or need clarification on anything? Feel free to reach out.",
+                exampleSignoff: "Best regards,<br>Sarah Chen<br>Engineering Manager, Platform Team",
+                tipsHeading: "💡 Tips for Effective Team Update Emails",
+                tips: [
+                    "<strong>Keep it Scannable:</strong> Use bullet points, clear headers, and concise language. Busy stakeholders should get key info quickly.",
+                    "<strong>Lead with Impact:</strong> Start with outcomes and business value, not just activities. Show how work connects to company goals.",
+                    "<strong>Be Transparent about Challenges:</strong> Don't hide problems. Share challenges early with context and proposed solutions.",
+                    "<strong>Include Relevant Metrics:</strong> Choose 3-5 metrics that matter to your audience. Provide context for trends and changes.",
+                    "<strong>Call Out Dependencies:</strong> Highlight where you need decisions, resources, or support from other teams or leadership.",
+                    "<strong>Maintain Consistent Timing:</strong> Send updates on the same day/time each week so stakeholders know when to expect them."
+                ],
+                btnGeneratePrompt: "Generate Email Prompt",
+                btnPrint: "Print Template",
+                btnDownload: "Download Template",
+                btnReset: "Reset Form",
+                confirmReset: "Are you sure you want to reset all fields? This will clear all your data.",
+                promptSectionEmailDetails: "Email Details",
+                promptSectionContent: "Content to Include",
+                promptAccomplishments: "Accomplishments & Progress",
+                promptChallenges: "Challenges & Blockers",
+                promptUpcoming: "Upcoming Work & Priorities",
+                promptMetrics: "Key Metrics",
+                promptMetricsContext: "Metrics Context",
+                promptNoAccomplishments: "[No accomplishments listed]",
+                promptNoChallenges: "[No challenges listed]",
+                promptNoUpcoming: "[No upcoming work listed]",
+                promptNoMetrics: "[No metrics provided]",
+                priorityWord: "priority",
+                severityWord: "severity"
+            },
+            zh: {
+                pageTitle: "團隊週報 Email 草稿 Prompt 範本",
+                headerTitle: "團隊週報 Email 草稿產生器",
+                descriptionHTML: "<strong>用途：</strong>這個範本會產生 AI prompt，幫你寫出專業、精簡的團隊定期更新 email，給利害關係人參考。把零散的專案筆記與數據，轉換成一封條理清楚的 email，讓主管、產品團隊與其他利害關係人隨時掌握你團隊的進度、挑戰與優先事項。",
+                audienceHeading: "目標受眾",
+                audienceIntro: "選擇你的主要受眾（會影響語氣與細節程度）：",
+                audienceTabs: {
+                    leadership: "高階主管",
+                    product: "產品團隊",
+                    engineering: "工程團隊",
+                    "cross-functional": "跨職能團隊",
+                    stakeholders: "一般利害關係人"
+                },
+                audienceDescriptions: {
+                    leadership: "高階主管（聚焦於商業影響、高層次成果與策略對齊）",
+                    product: "產品團隊（強調功能交付、使用者影響與跨團隊協作）",
+                    engineering: "其他工程團隊（包含技術細節、架構決策與工程指標）",
+                    "cross-functional": "跨職能團隊（兼顧技術與商業脈絡，凸顯相依關係）",
+                    stakeholders: "一般利害關係人（用清楚易懂的語言搭配商業脈絡）"
+                },
+                updateInfoHeading: "更新資訊",
+                lblTeamName: "團隊名稱：",
+                lblUpdatePeriod: "更新期間：",
+                lblSenderInfo: "你的姓名/職稱：",
+                lblUpdateFrequency: "更新頻率：",
+                phTeamName: "例如：平台工程團隊",
+                phUpdatePeriod: "例如：2024 年 3 月 4-8 日當週",
+                phSenderInfo: "例如：陳莎拉，工程經理",
+                freqOptions: { "Weekly": "每週", "Bi-weekly": "雙週", "Monthly": "每月", "Sprint-based": "以 Sprint 為單位", "Ad-hoc": "不定期" },
+                progressHeaderText: "進度與重點成果",
+                progressIntro: "這段期間團隊完成了什麼？聚焦在成果與影響上。",
+                phAccTitle1: "已完成的成果或里程碑",
+                phAccDetails1: "描述這項成果的影響、數據，或重要性...",
+                phAccTitle2: "另一項重點成果",
+                phAccDetails2: "影響與細節...",
+                btnAddAccomplishment: "+ 新增成果",
+                challengesHeaderText: "挑戰與 Blocker",
+                challengesIntro: "團隊目前面臨哪些挑戰？需要什麼支援或決策？",
+                phChalTitle1: "挑戰或 blocker 描述",
+                phChalDetails1: "說明這項挑戰、對時程/目標的影響，以及需要什麼協助...",
+                phChalTitle2: "其他挑戰（如果有）",
+                phChalDetails2: "挑戰細節與所需支援...",
+                btnAddChallenge: "+ 新增挑戰",
+                upcomingHeaderText: "接下來的工作與優先事項",
+                upcomingIntro: "團隊下個階段的重點是什麼？主要優先事項有哪些？",
+                phUpTitle1: "接下來的專案或優先事項",
+                phUpDetails1: "描述接下來的工作、時程與預期成果...",
+                phUpTitle2: "其他接下來的工作",
+                phUpDetails2: "接下來工作的細節...",
+                btnAddUpcoming: "+ 新增接下來的工作",
+                priorityLabel: "優先度：",
+                severityLabel: "嚴重度：",
+                high: "高",
+                med: "中",
+                low: "低",
+                metricsHeaderText: "關鍵指標與表現",
+                metricsIntro: "納入受眾在意的相關指標，依你的利害關係人追蹤的內容自行調整。",
+                phMetricVal1: "85%",
+                phMetricLabel1: "Sprint 完成率",
+                phMetricVal2: "12",
+                phMetricLabel2: "已交付功能數",
+                phMetricVal3: "2.1 天",
+                phMetricLabel3: "平均修復 Bug 時間",
+                phMetricVal4: "98.9%",
+                phMetricLabel4: "系統正常運行時間",
+                lblMetricsContext: "指標脈絡與趨勢：",
+                phMetricsContext: "說明這些指標代表的意義、趨勢，或利害關係人需要了解的脈絡...",
+                styleHeading: "Email 風格與語氣",
+                styleIntro: "選擇符合你組織文化的溝通風格：",
+                styles: {
+                    executive: { title: "高階摘要", desc: "精簡、高層次，聚焦於商業影響" },
+                    detailed: { title: "詳細技術說明", desc: "完整涵蓋技術脈絡與細節" },
+                    collaborative: { title: "協作式更新", desc: "友善的語氣，強調團隊合作與夥伴關係" },
+                    "data-driven": { title: "數據導向報告", desc: "聚焦數據、分析導向，清楚呈現趨勢" }
+                },
+                styleDescriptions: {
+                    executive: "精簡的高階摘要風格——條列式重點、聚焦商業影響、盡量減少技術術語",
+                    detailed: "完整的技術說明風格——詳細解釋、包含技術脈絡、涵蓋全面",
+                    collaborative: "友善協作的語氣——強調團隊合作、夥伴關係與共同目標",
+                    "data-driven": "分析型報告風格——聚焦數據、趨勢分析、以數據驅動洞察"
+                },
+                usageHeading: "如何產生你的團隊週報 Email",
+                usageSteps: [
+                    "在上方填寫團隊資訊與更新內容",
+                    "選擇目標受眾與偏好的 email 風格",
+                    "點擊「產生 Email Prompt」建立你的 AI prompt",
+                    "把 prompt 複製貼到 ChatGPT、Claude 或你慣用的 AI 工具",
+                    "在寄出前檢視並調整 AI 產生的 email 內容"
+                ],
+                promptHeading: "產生的 AI Email Prompt",
+                promptPlaceholder: "在上方填寫團隊更新資訊，然後點擊「產生 Email Prompt」來建立你的自訂 AI prompt。",
+                btnCopyPrompt: "複製 Prompt",
+                btnCopied: "已複製！",
+                exampleHeading: "📧 AI 產生的 Email 範例",
+                exampleIntro: "以下是 AI 針對平台工程團隊更新可能產生的內容：",
+                exampleSubject: "週報：平台工程團隊 - 2024 年 3 月 4-8 日",
+                exampleFromTo: "寄件人：陳莎拉，工程經理 | 收件人：工程主管、產品團隊",
+                exampleGreeting: "大家好，",
+                exampleOpening: "以下是平台工程團隊 2024 年 3 月 4-8 日這週的更新。",
+                exampleAccHeading: "✅ 重點成果",
+                exampleAccList: [
+                    "<strong>完成 API Gateway 遷移：</strong>已成功將所有服務遷移到新的 API gateway，延遲降低 35%，可靠性也隨之提升",
+                    "<strong>資料庫效能優化：</strong>導入查詢優化，將平均回應時間從 200ms 降到 75ms",
+                    "<strong>資安合規里程碑：</strong>完成身分驗證服務的 SOC2 合規要求"
+                ],
+                exampleChalHeading: "🚧 目前的挑戰",
+                exampleChalList: [
+                    "<strong>第三方整合延遲：</strong>等待供應商更新付款處理整合用的 API（中度優先——可能影響 Q2 時程 1-2 週）",
+                    "<strong>基礎設施擴展：</strong>需要針對 Q2 成長預估決定 AWS 產能規劃（高度優先——影響預算規劃）"
+                ],
+                examplePriHeading: "🎯 下週優先事項",
+                examplePriList: [
+                    "<strong>行動應用效能：</strong>透過快取優化，聚焦將 app 啟動時間縮短 40%",
+                    "<strong>監控強化：</strong>部署新的告警系統以縮短事故應變時間",
+                    "<strong>團隊新人 Onboarding：</strong>完成下週即將加入的兩位工程師的入職設定"
+                ],
+                exampleMetricsHeading: "📊 關鍵指標",
+                exampleMetricsList: [
+                    "Sprint 完成率：85%（較上週 78% 上升）",
+                    "系統正常運行時間：99.2%（超越 99% 的 SLA）",
+                    "平均 Bug 修復時間：2.1 天（目標：&lt;3 天）",
+                    "已交付功能數：本 sprint 完成 12 項功能"
+                ],
+                exampleClosingQ: "有任何問題或需要進一步說明的地方，歡迎隨時聯繫。",
+                exampleSignoff: "此致<br>陳莎拉<br>平台團隊工程經理",
+                tipsHeading: "💡 撰寫有效團隊週報 Email 的技巧",
+                tips: [
+                    "<strong>保持可快速瀏覽：</strong>使用條列式、清楚的標題與精簡的語言。忙碌的利害關係人應該能很快抓到重點資訊。",
+                    "<strong>先講影響再講活動：</strong>從成果與商業價值切入，而不只是列出做了哪些事。讓內容清楚連結到公司目標。",
+                    "<strong>對挑戰保持透明：</strong>不要隱藏問題。及早分享挑戰，附上脈絡與建議的解法。",
+                    "<strong>納入相關指標：</strong>挑選 3-5 個受眾在意的指標，並提供趨勢與變化的脈絡說明。",
+                    "<strong>主動點出相依關係：</strong>凸顯哪裡需要其他團隊或主管的決策、資源或支援。",
+                    "<strong>維持固定的更新時間：</strong>每週固定同一天/同一時間寄出更新，讓利害關係人知道何時該預期收到。"
+                ],
+                btnGeneratePrompt: "產生 Email Prompt",
+                btnPrint: "列印範本",
+                btnDownload: "下載範本",
+                btnReset: "重設表單",
+                confirmReset: "確定要重設所有欄位嗎？這會清除你所有的資料。",
+                promptSectionEmailDetails: "Email 詳細資訊",
+                promptSectionContent: "要包含的內容",
+                promptAccomplishments: "成果與進度",
+                promptChallenges: "挑戰與 Blocker",
+                promptUpcoming: "接下來的工作與優先事項",
+                promptMetrics: "關鍵指標",
+                promptMetricsContext: "指標脈絡",
+                promptNoAccomplishments: "[未列出任何成果]",
+                promptNoChallenges: "[未列出任何挑戰]",
+                promptNoUpcoming: "[未列出接下來的工作]",
+                promptNoMetrics: "[未提供任何指標]",
+                priorityWord: "優先度",
+                severityWord: "嚴重度"
+            }
+        };
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        // ---------------------------------------------------------------
+        // Language switching / rendering
+        // ---------------------------------------------------------------
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+            document.getElementById('pageTitle').textContent = dict.pageTitle;
+            document.title = dict.pageTitle;
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            document.getElementById('headerTitle').textContent = dict.headerTitle;
+            document.getElementById('descriptionText').innerHTML = dict.descriptionHTML;
+
+            document.getElementById('audienceHeading').textContent = dict.audienceHeading;
+            document.getElementById('audienceIntro').textContent = dict.audienceIntro;
+            document.getElementById('audienceTab-leadership').textContent = dict.audienceTabs.leadership;
+            document.getElementById('audienceTab-product').textContent = dict.audienceTabs.product;
+            document.getElementById('audienceTab-engineering').textContent = dict.audienceTabs.engineering;
+            document.getElementById('audienceTab-crossfunctional').textContent = dict.audienceTabs['cross-functional'];
+            document.getElementById('audienceTab-stakeholders').textContent = dict.audienceTabs.stakeholders;
+
+            document.getElementById('updateInfoHeading').textContent = dict.updateInfoHeading;
+            document.getElementById('lblTeamName').textContent = dict.lblTeamName;
+            document.getElementById('lblUpdatePeriod').textContent = dict.lblUpdatePeriod;
+            document.getElementById('lblSenderInfo').textContent = dict.lblSenderInfo;
+            document.getElementById('lblUpdateFrequency').textContent = dict.lblUpdateFrequency;
+            document.getElementById('team-name').placeholder = dict.phTeamName;
+            document.getElementById('update-period').placeholder = dict.phUpdatePeriod;
+            document.getElementById('sender-info').placeholder = dict.phSenderInfo;
+            document.getElementById('freqOpt-Weekly').textContent = dict.freqOptions['Weekly'];
+            document.getElementById('freqOpt-Biweekly').textContent = dict.freqOptions['Bi-weekly'];
+            document.getElementById('freqOpt-Monthly').textContent = dict.freqOptions['Monthly'];
+            document.getElementById('freqOpt-Sprintbased').textContent = dict.freqOptions['Sprint-based'];
+            document.getElementById('freqOpt-Adhoc').textContent = dict.freqOptions['Ad-hoc'];
+
+            document.getElementById('progressHeaderText').textContent = dict.progressHeaderText;
+            document.getElementById('progressIntro').textContent = dict.progressIntro;
+            setPh('acc-title-1', dict.phAccTitle1);
+            setPh('acc-details-1', dict.phAccDetails1);
+            setPh('acc-title-2', dict.phAccTitle2);
+            setPh('acc-details-2', dict.phAccDetails2);
+            document.getElementById('btnAddAccomplishment').textContent = dict.btnAddAccomplishment;
+
+            document.getElementById('challengesHeaderText').textContent = dict.challengesHeaderText;
+            document.getElementById('challengesIntro').textContent = dict.challengesIntro;
+            setPh('chal-title-1', dict.phChalTitle1);
+            setPh('chal-details-1', dict.phChalDetails1);
+            setPh('chal-title-2', dict.phChalTitle2);
+            setPh('chal-details-2', dict.phChalDetails2);
+            document.getElementById('btnAddChallenge').textContent = dict.btnAddChallenge;
+
+            document.getElementById('upcomingHeaderText').textContent = dict.upcomingHeaderText;
+            document.getElementById('upcomingIntro').textContent = dict.upcomingIntro;
+            setPh('up-title-1', dict.phUpTitle1);
+            setPh('up-details-1', dict.phUpDetails1);
+            setPh('up-title-2', dict.phUpTitle2);
+            setPh('up-details-2', dict.phUpDetails2);
+            document.getElementById('btnAddUpcoming').textContent = dict.btnAddUpcoming;
+
+            // Repeated priority/severity labels & High/Med/Low across all content-items
+            // (covers both pre-existing and dynamically-added rows).
+            document.querySelectorAll('.progress-header ~ .section-content .priority-label, .upcoming-header ~ .section-content .priority-label')
+                .forEach(el => el.textContent = dict.priorityLabel);
+            document.querySelectorAll('.challenges-header ~ .section-content .priority-label')
+                .forEach(el => el.textContent = dict.severityLabel);
+            document.querySelectorAll('.high-priority span').forEach(el => el.textContent = dict.high);
+            document.querySelectorAll('.medium-priority span').forEach(el => el.textContent = dict.med);
+            document.querySelectorAll('.low-priority span').forEach(el => el.textContent = dict.low);
+
+            document.getElementById('metricsHeaderText').textContent = dict.metricsHeaderText;
+            document.getElementById('metricsIntro').textContent = dict.metricsIntro;
+            setPh('metricVal-1', dict.phMetricVal1);
+            setPh('metricLabel-1', dict.phMetricLabel1);
+            setPh('metricVal-2', dict.phMetricVal2);
+            setPh('metricLabel-2', dict.phMetricLabel2);
+            setPh('metricVal-3', dict.phMetricVal3);
+            setPh('metricLabel-3', dict.phMetricLabel3);
+            setPh('metricVal-4', dict.phMetricVal4);
+            setPh('metricLabel-4', dict.phMetricLabel4);
+            document.getElementById('lblMetricsContext').textContent = dict.lblMetricsContext;
+            setPh('metrics-context', dict.phMetricsContext);
+
+            document.getElementById('styleHeading').textContent = dict.styleHeading;
+            document.getElementById('styleIntro').textContent = dict.styleIntro;
+            document.getElementById('styleTitle-executive').textContent = dict.styles.executive.title;
+            document.getElementById('styleDesc-executive').textContent = dict.styles.executive.desc;
+            document.getElementById('styleTitle-detailed').textContent = dict.styles.detailed.title;
+            document.getElementById('styleDesc-detailed').textContent = dict.styles.detailed.desc;
+            document.getElementById('styleTitle-collaborative').textContent = dict.styles.collaborative.title;
+            document.getElementById('styleDesc-collaborative').textContent = dict.styles.collaborative.desc;
+            document.getElementById('styleTitle-datadriven').textContent = dict.styles['data-driven'].title;
+            document.getElementById('styleDesc-datadriven').textContent = dict.styles['data-driven'].desc;
+
+            document.getElementById('usageHeading').textContent = dict.usageHeading;
+            dict.usageSteps.forEach((step, i) => {
+                const el = document.getElementById(`usageStep-${i + 1}`);
+                if (el) el.textContent = step;
+            });
+
+            document.getElementById('promptHeading').textContent = dict.promptHeading;
+            const promptBox = document.getElementById('generated-prompt');
+            if (promptBox && !promptBox.dataset.generated) {
+                promptBox.textContent = dict.promptPlaceholder;
+            }
+            document.getElementById('btnCopyPrompt').textContent = dict.btnCopyPrompt;
+
+            document.getElementById('exampleHeading').textContent = dict.exampleHeading;
+            document.getElementById('exampleIntro').textContent = dict.exampleIntro;
+            document.getElementById('exampleSubject').textContent = dict.exampleSubject;
+            document.getElementById('exampleFromTo').textContent = dict.exampleFromTo;
+            document.getElementById('exampleGreeting').textContent = dict.exampleGreeting;
+            document.getElementById('exampleOpening').textContent = dict.exampleOpening;
+            document.getElementById('exampleAccHeading').textContent = dict.exampleAccHeading;
+            document.getElementById('exampleAccList').innerHTML = dict.exampleAccList.map(i => `<li>${i}</li>`).join('');
+            document.getElementById('exampleChalHeading').textContent = dict.exampleChalHeading;
+            document.getElementById('exampleChalList').innerHTML = dict.exampleChalList.map(i => `<li>${i}</li>`).join('');
+            document.getElementById('examplePriHeading').textContent = dict.examplePriHeading;
+            document.getElementById('examplePriList').innerHTML = dict.examplePriList.map(i => `<li>${i}</li>`).join('');
+            document.getElementById('exampleMetricsHeading').textContent = dict.exampleMetricsHeading;
+            document.getElementById('exampleMetricsList').innerHTML = dict.exampleMetricsList.map(i => `<li>${i}</li>`).join('');
+            document.getElementById('exampleClosingQ').textContent = dict.exampleClosingQ;
+            document.getElementById('exampleSignoff').innerHTML = dict.exampleSignoff;
+
+            document.getElementById('tipsHeading').textContent = dict.tipsHeading;
+            dict.tips.forEach((tip, i) => {
+                const el = document.getElementById(`tip-${i + 1}`);
+                if (el) el.innerHTML = tip;
+            });
+
+            document.getElementById('btnGeneratePrompt').textContent = dict.btnGeneratePrompt;
+            document.getElementById('btnPrint').textContent = dict.btnPrint;
+            document.getElementById('btnDownload').textContent = dict.btnDownload;
+            document.getElementById('btnReset').textContent = dict.btnReset;
+        }
+
+        function setPh(id, value) {
+            const el = document.getElementById(id);
+            if (el) el.placeholder = value;
+        }
+
+        // ---------------------------------------------------------------
+        // Interaction handlers
+        // ---------------------------------------------------------------
         function setAudience(audience) {
             document.querySelectorAll('.audience-tab').forEach(tab => tab.classList.remove('active'));
             event.target.classList.add('active');
@@ -1002,42 +1515,50 @@ Fill out the team update information above and click "Generate Email Prompt" to 
         }
 
         function createContentItem(type) {
+            const dict = t();
             const item = document.createElement('div');
             item.className = 'content-item';
             const randomId = Math.random().toString(36).substr(2, 9);
 
-            let priorityLabel = 'Priority';
+            let priorityLabel = dict.priorityLabel;
             let defaultPriority = 'medium';
+            let titlePlaceholder;
 
             if (type === 'challenge') {
-                priorityLabel = 'Severity';
+                priorityLabel = dict.severityLabel;
                 defaultPriority = 'high';
+                titlePlaceholder = dict.phChalTitle1;
             } else if (type === 'upcoming') {
-                priorityLabel = 'Priority';
+                priorityLabel = dict.priorityLabel;
                 defaultPriority = 'high';
+                titlePlaceholder = dict.phUpTitle1;
+            } else {
+                titlePlaceholder = dict.phAccTitle1;
             }
+
+            const detailsPlaceholder = currentLang === 'zh' ? '細節與脈絡...' : 'Details and context...';
 
             item.innerHTML = `
                 <div class="item-header">
-                    <input type="text" class="field-input" placeholder="${type === 'accomplishment' ? 'Achievement or milestone' : type === 'challenge' ? 'Challenge description' : 'Upcoming work item'}" style="flex: 1; margin-right: 15px;">
+                    <input type="text" class="field-input" placeholder="${titlePlaceholder}" style="flex: 1; margin-right: 15px;">
                     <div class="item-priority">
-                        <span class="priority-label">${priorityLabel}:</span>
+                        <span class="priority-label">${priorityLabel}</span>
                         <label class="priority-option high-priority">
                             <input type="radio" name="${type}-${randomId}-priority" value="high" ${defaultPriority === 'high' ? 'checked' : ''}>
-                            <span>High</span>
+                            <span>${dict.high}</span>
                         </label>
                         <label class="priority-option medium-priority">
                             <input type="radio" name="${type}-${randomId}-priority" value="medium" ${defaultPriority === 'medium' ? 'checked' : ''}>
-                            <span>Med</span>
+                            <span>${dict.med}</span>
                         </label>
                         <label class="priority-option low-priority">
                             <input type="radio" name="${type}-${randomId}-priority" value="low" ${defaultPriority === 'low' ? 'checked' : ''}>
-                            <span>Low</span>
+                            <span>${dict.low}</span>
                         </label>
                     </div>
                 </div>
                 <div class="item-details">
-                    <textarea class="field-textarea" placeholder="Details and context..."></textarea>
+                    <textarea class="field-textarea" placeholder="${detailsPlaceholder}"></textarea>
                 </div>
             `;
 
@@ -1045,10 +1566,13 @@ Fill out the team update information above and click "Generate Email Prompt" to 
         }
 
         function generatePrompt() {
+            const dict = t();
+            const zh = currentLang === 'zh';
             const teamName = document.getElementById('team-name').value || '[TEAM_NAME]';
             const updatePeriod = document.getElementById('update-period').value || '[UPDATE_PERIOD]';
             const senderInfo = document.getElementById('sender-info').value || '[YOUR_NAME_ROLE]';
-            const updateFrequency = document.getElementById('update-frequency').value || 'Weekly';
+            const updateFrequencyRaw = document.getElementById('update-frequency').value || 'Weekly';
+            const updateFrequency = dict.freqOptions[updateFrequencyRaw] || updateFrequencyRaw;
 
             // Collect accomplishments
             const accomplishments = [];
@@ -1057,7 +1581,7 @@ Fill out the team update information above and click "Generate Email Prompt" to 
                 const details = item.querySelector('textarea').value;
                 const priority = item.querySelector('input[type="radio"]:checked')?.value || 'medium';
                 if (title) {
-                    accomplishments.push(`${title} (${priority} priority): ${details}`);
+                    accomplishments.push(`${title} (${priority} ${dict.priorityWord}): ${details}`);
                 }
             });
 
@@ -1068,7 +1592,7 @@ Fill out the team update information above and click "Generate Email Prompt" to 
                 const details = item.querySelector('textarea').value;
                 const severity = item.querySelector('input[type="radio"]:checked')?.value || 'medium';
                 if (title) {
-                    challenges.push(`${title} (${severity} severity): ${details}`);
+                    challenges.push(`${title} (${severity} ${dict.severityWord}): ${details}`);
                 }
             });
 
@@ -1079,7 +1603,7 @@ Fill out the team update information above and click "Generate Email Prompt" to 
                 const details = item.querySelector('textarea').value;
                 const priority = item.querySelector('input[type="radio"]:checked')?.value || 'medium';
                 if (title) {
-                    upcomingWork.push(`${title} (${priority} priority): ${details}`);
+                    upcomingWork.push(`${title} (${priority} ${dict.priorityWord}): ${details}`);
                 }
             });
 
@@ -1093,24 +1617,64 @@ Fill out the team update information above and click "Generate Email Prompt" to 
                 }
             });
 
-            const metricsContext = document.querySelector('#metrics-header + .section-content .field-textarea')?.value || '';
+            const metricsContext = document.querySelector('#metrics-context')?.value || '';
 
-            const audienceDescriptions = {
-                'leadership': 'executive leadership (focus on business impact, high-level outcomes, and strategic alignment)',
-                'product': 'product teams (emphasize feature delivery, user impact, and cross-team collaboration)',
-                'engineering': 'other engineering teams (include technical details, architecture decisions, and engineering metrics)',
-                'cross-functional': 'cross-functional teams (balance technical and business context, highlight dependencies)',
-                'stakeholders': 'general stakeholders (clear, accessible language with business context)'
-            };
+            const audienceDescriptions = dict.audienceDescriptions;
+            const styleDescriptions = dict.styleDescriptions;
 
-            const styleDescriptions = {
-                'executive': 'concise executive summary style - bullet points, business impact focus, minimal technical jargon',
-                'detailed': 'comprehensive technical style - detailed explanations, technical context, thorough coverage',
-                'collaborative': 'friendly collaborative tone - emphasize teamwork, partnerships, and shared goals',
-                'data-driven': 'analytical report style - metrics-focused, trend analysis, data-driven insights'
-            };
+            let prompt;
+            if (zh) {
+                prompt = `你正在為${audienceDescriptions[selectedAudience]}撰寫一封專業的團隊更新 email。請用${styleDescriptions[selectedEmailStyle]}，寫出一封結構清楚、易讀、有吸引力的 email。
 
-            const prompt = `You are writing a professional team update email for ${audienceDescriptions[selectedAudience]}. Create a well-structured, clear, and engaging email using a ${styleDescriptions[selectedEmailStyle]}.
+**Email 詳細資訊：**
+- 團隊：${teamName}
+- 更新期間：${updatePeriod}
+- 寄件人：${senderInfo}
+- 頻率：${updateFrequency}更新
+- 受眾：${dict.audienceTabs[selectedAudience] || selectedAudience}
+- 風格：${dict.styles[selectedEmailStyle] ? dict.styles[selectedEmailStyle].title : selectedEmailStyle}
+
+**要包含的內容：**
+
+**成果與進度：**
+${accomplishments.length > 0 ? accomplishments.map(item => `• ${item}`).join('\n') : '• [未列出任何成果]'}
+
+**挑戰與 Blocker：**
+${challenges.length > 0 ? challenges.map(item => `• ${item}`).join('\n') : '• [未列出任何挑戰]'}
+
+**接下來的工作與優先事項：**
+${upcomingWork.length > 0 ? upcomingWork.map(item => `• ${item}`).join('\n') : '• [未列出接下來的工作]'}
+
+**關鍵指標：**
+${metrics.length > 0 ? metrics.map(item => `• ${item}`).join('\n') : '• [未提供任何指標]'}
+
+**指標脈絡：** ${metricsContext}
+
+**Email 要求：**
+1. **專業的主旨行**，符合${dict.audienceTabs[selectedAudience] || selectedAudience}的閱讀對象
+2. **清楚的結構**，用標題或格式明確區分各段落
+3. **有吸引力的開場**，為這段更新期間帶出脈絡
+4. **聚焦成果的內容**，呈現結果而不只是活動紀錄
+5. **明確標示**需要關注或決策的挑戰
+6. **專業的結尾**，附上後續步驟或聯絡方式
+7. **適當的長度**——精簡但完整（目標是 2-3 分鐘內能瀏覽完）
+
+**語氣指引：**
+- 專業但親切
+- 對成果有自信，對挑戰保持透明
+- 行動導向，附清楚的下一步
+- 依${dict.audienceTabs[selectedAudience] || selectedAudience}調整合適的技術深度
+- ${dict.styles[selectedEmailStyle] ? dict.styles[selectedEmailStyle].title : selectedEmailStyle}的溝通風格
+
+**格式要求：**
+- 使用清楚的標題/段落
+- 用條列式方便快速瀏覽
+- 把關鍵資訊加粗
+- 段落保持精簡、聚焦
+
+請產生一封完整、可直接寄出的 email，讓${senderInfo}能寄給${dict.audienceTabs[selectedAudience] || selectedAudience}，作為他們的${updateFrequency}團隊更新。`;
+            } else {
+                prompt = `You are writing a professional team update email for ${audienceDescriptions[selectedAudience]}. Create a well-structured, clear, and engaging email using a ${styleDescriptions[selectedEmailStyle]}.
 
 **Email Details:**
 - Team: ${teamName}
@@ -1159,8 +1723,11 @@ ${metrics.length > 0 ? metrics.map(item => `• ${item}`).join('\n') : '• [No 
 - Keep paragraphs short and focused
 
 Please generate a complete, ready-to-send email that ${senderInfo} can send to ${selectedAudience} as their ${updateFrequency.toLowerCase()} team update.`;
+            }
 
-            document.getElementById('generated-prompt').textContent = prompt;
+            const promptBox = document.getElementById('generated-prompt');
+            promptBox.textContent = prompt;
+            promptBox.dataset.generated = 'true';
             autoSave();
         }
 
@@ -1171,7 +1738,7 @@ Please generate a complete, ready-to-send email that ${senderInfo} can send to $
                 navigator.clipboard.writeText(promptText).then(() => {
                     const button = document.querySelector('.copy-button');
                     const originalText = button.textContent;
-                    button.textContent = 'Copied!';
+                    button.textContent = t().btnCopied;
                     button.style.background = '#38a169';
                     setTimeout(() => {
                         button.textContent = originalText;
@@ -1189,7 +1756,7 @@ Please generate a complete, ready-to-send email that ${senderInfo} can send to $
                     document.execCommand('copy');
                     const button = document.querySelector('.copy-button');
                     const originalText = button.textContent;
-                    button.textContent = 'Copied!';
+                    button.textContent = t().btnCopied;
                     button.style.background = '#38a169';
                     setTimeout(() => {
                         button.textContent = originalText;
@@ -1216,7 +1783,10 @@ Please generate a complete, ready-to-send email that ${senderInfo} can send to $
                 }
             });
 
-            data['generated_prompt'] = document.getElementById('generated-prompt').textContent;
+            const promptBoxForSave = document.getElementById('generated-prompt');
+            if (promptBoxForSave.dataset.generated) {
+                data['generated_prompt'] = promptBoxForSave.textContent;
+            }
             localStorage.setItem('teamUpdateEmail', JSON.stringify(data));
         }
 
@@ -1251,7 +1821,9 @@ Please generate a complete, ready-to-send email that ${senderInfo} can send to $
                 }
 
                 if (data.generated_prompt) {
-                    document.getElementById('generated-prompt').textContent = data.generated_prompt;
+                    const promptBox = document.getElementById('generated-prompt');
+                    promptBox.textContent = data.generated_prompt;
+                    promptBox.dataset.generated = 'true';
                 }
             }
         }
@@ -1270,7 +1842,7 @@ Please generate a complete, ready-to-send email that ${senderInfo} can send to $
         }
 
         function resetForm() {
-            if (confirm('Are you sure you want to reset all fields? This will clear all your data.')) {
+            if (confirm(t().confirmReset)) {
                 localStorage.removeItem('teamUpdateEmail');
                 location.reload();
             }
@@ -1289,6 +1861,8 @@ Please generate a complete, ready-to-send email that ${senderInfo} can send to $
             if (!document.getElementById('update-period').value) {
                 document.getElementById('update-period').value = weekString;
             }
+
+            renderLanguage();
 
             // Auto-save on input changes
             document.addEventListener('input', autoSave);

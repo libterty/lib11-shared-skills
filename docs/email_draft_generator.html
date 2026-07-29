@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engineering Management Email Draft Generator</title>
+    <title id="pageTitle">Engineering Management Email Draft Generator</title>
     <style>
         * {
             margin: 0;
@@ -28,6 +28,36 @@
             border-radius: 8px;
             margin-bottom: 30px;
             text-align: center;
+            position: relative;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.4);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: #667eea;
         }
 
         .header h1 {
@@ -217,6 +247,10 @@
                 display: none;
             }
 
+            .lang-switcher {
+                display: none;
+            }
+
             .header {
                 background: #667eea !important;
                 -webkit-print-color-adjust: exact;
@@ -243,23 +277,33 @@
             .template-grid {
                 grid-template-columns: 1fr;
             }
+
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>📧 Engineering Management Email Draft Generator</h1>
-        <p>Professional email templates and AI prompts for stakeholder communication and team management</p>
+        <div class="lang-switcher">
+            <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+            <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+        </div>
+        <h1>📧 <span id="headerTitle">Engineering Management Email Draft Generator</span></h1>
+        <p id="headerSubtitle">Professional email templates and AI prompts for stakeholder communication and team management</p>
     </div>
 
     <div class="container">
         <div class="section">
-            <h2>📋 Overview & Usage</h2>
-            <p>This tool provides structured prompts and templates for generating professional emails across common engineering management scenarios. Use the prompts below with AI assistants or as templates for manual drafting.</p>
+            <h2>📋 <span id="overviewHeading">Overview &amp; Usage</span></h2>
+            <p id="overviewBody">This tool provides structured prompts and templates for generating professional emails across common engineering management scenarios. Use the prompts below with AI assistants or as templates for manual drafting.</p>
 
             <div class="tips">
-                <h4>💡 Best Practices</h4>
-                <ul>
+                <h4>💡 <span id="tipsHeading">Best Practices</span></h4>
+                <ul id="tipsList">
                     <li>Fill out the context fields thoroughly for better AI-generated results</li>
                     <li>Customize tone and formality based on your audience</li>
                     <li>Always review and personalize generated content before sending</li>
@@ -269,104 +313,103 @@
         </div>
 
         <div class="section">
-            <h2>🎯 Email Categories</h2>
+            <h2>🎯 <span id="categoriesHeading">Email Categories</span></h2>
             <div class="email-types">
                 <div class="email-type">
-                    <h3>📊 Status Updates</h3>
-                    <p>Sprint progress, milestone updates, project status reports, roadmap changes</p>
+                    <h3>📊 <span id="etTitle-status">Status Updates</span></h3>
+                    <p id="etDesc-status">Sprint progress, milestone updates, project status reports, roadmap changes</p>
                 </div>
                 <div class="email-type">
-                    <h3>🚨 Issue Communication</h3>
-                    <p>Incident reports, outages, delays, risk escalation, blocker notifications</p>
+                    <h3>🚨 <span id="etTitle-issue">Issue Communication</span></h3>
+                    <p id="etDesc-issue">Incident reports, outages, delays, risk escalation, blocker notifications</p>
                 </div>
                 <div class="email-type">
-                    <h3>👥 Team Communication</h3>
-                    <p>All-hands updates, process changes, team announcements, recognition</p>
+                    <h3>👥 <span id="etTitle-team">Team Communication</span></h3>
+                    <p id="etDesc-team">All-hands updates, process changes, team announcements, recognition</p>
                 </div>
                 <div class="email-type">
-                    <h3>🤝 Stakeholder Relations</h3>
-                    <p>Executive updates, cross-team coordination, external partner communication</p>
+                    <h3>🤝 <span id="etTitle-stakeholder">Stakeholder Relations</span></h3>
+                    <p id="etDesc-stakeholder">Executive updates, cross-team coordination, external partner communication</p>
                 </div>
                 <div class="email-type">
-                    <h3>📈 Performance & Reviews</h3>
-                    <p>Quarterly reviews, goal setting, feedback delivery, career discussions</p>
+                    <h3>📈 <span id="etTitle-performance">Performance &amp; Reviews</span></h3>
+                    <p id="etDesc-performance">Quarterly reviews, goal setting, feedback delivery, career discussions</p>
                 </div>
                 <div class="email-type">
-                    <h3>🔄 Process & Change</h3>
-                    <p>New procedures, tool rollouts, policy updates, retrospective outcomes</p>
+                    <h3>🔄 <span id="etTitle-process">Process &amp; Change</span></h3>
+                    <p id="etDesc-process">New procedures, tool rollouts, policy updates, retrospective outcomes</p>
                 </div>
             </div>
         </div>
 
         <div class="section">
-            <h2>🤖 AI Prompt Generator</h2>
+            <h2>🤖 <span id="generatorHeading">AI Prompt Generator</span></h2>
             <div class="prompt-section">
-                <h4>Context Input Form</h4>
+                <h4 id="contextFormHeading">Context Input Form</h4>
 
                 <div class="prompt-field">
-                    <label for="emailType">Email Type:</label>
+                    <label for="emailType" id="lblEmailType">Email Type:</label>
                     <select id="emailType">
-                        <option>Status Update</option>
-                        <option>Issue Communication</option>
-                        <option>Team Announcement</option>
-                        <option>Stakeholder Update</option>
-                        <option>Performance Discussion</option>
-                        <option>Process Change</option>
-                        <option>Meeting Follow-up</option>
-                        <option>Resource Request</option>
+                        <option value="Status Update" id="etOpt-status">Status Update</option>
+                        <option value="Issue Communication" id="etOpt-issue">Issue Communication</option>
+                        <option value="Team Announcement" id="etOpt-team">Team Announcement</option>
+                        <option value="Stakeholder Update" id="etOpt-stakeholder">Stakeholder Update</option>
+                        <option value="Performance Discussion" id="etOpt-performance">Performance Discussion</option>
+                        <option value="Process Change" id="etOpt-process">Process Change</option>
+                        <option value="Meeting Follow-up" id="etOpt-followup">Meeting Follow-up</option>
+                        <option value="Resource Request" id="etOpt-resource">Resource Request</option>
                     </select>
                 </div>
 
                 <div class="prompt-field">
-                    <label for="audience">Audience:</label>
+                    <label for="audience" id="lblAudience">Audience:</label>
                     <input type="text" id="audience" placeholder="e.g., Engineering VP, Product Team, Direct Reports, Executive Leadership">
                 </div>
 
                 <div class="prompt-field">
-                    <label for="context">Situation/Context:</label>
+                    <label for="context" id="lblContext">Situation/Context:</label>
                     <textarea id="context" placeholder="Describe the situation, project, issue, or topic you're communicating about..."></textarea>
                 </div>
 
                 <div class="prompt-field">
-                    <label for="keyPoints">Key Points to Cover:</label>
+                    <label for="keyPoints" id="lblKeyPoints">Key Points to Cover:</label>
                     <textarea id="keyPoints" placeholder="List the main points, data, decisions, or actions you need to communicate..."></textarea>
                 </div>
 
                 <div class="prompt-field">
-                    <label for="tone">Tone/Formality:</label>
+                    <label for="tone" id="lblTone">Tone/Formality:</label>
                     <select id="tone">
-                        <option>Professional & Direct</option>
-                        <option>Formal & Executive</option>
-                        <option>Collaborative & Friendly</option>
-                        <option>Urgent & Decisive</option>
-                        <option>Reassuring & Confident</option>
-                        <option>Transparent & Honest</option>
+                        <option value="Professional & Direct" id="toneOpt-professional">Professional &amp; Direct</option>
+                        <option value="Formal & Executive" id="toneOpt-formal">Formal &amp; Executive</option>
+                        <option value="Collaborative & Friendly" id="toneOpt-collaborative">Collaborative &amp; Friendly</option>
+                        <option value="Urgent & Decisive" id="toneOpt-urgent">Urgent &amp; Decisive</option>
+                        <option value="Reassuring & Confident" id="toneOpt-reassuring">Reassuring &amp; Confident</option>
+                        <option value="Transparent & Honest" id="toneOpt-transparent">Transparent &amp; Honest</option>
                     </select>
                 </div>
 
                 <div class="prompt-field">
-                    <label for="actionItems">Desired Actions/Next Steps:</label>
+                    <label for="actionItems" id="lblActionItems">Desired Actions/Next Steps:</label>
                     <textarea id="actionItems" placeholder="What do you want recipients to do? Meetings to schedule? Decisions needed?"></textarea>
                 </div>
 
-                <button class="generate-btn" onclick="generatePrompt()">✨ Generate AI Prompt</button>
-                <button class="generate-btn" onclick="generateTemplate()">📝 Generate Template</button>
+                <button class="generate-btn" onclick="generatePrompt()" id="btnGeneratePrompt">✨ Generate AI Prompt</button>
+                <button class="generate-btn" onclick="generateTemplate()" id="btnGenerateTemplate">📝 Generate Template</button>
             </div>
 
             <div class="output-area" id="outputArea">
-                <p style="color: #6c757d; text-align: center; margin-top: 80px;">Generated content will appear here...</p>
+                <p style="color: #6c757d; text-align: center; margin-top: 80px;" id="outputPlaceholder">Generated content will appear here...</p>
             </div>
         </div>
 
         <div class="section">
-            <h2>📚 Email Templates</h2>
+            <h2>📚 <span id="templatesHeading">Email Templates</span></h2>
             <div class="template-grid">
                 <div class="template-card">
-                    <div class="template-header">Sprint Status Update</div>
+                    <div class="template-header" id="tplHeader-sprint">Sprint Status Update</div>
                     <div class="template-content">
-                        <strong>Use Case:</strong> Weekly/bi-weekly sprint progress communication
-                        <div class="template-example">
-Subject: Sprint [X] Update - [Project Name]
+                        <span id="tplUseCase-sprint"><strong>Use Case:</strong> Weekly/bi-weekly sprint progress communication</span>
+                        <div class="template-example" id="tplExample-sprint">Subject: Sprint [X] Update - [Project Name]
 
 Hi [Team/Stakeholders],
 
@@ -392,11 +435,10 @@ Best,
                 </div>
 
                 <div class="template-card">
-                    <div class="template-header">Incident Communication</div>
+                    <div class="template-header" id="tplHeader-incident">Incident Communication</div>
                     <div class="template-content">
-                        <strong>Use Case:</strong> Outage or critical issue notification
-                        <div class="template-example">
-Subject: [RESOLVED/ONGOING] - [System] Issue
+                        <span id="tplUseCase-incident"><strong>Use Case:</strong> Outage or critical issue notification</span>
+                        <div class="template-example" id="tplExample-incident">Subject: [RESOLVED/ONGOING] - [System] Issue
 
 Hi [Stakeholders],
 
@@ -421,11 +463,10 @@ I'll provide updates as available.
                 </div>
 
                 <div class="template-card">
-                    <div class="template-header">Executive Summary</div>
+                    <div class="template-header" id="tplHeader-executive">Executive Summary</div>
                     <div class="template-content">
-                        <strong>Use Case:</strong> High-level leadership updates
-                        <div class="template-example">
-Subject: Engineering Update - [Period]
+                        <span id="tplUseCase-executive"><strong>Use Case:</strong> High-level leadership updates</span>
+                        <div class="template-example" id="tplExample-executive">Subject: Engineering Update - [Period]
 
 [Executive Team],
 
@@ -451,11 +492,10 @@ Happy to discuss details.
                 </div>
 
                 <div class="template-card">
-                    <div class="template-header">Team Announcement</div>
+                    <div class="template-header" id="tplHeader-announcement">Team Announcement</div>
                     <div class="template-content">
-                        <strong>Use Case:</strong> Process changes, new hires, policy updates
-                        <div class="template-example">
-Subject: [Team] Update - [Topic]
+                        <span id="tplUseCase-announcement"><strong>Use Case:</strong> Process changes, new hires, policy updates</span>
+                        <div class="template-example" id="tplExample-announcement">Subject: [Team] Update - [Topic]
 
 Team,
 
@@ -487,27 +527,482 @@ Thanks,
     </div>
 
     <script>
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        // ---------------------------------------------------------------
+        // i18n dictionaries
+        // ---------------------------------------------------------------
+        const I18N = {
+            en: {
+                pageTitle: "Engineering Management Email Draft Generator",
+                headerTitle: "Engineering Management Email Draft Generator",
+                headerSubtitle: "Professional email templates and AI prompts for stakeholder communication and team management",
+                overviewHeading: "Overview & Usage",
+                overviewBody: "This tool provides structured prompts and templates for generating professional emails across common engineering management scenarios. Use the prompts below with AI assistants or as templates for manual drafting.",
+                tipsHeading: "Best Practices",
+                tips: [
+                    "Fill out the context fields thoroughly for better AI-generated results",
+                    "Customize tone and formality based on your audience",
+                    "Always review and personalize generated content before sending",
+                    "Save frequently used contexts as templates"
+                ],
+                categoriesHeading: "Email Categories",
+                emailTypes: {
+                    status: { title: "Status Updates", desc: "Sprint progress, milestone updates, project status reports, roadmap changes" },
+                    issue: { title: "Issue Communication", desc: "Incident reports, outages, delays, risk escalation, blocker notifications" },
+                    team: { title: "Team Communication", desc: "All-hands updates, process changes, team announcements, recognition" },
+                    stakeholder: { title: "Stakeholder Relations", desc: "Executive updates, cross-team coordination, external partner communication" },
+                    performance: { title: "Performance & Reviews", desc: "Quarterly reviews, goal setting, feedback delivery, career discussions" },
+                    process: { title: "Process & Change", desc: "New procedures, tool rollouts, policy updates, retrospective outcomes" }
+                },
+                generatorHeading: "AI Prompt Generator",
+                contextFormHeading: "Context Input Form",
+                lblEmailType: "Email Type:",
+                emailTypeOptions: {
+                    "Status Update": "Status Update",
+                    "Issue Communication": "Issue Communication",
+                    "Team Announcement": "Team Announcement",
+                    "Stakeholder Update": "Stakeholder Update",
+                    "Performance Discussion": "Performance Discussion",
+                    "Process Change": "Process Change",
+                    "Meeting Follow-up": "Meeting Follow-up",
+                    "Resource Request": "Resource Request"
+                },
+                lblAudience: "Audience:",
+                phAudience: "e.g., Engineering VP, Product Team, Direct Reports, Executive Leadership",
+                lblContext: "Situation/Context:",
+                phContext: "Describe the situation, project, issue, or topic you're communicating about...",
+                lblKeyPoints: "Key Points to Cover:",
+                phKeyPoints: "List the main points, data, decisions, or actions you need to communicate...",
+                lblTone: "Tone/Formality:",
+                toneOptions: {
+                    "Professional & Direct": "Professional & Direct",
+                    "Formal & Executive": "Formal & Executive",
+                    "Collaborative & Friendly": "Collaborative & Friendly",
+                    "Urgent & Decisive": "Urgent & Decisive",
+                    "Reassuring & Confident": "Reassuring & Confident",
+                    "Transparent & Honest": "Transparent & Honest"
+                },
+                lblActionItems: "Desired Actions/Next Steps:",
+                phActionItems: "What do you want recipients to do? Meetings to schedule? Decisions needed?",
+                btnGeneratePrompt: "✨ Generate AI Prompt",
+                btnGenerateTemplate: "📝 Generate Template",
+                outputPlaceholder: "Generated content will appear here...",
+                templatesHeading: "Email Templates",
+                templates: {
+                    sprint: { header: "Sprint Status Update", useCase: "<strong>Use Case:</strong> Weekly/bi-weekly sprint progress communication" },
+                    incident: { header: "Incident Communication", useCase: "<strong>Use Case:</strong> Outage or critical issue notification" },
+                    executive: { header: "Executive Summary", useCase: "<strong>Use Case:</strong> High-level leadership updates" },
+                    announcement: { header: "Team Announcement", useCase: "<strong>Use Case:</strong> Process changes, new hires, policy updates" }
+                },
+                notSpecified: "[Not specified]",
+                pleaseContext: "[Please provide context]",
+                pleaseKeyPoints: "[Please specify key points]",
+                pleaseActions: "[Please specify desired actions]",
+                aiPromptGeneratedHeading: "🤖 AI Prompt Generated",
+                aiPromptFooter: "Copy this prompt and paste it into your AI assistant (Claude, ChatGPT, etc.) to generate your email.",
+                emailTemplateGeneratedHeading: "📝 Email Template Generated",
+                emailTemplateFooter: "Customize the bracketed placeholders with your specific information.",
+                audiencePlaceholder: "[Audience]",
+                subjectPlaceholder: "[Subject]",
+                issueDescPlaceholder: "[Issue Description]",
+                openingContextPlaceholder: "[Opening context/purpose]"
+            },
+            zh: {
+                pageTitle: "工程管理 Email 草稿產生器",
+                headerTitle: "工程管理 Email 草稿產生器",
+                headerSubtitle: "為利害關係人溝通與團隊管理打造的專業 email 範本與 AI prompt",
+                overviewHeading: "工具說明與使用方式",
+                overviewBody: "這個工具為常見的工程管理情境提供結構化的 prompt 與範本，協助你產生專業的 email。你可以把下方的 prompt 交給 AI 助理使用，或直接作為手動撰寫的範本。",
+                tipsHeading: "最佳實務",
+                tips: [
+                    "詳細填寫背景欄位，AI 產生的結果會更好",
+                    "依對象調整語氣與正式程度",
+                    "寄出前務必檢視並個人化產生的內容",
+                    "把常用的情境存成範本"
+                ],
+                categoriesHeading: "Email 類別",
+                emailTypes: {
+                    status: { title: "狀態更新", desc: "Sprint 進度、里程碑更新、專案狀態報告、roadmap 變動" },
+                    issue: { title: "問題溝通", desc: "事故報告、服務中斷、延遲、風險升級、blocker 通知" },
+                    team: { title: "團隊溝通", desc: "全員更新、流程變更、團隊公告、表揚" },
+                    stakeholder: { title: "利害關係人關係", desc: "主管更新、跨團隊協調、外部合作夥伴溝通" },
+                    performance: { title: "績效與考核", desc: "季度考核、目標設定、回饋傳遞、職涯討論" },
+                    process: { title: "流程與變更", desc: "新流程、工具導入、政策更新、回顧結論" }
+                },
+                generatorHeading: "AI Prompt 產生器",
+                contextFormHeading: "背景資訊輸入表單",
+                lblEmailType: "Email 類型：",
+                emailTypeOptions: {
+                    "Status Update": "狀態更新",
+                    "Issue Communication": "問題溝通",
+                    "Team Announcement": "團隊公告",
+                    "Stakeholder Update": "利害關係人更新",
+                    "Performance Discussion": "績效討論",
+                    "Process Change": "流程變更",
+                    "Meeting Follow-up": "會議後續追蹤",
+                    "Resource Request": "資源需求申請"
+                },
+                lblAudience: "對象：",
+                phAudience: "例如：工程副總、產品團隊、直屬部屬、高階主管",
+                lblContext: "情境/背景：",
+                phContext: "描述你要溝通的情境、專案、問題或主題...",
+                lblKeyPoints: "要涵蓋的重點：",
+                phKeyPoints: "列出你需要傳達的主要重點、數據、決策或行動...",
+                lblTone: "語氣/正式程度：",
+                toneOptions: {
+                    "Professional & Direct": "專業且直接",
+                    "Formal & Executive": "正式且高階",
+                    "Collaborative & Friendly": "協作且友善",
+                    "Urgent & Decisive": "緊急且果斷",
+                    "Reassuring & Confident": "安撫且有信心",
+                    "Transparent & Honest": "透明且誠實"
+                },
+                lblActionItems: "期望的行動/後續步驟：",
+                phActionItems: "你希望收件者做什麼？要排哪些會議？需要什麼決策？",
+                btnGeneratePrompt: "✨ 產生 AI Prompt",
+                btnGenerateTemplate: "📝 產生範本",
+                outputPlaceholder: "產生的內容會顯示在這裡...",
+                templatesHeading: "Email 範本",
+                templates: {
+                    sprint: { header: "Sprint 狀態更新", useCase: "<strong>使用情境：</strong>每週/雙週的 sprint 進度溝通" },
+                    incident: { header: "事故溝通", useCase: "<strong>使用情境：</strong>服務中斷或重大問題通知" },
+                    executive: { header: "高階摘要", useCase: "<strong>使用情境：</strong>給高階主管的總覽更新" },
+                    announcement: { header: "團隊公告", useCase: "<strong>使用情境：</strong>流程變更、新進成員、政策更新" }
+                },
+                notSpecified: "[未填寫]",
+                pleaseContext: "[請提供背景資訊]",
+                pleaseKeyPoints: "[請填寫重點]",
+                pleaseActions: "[請填寫期望的行動]",
+                aiPromptGeneratedHeading: "🤖 AI Prompt 已產生",
+                aiPromptFooter: "複製這段 prompt，貼到你的 AI 助理（Claude、ChatGPT 等）裡，產生你的 email。",
+                emailTemplateGeneratedHeading: "📝 Email 範本已產生",
+                emailTemplateFooter: "把方括號裡的佔位內容換成你的實際資訊。",
+                audiencePlaceholder: "[對象]",
+                subjectPlaceholder: "[主旨]",
+                issueDescPlaceholder: "[問題描述]",
+                openingContextPlaceholder: "[開場背景/目的]"
+            }
+        };
+
+        // Static template-example full text blocks (4 cards), per language.
+        const TEMPLATE_EXAMPLES = {
+            en: {
+                sprint: `Subject: Sprint [X] Update - [Project Name]
+
+Hi [Team/Stakeholders],
+
+Here's our Sprint [X] status for [Project]:
+
+📊 PROGRESS
+• Completed: [X/Y] story points
+• On track: [Feature list]
+• At risk: [Issue list]
+
+🎯 NEXT SPRINT
+• Focus: [Primary objectives]
+• Delivery: [Expected outcomes]
+
+🚨 BLOCKERS & RISKS
+• [Issue]: [Impact & resolution plan]
+
+Let me know if you have questions.
+
+Best,
+[Name]`,
+                incident: `Subject: [RESOLVED/ONGOING] - [System] Issue
+
+Hi [Stakeholders],
+
+STATUS: [Resolved/Investigating]
+IMPACT: [User/system impact]
+TIMEFRAME: [Start - End time]
+
+SUMMARY:
+[Brief description of issue]
+
+RESOLUTION:
+[Actions taken/being taken]
+
+NEXT STEPS:
+• Post-mortem: [Date]
+• Prevention: [Measures]
+
+I'll provide updates as available.
+
+[Name]`,
+                executive: `Subject: Engineering Update - [Period]
+
+[Executive Team],
+
+KEY HIGHLIGHTS:
+✅ [Major achievement]
+✅ [Milestone reached]
+📈 [Metric improvement]
+
+PRIORITIES & PROGRESS:
+1. [Initiative]: [Status & impact]
+2. [Initiative]: [Status & impact]
+
+RISKS & MITIGATION:
+• [Risk]: [Action plan]
+
+RESOURCE NEEDS:
+• [Request]: [Justification]
+
+Happy to discuss details.
+
+[Name]`,
+                announcement: `Subject: [Team] Update - [Topic]
+
+Team,
+
+I wanted to share some important updates:
+
+📢 ANNOUNCEMENT:
+[Main news/change]
+
+💡 WHY THIS MATTERS:
+[Context and benefits]
+
+🔄 WHAT'S CHANGING:
+• [Change 1]
+• [Change 2]
+
+⏰ TIMELINE:
+• [Date]: [Milestone]
+• [Date]: [Implementation]
+
+QUESTIONS?
+Feel free to reach out or we'll discuss in our next team meeting.
+
+Thanks,
+[Name]`
+            },
+            zh: {
+                sprint: `主旨：Sprint [X] 更新 - [專案名稱]
+
+Hi [團隊/利害關係人]，
+
+以下是 [專案] 的 Sprint [X] 狀態：
+
+📊 進度
+• 已完成：[X/Y] story points
+• 進度正常：[功能清單]
+• 有風險：[問題清單]
+
+🎯 下個 Sprint
+• 重點：[主要目標]
+• 交付：[預期成果]
+
+🚨 阻礙與風險
+• [問題]：[影響與解決計畫]
+
+如有任何問題歡迎告訴我。
+
+Best,
+[姓名]`,
+                incident: `主旨：[已解決/處理中] - [系統] 問題
+
+Hi [利害關係人]，
+
+狀態：[已解決/調查中]
+影響：[使用者/系統影響]
+時間範圍：[開始 - 結束時間]
+
+摘要：
+[問題的簡短說明]
+
+解決方式：
+[已採取/正在採取的行動]
+
+後續步驟：
+• 事後檢討：[日期]
+• 預防措施：[措施]
+
+我會持續提供最新進度。
+
+[姓名]`,
+                executive: `主旨：工程部門更新 - [期間]
+
+[高階主管團隊]，
+
+重點摘要：
+✅ [重大成就]
+✅ [達成的里程碑]
+📈 [指標改善]
+
+優先事項與進度：
+1. [計畫]：[狀態與影響]
+2. [計畫]：[狀態與影響]
+
+風險與緩解措施：
+• [風險]：[行動計畫]
+
+資源需求：
+• [需求]：[理由]
+
+樂意進一步討論細節。
+
+[姓名]`,
+                announcement: `主旨：[團隊] 更新 - [主題]
+
+各位，
+
+想跟大家分享一些重要更新：
+
+📢 公告：
+[主要消息/變更]
+
+💡 為什麼重要：
+[脈絡與效益]
+
+🔄 有什麼變化：
+• [變更 1]
+• [變更 2]
+
+⏰ 時程：
+• [日期]：[里程碑]
+• [日期]：[實施]
+
+有問題嗎？
+歡迎直接聯繫，或我們下次團隊會議再討論。
+
+Thanks,
+[姓名]`
+            }
+        };
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        // ---------------------------------------------------------------
+        // Language switching / rendering
+        // ---------------------------------------------------------------
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+            document.getElementById('pageTitle').textContent = dict.pageTitle;
+            document.title = dict.pageTitle;
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            document.getElementById('headerTitle').textContent = dict.headerTitle;
+            document.getElementById('headerSubtitle').textContent = dict.headerSubtitle;
+
+            document.getElementById('overviewHeading').textContent = dict.overviewHeading;
+            document.getElementById('overviewBody').textContent = dict.overviewBody;
+            document.getElementById('tipsHeading').textContent = dict.tipsHeading;
+            document.getElementById('tipsList').innerHTML = dict.tips.map(tip => `<li>${tip}</li>`).join('');
+
+            document.getElementById('categoriesHeading').textContent = dict.categoriesHeading;
+            Object.keys(dict.emailTypes).forEach(key => {
+                const et = dict.emailTypes[key];
+                const titleEl = document.getElementById(`etTitle-${key}`);
+                const descEl = document.getElementById(`etDesc-${key}`);
+                if (titleEl) titleEl.textContent = et.title;
+                if (descEl) descEl.textContent = et.desc;
+            });
+
+            document.getElementById('generatorHeading').textContent = dict.generatorHeading;
+            document.getElementById('contextFormHeading').textContent = dict.contextFormHeading;
+            document.getElementById('lblEmailType').textContent = dict.lblEmailType;
+            Object.keys(dict.emailTypeOptions).forEach(val => {
+                const opt = document.querySelector(`#emailType option[value="${CSS.escape(val)}"]`);
+                if (opt) opt.textContent = dict.emailTypeOptions[val];
+            });
+            document.getElementById('lblAudience').textContent = dict.lblAudience;
+            document.getElementById('audience').placeholder = dict.phAudience;
+            document.getElementById('lblContext').textContent = dict.lblContext;
+            document.getElementById('context').placeholder = dict.phContext;
+            document.getElementById('lblKeyPoints').textContent = dict.lblKeyPoints;
+            document.getElementById('keyPoints').placeholder = dict.phKeyPoints;
+            document.getElementById('lblTone').textContent = dict.lblTone;
+            Object.keys(dict.toneOptions).forEach(val => {
+                const opt = document.querySelector(`#tone option[value="${CSS.escape(val)}"]`);
+                if (opt) opt.textContent = dict.toneOptions[val];
+            });
+            document.getElementById('lblActionItems').textContent = dict.lblActionItems;
+            document.getElementById('actionItems').placeholder = dict.phActionItems;
+
+            document.getElementById('btnGeneratePrompt').textContent = dict.btnGeneratePrompt;
+            document.getElementById('btnGenerateTemplate').textContent = dict.btnGenerateTemplate;
+            const outputPlaceholder = document.getElementById('outputPlaceholder');
+            if (outputPlaceholder) outputPlaceholder.textContent = dict.outputPlaceholder;
+
+            document.getElementById('templatesHeading').textContent = dict.templatesHeading;
+            Object.keys(dict.templates).forEach(key => {
+                const headerEl = document.getElementById(`tplHeader-${key}`);
+                const useCaseEl = document.getElementById(`tplUseCase-${key}`);
+                const exampleEl = document.getElementById(`tplExample-${key}`);
+                if (headerEl) headerEl.textContent = dict.templates[key].header;
+                if (useCaseEl) useCaseEl.innerHTML = dict.templates[key].useCase;
+                if (exampleEl) exampleEl.textContent = TEMPLATE_EXAMPLES[currentLang][key];
+            });
+        }
+
+        // ---------------------------------------------------------------
+        // Generators
+        // ---------------------------------------------------------------
         function generatePrompt() {
-            const emailType = document.getElementById('emailType').value;
+            const dict = t();
+            const zh = currentLang === 'zh';
+            const emailTypeValue = document.getElementById('emailType').value;
             const audience = document.getElementById('audience').value;
             const context = document.getElementById('context').value;
             const keyPoints = document.getElementById('keyPoints').value;
-            const tone = document.getElementById('tone').value;
+            const toneValue = document.getElementById('tone').value;
             const actionItems = document.getElementById('actionItems').value;
 
-            const prompt = `Please write a professional ${emailType.toLowerCase()} email with the following details:
+            const emailTypeLabel = dict.emailTypeOptions[emailTypeValue] || emailTypeValue;
+            const toneLabel = dict.toneOptions[toneValue] || toneValue;
 
-AUDIENCE: ${audience || '[Not specified]'}
-TONE: ${tone}
+            let prompt;
+            if (zh) {
+                prompt = `請撰寫一封專業的「${emailTypeLabel}」email，內容需包含以下細節：
+
+對象：${audience || dict.notSpecified}
+語氣：${toneLabel}
+
+背景：
+${context || dict.pleaseContext}
+
+要涵蓋的重點：
+${keyPoints || dict.pleaseKeyPoints}
+
+期望的行動/後續步驟：
+${actionItems || dict.pleaseActions}
+
+請以完整 email 的格式呈現，包含：
+- 適當的主旨
+- 專業的問候語
+- 清楚且有結構的內文（視需要使用標題/條列）
+- 明確的行動呼籲
+- 專業的結尾
+
+請讓內容簡潔、可執行，並符合指定的對象與語氣。`;
+            } else {
+                prompt = `Please write a professional ${emailTypeLabel.toLowerCase()} email with the following details:
+
+AUDIENCE: ${audience || dict.notSpecified}
+TONE: ${toneLabel}
 
 CONTEXT:
-${context || '[Please provide context]'}
+${context || dict.pleaseContext}
 
 KEY POINTS TO COVER:
-${keyPoints || '[Please specify key points]'}
+${keyPoints || dict.pleaseKeyPoints}
 
 DESIRED ACTIONS/NEXT STEPS:
-${actionItems || '[Please specify desired actions]'}
+${actionItems || dict.pleaseActions}
 
 Please format as a complete email with:
 - Appropriate subject line
@@ -517,28 +1012,85 @@ Please format as a complete email with:
 - Professional closing
 
 Make it concise, actionable, and appropriate for the specified audience and tone.`;
+            }
 
             document.getElementById('outputArea').innerHTML = `
-                <h4 style="color: #28a745; margin-bottom: 15px;">🤖 AI Prompt Generated</h4>
+                <h4 style="color: #28a745; margin-bottom: 15px;">${dict.aiPromptGeneratedHeading}</h4>
                 <div style="background: white; padding: 15px; border-radius: 4px; border: 1px solid #dee2e6; font-family: monospace; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${prompt}</div>
-                <p style="margin-top: 15px; color: #6c757d; font-style: italic;">Copy this prompt and paste it into your AI assistant (Claude, ChatGPT, etc.) to generate your email.</p>
+                <p style="margin-top: 15px; color: #6c757d; font-style: italic;">${dict.aiPromptFooter}</p>
             `;
         }
 
         function generateTemplate() {
-            const emailType = document.getElementById('emailType').value;
+            const dict = t();
+            const zh = currentLang === 'zh';
+            const emailTypeValue = document.getElementById('emailType').value;
             const audience = document.getElementById('audience').value;
             const context = document.getElementById('context').value;
             const keyPoints = document.getElementById('keyPoints').value;
-            const tone = document.getElementById('tone').value;
             const actionItems = document.getElementById('actionItems').value;
 
             let template = '';
 
-            if (emailType === 'Status Update') {
-                template = `Subject: ${context ? context + ' - ' : ''}Status Update
+            if (zh) {
+                if (emailTypeValue === 'Status Update') {
+                    template = `主旨：${context ? context + ' - ' : ''}狀態更新
 
-Hi ${audience || '[Audience]'},
+Hi ${audience || dict.audiencePlaceholder}，
+
+📊 目前狀態：
+${keyPoints || '• [重點 1]\n• [重點 2]\n• [重點 3]'}
+
+🎯 後續步驟：
+${actionItems || '• [行動事項 1]\n• [行動事項 2]'}
+
+⏰ 時程：
+• [日期]：[里程碑]
+
+如有任何問題請告訴我。
+
+Best regards,
+[你的姓名]`;
+                } else if (emailTypeValue === 'Issue Communication') {
+                    template = `主旨：[緊急] ${context || dict.issueDescPlaceholder}
+
+Hi ${audience || dict.audiencePlaceholder}，
+
+🚨 問題摘要：
+${context || '[描述問題與其影響]'}
+
+📊 目前狀態：
+${keyPoints || '• [目前已知資訊]\n• [目前處理方式]\n• [目前影響]'}
+
+⚡ 立即行動：
+${actionItems || '• [正在採取的行動]\n• [預計解決時間]\n• [下次更新時間]'}
+
+有進一步消息我會持續更新。
+
+[你的姓名]`;
+                } else {
+                    template = `主旨：${context || dict.subjectPlaceholder}
+
+Hi ${audience || dict.audiencePlaceholder}，
+
+${context || dict.openingContextPlaceholder}
+
+重點：
+${keyPoints || '• [重點 1]\n• [重點 2]\n• [重點 3]'}
+
+後續步驟：
+${actionItems || '• [行動 1]\n• [行動 2]'}
+
+如有任何問題請告訴我。
+
+Best regards,
+[你的姓名]`;
+                }
+            } else {
+                if (emailTypeValue === 'Status Update') {
+                    template = `Subject: ${context ? context + ' - ' : ''}Status Update
+
+Hi ${audience || dict.audiencePlaceholder},
 
 📊 CURRENT STATUS:
 ${keyPoints || '• [Key point 1]\n• [Key point 2]\n• [Key point 3]'}
@@ -553,10 +1105,10 @@ Let me know if you have any questions.
 
 Best regards,
 [Your Name]`;
-            } else if (emailType === 'Issue Communication') {
-                template = `Subject: [URGENT] ${context || '[Issue Description]'}
+                } else if (emailTypeValue === 'Issue Communication') {
+                    template = `Subject: [URGENT] ${context || dict.issueDescPlaceholder}
 
-Hi ${audience || '[Audience]'},
+Hi ${audience || dict.audiencePlaceholder},
 
 🚨 ISSUE SUMMARY:
 ${context || '[Describe the issue and its impact]'}
@@ -570,12 +1122,12 @@ ${actionItems || '• [Action being taken]\n• [Timeline for resolution]\n• [
 I'll keep you updated as we learn more.
 
 [Your Name]`;
-            } else {
-                template = `Subject: ${context || '[Subject]'}
+                } else {
+                    template = `Subject: ${context || dict.subjectPlaceholder}
 
-Hi ${audience || '[Audience]'},
+Hi ${audience || dict.audiencePlaceholder},
 
-${context || '[Opening context/purpose]'}
+${context || dict.openingContextPlaceholder}
 
 KEY POINTS:
 ${keyPoints || '• [Point 1]\n• [Point 2]\n• [Point 3]'}
@@ -587,14 +1139,20 @@ Please let me know if you have any questions.
 
 Best regards,
 [Your Name]`;
+                }
             }
 
             document.getElementById('outputArea').innerHTML = `
-                <h4 style="color: #667eea; margin-bottom: 15px;">📝 Email Template Generated</h4>
+                <h4 style="color: #667eea; margin-bottom: 15px;">${dict.emailTemplateGeneratedHeading}</h4>
                 <div style="background: white; padding: 20px; border-radius: 4px; border: 1px solid #dee2e6; font-family: monospace; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${template}</div>
-                <p style="margin-top: 15px; color: #6c757d; font-style: italic;">Customize the bracketed placeholders with your specific information.</p>
+                <p style="margin-top: 15px; color: #6c757d; font-style: italic;">${dict.emailTemplateFooter}</p>
             `;
         }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderLanguage();
+        });
     </script>
 </body>
 </html>

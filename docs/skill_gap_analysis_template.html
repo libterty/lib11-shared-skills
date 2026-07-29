@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skill Gap Analysis Prompt - Engineering Management Tool</title>
+    <title id="pageTitle">Skill Gap Analysis Prompt - Engineering Management Tool</title>
     <style>
         * {
             margin: 0;
@@ -34,6 +34,36 @@
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 3px solid #2c5aa0;
+            position: relative;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: #f1f8ff;
+            color: #2c5aa0;
+            border: 1px solid #2c5aa0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:hover {
+            background: #dbeafe;
+        }
+
+        .lang-btn.active {
+            background: #2c5aa0;
+            color: white;
         }
 
         .header h1 {
@@ -313,6 +343,9 @@
             .action-buttons {
                 display: none;
             }
+            .lang-switcher {
+                display: none;
+            }
         }
 
         @media (max-width: 768px) {
@@ -333,57 +366,66 @@
                 align-items: flex-start;
                 gap: 10px;
             }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 Skill Gap Analysis Prompt</h1>
-            <div class="subtitle">AI-Powered Team Skill Assessment & Development Planning</div>
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1>📊 <span id="headerTitle">Skill Gap Analysis Prompt</span></h1>
+            <div class="subtitle" id="headerSubtitle">AI-Powered Team Skill Assessment &amp; Development Planning</div>
         </div>
 
         <div class="description">
-            <h2>🎯 What is this tool?</h2>
-            <p>This template helps engineering managers systematically analyze skill gaps across their team using AI. By documenting each engineer's current skill levels against required competencies, you can generate comprehensive reports that identify missing skills, prioritize development areas, and create targeted learning plans.</p>
+            <h2>🎯 <span id="descHeading">What is this tool?</span></h2>
+            <p id="descBody1">This template helps engineering managers systematically analyze skill gaps across their team using AI. By documenting each engineer's current skill levels against required competencies, you can generate comprehensive reports that identify missing skills, prioritize development areas, and create targeted learning plans.</p>
 
-            <p><strong>Why use this:</strong> Provides objective skill assessment, identifies team-wide capability gaps, enables data-driven hiring decisions, creates personalized development roadmaps, and ensures strategic alignment between team skills and business needs.</p>
+            <p id="descBody2"><strong>Why use this:</strong> Provides objective skill assessment, identifies team-wide capability gaps, enables data-driven hiring decisions, creates personalized development roadmaps, and ensures strategic alignment between team skills and business needs.</p>
         </div>
 
         <div class="section">
-            <div class="section-title">🏢 Team & Project Context</div>
+            <div class="section-title">🏢 <span id="sectionTeamContext">Team &amp; Project Context</span></div>
 
             <div class="form-group">
-                <label for="team-name">Team Name:</label>
+                <label for="team-name" id="lblTeamName">Team Name:</label>
                 <input type="text" id="team-name" placeholder="e.g., Backend Platform Team">
             </div>
 
             <div class="form-group">
-                <label for="project-context">Current Projects & Tech Stack:</label>
+                <label for="project-context" id="lblProjectContext">Current Projects &amp; Tech Stack:</label>
                 <textarea id="project-context" placeholder="e.g., Building microservices platform using Java/Spring Boot, AWS, Kubernetes. Focus on payment processing and user authentication systems."></textarea>
             </div>
 
             <div class="form-group">
-                <label for="business-goals">Key Business Goals & Challenges:</label>
+                <label for="business-goals" id="lblBusinessGoals">Key Business Goals &amp; Challenges:</label>
                 <textarea id="business-goals" placeholder="e.g., Scale to 10x traffic by Q4, improve system reliability to 99.9% uptime, reduce deployment time from 2 hours to 15 minutes"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="timeline">Analysis Timeframe:</label>
+                <label for="timeline" id="lblTimeline">Analysis Timeframe:</label>
                 <select id="timeline">
-                    <option value="">Select timeframe</option>
-                    <option value="immediate">Immediate needs (0-3 months)</option>
-                    <option value="short-term">Short-term planning (3-6 months)</option>
-                    <option value="medium-term">Medium-term strategy (6-12 months)</option>
-                    <option value="long-term">Long-term vision (12+ months)</option>
+                    <option value="" id="timelineOpt-empty">Select timeframe</option>
+                    <option value="immediate" id="timelineOpt-immediate">Immediate needs (0-3 months)</option>
+                    <option value="short-term" id="timelineOpt-short">Short-term planning (3-6 months)</option>
+                    <option value="medium-term" id="timelineOpt-medium">Medium-term strategy (6-12 months)</option>
+                    <option value="long-term" id="timelineOpt-long">Long-term vision (12+ months)</option>
                 </select>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">👥 Team Members & Skills Assessment</div>
+            <div class="section-title">👥 <span id="sectionTeamMembers">Team Members &amp; Skills Assessment</span></div>
 
-            <button class="add-engineer-btn" onclick="addEngineer()">➕ Add Team Member</button>
+            <button class="add-engineer-btn" onclick="addEngineer()" id="btnAddEngineer">➕ Add Team Member</button>
 
             <div id="engineers-container">
                 <!-- Engineers will be added here dynamically -->
@@ -391,133 +433,437 @@
         </div>
 
         <div class="section">
-            <div class="section-title">🔍 Analysis Focus Areas</div>
+            <div class="section-title">🔍 <span id="sectionAnalysisFocus">Analysis Focus Areas</span></div>
 
             <div class="analysis-options">
-                <label><strong>Select what you want the AI to analyze:</strong></label>
+                <label><strong id="lblSelectFocus">Select what you want the AI to analyze:</strong></label>
                 <div class="checkbox-group">
                     <div class="checkbox-item">
                         <input type="checkbox" id="critical-gaps" checked>
-                        <label for="critical-gaps">Critical skill gaps blocking current projects</label>
+                        <label for="critical-gaps" id="cbLabel-critical-gaps">Critical skill gaps blocking current projects</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="individual-plans" checked>
-                        <label for="individual-plans">Individual development plans for each engineer</label>
+                        <label for="individual-plans" id="cbLabel-individual-plans">Individual development plans for each engineer</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="team-strengths">
-                        <label for="team-strengths">Team strengths and areas of expertise</label>
+                        <label for="team-strengths" id="cbLabel-team-strengths">Team strengths and areas of expertise</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="hiring-needs">
-                        <label for="hiring-needs">Hiring priorities and role requirements</label>
+                        <label for="hiring-needs" id="cbLabel-hiring-needs">Hiring priorities and role requirements</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="training-budget">
-                        <label for="training-budget">Training budget allocation recommendations</label>
+                        <label for="training-budget" id="cbLabel-training-budget">Training budget allocation recommendations</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="succession-planning">
-                        <label for="succession-planning">Succession planning and knowledge transfer risks</label>
+                        <label for="succession-planning" id="cbLabel-succession-planning">Succession planning and knowledge transfer risks</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="skill-matrix">
-                        <label for="skill-matrix">Detailed skill matrix and coverage analysis</label>
+                        <label for="skill-matrix" id="cbLabel-skill-matrix">Detailed skill matrix and coverage analysis</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="growth-tracks">
-                        <label for="growth-tracks">Career growth tracks and promotion readiness</label>
+                        <label for="growth-tracks" id="cbLabel-growth-tracks">Career growth tracks and promotion readiness</label>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">🤖 Generated AI Prompt</div>
+            <div class="section-title">🤖 <span id="sectionGeneratedPrompt">Generated AI Prompt</span></div>
 
-            <div class="prompt-box" id="generated-prompt">
+            <div class="prompt-box" id="generated-prompt" data-state="placeholder">
 Click "Generate Analysis Prompt" to create your customized AI prompt based on the team information above.
             </div>
         </div>
 
         <div class="example-section">
-            <h4>💡 Example Analysis Output</h4>
-            <p><strong>Critical Gaps Identified:</strong></p>
+            <h4>💡 <span id="exampleHeading">Example Analysis Output</span></h4>
+            <p id="exampleCriticalLabel"><strong>Critical Gaps Identified:</strong></p>
             <ul>
-                <li><strong>System Design:</strong> 60% of senior engineers lack large-scale distributed systems experience</li>
-                <li><strong>DevOps:</strong> No team members proficient in Kubernetes troubleshooting</li>
-                <li><strong>Security:</strong> Only 1 engineer has experience with OAuth/OIDC implementation</li>
+                <li id="exampleLi1"><strong>System Design:</strong> 60% of senior engineers lack large-scale distributed systems experience</li>
+                <li id="exampleLi2"><strong>DevOps:</strong> No team members proficient in Kubernetes troubleshooting</li>
+                <li id="exampleLi3"><strong>Security:</strong> Only 1 engineer has experience with OAuth/OIDC implementation</li>
             </ul>
-            <p><strong>Recommended Actions:</strong> Prioritize Kubernetes training for 2 engineers, hire senior engineer with distributed systems background, create internal security training program.</p>
+            <p id="exampleRecommended"><strong>Recommended Actions:</strong> Prioritize Kubernetes training for 2 engineers, hire senior engineer with distributed systems background, create internal security training program.</p>
         </div>
 
         <div class="tips">
-            <h4>💡 Pro Tips for Effective Analysis</h4>
+            <h4>💡 <span id="tipsHeading2">Pro Tips for Effective Analysis</span></h4>
             <ul>
-                <li><strong>Be Honest:</strong> Accurate skill ratings lead to better recommendations - avoid inflating levels</li>
-                <li><strong>Include Context:</strong> Mention specific technologies, frameworks, and business requirements</li>
-                <li><strong>Update Regularly:</strong> Refresh skill assessments quarterly or after major project completions</li>
-                <li><strong>Focus on Outcomes:</strong> Link skill gaps to specific business impacts or project delays</li>
-                <li><strong>Consider Soft Skills:</strong> Don't forget leadership, communication, and mentoring capabilities</li>
-                <li><strong>Plan for Growth:</strong> Include aspirational skills needed for future projects and roles</li>
+                <li id="tipLi1"><strong>Be Honest:</strong> Accurate skill ratings lead to better recommendations - avoid inflating levels</li>
+                <li id="tipLi2"><strong>Include Context:</strong> Mention specific technologies, frameworks, and business requirements</li>
+                <li id="tipLi3"><strong>Update Regularly:</strong> Refresh skill assessments quarterly or after major project completions</li>
+                <li id="tipLi4"><strong>Focus on Outcomes:</strong> Link skill gaps to specific business impacts or project delays</li>
+                <li id="tipLi5"><strong>Consider Soft Skills:</strong> Don't forget leadership, communication, and mentoring capabilities</li>
+                <li id="tipLi6"><strong>Plan for Growth:</strong> Include aspirational skills needed for future projects and roles</li>
             </ul>
         </div>
 
         <div class="action-buttons">
-            <button class="btn" onclick="generatePrompt()">✨ Generate Analysis Prompt</button>
-            <button class="btn btn-secondary" onclick="window.print()">🖨️ Print Assessment</button>
-            <button class="btn btn-secondary" onclick="clearAll()">🗑️ Clear All Data</button>
+            <button class="btn" onclick="generatePrompt()" id="btnGeneratePrompt">✨ Generate Analysis Prompt</button>
+            <button class="btn btn-secondary" onclick="window.print()" id="btnPrint">🖨️ Print Assessment</button>
+            <button class="btn btn-secondary" onclick="clearAll()" id="btnClearAll">🗑️ Clear All Data</button>
         </div>
     </div>
 
     <script>
         let engineerCount = 0;
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
 
-        const skillCategories = {
-            'Technical Skills': [
-                'Programming Languages (Primary)',
-                'Programming Languages (Secondary)',
-                'Database Design & Optimization',
-                'System Architecture & Design',
-                'API Design & Development',
-                'Testing & Quality Assurance',
-                'Performance Optimization',
-                'Security Best Practices'
-            ],
-            'Platform & Tools': [
-                'Cloud Platforms (AWS/GCP/Azure)',
-                'Containerization (Docker/Kubernetes)',
-                'CI/CD Pipelines',
-                'Monitoring & Observability',
-                'Infrastructure as Code',
-                'Version Control & Git Workflows',
-                'Development Tools & IDEs',
-                'Debugging & Troubleshooting'
-            ],
-            'Leadership & Communication': [
-                'Technical Leadership',
-                'Code Review & Mentoring',
-                'Cross-team Collaboration',
-                'Stakeholder Communication',
-                'Project Planning & Estimation',
-                'Documentation & Knowledge Sharing',
-                'Incident Response & Management',
-                'Team Building & Culture'
-            ],
-            'Domain Knowledge': [
-                'Business Domain Understanding',
-                'Product & User Experience',
-                'Data Analysis & Insights',
-                'Compliance & Regulations',
-                'Industry Best Practices',
-                'Competitive Landscape',
-                'Customer Needs & Pain Points',
-                'Market Trends & Technology'
-            ]
+        // ---------------------------------------------------------------
+        // Skill structure: stable English keys, translated labels via I18N
+        // ---------------------------------------------------------------
+        const SKILL_STRUCTURE = [
+            { key: 'technical', skills: ['langPrimary', 'langSecondary', 'dbDesign', 'sysArch', 'apiDesign', 'testingQA', 'perfOpt', 'security'] },
+            { key: 'platform', skills: ['cloud', 'containerization', 'cicd', 'monitoring', 'iac', 'vcs', 'devTools', 'debugging'] },
+            { key: 'leadership', skills: ['techLead', 'codeReview', 'crossTeam', 'stakeholderComm', 'projectPlanning', 'docs', 'incidentResponse', 'teamBuilding'] },
+            { key: 'domain', skills: ['bizDomain', 'productUX', 'dataAnalysis', 'compliance', 'bestPractices', 'competitive', 'customerNeeds', 'marketTrends'] }
+        ];
+
+        // ---------------------------------------------------------------
+        // i18n dictionaries
+        // ---------------------------------------------------------------
+        const I18N = {
+            en: {
+                pageTitle: "Skill Gap Analysis Prompt - Engineering Management Tool",
+                headerTitle: "Skill Gap Analysis Prompt",
+                headerSubtitle: "AI-Powered Team Skill Assessment & Development Planning",
+                descHeading: "What is this tool?",
+                descBody1: "This template helps engineering managers systematically analyze skill gaps across their team using AI. By documenting each engineer's current skill levels against required competencies, you can generate comprehensive reports that identify missing skills, prioritize development areas, and create targeted learning plans.",
+                descBody2: "<strong>Why use this:</strong> Provides objective skill assessment, identifies team-wide capability gaps, enables data-driven hiring decisions, creates personalized development roadmaps, and ensures strategic alignment between team skills and business needs.",
+                sectionTeamContext: "Team & Project Context",
+                lblTeamName: "Team Name:",
+                phTeamName: "e.g., Backend Platform Team",
+                lblProjectContext: "Current Projects & Tech Stack:",
+                phProjectContext: "e.g., Building microservices platform using Java/Spring Boot, AWS, Kubernetes. Focus on payment processing and user authentication systems.",
+                lblBusinessGoals: "Key Business Goals & Challenges:",
+                phBusinessGoals: "e.g., Scale to 10x traffic by Q4, improve system reliability to 99.9% uptime, reduce deployment time from 2 hours to 15 minutes",
+                lblTimeline: "Analysis Timeframe:",
+                timelineOptions: {
+                    empty: "Select timeframe",
+                    immediate: "Immediate needs (0-3 months)",
+                    short: "Short-term planning (3-6 months)",
+                    medium: "Medium-term strategy (6-12 months)",
+                    long: "Long-term vision (12+ months)"
+                },
+                sectionTeamMembers: "Team Members & Skills Assessment",
+                btnAddEngineer: "➕ Add Team Member",
+                sectionAnalysisFocus: "Analysis Focus Areas",
+                lblSelectFocus: "Select what you want the AI to analyze:",
+                checkboxes: {
+                    'critical-gaps': "Critical skill gaps blocking current projects",
+                    'individual-plans': "Individual development plans for each engineer",
+                    'team-strengths': "Team strengths and areas of expertise",
+                    'hiring-needs': "Hiring priorities and role requirements",
+                    'training-budget': "Training budget allocation recommendations",
+                    'succession-planning': "Succession planning and knowledge transfer risks",
+                    'skill-matrix': "Detailed skill matrix and coverage analysis",
+                    'growth-tracks': "Career growth tracks and promotion readiness"
+                },
+                sectionGeneratedPrompt: "Generated AI Prompt",
+                promptPlaceholder: 'Click "Generate Analysis Prompt" to create your customized AI prompt based on the team information above.',
+                exampleHeading: "Example Analysis Output",
+                exampleCriticalLabel: "<strong>Critical Gaps Identified:</strong>",
+                exampleLi1: "<strong>System Design:</strong> 60% of senior engineers lack large-scale distributed systems experience",
+                exampleLi2: "<strong>DevOps:</strong> No team members proficient in Kubernetes troubleshooting",
+                exampleLi3: "<strong>Security:</strong> Only 1 engineer has experience with OAuth/OIDC implementation",
+                exampleRecommended: "<strong>Recommended Actions:</strong> Prioritize Kubernetes training for 2 engineers, hire senior engineer with distributed systems background, create internal security training program.",
+                tipsHeading2: "Pro Tips for Effective Analysis",
+                tipLi1: "<strong>Be Honest:</strong> Accurate skill ratings lead to better recommendations - avoid inflating levels",
+                tipLi2: "<strong>Include Context:</strong> Mention specific technologies, frameworks, and business requirements",
+                tipLi3: "<strong>Update Regularly:</strong> Refresh skill assessments quarterly or after major project completions",
+                tipLi4: "<strong>Focus on Outcomes:</strong> Link skill gaps to specific business impacts or project delays",
+                tipLi5: "<strong>Consider Soft Skills:</strong> Don't forget leadership, communication, and mentoring capabilities",
+                tipLi6: "<strong>Plan for Growth:</strong> Include aspirational skills needed for future projects and roles",
+                btnGeneratePrompt: "✨ Generate Analysis Prompt",
+                btnPrint: "🖨️ Print Assessment",
+                btnClearAll: "🗑️ Clear All Data",
+                skillCategories: {
+                    technical: "Technical Skills",
+                    platform: "Platform & Tools",
+                    leadership: "Leadership & Communication",
+                    domain: "Domain Knowledge"
+                },
+                skills: {
+                    langPrimary: "Programming Languages (Primary)",
+                    langSecondary: "Programming Languages (Secondary)",
+                    dbDesign: "Database Design & Optimization",
+                    sysArch: "System Architecture & Design",
+                    apiDesign: "API Design & Development",
+                    testingQA: "Testing & Quality Assurance",
+                    perfOpt: "Performance Optimization",
+                    security: "Security Best Practices",
+                    cloud: "Cloud Platforms (AWS/GCP/Azure)",
+                    containerization: "Containerization (Docker/Kubernetes)",
+                    cicd: "CI/CD Pipelines",
+                    monitoring: "Monitoring & Observability",
+                    iac: "Infrastructure as Code",
+                    vcs: "Version Control & Git Workflows",
+                    devTools: "Development Tools & IDEs",
+                    debugging: "Debugging & Troubleshooting",
+                    techLead: "Technical Leadership",
+                    codeReview: "Code Review & Mentoring",
+                    crossTeam: "Cross-team Collaboration",
+                    stakeholderComm: "Stakeholder Communication",
+                    projectPlanning: "Project Planning & Estimation",
+                    docs: "Documentation & Knowledge Sharing",
+                    incidentResponse: "Incident Response & Management",
+                    teamBuilding: "Team Building & Culture",
+                    bizDomain: "Business Domain Understanding",
+                    productUX: "Product & User Experience",
+                    dataAnalysis: "Data Analysis & Insights",
+                    compliance: "Compliance & Regulations",
+                    bestPractices: "Industry Best Practices",
+                    competitive: "Competitive Landscape",
+                    customerNeeds: "Customer Needs & Pain Points",
+                    marketTrends: "Market Trends & Technology"
+                },
+                rateLabel: "Rate",
+                ratingScale: ["0 - None", "1 - Basic", "2 - Intermediate", "3 - Advanced", "4 - Expert", "5 - Thought Leader"],
+                phEngineerName: "Engineer Name",
+                phRoleLevel: "Role & Level (e.g., Senior Software Engineer)",
+                lblAdditionalContext: "Additional Context:",
+                phAdditionalContext: "Recent projects, strengths, challenges, career goals...",
+                btnRemove: "Remove",
+                notFilled: "[Not specified]",
+                confirmClear: "Are you sure you want to clear all data? This will remove all team members and reset the form.",
+                alertCopied: "✅ Skill Gap Analysis Prompt generated and copied to clipboard! You can now paste it into your preferred AI tool.",
+                alertGenerated: "ℹ️ Skill Gap Analysis Prompt generated! You can copy it from the text box below."
+            },
+            zh: {
+                pageTitle: "技能落差分析 Prompt - 工程管理工具",
+                headerTitle: "技能落差分析 Prompt",
+                headerSubtitle: "AI 驅動的團隊技能評估與發展規劃",
+                descHeading: "這是什麼工具？",
+                descBody1: "這個範本協助工程主管透過 AI 系統化分析團隊的技能落差。透過記錄每位工程師目前的技能水準與所需能力的對照，你可以產生完整的報告，找出缺少的技能、排定發展優先順序，並建立有針對性的學習計畫。",
+                descBody2: "<strong>為什麼要用這個：</strong>提供客觀的技能評估、找出團隊整體的能力缺口、支援資料驅動的招募決策、產生個人化的發展藍圖，並確保團隊技能與business需求策略對齊。",
+                sectionTeamContext: "團隊與專案背景",
+                lblTeamName: "團隊名稱：",
+                phTeamName: "例如：Backend Platform Team",
+                lblProjectContext: "目前專案與技術棧：",
+                phProjectContext: "例如：使用 Java/Spring Boot、AWS、Kubernetes 建置微服務平台，聚焦在金流處理與使用者驗證系統。",
+                lblBusinessGoals: "關鍵業務目標與挑戰：",
+                phBusinessGoals: "例如：第四季前流量擴大 10 倍、系統可靠度提升到 99.9% uptime、部署時間從 2 小時縮短到 15 分鐘",
+                lblTimeline: "分析時間範圍：",
+                timelineOptions: {
+                    empty: "選擇時間範圍",
+                    immediate: "立即需求（0-3 個月）",
+                    short: "短期規劃（3-6 個月）",
+                    medium: "中期策略（6-12 個月）",
+                    long: "長期願景（12 個月以上）"
+                },
+                sectionTeamMembers: "團隊成員與技能評估",
+                btnAddEngineer: "➕ 新增團隊成員",
+                sectionAnalysisFocus: "分析重點項目",
+                lblSelectFocus: "選擇你希望 AI 分析的項目：",
+                checkboxes: {
+                    'critical-gaps': "阻礙目前專案的關鍵技能落差",
+                    'individual-plans': "每位工程師的個人發展計畫",
+                    'team-strengths': "團隊優勢與專長領域",
+                    'hiring-needs': "招募優先順序與職缺需求",
+                    'training-budget': "教育訓練預算分配建議",
+                    'succession-planning': "接班規劃與知識傳承風險",
+                    'skill-matrix': "詳細的技能矩陣與涵蓋度分析",
+                    'growth-tracks': "職涯成長路徑與升遷準備度"
+                },
+                sectionGeneratedPrompt: "產生的 AI Prompt",
+                promptPlaceholder: '點選「產生分析 Prompt」，根據上方的團隊資訊產生你的客製化 AI prompt。',
+                exampleHeading: "分析輸出範例",
+                exampleCriticalLabel: "<strong>找到的關鍵落差：</strong>",
+                exampleLi1: "<strong>系統設計：</strong>60% 的資深工程師缺乏大規模分散式系統經驗",
+                exampleLi2: "<strong>DevOps：</strong>沒有團隊成員熟悉 Kubernetes 疑難排解",
+                exampleLi3: "<strong>資安：</strong>只有 1 位工程師有 OAuth/OIDC 實作經驗",
+                exampleRecommended: "<strong>建議行動：</strong>優先安排 2 位工程師的 Kubernetes 訓練、招募具備分散式系統背景的資深工程師、建立內部資安訓練計畫。",
+                tipsHeading2: "有效分析的實用建議",
+                tipLi1: "<strong>誠實填寫：</strong>準確的技能評分才能得到更好的建議——避免灌水評等",
+                tipLi2: "<strong>提供脈絡：</strong>寫清楚具體的技術、框架與業務需求",
+                tipLi3: "<strong>定期更新：</strong>每季或重大專案完成後重新評估技能",
+                tipLi4: "<strong>聚焦成果：</strong>把技能落差連結到具體的業務影響或專案延遲",
+                tipLi5: "<strong>別忘了軟實力：</strong>不要忽略領導力、溝通與 mentoring 能力",
+                tipLi6: "<strong>為成長預留空間：</strong>納入未來專案與角色所需的期望技能",
+                btnGeneratePrompt: "✨ 產生分析 Prompt",
+                btnPrint: "🖨️ 列印評估表",
+                btnClearAll: "🗑️ 清除所有資料",
+                skillCategories: {
+                    technical: "技術技能",
+                    platform: "平台與工具",
+                    leadership: "領導力與溝通",
+                    domain: "領域知識"
+                },
+                skills: {
+                    langPrimary: "程式語言（主要）",
+                    langSecondary: "程式語言（次要）",
+                    dbDesign: "資料庫設計與優化",
+                    sysArch: "系統架構與設計",
+                    apiDesign: "API 設計與開發",
+                    testingQA: "測試與品質保證",
+                    perfOpt: "效能優化",
+                    security: "資安最佳實務",
+                    cloud: "雲端平台（AWS/GCP/Azure）",
+                    containerization: "容器化（Docker/Kubernetes）",
+                    cicd: "CI/CD Pipeline",
+                    monitoring: "監控與可觀測性",
+                    iac: "Infrastructure as Code",
+                    vcs: "版本控制與 Git 工作流程",
+                    devTools: "開發工具與 IDE",
+                    debugging: "除錯與疑難排解",
+                    techLead: "技術領導力",
+                    codeReview: "Code Review 與 Mentoring",
+                    crossTeam: "跨團隊協作",
+                    stakeholderComm: "利害關係人溝通",
+                    projectPlanning: "專案規劃與估算",
+                    docs: "文件撰寫與知識分享",
+                    incidentResponse: "事故應變與管理",
+                    teamBuilding: "團隊建設與文化",
+                    bizDomain: "業務領域理解",
+                    productUX: "產品與使用者體驗",
+                    dataAnalysis: "資料分析與洞察",
+                    compliance: "法規與合規",
+                    bestPractices: "產業最佳實務",
+                    competitive: "競爭態勢",
+                    customerNeeds: "客戶需求與痛點",
+                    marketTrends: "市場趨勢與技術"
+                },
+                rateLabel: "評分",
+                ratingScale: ["0 - 無經驗", "1 - 基礎", "2 - 中階", "3 - 進階", "4 - 專家", "5 - 產業意見領袖"],
+                phEngineerName: "工程師姓名",
+                phRoleLevel: "角色與職級（例如：資深軟體工程師）",
+                lblAdditionalContext: "補充說明：",
+                phAdditionalContext: "近期專案、優勢、挑戰、職涯目標...",
+                btnRemove: "移除",
+                notFilled: "[未填寫]",
+                confirmClear: "確定要清除所有資料嗎？這會移除所有團隊成員並重設表單。",
+                alertCopied: "✅ 技能落差分析 Prompt 已產生並複製到剪貼簿！你現在可以貼到偏好的 AI 工具裡。",
+                alertGenerated: "ℹ️ 技能落差分析 Prompt 已產生！你可以從下方的文字框複製。"
+            }
         };
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        // ---------------------------------------------------------------
+        // Language switching / rendering
+        // ---------------------------------------------------------------
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+            document.getElementById('pageTitle').textContent = dict.pageTitle;
+            document.title = dict.pageTitle;
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            document.getElementById('headerTitle').textContent = dict.headerTitle;
+            document.getElementById('headerSubtitle').textContent = dict.headerSubtitle;
+
+            document.getElementById('descHeading').textContent = dict.descHeading;
+            document.getElementById('descBody1').textContent = dict.descBody1;
+            document.getElementById('descBody2').innerHTML = dict.descBody2;
+
+            document.getElementById('sectionTeamContext').textContent = dict.sectionTeamContext;
+            document.getElementById('lblTeamName').textContent = dict.lblTeamName;
+            document.getElementById('team-name').placeholder = dict.phTeamName;
+            document.getElementById('lblProjectContext').textContent = dict.lblProjectContext;
+            document.getElementById('project-context').placeholder = dict.phProjectContext;
+            document.getElementById('lblBusinessGoals').textContent = dict.lblBusinessGoals;
+            document.getElementById('business-goals').placeholder = dict.phBusinessGoals;
+            document.getElementById('lblTimeline').textContent = dict.lblTimeline;
+            document.getElementById('timelineOpt-empty').textContent = dict.timelineOptions.empty;
+            document.getElementById('timelineOpt-immediate').textContent = dict.timelineOptions.immediate;
+            document.getElementById('timelineOpt-short').textContent = dict.timelineOptions.short;
+            document.getElementById('timelineOpt-medium').textContent = dict.timelineOptions.medium;
+            document.getElementById('timelineOpt-long').textContent = dict.timelineOptions.long;
+
+            document.getElementById('sectionTeamMembers').textContent = dict.sectionTeamMembers;
+            document.getElementById('btnAddEngineer').textContent = dict.btnAddEngineer;
+
+            document.getElementById('sectionAnalysisFocus').textContent = dict.sectionAnalysisFocus;
+            document.getElementById('lblSelectFocus').textContent = dict.lblSelectFocus;
+            Object.keys(dict.checkboxes).forEach(id => {
+                const el = document.getElementById(`cbLabel-${id}`);
+                if (el) el.textContent = dict.checkboxes[id];
+            });
+
+            document.getElementById('sectionGeneratedPrompt').textContent = dict.sectionGeneratedPrompt;
+            const promptBox = document.getElementById('generated-prompt');
+            if (promptBox && promptBox.getAttribute('data-state') === 'placeholder') {
+                promptBox.textContent = dict.promptPlaceholder;
+            }
+
+            document.getElementById('exampleHeading').textContent = dict.exampleHeading;
+            document.getElementById('exampleCriticalLabel').innerHTML = dict.exampleCriticalLabel;
+            document.getElementById('exampleLi1').innerHTML = dict.exampleLi1;
+            document.getElementById('exampleLi2').innerHTML = dict.exampleLi2;
+            document.getElementById('exampleLi3').innerHTML = dict.exampleLi3;
+            document.getElementById('exampleRecommended').innerHTML = dict.exampleRecommended;
+
+            document.getElementById('tipsHeading2').textContent = dict.tipsHeading2;
+            for (let i = 1; i <= 6; i++) {
+                document.getElementById(`tipLi${i}`).innerHTML = dict[`tipLi${i}`];
+            }
+
+            document.getElementById('btnGeneratePrompt').textContent = dict.btnGeneratePrompt;
+            document.getElementById('btnPrint').textContent = dict.btnPrint;
+            document.getElementById('btnClearAll').textContent = dict.btnClearAll;
+
+            applyEngineerCardTranslations();
+        }
+
+        // Re-applies translated labels to already-rendered engineer cards
+        // (used both after addEngineer() and after a language switch).
+        function applyEngineerCardTranslations() {
+            const dict = t();
+            document.querySelectorAll('.engineer-card').forEach(card => {
+                const nameInput = card.querySelector('.engineer-name');
+                if (nameInput) nameInput.placeholder = dict.phEngineerName;
+                const roleInput = card.querySelector('[data-role-input]');
+                if (roleInput) roleInput.placeholder = dict.phRoleLevel;
+                const contextLabel = card.querySelector('[data-context-label]');
+                if (contextLabel) contextLabel.textContent = dict.lblAdditionalContext;
+                const contextInput = card.querySelector('[data-context-input]');
+                if (contextInput) contextInput.placeholder = dict.phAdditionalContext;
+                const removeBtn = card.querySelector('.remove-engineer');
+                if (removeBtn) removeBtn.textContent = dict.btnRemove;
+
+                card.querySelectorAll('.skill-category').forEach(catEl => {
+                    const catKey = catEl.getAttribute('data-cat-key');
+                    const heading = catEl.querySelector('h4');
+                    if (heading && catKey) heading.textContent = dict.skillCategories[catKey];
+
+                    catEl.querySelectorAll('.skill-item').forEach(itemEl => {
+                        const skillKey = itemEl.getAttribute('data-skill-key');
+                        const label = itemEl.querySelector('label');
+                        if (label && skillKey) label.textContent = dict.skills[skillKey];
+
+                        const select = itemEl.querySelector('.skill-level');
+                        if (select) {
+                            const opts = select.querySelectorAll('option');
+                            if (opts[0]) opts[0].textContent = dict.rateLabel;
+                            for (let i = 0; i < 6; i++) {
+                                if (opts[i + 1]) opts[i + 1].textContent = dict.ratingScale[i];
+                            }
+                        }
+                    });
+                });
+            });
+        }
 
         function addEngineer() {
             engineerCount++;
+            const dict = t();
             const container = document.getElementById('engineers-container');
 
             const engineerDiv = document.createElement('div');
@@ -525,24 +871,24 @@ Click "Generate Analysis Prompt" to create your customized AI prompt based on th
             engineerDiv.id = `engineer-${engineerCount}`;
 
             let skillsHtml = '';
-            Object.keys(skillCategories).forEach(category => {
+            SKILL_STRUCTURE.forEach(category => {
                 skillsHtml += `
-                    <div class="skill-category">
-                        <h4>${category}</h4>`;
+                    <div class="skill-category" data-cat-key="${category.key}">
+                        <h4>${dict.skillCategories[category.key]}</h4>`;
 
-                skillCategories[category].forEach(skill => {
-                    const skillId = `engineer-${engineerCount}-${skill.replace(/[^a-zA-Z0-9]/g, '')}`;
+                category.skills.forEach(skillKey => {
+                    const skillId = `engineer-${engineerCount}-${category.key}-${skillKey}`;
                     skillsHtml += `
-                        <div class="skill-item">
-                            <label for="${skillId}">${skill}</label>
-                            <select class="skill-level" id="${skillId}">
-                                <option value="">Rate</option>
-                                <option value="0">0 - None</option>
-                                <option value="1">1 - Basic</option>
-                                <option value="2">2 - Intermediate</option>
-                                <option value="3">3 - Advanced</option>
-                                <option value="4">4 - Expert</option>
-                                <option value="5">5 - Thought Leader</option>
+                        <div class="skill-item" data-skill-key="${skillKey}">
+                            <label for="${skillId}">${dict.skills[skillKey]}</label>
+                            <select class="skill-level" id="${skillId}" data-skill-key="${skillKey}" data-cat-key="${category.key}">
+                                <option value="">${dict.rateLabel}</option>
+                                <option value="0">${dict.ratingScale[0]}</option>
+                                <option value="1">${dict.ratingScale[1]}</option>
+                                <option value="2">${dict.ratingScale[2]}</option>
+                                <option value="3">${dict.ratingScale[3]}</option>
+                                <option value="4">${dict.ratingScale[4]}</option>
+                                <option value="5">${dict.ratingScale[5]}</option>
                             </select>
                         </div>`;
                 });
@@ -553,14 +899,14 @@ Click "Generate Analysis Prompt" to create your customized AI prompt based on th
             engineerDiv.innerHTML = `
                 <div class="engineer-header">
                     <div>
-                        <input type="text" placeholder="Engineer Name" class="engineer-name" style="border: none; background: transparent; font-size: 1.2em; font-weight: 600; color: #2c5aa0; width: 250px;">
-                        <input type="text" placeholder="Role & Level (e.g., Senior Software Engineer)" style="display: block; margin-top: 5px; width: 100%; font-size: 0.9em; padding: 5px; border: 1px solid #ddd; border-radius: 3px;">
+                        <input type="text" placeholder="${dict.phEngineerName}" class="engineer-name" style="border: none; background: transparent; font-size: 1.2em; font-weight: 600; color: #2c5aa0; width: 250px;">
+                        <input type="text" placeholder="${dict.phRoleLevel}" data-role-input style="display: block; margin-top: 5px; width: 100%; font-size: 0.9em; padding: 5px; border: 1px solid #ddd; border-radius: 3px;">
                     </div>
-                    <button class="remove-engineer" onclick="removeEngineer(${engineerCount})">Remove</button>
+                    <button class="remove-engineer" onclick="removeEngineer(${engineerCount})">${dict.btnRemove}</button>
                 </div>
                 <div class="form-group">
-                    <label>Additional Context:</label>
-                    <textarea placeholder="Recent projects, strengths, challenges, career goals..." style="min-height: 60px;"></textarea>
+                    <label data-context-label>${dict.lblAdditionalContext}</label>
+                    <textarea placeholder="${dict.phAdditionalContext}" data-context-input style="min-height: 60px;"></textarea>
                 </div>
                 <div class="skill-grid">
                     ${skillsHtml}
@@ -578,10 +924,12 @@ Click "Generate Analysis Prompt" to create your customized AI prompt based on th
         }
 
         function generatePrompt() {
-            const teamName = document.getElementById('team-name').value || '[Team Name]';
-            const projectContext = document.getElementById('project-context').value || '[Project Context & Tech Stack]';
-            const businessGoals = document.getElementById('business-goals').value || '[Business Goals & Challenges]';
-            const timeline = document.getElementById('timeline').value || '[Analysis Timeframe]';
+            const dict = t();
+            const zh = currentLang === 'zh';
+            const teamName = document.getElementById('team-name').value || (zh ? '[團隊名稱]' : '[Team Name]');
+            const projectContext = document.getElementById('project-context').value || (zh ? '[專案背景與技術棧]' : '[Project Context & Tech Stack]');
+            const businessGoals = document.getElementById('business-goals').value || (zh ? '[業務目標與挑戰]' : '[Business Goals & Challenges]');
+            const timeline = document.getElementById('timeline').value || (zh ? '[分析時間範圍]' : '[Analysis Timeframe]');
 
             // Get selected analysis focus areas
             const focusAreas = [];
@@ -593,21 +941,22 @@ Click "Generate Analysis Prompt" to create your customized AI prompt based on th
             const engineers = [];
             document.querySelectorAll('.engineer-card').forEach((card, index) => {
                 const nameInput = card.querySelector('.engineer-name');
-                const roleInput = card.querySelector('input[placeholder*="Role"]');
-                const contextInput = card.querySelector('textarea');
+                const roleInput = card.querySelector('[data-role-input]');
+                const contextInput = card.querySelector('[data-context-input]');
 
-                const name = nameInput ? nameInput.value || `Engineer ${index + 1}` : `Engineer ${index + 1}`;
-                const role = roleInput ? roleInput.value || '[Role & Level]' : '[Role & Level]';
-                const context = contextInput ? contextInput.value || '[Additional context]' : '[Additional context]';
+                const name = nameInput ? nameInput.value || `${zh ? '工程師' : 'Engineer'} ${index + 1}` : `${zh ? '工程師' : 'Engineer'} ${index + 1}`;
+                const role = roleInput ? roleInput.value || (zh ? '[角色與職級]' : '[Role & Level]') : (zh ? '[角色與職級]' : '[Role & Level]');
+                const context = contextInput ? contextInput.value || (zh ? '[補充說明]' : '[Additional context]') : (zh ? '[補充說明]' : '[Additional context]');
 
                 // Get skill ratings
                 const skills = {};
-                Object.keys(skillCategories).forEach(category => {
-                    skills[category] = {};
-                    skillCategories[category].forEach(skill => {
-                        const skillElement = card.querySelector(`#engineer-${card.id.split('-')[1]}-${skill.replace(/[^a-zA-Z0-9]/g, '')}`);
+                SKILL_STRUCTURE.forEach(category => {
+                    skills[category.key] = {};
+                    category.skills.forEach(skillKey => {
+                        const skillElement = document.getElementById(`engineer-${index + 1}-${category.key}-${skillKey}`) ||
+                            card.querySelector(`[data-cat-key="${category.key}"][data-skill-key="${skillKey}"].skill-level`);
                         if (skillElement && skillElement.value) {
-                            skills[category][skill] = skillElement.value;
+                            skills[category.key][skillKey] = skillElement.value;
                         }
                     });
                 });
@@ -616,24 +965,71 @@ Click "Generate Analysis Prompt" to create your customized AI prompt based on th
             });
 
             let engineerProfiles = '';
-            engineers.forEach((engineer, index) => {
+            engineers.forEach((engineer) => {
                 engineerProfiles += `\n**${engineer.name}** - ${engineer.role}\n`;
-                engineerProfiles += `Context: ${engineer.context}\n`;
-                engineerProfiles += 'Skills Assessment:\n';
+                engineerProfiles += `${zh ? '背景說明' : 'Context'}: ${engineer.context}\n`;
+                engineerProfiles += (zh ? '技能評估：\n' : 'Skills Assessment:\n');
 
-                Object.keys(engineer.skills).forEach(category => {
-                    const categorySkills = engineer.skills[category];
+                Object.keys(engineer.skills).forEach(catKey => {
+                    const categorySkills = engineer.skills[catKey];
                     if (Object.keys(categorySkills).length > 0) {
-                        engineerProfiles += `  ${category}:\n`;
-                        Object.entries(categorySkills).forEach(([skill, level]) => {
-                            engineerProfiles += `    - ${skill}: ${level}/5\n`;
+                        engineerProfiles += `  ${dict.skillCategories[catKey]}:\n`;
+                        Object.entries(categorySkills).forEach(([skillKey, level]) => {
+                            engineerProfiles += `    - ${dict.skills[skillKey]}: ${level}/5\n`;
                         });
                     }
                 });
                 engineerProfiles += '\n';
             });
 
-            const prompt = `You are an experienced engineering manager and talent development expert. Please analyze the following team skill assessment data and provide comprehensive insights and recommendations.
+            let prompt;
+            if (zh) {
+                prompt = `你是一位經驗豐富的工程主管與人才發展專家。請分析以下的團隊技能評估資料，並提供完整的洞察與建議。
+
+**團隊概況：**
+團隊：${teamName}
+專案背景：${projectContext}
+業務目標：${businessGoals}
+分析時間範圍：${timeline}
+
+**團隊成員資料：**${engineerProfiles}
+
+**分析重點項目：**
+${focusAreas.join('\n')}
+
+**技能評分標準：**
+0 = 無經驗/知識
+1 = 基礎理解，需要指導
+2 = 中階熟練度，能獨立完成簡單任務
+3 = 進階技能，能處理複雜任務並指導他人
+4 = 專家等級，能設計解決方案並指導團隊成員
+5 = 產業意見領袖，能推動創新與產業最佳實務
+
+請提供完整分析，包含：
+
+1. **摘要總結** - 3-4 個重點條列的關鍵發現與關鍵技能落差
+
+2. **關鍵技能落差** - 阻礙目前專案或業務目標的缺失或不足技能
+
+3. **個人發展建議** - 針對每位團隊成員成長的具體建議
+
+4. **團隊能力矩陣** - 團隊整體優勢與涵蓋領域
+
+5. **招募策略** - 新聘人員應優先具備的角色/技能
+
+6. **教育訓練計畫** - 建議的課程、證照或學習方案
+
+7. **風險評估** - 知識傳承風險與接班規劃疑慮
+
+8. **資源配置** - 對團隊能力影響最大的預算優先順序
+
+9. **時程與里程碑** - 建議的發展時程與檢查點
+
+10. **指標與追蹤** - 如何衡量進度與成效
+
+請確保所有建議都具體、可執行，並與所述的業務目標和時間範圍一致。`;
+            } else {
+                prompt = `You are an experienced engineering manager and talent development expert. Please analyze the following team skill assessment data and provide comprehensive insights and recommendations.
 
 **Team Overview:**
 Team: ${teamName}
@@ -677,19 +1073,23 @@ Please provide a comprehensive analysis including:
 10. **Metrics & Tracking** - How to measure progress and success
 
 Make all recommendations specific, actionable, and aligned with the stated business goals and timeframe.`;
+            }
 
-            document.getElementById('generated-prompt').textContent = prompt;
+            const promptBox = document.getElementById('generated-prompt');
+            promptBox.textContent = prompt;
+            promptBox.setAttribute('data-state', 'generated');
 
             // Copy to clipboard
             navigator.clipboard.writeText(prompt).then(() => {
-                alert('✅ Skill Gap Analysis Prompt generated and copied to clipboard! You can now paste it into your preferred AI tool.');
+                alert(dict.alertCopied);
             }).catch(() => {
-                alert('ℹ️ Skill Gap Analysis Prompt generated! You can copy it from the text box below.');
+                alert(dict.alertGenerated);
             });
         }
 
         function clearAll() {
-            if (confirm('Are you sure you want to clear all data? This will remove all team members and reset the form.')) {
+            const dict = t();
+            if (confirm(dict.confirmClear)) {
                 // Clear all form inputs
                 document.querySelectorAll('input, textarea, select').forEach(element => {
                     if (element.type === 'checkbox') {
@@ -708,12 +1108,15 @@ Make all recommendations specific, actionable, and aligned with the stated busin
                 engineerCount = 0;
 
                 // Reset prompt
-                document.getElementById('generated-prompt').textContent = 'Click "Generate Analysis Prompt" to create your customized AI prompt based on the team information above.';
+                const promptBox = document.getElementById('generated-prompt');
+                promptBox.textContent = dict.promptPlaceholder;
+                promptBox.setAttribute('data-state', 'placeholder');
             }
         }
 
         // Add first engineer by default
         window.onload = function() {
+            renderLanguage();
             addEngineer();
         };
     </script>
