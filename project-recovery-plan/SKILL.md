@@ -47,6 +47,7 @@ metadata:
 - **成功驗證標準**（可衡量、有日期）
 - **退場/縮減範圍計畫**（萬一復原失敗——要明確寫出來，不能留白）
 - **延伸追蹤**（選填）：先止血行動與 7 天/30 天計畫裡的項目，如果需要跨週期持續追蹤到完成，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在你自己從 `shared-skills/docs/ar.template.md` 複製建立、存放在 `shared-skills/docs/ar/` 底下的檔案
+- **延伸應用**（選填）：如果取捨選項需要拿給主管做比較，可以整理進 `shared-skills/docs/scenario_comparison_template.html` 或 `shared-skills/docs/decision_matrix_template.html`；如果復原失敗條件、關鍵路徑依賴、退場/縮減範圍計畫需要跨週期追蹤風險，整理進 `shared-skills/docs/risk_analysis_template.html`
 
 ## Safety Constraints
 

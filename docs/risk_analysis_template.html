@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering Risk Analysis Template</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.5; color: #263238; background: #f5f7f8; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+        .panel { background: #fff; border: 1px solid #d9e0e4; border-radius: 8px; padding: 22px; margin-bottom: 18px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+        .header { position: relative; border-bottom: 3px solid #c62828; padding-bottom: 14px; }
+        h1 { margin: 0; color: #b71c1c; font-size: 2rem; }
+        h2 { margin: 0 0 14px; color: #37474f; font-size: 1.25rem; }
+        label { display: block; font-weight: 650; margin-bottom: 6px; }
+        input, textarea, select { width: 100%; border: 1px solid #cfd8dc; border-radius: 6px; padding: 9px; font: inherit; background: #fff; }
+        textarea { min-height: 78px; resize: vertical; }
+        table { width: 100%; border-collapse: collapse; background: #fff; }
+        th, td { border: 1px solid #d9e0e4; padding: 8px; vertical-align: top; }
+        th { background: #37474f; color: #fff; text-align: left; }
+        .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        .matrix { display: grid; grid-template-columns: 120px repeat(5, 1fr); gap: 4px; font-size: .9rem; }
+        .matrix div { padding: 8px; text-align: center; border-radius: 4px; font-weight: 650; }
+        .mh { background: #455a64; color: #fff; }
+        .low { background: #d9f2df; } .medium { background: #fff3cd; } .high { background: #ffd8cc; } .critical { background: #ffcdd2; }
+        .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+        button { border: 0; border-radius: 6px; padding: 10px 14px; font-weight: 700; cursor: pointer; background: #c62828; color: white; }
+        button.secondary { background: #455a64; } button.ghost { background: #eceff1; color: #263238; }
+        .lang-switcher { position: absolute; top: 0; right: 0; display: flex; gap: 6px; }
+        .lang-switcher button { background: #fff; color: #c62828; border: 1px solid #c62828; padding: 6px 12px; border-radius: 18px; }
+        .lang-switcher button.active { background: #c62828; color: #fff; }
+        .hint { color: #607d8b; font-size: .95rem; }
+        @media (max-width: 800px) { .container { padding: 12px; } .grid { grid-template-columns: 1fr; } .lang-switcher { position: static; justify-content: flex-end; margin-bottom: 12px; } .matrix { grid-template-columns: 90px repeat(5, 1fr); font-size: .75rem; } }
+        @media print { .lang-switcher, .actions { display: none; } body { background: #fff; } .panel { box-shadow: none; } }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <section class="panel header">
+            <div class="lang-switcher"><button id="langEn" onclick="setLanguage('en')">EN</button><button id="langZh" onclick="setLanguage('zh')">中文</button></div>
+            <h1>⚠️ <span data-i18n="title">Engineering Risk Analysis Template</span></h1>
+            <p class="hint" data-i18n="intro">Use this as a live risk register for a project, launch, migration, or operational change.</p>
+        </section>
+        <section class="panel">
+            <h2 data-i18n="context">Project Context</h2>
+            <div class="grid">
+                <div><label data-i18n="project">Project</label><input id="project" data-ph="projectPh"></div>
+                <div><label data-i18n="owner">Owner</label><input id="owner" data-ph="ownerPh"></div>
+                <div><label data-i18n="date">Review date</label><input id="date" type="date"></div>
+                <div><label data-i18n="cadence">Review cadence</label><input id="cadence" data-ph="cadencePh"></div>
+            </div>
+            <div style="margin-top:14px"><label data-i18n="scope">Scope / assumptions</label><textarea id="scope" data-ph="scopePh"></textarea></div>
+        </section>
+        <section class="panel">
+            <h2 data-i18n="matrix">Risk Assessment Matrix</h2>
+            <p class="hint" data-i18n="matrixHint">Score = probability x impact. Use the color bands to decide review urgency.</p>
+            <div class="matrix" id="matrixGrid"></div>
+        </section>
+        <section class="panel">
+            <h2 data-i18n="register">Risk Register</h2>
+            <table>
+                <thead><tr><th>ID</th><th data-i18n="risk">Risk</th><th data-i18n="prob">Prob.</th><th data-i18n="impact">Impact</th><th data-i18n="score">Score</th><th data-i18n="mitigation">Mitigation / contingency</th><th data-i18n="riskOwner">Owner</th><th data-i18n="status">Status</th></tr></thead>
+                <tbody id="riskRows"></tbody>
+            </table>
+            <div class="actions"><button onclick="addRisk()" data-i18n="btnAddRisk">Add risk</button></div>
+        </section>
+        <section class="panel">
+            <h2 data-i18n="nextSteps">Action Items & Next Steps</h2>
+            <textarea id="nextStepsText" data-ph="nextStepsPh"></textarea>
+            <div class="actions">
+                <button onclick="copyTemplate()" data-i18n="btnCopy">Copy structured template</button>
+                <button class="secondary" onclick="window.print()" data-i18n="btnPrint">Print / save PDF</button>
+                <button class="ghost" onclick="resetForm()" data-i18n="btnReset">Reset</button>
+            </div>
+        </section>
+    </main>
+    <script>
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+        const data = {
+            en: { title:'Engineering Risk Analysis Template', intro:'Use this as a live risk register for a project, launch, migration, or operational change.', context:'Project Context', project:'Project', owner:'Owner', date:'Review date', cadence:'Review cadence', scope:'Scope / assumptions', matrix:'Risk Assessment Matrix', matrixHint:'Score = probability x impact. Use the color bands to decide review urgency.', register:'Risk Register', risk:'Risk', prob:'Prob.', impact:'Impact', score:'Score', mitigation:'Mitigation / contingency', riskOwner:'Owner', status:'Status', nextSteps:'Action Items & Next Steps', btnAddRisk:'Add risk', btnCopy:'Copy structured template', btnPrint:'Print / save PDF', btnReset:'Reset', projectPh:'Project name', ownerPh:'Risk review owner', cadencePh:'Weekly, bi-weekly, before each launch gate...', scopePh:'What is included, excluded, assumed, or already decided?', nextStepsPh:'Escalations, decisions needed, follow-ups, review cadence changes...', copied:'Copied', statuses:['Open','Monitoring','Mitigating','Escalated','Closed'], levels:['Negligible','Minor','Moderate','Major','Critical'], probs:['Very low','Low','Medium','High','Very high'] },
+            zh: { title:'工程風險分析範本', intro:'用來維護專案、上線、遷移或營運變更的活風險登錄表。', context:'專案背景', project:'專案', owner:'負責人', date:'檢視日期', cadence:'檢視節奏', scope:'範圍／假設', matrix:'風險評估矩陣', matrixHint:'分數 = 發生機率 x 影響程度。依顏色區間判斷檢視急迫性。', register:'風險登錄表', risk:'風險', prob:'機率', impact:'影響', score:'分數', mitigation:'緩解／備援', riskOwner:'Owner', status:'狀態', nextSteps:'行動項目與下一步', btnAddRisk:'新增風險', btnCopy:'複製結構化範本', btnPrint:'列印／存 PDF', btnReset:'重設', projectPh:'專案名稱', ownerPh:'風險檢視負責人', cadencePh:'每週、每兩週、每個上線 gate 前...', scopePh:'包含、排除、假設或已決定的事項', nextStepsPh:'升級處理、待決策事項、後續追蹤、檢視節奏調整...', copied:'已複製', statuses:['未處理','監控中','緩解中','已升級','已關閉'], levels:['可忽略','輕微','中等','重大','嚴重'], probs:['極低','低','中','高','極高'] }
+        };
+        function t(){return data[currentLang];}
+        function setLanguage(lang){currentLang=lang;localStorage.setItem('emToolsLang',lang);render();}
+        function scoreClass(score){return score>=20?'critical':score>=12?'high':score>=6?'medium':'low';}
+        function renderMatrix(){const d=t();let html='<div class="mh"></div>'+d.levels.map((l,i)=>`<div class="mh">${i+1}<br>${l}</div>`).join('');for(let p=5;p>=1;p--){html+=`<div class="mh">${p}<br>${d.probs[p-1]}</div>`;for(let i=1;i<=5;i++){const s=p*i;html+=`<div class="${scoreClass(s)}">${s}</div>`;}}document.getElementById('matrixGrid').innerHTML=html;}
+        function riskRow(n){const d=t();return `<tr><td>R${String(n).padStart(3,'0')}</td><td><textarea data-risk-field="risk"></textarea></td><td><select data-risk-field="prob" onchange="updateScores()">${[1,2,3,4,5].map(x=>`<option>${x}</option>`).join('')}</select></td><td><select data-risk-field="impact" onchange="updateScores()">${[1,2,3,4,5].map(x=>`<option>${x}</option>`).join('')}</select></td><td data-score>1</td><td><textarea data-risk-field="mitigation"></textarea></td><td><input data-risk-field="owner"></td><td><select data-risk-field="status">${d.statuses.map(x=>`<option>${x}</option>`).join('')}</select></td></tr>`;}
+        function addRisk(){document.getElementById('riskRows').insertAdjacentHTML('beforeend',riskRow(document.querySelectorAll('#riskRows tr').length+1));updateScores();}
+        function updateScores(){document.querySelectorAll('#riskRows tr').forEach(row=>{const p=Number(row.querySelector('[data-risk-field=prob]').value);const i=Number(row.querySelector('[data-risk-field=impact]').value);const cell=row.querySelector('[data-score]');cell.textContent=p*i;cell.className=scoreClass(p*i);});}
+        function render(){const d=t();document.documentElement.lang=currentLang==='zh'?'zh-Hant':'en';document.title=d.title;document.getElementById('langEn').classList.toggle('active',currentLang==='en');document.getElementById('langZh').classList.toggle('active',currentLang==='zh');document.querySelectorAll('[data-i18n]').forEach(el=>el.textContent=d[el.dataset.i18n]);document.querySelectorAll('[data-ph]').forEach(el=>el.placeholder=d[el.dataset.ph]);renderMatrix();if(!document.querySelector('#riskRows tr')){for(let i=0;i<5;i++)addRisk();}else{document.querySelectorAll('[data-risk-field=status]').forEach(sel=>{const old=sel.value;sel.innerHTML=d.statuses.map(x=>`<option>${x}</option>`).join('');if(d.statuses.includes(old))sel.value=old;});}}
+        function val(id){return document.getElementById(id).value.trim();}
+        async function copyTemplate(){const d=t();const rows=Array.from(document.querySelectorAll('#riskRows tr')).map(row=>`- ${row.cells[0].textContent}: ${row.querySelector('[data-risk-field=risk]').value || '[risk]'} | ${d.score}: ${row.querySelector('[data-score]').textContent} | ${d.riskOwner}: ${row.querySelector('[data-risk-field=owner]').value || '[owner]'} | ${d.status}: ${row.querySelector('[data-risk-field=status]').value} | ${d.mitigation}: ${row.querySelector('[data-risk-field=mitigation]').value || '[mitigation]'}`).join('\n');const text=`# ${d.title}\n\n## ${d.context}\n- ${d.project}: ${val('project') || '[project]'}\n- ${d.owner}: ${val('owner') || '[owner]'}\n- ${d.date}: ${val('date') || '[date]'}\n- ${d.cadence}: ${val('cadence') || '[cadence]'}\n- ${d.scope}: ${val('scope') || '[scope]'}\n\n## ${d.register}\n${rows}\n\n## ${d.nextSteps}\n${val('nextStepsText') || '[next steps]'}`;await navigator.clipboard.writeText(text);alert(d.copied);}
+        function resetForm(){document.querySelectorAll('input, textarea').forEach(el=>{if(el.type!=='date')el.value='';});document.getElementById('riskRows').innerHTML='';for(let i=0;i<5;i++)addRisk();}
+        render();
+    </script>
+</body>
+</html>

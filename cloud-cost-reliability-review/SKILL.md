@@ -46,6 +46,7 @@ metadata:
 - **每個項目的 rollback/驗證計畫**——必要項目
 - **每個項目的負責人與檢視日期**
 - **延伸追蹤**（選填）：快贏機會與優先改善項目如果需要跨週期持續追蹤到完成，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在你自己從 `shared-skills/docs/ar.template.md` 複製建立、存放在 `shared-skills/docs/ar/` 底下的檔案
+- **延伸應用**（選填）：如果多個優先改善項目需要在成本、可靠性、實作風險與 rollback 複雜度之間做取捨，可以整理進 `shared-skills/docs/decision_matrix_template.html` 做加權比較；如果需要先向主管說明不同改善路線的取捨，可以用 `shared-skills/docs/scenario_comparison_template.html`
 
 ## Safety Constraints
 

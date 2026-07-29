@@ -1,6 +1,6 @@
-# Action Register、RACI、ADR、Meeting Notes、1:1、Async/Team Update、Stakeholder Report、Coaching/Skill Gap、Career Development — 範本與活文件
+# Action Register、RACI、ADR、Meeting Notes、1:1、Async/Team Update、Stakeholder Report、Coaching/Skill Gap、Career Development、Decision/Risk Analysis — 範本與活文件
 
-八組你直接管控、手動編輯（或手動填寫）的活文件，加上輔助更新的 skill。
+多組你直接管控、手動編輯（或手動填寫）的活文件，加上輔助更新的 skill。
 
 ## 結構：範本 vs 實際內容
 
@@ -23,6 +23,11 @@ docs/
 ├── ai_career_path_prompt_template.html    # 產生職涯路徑/晉升準備建議的 AI prompt 工具（公開，追蹤進 git）
 ├── email_draft_generator.html         # 產生各類 EM email（狀態更新/事故通報/團隊公告/主管摘要/績效對話/流程異動）AI prompt 的工具，附靜態範本（公開，追蹤進 git）
 ├── meeting_agenda_generator.html      # 9 種會議類型的議程 AI prompt 產生器，附靜態範本，支援英文/繁體中文切換（介面與產出內容都會切換），單機瀏覽器打開即可（公開，追蹤進 git）
+├── risk_analysis_prompt_generator.html       # 產生風險辨識/評分/緩解建議的 AI prompt 工具，支援英文/繁體中文介面與 prompt 產出（公開，追蹤進 git）
+├── scenario_comparison_prompt_generator.html # 產生多方案比較/決策建議的 AI prompt 工具，支援英文/繁體中文介面與 prompt 產出（公開，追蹤進 git）
+├── risk_analysis_template.html        # 專案風險矩陣 + 風險登錄表活文件，支援英文/繁體中文介面與結構化內容複製（公開，追蹤進 git）
+├── scenario_comparison_template.html  # 2-3 個方案的優缺點/風險/投入比較活文件，支援英文/繁體中文介面與結構化內容複製（公開，追蹤進 git）
+├── decision_matrix_template.html      # 加權決策矩陣工具，支援英文/繁體中文介面與結構化內容複製（公開，追蹤進 git）
 ├── ar/                                 # 實際的 Action Register 內容（.gitignore 排除，只留 .gitkeep）
 ├── raci/                               # 實際的 RACI Matrix 內容（.gitignore 排除，只留 .gitkeep）
 ├── adr/                                 # 實際的 ADR 內容，一個決策一個檔案（.gitignore 排除，只留 .gitkeep）
@@ -50,6 +55,7 @@ cp docs/mn.template.md docs/mn/2026-07-15-weekly.md
 - Coaching/Skill Gap：`docs/ai_coaching_prompt_template.html`（產生下屬成長建議的 AI prompt）、`docs/coaching_plan_tracker.html`（長期教練計畫追蹤）、`docs/skill_gap_analysis_template.html`（團隊技能矩陣 → 缺口分析 prompt）都只提供瀏覽器內填寫/列印/複製，沒有下載填寫結果的功能——填完直接列印存 PDF、或複製產生的 prompt，不會留下自動命名的匯出檔案。
 - Career Development：`docs/career_development_plan_template.html`（單一下屬的長期職涯發展計畫）填完可以用工具內建的「下載」按鈕存成 `.txt`，存進 `docs/coaching/`；`docs/ai_career_path_prompt_template.html`（產生職涯路徑/晉升準備建議的 AI prompt）跟其他 AI prompt 工具一樣沒有下載功能，只能複製。
 - Email/會議議程：`docs/email_draft_generator.html`（各類 EM email 的 AI prompt + 靜態範本）、`docs/meeting_agenda_generator.html`（9 種會議類型的議程 AI prompt + 靜態範本）都只提供瀏覽器內填寫/複製/列印，沒有下載功能。
+- Decision/Risk Analysis：`docs/risk_analysis_prompt_generator.html` 用來把專案背景、風險類別、分析深度組成一段可貼給 AI 的風險分析 prompt；`docs/scenario_comparison_prompt_generator.html` 用來把決策背景、候選方案、評估準則組成多方案比較 prompt；`docs/risk_analysis_template.html` 是手動維護風險矩陣與風險登錄表；`docs/scenario_comparison_template.html` 是比較 2-3 個方案的優缺點、風險與投入；`docs/decision_matrix_template.html` 是可加權計分的決策矩陣。這五個工具右上角都能切換英文/繁體中文，且複製出來的 AI prompt 或結構化 template 內容會依選定語言產生。
 
 `docs/ar/`、`docs/raci/`、`docs/adr/`、`docs/mn/`、`docs/1on1/`、`docs/updates/`、`docs/coaching/` 底下的檔案（`.gitkeep` 除外）都被 `.gitignore` 排除，不會被提交進這個 repo，因為裡面通常會累積真實的內部資訊。`shared-skills/validate-skills.sh` 掃描每個子目錄時也會跳過整個 `docs/`，不會把它當成缺 SKILL.md 的 skill 來報錯。
 
@@ -79,6 +85,44 @@ cp docs/mn.template.md docs/mn/2026-07-15-weekly.md
 | 針對某位下屬產生職涯路徑/晉升準備建議的 AI prompt | `docs/ai_career_path_prompt_template.html`；產出內容是給主管自己參考的建議，不是正式的晉升決定 |
 | 產生各類 EM email（狀態更新、事故通報、團隊公告、主管摘要、績效對話、流程異動）的 AI prompt，或直接套用靜態範本 | `docs/email_draft_generator.html`；如果只是要固定的每週給利害關係人的狀態 email，`docs/team_update_email_prompt.html` 更聚焦、欄位也更貼合週報情境 |
 | 草擬會議議程 AI prompt（9 種常見會議類型：standup/sprint planning/retro/1:1/架構審查/事故檢討/專案 kickoff/all-hands/週報向上報告），附靜態範本，右上角可切換英文/繁體中文（介面與產出的 prompt/範本都會切換） | 用瀏覽器打開 `docs/meeting_agenda_generator.html`；不方便用瀏覽器工具時改用 `shared-skills/meeting-agenda-draft/SKILL.md`（AI CLI 版本，附必要性提醒/會議類型判定/48 小時前置期檢查） |
+| 針對專案、上線、遷移或營運變更做風險辨識、風險評分與緩解計畫 | 想請 AI 先幫忙發散與整理時，用 `docs/risk_analysis_prompt_generator.html` 產生 prompt；已經要正式追蹤風險時，用 `docs/risk_analysis_template.html` 維護風險矩陣與風險登錄表 |
+| 比較多個工程/產品/流程/投資方案，形成決策建議 | 想請 AI 先做結構化比較時，用 `docs/scenario_comparison_prompt_generator.html`；想手動整理 2-3 個方案的優缺點、風險、投入與建議時，用 `docs/scenario_comparison_template.html` |
+| 用加權分數讓決策取捨更明確 | 用瀏覽器打開 `docs/decision_matrix_template.html`，設定準則權重、替每個方案評 1-5 分，再搭配質化分析決定最後建議；適合供應商選型、架構選型、roadmap 取捨、工具導入等需要留下決策理由的情境 |
+
+### Decision/Risk Analysis 工作台
+
+`risk_analysis_prompt_generator.html`、`risk_analysis_template.html`、`scenario_comparison_prompt_generator.html`、`scenario_comparison_template.html`、`decision_matrix_template.html` 這五個工具可以視為「瀏覽器版的決策/風險工作台」：不是取代既有 skill，而是放在幾個 skill 的前後，補上風險發散、方案比較、決策取捨與後續追蹤。
+
+| 工具 | 可以用來幹嘛 | 常見串接 |
+|---|---|---|
+| `docs/risk_analysis_prompt_generator.html` | 把專案背景整理成 AI prompt，請 AI 幫你發散風險：哪裡可能出事、機率/影響怎麼評、要怎麼預防、誰要看、什麼時候升級 | `delivery-health-review` 判斷專案偏黃/紅後，用這個工具做更完整風險分析；`commitment-risk-review` 判斷承諾風險後，用這個工具補齊風險清單 |
+| `docs/risk_analysis_template.html` | 正式追蹤風險，把 AI 分析或會議結論整理進風險矩陣/風險登錄表，持續更新 owner、狀態、緩解方案 | 從 `risk_analysis_prompt_generator.html` 或 `commitment-risk-review` 接結果；需要跨週期追蹤 mitigation、next steps 時，再接 `action-register-maintainer` |
+| `docs/scenario_comparison_prompt_generator.html` | 請 AI 比較多個方案，例如架構選型、vendor vs 自建、roadmap 取捨、流程調整；適合「還沒形成結論」時使用 | 寫 `architecture-decision-record` 前先比較選項；`capacity-roadmap-scenarios` 產出多個情境後，用這個工具要求 AI 補強比較角度 |
+| `docs/scenario_comparison_template.html` | 手動整理 2-3 個方案的優缺點、風險、投入、建議，適合拿去跟主管/PM/tech lead 討論 | 接在 `capacity-roadmap-scenarios` 後，把「維持現狀／人力受限／加速衝刺」整理成決策材料；如果卡在跨團隊依賴，補接 `cross-team-dependency-log` |
+| `docs/decision_matrix_template.html` | 用加權分數比較已知候選方案，讓取捨變明確，例如成本 3 分、速度 4 分、風險降低 5 分，再看加權結果 | 在 `architecture-decision-record` 前留下決策理由；也可接在 `scenario_comparison_template.html` 後，把質化比較轉成加權分數 |
+
+典型流程：
+
+```text
+delivery-health-review
+  -> risk_analysis_prompt_generator.html
+  -> risk_analysis_template.html
+  -> action-register-maintainer
+
+commitment-risk-review
+  -> risk_analysis_template.html
+  -> action-register-maintainer 或 role-clarity-decision-rights
+
+capacity-roadmap-scenarios
+  -> scenario_comparison_template.html
+  -> decision_matrix_template.html
+
+scenario_comparison_prompt_generator.html
+  -> decision_matrix_template.html
+  -> architecture-decision-record
+```
+
+如果比較方案時發現「誰能決定」「誰該 approve」不清楚，先用 `shared-skills/role-clarity-decision-rights/SKILL.md` 釐清決策權責，再回來更新 `scenario_comparison_template.html` 或 `decision_matrix_template.html`。如果方案或風險卡在跨團隊依賴，先用 `shared-skills/cross-team-dependency-log/SKILL.md` 把依賴拆清楚，再把需要追蹤的項目交給 `action-register-maintainer`。
 
 `action-register-maintainer` 只會**提出建議的異動**（新增哪些列、哪些該標記逾期、哪些該移到已完成），不會自己動手改你的 `docs/ar/<檔名>.md`——實際要不要採用建議、要不要真的修改檔案，由你決定並自己動手改。`architecture-decision-record` 沒有對應的「維護建議」skill，因為 ADR 本來就是一次性產出、之後偶爾手動更新狀態，不需要跨會議持續比對。所有 `docs/*.html` 工具也都沒有對應的「維護建議」skill——這些都是一次一份、獨立存檔的紀錄，不需要跨會議/跨週期比對。
 
@@ -116,7 +160,7 @@ cp docs/mn.template.md docs/mn/2026-07-15-weekly.md
 
 ## 隱私提醒
 
-`docs/1on1/`、`docs/updates/`、`docs/mn/`、`docs/coaching/` 底下的檔案會包含真實姓名、筆記或專案內部資訊，屬於機密/內部資料，跟 `docs/ar/`、`docs/raci/`、`docs/adr/` 一樣被 `.gitignore` 排除，不會被提交進這個公開 repo。`ai_one_on_one_prep_prompt.html`、`team_update_email_prompt.html`、`ai_meeting_summary_template.html`、`ai_coaching_prompt_template.html`、`skill_gap_analysis_template.html`、`ai_career_path_prompt_template.html`、`email_draft_generator.html`、`meeting_agenda_generator.html` 產生的 prompt 在貼給第三方 AI 工具前，也要先檢查是否包含不該外流的機密資訊。
+`docs/1on1/`、`docs/updates/`、`docs/mn/`、`docs/coaching/` 底下的檔案會包含真實姓名、筆記或專案內部資訊，屬於機密/內部資料，跟 `docs/ar/`、`docs/raci/`、`docs/adr/` 一樣被 `.gitignore` 排除，不會被提交進這個公開 repo。`ai_one_on_one_prep_prompt.html`、`team_update_email_prompt.html`、`ai_meeting_summary_template.html`、`ai_coaching_prompt_template.html`、`skill_gap_analysis_template.html`、`ai_career_path_prompt_template.html`、`email_draft_generator.html`、`meeting_agenda_generator.html`、`risk_analysis_prompt_generator.html`、`scenario_comparison_prompt_generator.html` 產生的 prompt 在貼給第三方 AI 工具前，也要先檢查是否包含不該外流的機密資訊。`risk_analysis_template.html`、`scenario_comparison_template.html`、`decision_matrix_template.html` 填寫後也可能包含內部 roadmap、供應商、成本或架構資訊，複製或列印保存時不要放進會被公開提交的位置。
 
 `coaching_plan_tracker.html`、`skill_gap_analysis_template.html` 填寫後通常會包含真實姓名、技能評分、教練筆記，屬於敏感人事內容——這兩個工具沒有「下載」按鈕，只能列印/存 PDF 或截圖，存檔時不要存進任何會被提交進版控的位置（不論是這個 repo 還是你自己使用的專案 repo）。`career_development_plan_template.html` 有下載按鈕，填寫後的 `.txt` 檔同樣屬於敏感人事內容，只能存進 `docs/coaching/`（已被 `.gitignore` 排除）。
 

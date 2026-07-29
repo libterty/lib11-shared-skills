@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering Decision Matrix Template</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.5; color: #263238; background: #f5f7f8; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+        .panel { background: #fff; border: 1px solid #d9e0e4; border-radius: 8px; padding: 22px; margin-bottom: 18px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+        .header { position: relative; border-bottom: 3px solid #2c5aa0; padding-bottom: 14px; }
+        h1 { margin: 0; color: #2c5aa0; font-size: 2rem; }
+        h2 { margin: 0 0 14px; color: #37474f; font-size: 1.25rem; }
+        label { display: block; font-weight: 650; margin-bottom: 6px; }
+        input, textarea { width: 100%; border: 1px solid #cfd8dc; border-radius: 6px; padding: 9px; font: inherit; background: #fff; }
+        textarea { min-height: 78px; resize: vertical; }
+        table { width: 100%; border-collapse: collapse; background: #fff; }
+        th, td { border: 1px solid #d9e0e4; padding: 8px; vertical-align: top; text-align: center; }
+        th { background: #2c5aa0; color: #fff; }
+        td:first-child, th:first-child { text-align: left; min-width: 190px; }
+        .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        .score { width: 72px; text-align: center; }
+        .total { font-weight: 800; background: #e8f5e9; }
+        .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+        button { border: 0; border-radius: 6px; padding: 10px 14px; font-weight: 700; cursor: pointer; background: #2c5aa0; color: white; }
+        button.secondary { background: #455a64; } button.ghost { background: #eceff1; color: #263238; }
+        .lang-switcher { position: absolute; top: 0; right: 0; display: flex; gap: 6px; }
+        .lang-switcher button { background: #fff; color: #2c5aa0; border: 1px solid #2c5aa0; padding: 6px 12px; border-radius: 18px; }
+        .lang-switcher button.active { background: #2c5aa0; color: #fff; }
+        .hint { color: #607d8b; font-size: .95rem; }
+        @media (max-width: 900px) { .container { padding: 12px; } .grid { grid-template-columns: 1fr; } .lang-switcher { position: static; justify-content: flex-end; margin-bottom: 12px; } table { font-size: .86rem; } .score { width: 52px; } }
+        @media print { .lang-switcher, .actions { display: none; } body { background: #fff; } .panel { box-shadow: none; } }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <section class="panel header">
+            <div class="lang-switcher"><button id="langEn" onclick="setLanguage('en')">EN</button><button id="langZh" onclick="setLanguage('zh')">中文</button></div>
+            <h1>🎯 <span data-i18n="title">Engineering Decision Matrix Template</span></h1>
+            <p class="hint" data-i18n="intro">Score options against weighted criteria to make tradeoffs explicit before recommending a decision.</p>
+        </section>
+        <section class="panel">
+            <h2 data-i18n="context">Decision Context</h2>
+            <div class="grid">
+                <div><label data-i18n="topic">Decision topic</label><input id="topic" data-ph="topicPh"></div>
+                <div><label data-i18n="owner">Decision owner</label><input id="owner" data-ph="ownerPh"></div>
+                <div><label data-i18n="date">Date</label><input id="date" type="date"></div>
+                <div><label data-i18n="stakeholders">Stakeholders</label><input id="stakeholders" data-ph="stakeholdersPh"></div>
+            </div>
+            <div style="margin-top:14px"><label data-i18n="notes">Context notes</label><textarea id="notes" data-ph="notesPh"></textarea></div>
+        </section>
+        <section class="panel">
+            <h2 data-i18n="criteria">Criteria & Weights</h2>
+            <table><thead><tr><th data-i18n="criterion">Criterion</th><th data-i18n="weight">Weight</th><th data-i18n="meaning">What it means</th></tr></thead><tbody id="criteriaRows"></tbody></table>
+        </section>
+        <section class="panel">
+            <h2 data-i18n="matrix">Decision Matrix</h2>
+            <p class="hint" data-i18n="matrixHint">Score each option from 1-5. Weighted total = score x criterion weight.</p>
+            <table id="matrixTable"></table>
+            <div class="actions"><button onclick="addOption()" data-i18n="btnAddOption">Add option</button><button class="ghost" onclick="calculate()" data-i18n="btnCalculate">Calculate</button></div>
+        </section>
+        <section class="panel">
+            <h2 data-i18n="qualitative">Qualitative Analysis</h2>
+            <div class="grid">
+                <div><label data-i18n="whyWinner">Why the leading option wins</label><textarea id="whyWinner"></textarea></div>
+                <div><label data-i18n="risks">Risks and mitigations</label><textarea id="risks"></textarea></div>
+                <div><label data-i18n="dissent">Dissenting views</label><textarea id="dissent"></textarea></div>
+                <div><label data-i18n="nextSteps">Next steps</label><textarea id="nextSteps"></textarea></div>
+            </div>
+            <div class="actions">
+                <button onclick="copyTemplate()" data-i18n="btnCopy">Copy structured template</button>
+                <button class="secondary" onclick="window.print()" data-i18n="btnPrint">Print / save PDF</button>
+                <button class="ghost" onclick="resetForm()" data-i18n="btnReset">Reset</button>
+            </div>
+        </section>
+    </main>
+    <script>
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+        let optionCount = 3;
+        const criteriaKeys = ['value','cost','speed','complexity','risk'];
+        const data = {
+            en: { title:'Engineering Decision Matrix Template', intro:'Score options against weighted criteria to make tradeoffs explicit before recommending a decision.', context:'Decision Context', topic:'Decision topic', owner:'Decision owner', date:'Date', stakeholders:'Stakeholders', notes:'Context notes', criteria:'Criteria & Weights', criterion:'Criterion', weight:'Weight', meaning:'What it means', matrix:'Decision Matrix', matrixHint:'Score each option from 1-5. Weighted total = score x criterion weight.', qualitative:'Qualitative Analysis', whyWinner:'Why the leading option wins', risks:'Risks and mitigations', dissent:'Dissenting views', nextSteps:'Next steps', btnAddOption:'Add option', btnCalculate:'Calculate', btnCopy:'Copy structured template', btnPrint:'Print / save PDF', btnReset:'Reset', topicPh:'e.g. Choose observability platform', ownerPh:'Name', stakeholdersPh:'Engineering, SRE, Finance, Security', notesPh:'Decision background, constraints, non-goals...', copied:'Copied', option:'Option', total:'Total', criteriaDefaults:{ value:['Business value',5,'Customer, revenue, strategic, or operational value.'], cost:['Cost',3,'License, engineering effort, opportunity cost.'], speed:['Time to deliver',4,'How quickly value can be delivered.'], complexity:['Complexity',3,'Implementation, migration, and cognitive load.'], risk:['Risk reduction',4,'Reliability, security, rollback, and decision reversibility.'] } },
+            zh: { title:'工程決策矩陣範本', intro:'用加權準則評分多個方案，讓取捨在提出建議前更明確。', context:'決策背景', topic:'決策主題', owner:'決策 owner', date:'日期', stakeholders:'利害關係人', notes:'背景筆記', criteria:'評估準則與權重', criterion:'準則', weight:'權重', meaning:'意義', matrix:'決策矩陣', matrixHint:'每個方案以 1-5 分評分。加權總分 = 分數 x 準則權重。', qualitative:'質化分析', whyWinner:'領先方案勝出的原因', risks:'風險與緩解方式', dissent:'不同意見', nextSteps:'下一步', btnAddOption:'新增方案', btnCalculate:'計算', btnCopy:'複製結構化範本', btnPrint:'列印／存 PDF', btnReset:'重設', topicPh:'例如：選擇可觀測性平台', ownerPh:'姓名', stakeholdersPh:'工程、SRE、財務、安全', notesPh:'決策背景、限制、非目標...', copied:'已複製', option:'方案', total:'總分', criteriaDefaults:{ value:['商業價值',5,'客戶、營收、策略或營運價值。'], cost:['成本',3,'授權費、工程投入、機會成本。'], speed:['交付速度',4,'多快可以交付價值。'], complexity:['複雜度',3,'導入、遷移與認知負擔。'], risk:['風險降低',4,'可靠性、安全、回復能力與決策可逆性。'] } }
+        };
+        function t(){return data[currentLang];}
+        function setLanguage(lang){currentLang=lang;localStorage.setItem('emToolsLang',lang);render();}
+        function renderCriteria(){const d=t();document.getElementById('criteriaRows').innerHTML=criteriaKeys.map(k=>{const c=d.criteriaDefaults[k];return `<tr><td><input id="crit_${k}" value="${c[0]}"></td><td><input class="score" type="number" min="1" max="5" id="weight_${k}" value="${c[1]}" onchange="calculate()"></td><td><textarea id="meaning_${k}">${c[2]}</textarea></td></tr>`;}).join('');}
+        function renderMatrix(){const d=t();let head=`<thead><tr><th>${d.option}</th>${criteriaKeys.map(k=>`<th>${document.getElementById('crit_'+k)?.value || d.criteriaDefaults[k][0]}</th>`).join('')}<th>${d.total}</th></tr></thead>`;let body='<tbody>';for(let o=1;o<=optionCount;o++){body+=`<tr><td><input id="option_${o}" placeholder="${d.option} ${o}"></td>${criteriaKeys.map(k=>`<td><input class="score" type="number" min="1" max="5" value="3" data-option="${o}" data-crit="${k}" onchange="calculate()"></td>`).join('')}<td class="total" id="total_${o}">0</td></tr>`;}body+='</tbody>';document.getElementById('matrixTable').innerHTML=head+body;calculate();}
+        function render(){const d=t();const saved=collect();document.documentElement.lang=currentLang==='zh'?'zh-Hant':'en';document.title=d.title;document.getElementById('langEn').classList.toggle('active',currentLang==='en');document.getElementById('langZh').classList.toggle('active',currentLang==='zh');document.querySelectorAll('[data-i18n]').forEach(el=>el.textContent=d[el.dataset.i18n]);document.querySelectorAll('[data-ph]').forEach(el=>el.placeholder=d[el.dataset.ph]);renderCriteria();restore(saved);renderMatrix();restore(saved);}
+        function calculate(){for(let o=1;o<=optionCount;o++){let total=0;criteriaKeys.forEach(k=>{const score=Number(document.querySelector(`[data-option="${o}"][data-crit="${k}"]`)?.value || 0);const weight=Number(document.getElementById('weight_'+k)?.value || 0);total+=score*weight;});const cell=document.getElementById('total_'+o);if(cell)cell.textContent=total;}}
+        function addOption(){const saved=collect();optionCount++;renderMatrix();restore(saved);}
+        function collect(){const out={};document.querySelectorAll('input, textarea').forEach(el=>{if(el.id)out[el.id]=el.value;});return out;}
+        function restore(values){Object.entries(values).forEach(([id,value])=>{const el=document.getElementById(id);if(el)el.value=value;});calculate();}
+        function val(id){return document.getElementById(id)?.value.trim() || '';}
+        async function copyTemplate(){calculate();const d=t();const criteria=criteriaKeys.map(k=>`- ${val('crit_'+k)} (${d.weight}: ${val('weight_'+k)}): ${val('meaning_'+k)}`).join('\n');const options=[];for(let o=1;o<=optionCount;o++){options.push(`- ${val('option_'+o)||d.option+' '+o}: ${document.getElementById('total_'+o).textContent}`);}const text=`# ${d.title}\n\n## ${d.context}\n- ${d.topic}: ${val('topic')||'[]'}\n- ${d.owner}: ${val('owner')||'[]'}\n- ${d.date}: ${val('date')||'[]'}\n- ${d.stakeholders}: ${val('stakeholders')||'[]'}\n- ${d.notes}: ${val('notes')||'[]'}\n\n## ${d.criteria}\n${criteria}\n\n## ${d.matrix}\n${options.join('\n')}\n\n## ${d.qualitative}\n- ${d.whyWinner}: ${val('whyWinner')||'[]'}\n- ${d.risks}: ${val('risks')||'[]'}\n- ${d.dissent}: ${val('dissent')||'[]'}\n- ${d.nextSteps}: ${val('nextSteps')||'[]'}`;await navigator.clipboard.writeText(text);alert(d.copied);}
+        function resetForm(){['topic','owner','date','stakeholders','notes','whyWinner','risks','dissent','nextSteps'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});optionCount=3;renderCriteria();renderMatrix();}
+        render();
+    </script>
+</body>
+</html>

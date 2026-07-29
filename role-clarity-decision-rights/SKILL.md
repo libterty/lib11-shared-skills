@@ -43,6 +43,7 @@ metadata:
 - **交接檢核清單**
 - **溝通計畫**
 - **30 天檢核點**
+- **延伸應用**（選填）：如果角色釐清的核心問題是多個方案之間的決策權責不同，可以先用 `shared-skills/docs/scenario_comparison_template.html` 整理各方案，再把「誰是 DRI／誰核准／誰需諮詢」回填到本 skill 的決策權責表；如果每個方案需要加權取捨，可接 `shared-skills/docs/decision_matrix_template.html`
 
 ## Safety Constraints
 

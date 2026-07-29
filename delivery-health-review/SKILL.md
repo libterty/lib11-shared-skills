@@ -44,6 +44,7 @@ metadata:
 - **復原/升級建議**（或明確寫「本週期不需要」）
 - **延伸追蹤**（選填）：「這週需要的決策」如果需要跨週期持續追蹤到定案，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在你自己從 `shared-skills/docs/ar.template.md` 複製建立、存放在 `shared-skills/docs/ar/` 底下的檔案；如果決策負責人本身反覆不清楚，先用 `shared-skills/role-clarity-decision-rights/SKILL.md` 產出提案，確認後維護在你自己從 `shared-skills/docs/raci.template.md` 複製建立、存放在 `shared-skills/docs/raci/` 底下的檔案
 - **延伸應用**（選填）：如果要把這份輸出轉成一份完整的利害關係人狀態報告，可以把各維度狀態、風險、需要的決策填進 `shared-skills/docs/stakeholder_update_template.html`（離線瀏覽器工具）
+- **延伸應用**（選填）：如果專案狀態偏黃/紅，且需要把風險拆得更完整，可以把本輸出的風險、關鍵路徑、領先/落後指標貼進 `shared-skills/docs/risk_analysis_prompt_generator.html` 產生風險分析 prompt；分析結果若要跨週期維護，整理進 `shared-skills/docs/risk_analysis_template.html` 的風險矩陣與風險登錄表
 
 ## Safety Constraints
 

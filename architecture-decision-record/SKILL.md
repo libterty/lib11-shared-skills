@@ -45,6 +45,7 @@ metadata:
 - **檢視日期**
 - **證據來源**（每個事實性主張附 Source ID）
 - **延伸追蹤**（選填）：如果「決策負責人」這個角色本身在團隊裡反覆不清楚，先用 `shared-skills/role-clarity-decision-rights/SKILL.md` 產出提案，確認後維護在你自己從 `shared-skills/docs/raci.template.md` 複製建立、存放在 `shared-skills/docs/raci/` 底下的檔案
+- **前置比較**（選填）：如果決策還沒定案、或考慮過的選項尚未被充分比較，可以先用 `shared-skills/docs/scenario_comparison_prompt_generator.html` 產生方案比較 prompt，或用 `shared-skills/docs/decision_matrix_template.html` 做加權比較；定案後再把比較結果摘要進 ADR 的「考慮過的選項」與「取捨」區塊
 
 ## Safety Constraints
 

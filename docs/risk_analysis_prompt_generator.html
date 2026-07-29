@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Risk Analysis Prompt Generator</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; color: #263238; background: #f5f7f8; }
+        .container { max-width: 1180px; margin: 0 auto; padding: 24px; }
+        .panel { background: #fff; border: 1px solid #d9e0e4; border-radius: 8px; padding: 24px; margin-bottom: 18px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+        .header { position: relative; border-bottom: 3px solid #c62828; padding-bottom: 14px; }
+        h1 { margin: 0; color: #b71c1c; font-size: 2rem; }
+        h2 { color: #37474f; margin: 0 0 14px; font-size: 1.25rem; }
+        label { display: block; font-weight: 650; margin-bottom: 6px; color: #37474f; }
+        input, textarea, select { width: 100%; border: 1px solid #cfd8dc; border-radius: 6px; padding: 10px; font: inherit; background: #fff; }
+        textarea { min-height: 92px; resize: vertical; }
+        .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+        .cards, .checks { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+        .card, .check { border: 1px solid #d9e0e4; border-radius: 8px; padding: 14px; background: #fff; }
+        .card { cursor: pointer; }
+        .card.selected { border-color: #c62828; background: #fff5f5; }
+        .check { display: flex; gap: 10px; align-items: flex-start; }
+        .check input { width: auto; margin-top: 5px; }
+        .check span { font-size: .95rem; }
+        .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+        button { border: 0; border-radius: 6px; padding: 10px 14px; font-weight: 700; cursor: pointer; background: #c62828; color: white; }
+        button.secondary { background: #455a64; }
+        button.ghost { background: #eceff1; color: #263238; }
+        .lang-switcher { position: absolute; top: 0; right: 0; display: flex; gap: 6px; }
+        .lang-switcher button { background: #fff; color: #c62828; border: 1px solid #c62828; padding: 6px 12px; border-radius: 18px; }
+        .lang-switcher button.active { background: #c62828; color: #fff; }
+        .output { white-space: pre-wrap; background: #102027; color: #e8f5e9; border-radius: 8px; padding: 18px; min-height: 220px; overflow: auto; }
+        .hint { color: #546e7a; font-size: .95rem; }
+        @media (max-width: 760px) { .container { padding: 12px; } .grid { grid-template-columns: 1fr; } .lang-switcher { position: static; margin-bottom: 12px; justify-content: flex-end; } }
+        @media print { .lang-switcher, .actions { display: none; } body { background: #fff; } .panel { box-shadow: none; } .output { color: #000; background: #fff; border: 1px solid #999; } }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <section class="panel header">
+            <div class="lang-switcher">
+                <button id="langEn" onclick="setLanguage('en')">EN</button>
+                <button id="langZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1>⚠️ <span data-i18n="title">Risk Analysis Prompt Generator</span></h1>
+            <p class="hint" data-i18n="intro">Build a focused prompt for asking an AI assistant to identify, score, and mitigate project risks.</p>
+        </section>
+
+        <section class="panel">
+            <h2 data-i18n="context">Project Context</h2>
+            <div class="grid">
+                <div><label for="projectName" data-i18n="projectName">Project name</label><input id="projectName" data-ph="projectNamePh"></div>
+                <div><label for="owner" data-i18n="owner">Owner / project lead</label><input id="owner" data-ph="ownerPh"></div>
+                <div><label for="timeline" data-i18n="timeline">Timeline</label><input id="timeline" data-ph="timelinePh"></div>
+                <div><label for="team" data-i18n="team">Team / capacity</label><input id="team" data-ph="teamPh"></div>
+                <div><label for="stakeholders" data-i18n="stakeholders">Stakeholders</label><input id="stakeholders" data-ph="stakeholdersPh"></div>
+                <div><label for="decisionPoint" data-i18n="decisionPoint">Decision or milestone at risk</label><input id="decisionPoint" data-ph="decisionPointPh"></div>
+            </div>
+            <div style="margin-top:16px"><label for="background" data-i18n="background">Relevant background</label><textarea id="background" data-ph="backgroundPh"></textarea></div>
+        </section>
+
+        <section class="panel">
+            <h2 data-i18n="projectType">Project Type</h2>
+            <div class="cards" id="projectTypes"></div>
+        </section>
+
+        <section class="panel">
+            <h2 data-i18n="riskCategories">Risk Categories</h2>
+            <div class="checks" id="riskCategories"></div>
+        </section>
+
+        <section class="panel">
+            <h2 data-i18n="analysisDepth">Analysis Depth</h2>
+            <div class="checks" id="analysisDepth"></div>
+        </section>
+
+        <section class="panel">
+            <h2 data-i18n="generate">Generate Prompt</h2>
+            <div class="actions">
+                <button onclick="generatePrompt()" data-i18n="btnGenerate">Generate risk analysis prompt</button>
+                <button class="secondary" onclick="copyOutput()" data-i18n="btnCopy">Copy prompt</button>
+                <button class="ghost" onclick="window.print()" data-i18n="btnPrint">Print</button>
+                <button class="ghost" onclick="resetForm()" data-i18n="btnReset">Reset</button>
+            </div>
+            <p class="hint" data-i18n="outputHint">The generated prompt uses the selected language.</p>
+            <div class="output" id="output"></div>
+        </section>
+    </main>
+
+    <script>
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+        let selectedType = 'delivery';
+        const data = {
+            en: {
+                title: 'Risk Analysis Prompt Generator', pageTitle: 'Risk Analysis Prompt Generator',
+                intro: 'Build a focused prompt for asking an AI assistant to identify, score, and mitigate project risks.',
+                context: 'Project Context', projectName: 'Project name', owner: 'Owner / project lead', timeline: 'Timeline', team: 'Team / capacity', stakeholders: 'Stakeholders', decisionPoint: 'Decision or milestone at risk', background: 'Relevant background',
+                projectNamePh: 'e.g. Customer portal redesign', ownerPh: 'Your name or project lead', timelinePh: 'e.g. 6 months, launch by Q4', teamPh: 'e.g. 8 engineers, 1 PM, shared QA', stakeholdersPh: 'Product, Engineering, Sales, Support', decisionPointPh: 'e.g. architecture freeze, beta launch, vendor choice', backgroundPh: 'Known constraints, dependencies, assumptions, recent incidents, quality concerns...',
+                projectType: 'Project Type', riskCategories: 'Risk Categories', analysisDepth: 'Analysis Depth', generate: 'Generate Prompt',
+                btnGenerate: 'Generate risk analysis prompt', btnCopy: 'Copy prompt', btnPrint: 'Print', btnReset: 'Reset', outputHint: 'The generated prompt uses the selected language.',
+                copied: 'Copied', empty: 'Generate a prompt first.',
+                projectTypes: [
+                    ['delivery', 'Delivery / roadmap', 'Schedule, scope, dependency, and capacity risk.'],
+                    ['architecture', 'Architecture / platform', 'Technical design, scalability, security, and migration risk.'],
+                    ['incident', 'Incident / reliability', 'Operational, resilience, support, and customer impact risk.'],
+                    ['vendor', 'Vendor / build vs buy', 'Third-party, contract, integration, and exit risk.']
+                ],
+                categories: ['Technical architecture', 'Schedule and milestone', 'Resource and capacity', 'Cross-team dependency', 'Security and compliance', 'Reliability and operations', 'Quality and testing', 'Stakeholder communication', 'Vendor and third-party', 'Scope change'],
+                depths: ['Probability-impact scoring', 'Early warning indicators', 'Mitigation actions', 'Contingency and rollback plans', 'Risk owners and review cadence', 'Go / no-go thresholds'],
+                promptTitle: 'COMPREHENSIVE RISK ANALYSIS',
+                sections: ['Context', 'Selected risk categories', 'Requested analysis', 'Instructions', 'Expected output'],
+                instructions: [
+                    'Identify the most important risks, including risks not explicitly mentioned in the context.',
+                    'Score each risk by probability and impact on a 1-5 scale, then calculate severity.',
+                    'Separate symptoms, root causes, and triggering conditions.',
+                    'Recommend prevention actions, mitigation actions, contingency plans, and owners.',
+                    'Call out assumptions, missing information, and questions I should answer before making commitments.'
+                ],
+                expected: ['Risk register table', 'Top 3 risks requiring immediate attention', 'Early warning indicators', 'Mitigation and contingency plan', 'Executive summary for stakeholders']
+            },
+            zh: {
+                title: '風險分析 Prompt 產生器', pageTitle: '風險分析 Prompt 產生器',
+                intro: '產生可貼給 AI 助理的風險分析 prompt，用來辨識、評分並規劃專案風險緩解方案。',
+                context: '專案背景', projectName: '專案名稱', owner: '負責人／專案主導者', timeline: '時程', team: '團隊／產能', stakeholders: '利害關係人', decisionPoint: '有風險的決策或里程碑', background: '相關背景',
+                projectNamePh: '例如：客戶入口網站改版', ownerPh: '你的名字或專案主導者', timelinePh: '例如：6 個月，Q4 上線', teamPh: '例如：8 位工程師、1 位 PM、共用 QA', stakeholdersPh: '產品、工程、業務、客服', decisionPointPh: '例如：架構凍結、beta 上線、供應商選擇', backgroundPh: '已知限制、依賴、假設、近期事故、品質疑慮...',
+                projectType: '專案類型', riskCategories: '風險類別', analysisDepth: '分析深度', generate: '產生 Prompt',
+                btnGenerate: '產生風險分析 prompt', btnCopy: '複製 prompt', btnPrint: '列印', btnReset: '重設', outputHint: '產出的 prompt 會依目前選擇的語言生成。',
+                copied: '已複製', empty: '請先產生 prompt。',
+                projectTypes: [
+                    ['delivery', '交付／Roadmap', '聚焦時程、範圍、依賴與產能風險。'],
+                    ['architecture', '架構／平台', '聚焦技術設計、擴充性、安全與遷移風險。'],
+                    ['incident', '事故／可靠性', '聚焦營運、韌性、支援與客戶影響風險。'],
+                    ['vendor', '供應商／自建或採購', '聚焦第三方、合約、整合與退出風險。']
+                ],
+                categories: ['技術架構', '時程與里程碑', '資源與產能', '跨團隊依賴', '安全與合規', '可靠性與營運', '品質與測試', '利害關係人溝通', '供應商與第三方', '範圍變更'],
+                depths: ['機率與影響評分', '早期預警指標', '緩解行動', '備援與回復計畫', '風險 owner 與檢視節奏', 'Go / no-go 門檻'],
+                promptTitle: '完整風險分析',
+                sections: ['背景', '選定風險類別', '要求分析項目', '分析指示', '期望輸出'],
+                instructions: [
+                    '找出最重要的風險，包含背景中沒有明講但可能存在的風險。',
+                    '用 1-5 分評估每個風險的發生機率與影響程度，並計算嚴重度。',
+                    '區分表面症狀、根本原因與觸發條件。',
+                    '建議預防行動、緩解行動、備援計畫與 owner。',
+                    '列出假設、缺少的資訊，以及我在承諾時程或範圍前應先回答的問題。'
+                ],
+                expected: ['風險登錄表', '最需要立即處理的前三大風險', '早期預警指標', '緩解與備援計畫', '給利害關係人的主管摘要']
+            }
+        };
+        function t() { return data[currentLang]; }
+        function field(id, fallback) { return document.getElementById(id).value.trim() || fallback; }
+        function renderChecks(target, items, className, checkedCount) {
+            document.getElementById(target).innerHTML = items.map((text, i) => `<label class="check"><input type="checkbox" class="${className}" ${i < checkedCount ? 'checked' : ''}><span>${text}</span></label>`).join('');
+        }
+        function render() {
+            const d = t();
+            document.documentElement.lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+            document.title = d.pageTitle;
+            document.getElementById('langEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langZh').classList.toggle('active', currentLang === 'zh');
+            document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = d[el.dataset.i18n]);
+            document.querySelectorAll('[data-ph]').forEach(el => el.placeholder = d[el.dataset.ph]);
+            document.getElementById('projectTypes').innerHTML = d.projectTypes.map(([id, title, desc]) => `<div class="card ${id === selectedType ? 'selected' : ''}" onclick="selectType('${id}')"><strong>${title}</strong><br><span class="hint">${desc}</span></div>`).join('');
+            renderChecks('riskCategories', d.categories, 'risk-category', 4);
+            renderChecks('analysisDepth', d.depths, 'analysis-depth', 3);
+        }
+        function setLanguage(lang) { currentLang = lang; localStorage.setItem('emToolsLang', lang); render(); generatePrompt(false); }
+        function selectType(type) { selectedType = type; render(); }
+        function checkedTexts(selector) { return Array.from(document.querySelectorAll(selector)).filter(x => x.checked).map(x => x.nextElementSibling.textContent); }
+        function generatePrompt(show = true) {
+            const d = t();
+            const typeTitle = d.projectTypes.find(x => x[0] === selectedType)?.[1] || selectedType;
+            const values = [
+                `${d.projectName}: ${field('projectName', '[PROJECT_NAME]')}`,
+                `${d.owner}: ${field('owner', '[OWNER]')}`,
+                `${d.timeline}: ${field('timeline', '[TIMELINE]')}`,
+                `${d.team}: ${field('team', '[TEAM]')}`,
+                `${d.stakeholders}: ${field('stakeholders', '[STAKEHOLDERS]')}`,
+                `${d.decisionPoint}: ${field('decisionPoint', '[DECISION_OR_MILESTONE]')}`,
+                `${d.projectType}: ${typeTitle}`,
+                `${d.background}: ${field('background', '[BACKGROUND]')}`
+            ];
+            const prompt = `${d.promptTitle}: ${field('projectName', '[PROJECT_NAME]')}\n\n## ${d.sections[0]}\n${values.map(v => `- ${v}`).join('\n')}\n\n## ${d.sections[1]}\n${checkedTexts('.risk-category').map(v => `- ${v}`).join('\n')}\n\n## ${d.sections[2]}\n${checkedTexts('.analysis-depth').map(v => `- ${v}`).join('\n')}\n\n## ${d.sections[3]}\n${d.instructions.map(v => `- ${v}`).join('\n')}\n\n## ${d.sections[4]}\n${d.expected.map(v => `- ${v}`).join('\n')}`;
+            document.getElementById('output').textContent = prompt;
+            if (show) document.getElementById('output').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        async function copyOutput() {
+            const out = document.getElementById('output').textContent;
+            if (!out.trim()) return alert(t().empty);
+            await navigator.clipboard.writeText(out);
+            alert(t().copied);
+        }
+        function resetForm() { document.querySelectorAll('input[type=text], textarea').forEach(el => el.value = ''); document.getElementById('output').textContent = ''; }
+        render();
+    </script>
+</body>
+</html>

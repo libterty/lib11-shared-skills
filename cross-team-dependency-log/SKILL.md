@@ -36,6 +36,7 @@ metadata:
 - **沒有明確負責人／下一步的項目**
 - **雙方描述矛盾的項目**（明確標示矛盾內容，不做仲裁）
 - **延伸追蹤**（選填）：「沒有明確負責人/下一步」的項目如果反覆出現，代表責任歸屬本身有問題，可以先用 `shared-skills/role-clarity-decision-rights/SKILL.md` 產出提案，確認後維護在你自己從 `shared-skills/docs/raci.template.md` 複製建立、存放在 `shared-skills/docs/raci/` 底下的檔案；依賴清單本身如果要跨週期追蹤到解決，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在你自己從 `shared-skills/docs/ar.template.md` 複製建立、存放在 `shared-skills/docs/ar/` 底下的檔案
+- **延伸應用**（選填）：如果某些依賴已經威脅關鍵路徑，可以把依賴內容、等待時長、風險等級整理進 `shared-skills/docs/risk_analysis_template.html`；如果有多種解法或升級路徑需要比較，可以用 `shared-skills/docs/scenario_comparison_template.html` 整理方案取捨
 
 ## Safety Constraints
 

@@ -46,6 +46,7 @@ metadata:
 - **決策選項**（附取捨）
 - **核准措辭草案**（標示「草案——待 EM/主管簽核」）
 - **延伸追蹤**（選填）：紅旗警訊與依賴項目如果需要跨週期持續追蹤到解決，可以餵給 `shared-skills/action-register-maintainer/SKILL.md`，維護在你自己從 `shared-skills/docs/ar.template.md` 複製建立、存放在 `shared-skills/docs/ar/` 底下的檔案；如果追蹤/解決負責人本身反覆不清楚，先用 `shared-skills/role-clarity-decision-rights/SKILL.md` 產出提案，確認後維護在你自己從 `shared-skills/docs/raci.template.md` 複製建立、存放在 `shared-skills/docs/raci/` 底下的檔案
+- **延伸應用**（選填）：如果承諾仍在討論中，可以把「決策選項」與取捨整理進 `shared-skills/docs/scenario_comparison_template.html` 或 `shared-skills/docs/decision_matrix_template.html`，協助 EM/主管比較「照原樣接受／修改範圍或日期／拒絕／需要進一步 scope」；如果紅旗警訊需要形成正式風險清單，整理進 `shared-skills/docs/risk_analysis_template.html`
 
 ## Safety Constraints
 

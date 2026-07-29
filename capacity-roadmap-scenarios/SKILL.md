@@ -45,6 +45,7 @@ metadata:
 - 交付信心（程度＋理由）
 - 相對於其他情境的取捨
 - 主管決策請求（具體、可執行）
+- **延伸應用**（選填）：三種情境輸出後，如果要拿去跟主管/PM 做決策討論，可以整理進 `shared-skills/docs/scenario_comparison_template.html`；如果候選情境已經明確、需要用權重讓取捨更可見，可以接 `shared-skills/docs/decision_matrix_template.html` 做加權比較
 
 ## Safety Constraints
 
