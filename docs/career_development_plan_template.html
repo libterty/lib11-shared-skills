@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Career Growth & Development Plan - Engineering Management Tool</title>
+    <title id="pageTitle">Career Growth & Development Plan - Engineering Management Tool</title>
     <style>
         * {
             margin: 0;
@@ -30,10 +30,54 @@
         }
 
         .header {
+            position: relative;
             text-align: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 3px solid #2c5aa0;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: white;
+            color: #2c5aa0;
+            border: 2px solid #2c5aa0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover {
+            background: #e8f4f8;
+        }
+
+        .lang-btn.active {
+            background: #2c5aa0;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+        }
+
+        @media print {
+            .lang-switcher {
+                display: none;
+            }
         }
 
         .header h1 {
@@ -413,111 +457,115 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📈 Career Growth & Development Plan</h1>
-            <div class="subtitle">Structured Professional Development Planning Tool</div>
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1 id="mainTitle">📈 Career Growth & Development Plan</h1>
+            <div class="subtitle" id="mainSubtitle">Structured Professional Development Planning Tool</div>
         </div>
 
         <div class="description">
-            <h2>📋 What is this tool?</h2>
-            <p>This comprehensive template helps engineering managers create detailed, actionable career development plans for their direct reports. It provides a structured approach to setting goals, tracking progress, identifying skill gaps, and planning growth activities that align with both individual aspirations and business needs.</p>
+            <h2 id="descHeading">📋 What is this tool?</h2>
+            <p id="descP1">This comprehensive template helps engineering managers create detailed, actionable career development plans for their direct reports. It provides a structured approach to setting goals, tracking progress, identifying skill gaps, and planning growth activities that align with both individual aspirations and business needs.</p>
 
-            <p><strong>Why use this:</strong> Creates clear development roadmaps, tracks progress objectively, ensures alignment between personal and company goals, facilitates meaningful career conversations, and provides documentation for performance reviews and promotions.</p>
+            <p id="descP2"><strong id="descWhyLabel">Why use this:</strong> <span id="descWhyText">Creates clear development roadmaps, tracks progress objectively, ensures alignment between personal and company goals, facilitates meaningful career conversations, and provides documentation for performance reviews and promotions.</span></p>
         </div>
 
         <div class="section">
-            <div class="section-title">👤 Employee Information</div>
+            <div class="section-title" id="sectionEmployeeInfo">👤 Employee Information</div>
 
             <div class="employee-info">
                 <div class="form-group">
-                    <label for="employee-name">Employee Name:</label>
+                    <label for="employee-name" id="labelEmployeeName">Employee Name:</label>
                     <input type="text" id="employee-name" placeholder="e.g., Alex Chen">
                 </div>
 
                 <div class="form-group">
-                    <label for="current-role">Current Role & Level:</label>
+                    <label for="current-role" id="labelCurrentRole">Current Role & Level:</label>
                     <input type="text" id="current-role" placeholder="e.g., Senior Software Engineer, Level 5">
                 </div>
 
                 <div class="form-group">
-                    <label for="manager-name">Manager:</label>
+                    <label for="manager-name" id="labelManagerName">Manager:</label>
                     <input type="text" id="manager-name" placeholder="Your name">
                 </div>
 
                 <div class="form-group">
-                    <label for="plan-period">Plan Period:</label>
+                    <label for="plan-period" id="labelPlanPeriod">Plan Period:</label>
                     <select id="plan-period">
-                        <option value="">Select period</option>
-                        <option value="6-months">6 Months</option>
-                        <option value="1-year">1 Year</option>
-                        <option value="18-months">18 Months</option>
-                        <option value="2-years">2 Years</option>
+                        <option value="" id="optPeriodSelect">Select period</option>
+                        <option value="6-months" id="optPeriod6m">6 Months</option>
+                        <option value="1-year" id="optPeriod1y">1 Year</option>
+                        <option value="18-months" id="optPeriod18m">18 Months</option>
+                        <option value="2-years" id="optPeriod2y">2 Years</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="start-date">Plan Start Date:</label>
+                    <label for="start-date" id="labelStartDate">Plan Start Date:</label>
                     <input type="date" id="start-date">
                 </div>
 
                 <div class="form-group">
-                    <label for="next-review">Next Review Date:</label>
+                    <label for="next-review" id="labelNextReview">Next Review Date:</label>
                     <input type="date" id="next-review">
                 </div>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">🎯 Career Aspirations & Vision</div>
+            <div class="section-title" id="sectionAspirations">🎯 Career Aspirations & Vision</div>
 
             <div class="form-group">
-                <label for="career-vision">Long-term Career Vision (3-5 years):</label>
+                <label for="career-vision" id="labelCareerVision">Long-term Career Vision (3-5 years):</label>
                 <textarea id="career-vision" placeholder="e.g., Become a Staff Engineer leading architecture decisions for distributed systems, or transition to Engineering Management leading a team of 8-10 engineers"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="motivations">Key Motivations & Interests:</label>
+                <label for="motivations" id="labelMotivations">Key Motivations & Interests:</label>
                 <textarea id="motivations" placeholder="e.g., Passionate about system scalability, enjoys mentoring junior developers, interested in machine learning applications, wants more strategic impact on product direction"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="preferred-path">Preferred Growth Path:</label>
+                <label for="preferred-path" id="labelPreferredPath">Preferred Growth Path:</label>
                 <select id="preferred-path">
-                    <option value="">Select path</option>
-                    <option value="technical">Technical Leadership (Staff/Principal Engineer)</option>
-                    <option value="management">People Management (Engineering Manager)</option>
-                    <option value="product">Product-Technical Hybrid (Technical Product Manager)</option>
-                    <option value="architecture">Systems Architecture (Solutions Architect)</option>
-                    <option value="consulting">Technical Consulting (Internal/External)</option>
-                    <option value="entrepreneurship">Entrepreneurship/Startup</option>
-                    <option value="exploring">Still Exploring Options</option>
+                    <option value="" id="optPathSelect">Select path</option>
+                    <option value="technical" id="optPathTechnical">Technical Leadership (Staff/Principal Engineer)</option>
+                    <option value="management" id="optPathManagement">People Management (Engineering Manager)</option>
+                    <option value="product" id="optPathProduct">Product-Technical Hybrid (Technical Product Manager)</option>
+                    <option value="architecture" id="optPathArchitecture">Systems Architecture (Solutions Architect)</option>
+                    <option value="consulting" id="optPathConsulting">Technical Consulting (Internal/External)</option>
+                    <option value="entrepreneurship" id="optPathEntrepreneurship">Entrepreneurship/Startup</option>
+                    <option value="exploring" id="optPathExploring">Still Exploring Options</option>
                 </select>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">📊 Current State Assessment</div>
+            <div class="section-title" id="sectionAssessment">📊 Current State Assessment</div>
 
             <div class="form-group">
-                <label for="current-strengths">Key Strengths & Achievements:</label>
+                <label for="current-strengths" id="labelCurrentStrengths">Key Strengths & Achievements:</label>
                 <textarea id="current-strengths" placeholder="e.g., Excellent code quality with 95%+ test coverage, led migration reducing API response time by 60%, strong mentor to 3 junior engineers, domain expert in payment processing systems"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="development-areas">Areas for Development:</label>
+                <label for="development-areas" id="labelDevelopmentAreas">Areas for Development:</label>
                 <textarea id="development-areas" placeholder="e.g., System design for large-scale distributed systems, public speaking and technical presentations, cross-functional collaboration with product and design teams"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="feedback-summary">Recent Feedback Summary:</label>
+                <label for="feedback-summary" id="labelFeedbackSummary">Recent Feedback Summary:</label>
                 <textarea id="feedback-summary" placeholder="e.g., Consistently exceeds technical expectations, should work on influencing without authority, peers appreciate collaborative approach, could benefit from more strategic thinking"></textarea>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">📝 Development Goals</div>
+            <div class="section-title" id="sectionGoals">📝 Development Goals</div>
 
             <div class="goals-container">
-                <button class="add-goal-btn" onclick="addGoal()">➕ Add Development Goal</button>
+                <button class="add-goal-btn" id="addGoalBtn" onclick="addGoal()">➕ Add Development Goal</button>
                 <div id="goals-list">
                     <!-- Goals will be added here dynamically -->
                 </div>
@@ -525,101 +573,101 @@
         </div>
 
         <div class="section">
-            <div class="section-title">🛠️ Skills Development Matrix</div>
+            <div class="section-title" id="sectionSkillsMatrix">🛠️ Skills Development Matrix</div>
 
             <div class="skills-matrix">
                 <div class="skill-category">
-                    <h4>Technical Skills</h4>
+                    <h4 id="skillCatTechnical">Technical Skills</h4>
                     <div class="skill-item">
-                        <div class="skill-name">System Architecture & Design</div>
+                        <div class="skill-name" id="skillNameArch">System Architecture & Design</div>
                         <div class="skill-levels">
-                            <div class="skill-level current-level">Current: 3</div>
-                            <div class="skill-level target-level">Target: 4</div>
+                            <div class="skill-level current-level"><span id="skillCurrentLabel1">Current</span>: 3</div>
+                            <div class="skill-level target-level"><span id="skillTargetLabel1">Target</span>: 4</div>
                         </div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-name">Distributed Systems</div>
+                        <div class="skill-name" id="skillNameDistributed">Distributed Systems</div>
                         <div class="skill-levels">
-                            <div class="skill-level current-level">Current: 2</div>
-                            <div class="skill-level target-level">Target: 4</div>
+                            <div class="skill-level current-level"><span class="cur-label">Current</span>: 2</div>
+                            <div class="skill-level target-level"><span class="tgt-label">Target</span>: 4</div>
                         </div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-name">Cloud Platforms (AWS/GCP)</div>
+                        <div class="skill-name" id="skillNameCloud">Cloud Platforms (AWS/GCP)</div>
                         <div class="skill-levels">
-                            <div class="skill-level current-level">Current: 3</div>
-                            <div class="skill-level target-level">Target: 4</div>
+                            <div class="skill-level current-level"><span class="cur-label">Current</span>: 3</div>
+                            <div class="skill-level target-level"><span class="tgt-label">Target</span>: 4</div>
                         </div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-name">Performance Optimization</div>
+                        <div class="skill-name" id="skillNamePerf">Performance Optimization</div>
                         <div class="skill-levels">
-                            <div class="skill-level current-level">Current: 4</div>
-                            <div class="skill-level target-level">Target: 4</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h4>Leadership & Communication</h4>
-                    <div class="skill-item">
-                        <div class="skill-name">Technical Mentoring</div>
-                        <div class="skill-levels">
-                            <div class="skill-level current-level">Current: 4</div>
-                            <div class="skill-level target-level">Target: 5</div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-name">Cross-team Collaboration</div>
-                        <div class="skill-levels">
-                            <div class="skill-level current-level">Current: 2</div>
-                            <div class="skill-level target-level">Target: 4</div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-name">Technical Presentations</div>
-                        <div class="skill-levels">
-                            <div class="skill-level current-level">Current: 2</div>
-                            <div class="skill-level target-level">Target: 3</div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-name">Project Leadership</div>
-                        <div class="skill-levels">
-                            <div class="skill-level current-level">Current: 3</div>
-                            <div class="skill-level target-level">Target: 4</div>
+                            <div class="skill-level current-level"><span class="cur-label">Current</span>: 4</div>
+                            <div class="skill-level target-level"><span class="tgt-label">Target</span>: 4</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="skill-category">
-                    <h4>Business & Strategy</h4>
+                    <h4 id="skillCatLeadership">Leadership & Communication</h4>
                     <div class="skill-item">
-                        <div class="skill-name">Product Strategy Understanding</div>
+                        <div class="skill-name" id="skillNameMentoring">Technical Mentoring</div>
                         <div class="skill-levels">
-                            <div class="skill-level current-level">Current: 2</div>
-                            <div class="skill-level target-level">Target: 3</div>
+                            <div class="skill-level current-level"><span class="cur-label">Current</span>: 4</div>
+                            <div class="skill-level target-level"><span class="tgt-label">Target</span>: 5</div>
                         </div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-name">Technical Decision Making</div>
+                        <div class="skill-name" id="skillNameCollab">Cross-team Collaboration</div>
                         <div class="skill-levels">
-                            <div class="skill-level current-level">Current: 3</div>
-                            <div class="skill-level target-level">Target: 4</div>
+                            <div class="skill-level current-level"><span class="cur-label">Current</span>: 2</div>
+                            <div class="skill-level target-level"><span class="tgt-label">Target</span>: 4</div>
                         </div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-name">Stakeholder Communication</div>
+                        <div class="skill-name" id="skillNamePresentations">Technical Presentations</div>
                         <div class="skill-levels">
-                            <div class="skill-level current-level">Current: 2</div>
-                            <div class="skill-level target-level">Target: 4</div>
+                            <div class="skill-level current-level"><span class="cur-label">Current</span>: 2</div>
+                            <div class="skill-level target-level"><span class="tgt-label">Target</span>: 3</div>
                         </div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-name">Industry Knowledge</div>
+                        <div class="skill-name" id="skillNameProjLeadership">Project Leadership</div>
                         <div class="skill-levels">
-                            <div class="skill-level current-level">Current: 3</div>
-                            <div class="skill-level target-level">Target: 4</div>
+                            <div class="skill-level current-level"><span class="cur-label">Current</span>: 3</div>
+                            <div class="skill-level target-level"><span class="tgt-label">Target</span>: 4</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4 id="skillCatBusiness">Business & Strategy</h4>
+                    <div class="skill-item">
+                        <div class="skill-name" id="skillNameProductStrategy">Product Strategy Understanding</div>
+                        <div class="skill-levels">
+                            <div class="skill-level current-level"><span class="cur-label">Current</span>: 2</div>
+                            <div class="skill-level target-level"><span class="tgt-label">Target</span>: 3</div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name" id="skillNameDecisionMaking">Technical Decision Making</div>
+                        <div class="skill-levels">
+                            <div class="skill-level current-level"><span class="cur-label">Current</span>: 3</div>
+                            <div class="skill-level target-level"><span class="tgt-label">Target</span>: 4</div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name" id="skillNameStakeholder">Stakeholder Communication</div>
+                        <div class="skill-levels">
+                            <div class="skill-level current-level"><span class="cur-label">Current</span>: 2</div>
+                            <div class="skill-level target-level"><span class="tgt-label">Target</span>: 4</div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name" id="skillNameIndustry">Industry Knowledge</div>
+                        <div class="skill-levels">
+                            <div class="skill-level current-level"><span class="cur-label">Current</span>: 3</div>
+                            <div class="skill-level target-level"><span class="tgt-label">Target</span>: 4</div>
                         </div>
                     </div>
                 </div>
@@ -627,92 +675,497 @@
         </div>
 
         <div class="section">
-            <div class="section-title">📅 Review & Check-in Schedule</div>
+            <div class="section-title" id="sectionReviewSchedule">📅 Review & Check-in Schedule</div>
 
             <div class="review-schedule">
-                <h4>🔄 Planned Review Cadence</h4>
+                <h4 id="reviewCadenceHeading">🔄 Planned Review Cadence</h4>
                 <div class="review-grid">
                     <div class="review-item">
-                        <div class="review-date">Weekly 1:1s</div>
-                        <div class="review-type">Progress updates & blockers</div>
+                        <div class="review-date" id="reviewDateWeekly">Weekly 1:1s</div>
+                        <div class="review-type" id="reviewTypeWeekly">Progress updates & blockers</div>
                     </div>
                     <div class="review-item">
-                        <div class="review-date">Monthly Check-ins</div>
-                        <div class="review-type">Goal progress & adjustments</div>
+                        <div class="review-date" id="reviewDateMonthly">Monthly Check-ins</div>
+                        <div class="review-type" id="reviewTypeMonthly">Goal progress & adjustments</div>
                     </div>
                     <div class="review-item">
-                        <div class="review-date">Quarterly Reviews</div>
-                        <div class="review-type">Comprehensive plan review</div>
+                        <div class="review-date" id="reviewDateQuarterly">Quarterly Reviews</div>
+                        <div class="review-type" id="reviewTypeQuarterly">Comprehensive plan review</div>
                     </div>
                     <div class="review-item">
-                        <div class="review-date">Annual Planning</div>
-                        <div class="review-type">Career trajectory & new goals</div>
+                        <div class="review-date" id="reviewDateAnnual">Annual Planning</div>
+                        <div class="review-type" id="reviewTypeAnnual">Career trajectory & new goals</div>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="success-metrics">Success Metrics & Tracking:</label>
+                <label for="success-metrics" id="labelSuccessMetrics">Success Metrics & Tracking:</label>
                 <textarea id="success-metrics" placeholder="e.g., Complete AWS Solutions Architect certification by Q2, Lead architecture review for 2 major features, Deliver technical presentation to engineering all-hands, Receive promotion to Staff Engineer level by end of plan period"></textarea>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">💼 Manager Support & Resources</div>
+            <div class="section-title" id="sectionManagerSupport">💼 Manager Support & Resources</div>
 
             <div class="form-group">
-                <label for="manager-commitment">Manager Commitments:</label>
+                <label for="manager-commitment" id="labelManagerCommitment">Manager Commitments:</label>
                 <textarea id="manager-commitment" placeholder="e.g., Provide architecture review opportunities, Nominate for technical conference speaking, Connect with Staff Engineers for mentoring, Advocate for promotion when ready, Support conference attendance and training budget allocation"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="resources-needed">Resources & Budget Needed:</label>
+                <label for="resources-needed" id="labelResourcesNeeded">Resources & Budget Needed:</label>
                 <textarea id="resources-needed" placeholder="e.g., $2000 training budget for AWS certification and courses, Time allocation for conference presentations, Access to architecture review meetings, Mentorship connection with external senior engineer"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="potential-obstacles">Potential Obstacles & Mitigation:</label>
+                <label for="potential-obstacles" id="labelPotentialObstacles">Potential Obstacles & Mitigation:</label>
                 <textarea id="potential-obstacles" placeholder="e.g., Heavy project workload may limit learning time - will protect 2 hours weekly for development activities, Limited public speaking opportunities - will create internal tech talk series, Imposter syndrome with architecture decisions - will pair with senior architect for first 3 months"></textarea>
             </div>
         </div>
 
         <div class="summary-section">
-            <h3>📋 Plan Summary</h3>
+            <h3 id="summaryHeading">📋 Plan Summary</h3>
             <div class="form-group">
-                <label for="key-commitments">Key Commitments (Employee):</label>
+                <label for="key-commitments" id="labelKeyCommitments">Key Commitments (Employee):</label>
                 <textarea id="key-commitments" placeholder="This will be auto-populated based on goals and development activities above..."></textarea>
             </div>
 
             <div class="form-group">
-                <label for="manager-commitments-summary">Key Commitments (Manager):</label>
+                <label for="manager-commitments-summary" id="labelManagerCommitmentsSummary">Key Commitments (Manager):</label>
                 <textarea id="manager-commitments-summary" placeholder="This will be auto-populated based on support commitments above..."></textarea>
             </div>
         </div>
 
         <div class="action-buttons">
-            <button class="btn" onclick="generateSummary()">✨ Generate Plan Summary</button>
-            <button class="btn btn-secondary" onclick="window.print()">🖨️ Print Plan</button>
-            <button class="btn btn-secondary" onclick="exportPlan()">💾 Export to Text</button>
-            <button class="btn btn-secondary" onclick="clearPlan()">🗑️ Clear Plan</button>
+            <button class="btn" id="btnGenerateSummary" onclick="generateSummary()">✨ Generate Plan Summary</button>
+            <button class="btn btn-secondary" id="btnPrint" onclick="window.print()">🖨️ Print Plan</button>
+            <button class="btn btn-secondary" id="btnExport" onclick="exportPlan()">💾 Export to Text</button>
+            <button class="btn btn-secondary" id="btnClear" onclick="clearPlan()">🗑️ Clear Plan</button>
         </div>
     </div>
 
     <script>
         let goalCount = 0;
 
-        const goalTypes = [
-            'Technical Skill',
-            'Leadership',
-            'Communication',
-            'Project/Delivery',
-            'Learning/Certification',
-            'Career Milestone',
-            'Business Impact',
-            'Mentoring/Coaching'
-        ];
+        const I18N = {
+            en: {
+                pageTitle: 'Career Growth & Development Plan - Engineering Management Tool',
+                mainTitle: '📈 Career Growth & Development Plan',
+                mainSubtitle: 'Structured Professional Development Planning Tool',
+                descHeading: '📋 What is this tool?',
+                descP1: 'This comprehensive template helps engineering managers create detailed, actionable career development plans for their direct reports. It provides a structured approach to setting goals, tracking progress, identifying skill gaps, and planning growth activities that align with both individual aspirations and business needs.',
+                descWhyLabel: 'Why use this:',
+                descWhyText: 'Creates clear development roadmaps, tracks progress objectively, ensures alignment between personal and company goals, facilitates meaningful career conversations, and provides documentation for performance reviews and promotions.',
+                sectionEmployeeInfo: '👤 Employee Information',
+                labelEmployeeName: 'Employee Name:',
+                labelCurrentRole: 'Current Role & Level:',
+                labelManagerName: 'Manager:',
+                labelPlanPeriod: 'Plan Period:',
+                optPeriodSelect: 'Select period',
+                optPeriod6m: '6 Months',
+                optPeriod1y: '1 Year',
+                optPeriod18m: '18 Months',
+                optPeriod2y: '2 Years',
+                labelStartDate: 'Plan Start Date:',
+                labelNextReview: 'Next Review Date:',
+                sectionAspirations: '🎯 Career Aspirations & Vision',
+                labelCareerVision: 'Long-term Career Vision (3-5 years):',
+                labelMotivations: 'Key Motivations & Interests:',
+                labelPreferredPath: 'Preferred Growth Path:',
+                optPathSelect: 'Select path',
+                optPathTechnical: 'Technical Leadership (Staff/Principal Engineer)',
+                optPathManagement: 'People Management (Engineering Manager)',
+                optPathProduct: 'Product-Technical Hybrid (Technical Product Manager)',
+                optPathArchitecture: 'Systems Architecture (Solutions Architect)',
+                optPathConsulting: 'Technical Consulting (Internal/External)',
+                optPathEntrepreneurship: 'Entrepreneurship/Startup',
+                optPathExploring: 'Still Exploring Options',
+                sectionAssessment: '📊 Current State Assessment',
+                labelCurrentStrengths: 'Key Strengths & Achievements:',
+                labelDevelopmentAreas: 'Areas for Development:',
+                labelFeedbackSummary: 'Recent Feedback Summary:',
+                sectionGoals: '📝 Development Goals',
+                addGoalBtn: '➕ Add Development Goal',
+                sectionSkillsMatrix: '🛠️ Skills Development Matrix',
+                skillCatTechnical: 'Technical Skills',
+                skillNameArch: 'System Architecture & Design',
+                skillNameDistributed: 'Distributed Systems',
+                skillNameCloud: 'Cloud Platforms (AWS/GCP)',
+                skillNamePerf: 'Performance Optimization',
+                skillCatLeadership: 'Leadership & Communication',
+                skillNameMentoring: 'Technical Mentoring',
+                skillNameCollab: 'Cross-team Collaboration',
+                skillNamePresentations: 'Technical Presentations',
+                skillNameProjLeadership: 'Project Leadership',
+                skillCatBusiness: 'Business & Strategy',
+                skillNameProductStrategy: 'Product Strategy Understanding',
+                skillNameDecisionMaking: 'Technical Decision Making',
+                skillNameStakeholder: 'Stakeholder Communication',
+                skillNameIndustry: 'Industry Knowledge',
+                curLabel: 'Current',
+                tgtLabel: 'Target',
+                sectionReviewSchedule: '📅 Review & Check-in Schedule',
+                reviewCadenceHeading: '🔄 Planned Review Cadence',
+                reviewDateWeekly: 'Weekly 1:1s',
+                reviewTypeWeekly: 'Progress updates & blockers',
+                reviewDateMonthly: 'Monthly Check-ins',
+                reviewTypeMonthly: 'Goal progress & adjustments',
+                reviewDateQuarterly: 'Quarterly Reviews',
+                reviewTypeQuarterly: 'Comprehensive plan review',
+                reviewDateAnnual: 'Annual Planning',
+                reviewTypeAnnual: 'Career trajectory & new goals',
+                labelSuccessMetrics: 'Success Metrics & Tracking:',
+                sectionManagerSupport: '💼 Manager Support & Resources',
+                labelManagerCommitment: 'Manager Commitments:',
+                labelResourcesNeeded: 'Resources & Budget Needed:',
+                labelPotentialObstacles: 'Potential Obstacles & Mitigation:',
+                summaryHeading: '📋 Plan Summary',
+                labelKeyCommitments: 'Key Commitments (Employee):',
+                labelManagerCommitmentsSummary: 'Key Commitments (Manager):',
+                btnGenerateSummary: '✨ Generate Plan Summary',
+                btnPrint: '🖨️ Print Plan',
+                btnExport: '💾 Export to Text',
+                btnClear: '🗑️ Clear Plan',
+                placeholders: {
+                    'employee-name': 'e.g., Alex Chen',
+                    'current-role': 'e.g., Senior Software Engineer, Level 5',
+                    'manager-name': 'Your name',
+                    'career-vision': 'e.g., Become a Staff Engineer leading architecture decisions for distributed systems, or transition to Engineering Management leading a team of 8-10 engineers',
+                    'motivations': 'e.g., Passionate about system scalability, enjoys mentoring junior developers, interested in machine learning applications, wants more strategic impact on product direction',
+                    'current-strengths': 'e.g., Excellent code quality with 95%+ test coverage, led migration reducing API response time by 60%, strong mentor to 3 junior engineers, domain expert in payment processing systems',
+                    'development-areas': 'e.g., System design for large-scale distributed systems, public speaking and technical presentations, cross-functional collaboration with product and design teams',
+                    'feedback-summary': 'e.g., Consistently exceeds technical expectations, should work on influencing without authority, peers appreciate collaborative approach, could benefit from more strategic thinking',
+                    'success-metrics': 'e.g., Complete AWS Solutions Architect certification by Q2, Lead architecture review for 2 major features, Deliver technical presentation to engineering all-hands, Receive promotion to Staff Engineer level by end of plan period',
+                    'manager-commitment': 'e.g., Provide architecture review opportunities, Nominate for technical conference speaking, Connect with Staff Engineers for mentoring, Advocate for promotion when ready, Support conference attendance and training budget allocation',
+                    'resources-needed': 'e.g., $2000 training budget for AWS certification and courses, Time allocation for conference presentations, Access to architecture review meetings, Mentorship connection with external senior engineer',
+                    'potential-obstacles': 'e.g., Heavy project workload may limit learning time - will protect 2 hours weekly for development activities, Limited public speaking opportunities - will create internal tech talk series, Imposter syndrome with architecture decisions - will pair with senior architect for first 3 months',
+                    'key-commitments': 'This will be auto-populated based on goals and development activities above...',
+                    'manager-commitments-summary': 'This will be auto-populated based on support commitments above...'
+                },
+                goalTypes: ['Technical Skill', 'Leadership', 'Communication', 'Project/Delivery', 'Learning/Certification', 'Career Milestone', 'Business Impact', 'Mentoring/Coaching'],
+                selectGoalType: 'Select Goal Type',
+                removeGoal: 'Remove',
+                priorityLabel: 'Priority',
+                priorityHigh: 'High Priority',
+                priorityMedium: 'Medium Priority',
+                priorityLow: 'Low Priority',
+                goalDescLabel: 'Goal Description:',
+                goalDescPlaceholder: "e.g., Become proficient in system architecture design for distributed systems handling 100k+ requests/second",
+                successCriteriaLabel: 'Success Criteria:',
+                successCriteriaPlaceholder: 'e.g., Successfully design and implement architecture for 2 high-scale features, pass AWS Solutions Architect certification, receive positive feedback from senior architects',
+                targetDateLabel: 'Target Completion Date:',
+                progressStatusLabel: 'Progress Status:',
+                progress0: 'Not Started (0%)',
+                progress25: 'Getting Started (25%)',
+                progress50: 'In Progress (50%)',
+                progress75: 'Nearly Complete (75%)',
+                progress100: 'Completed (100%)',
+                actionStepsLabel: 'Action Steps & Activities:',
+                actionStepsPlaceholder: "e.g., 1) Complete 'Designing Data-Intensive Applications' book study, 2) Attend AWS architecture training, 3) Shadow senior architect in design reviews, 4) Lead architecture design for next major project, 5) Present architecture proposal to engineering team",
+                keyMilestones: '🎯 Key Milestones:',
+                addMilestoneBtn: '+ Add Milestone',
+                milestoneTextPlaceholder: 'e.g., Complete AWS certification exam',
+                summaryEmployeeHeader: 'Key Development Commitments:\n',
+                summaryManagerHeader: 'Manager Support Commitments:\n',
+                summaryGenerated: '✅ Plan summary generated! Review the summary section at the bottom.',
+                exportEmployeeDefault: 'Employee',
+                clearConfirm: 'Are you sure you want to clear all plan data? This action cannot be undone.',
+                clearedAlert: 'Development plan cleared successfully.'
+            },
+            zh: {
+                pageTitle: '職涯成長與發展計畫 - 工程管理工具',
+                mainTitle: '📈 職涯成長與發展計畫',
+                mainSubtitle: '結構化的職涯發展規劃工具',
+                descHeading: '📋 這個工具是做什麼的？',
+                descP1: '這份完整的範本幫助工程主管為直屬部屬制定詳細、可執行的職涯發展計畫。它提供一套結構化的方法來設定目標、追蹤進度、找出技能缺口，並規劃兼顧個人抱負與business需求的成長活動。',
+                descWhyLabel: '為什麼要用這個：',
+                descWhyText: '建立清楚的發展路徑圖、客觀追蹤進度、確保個人目標與公司目標一致、促成有意義的職涯對話，並為績效考核與升遷提供文件依據。',
+                sectionEmployeeInfo: '👤 員工資訊',
+                labelEmployeeName: '員工姓名：',
+                labelCurrentRole: '目前職位與職等：',
+                labelManagerName: '主管：',
+                labelPlanPeriod: '計畫期間：',
+                optPeriodSelect: '選擇期間',
+                optPeriod6m: '6 個月',
+                optPeriod1y: '1 年',
+                optPeriod18m: '18 個月',
+                optPeriod2y: '2 年',
+                labelStartDate: '計畫開始日期：',
+                labelNextReview: '下次檢視日期：',
+                sectionAspirations: '🎯 職涯抱負與願景',
+                labelCareerVision: '長期職涯願景（3-5 年）：',
+                labelMotivations: '主要動機與興趣：',
+                labelPreferredPath: '偏好的成長路徑：',
+                optPathSelect: '選擇路徑',
+                optPathTechnical: '技術領導（Staff/Principal Engineer）',
+                optPathManagement: '人員管理（工程經理）',
+                optPathProduct: '產品技術混合型（Technical Product Manager）',
+                optPathArchitecture: '系統架構（Solutions Architect）',
+                optPathConsulting: '技術顧問（內部/外部）',
+                optPathEntrepreneurship: '創業/新創',
+                optPathExploring: '仍在探索選項',
+                sectionAssessment: '📊 目前狀態評估',
+                labelCurrentStrengths: '主要優勢與成就：',
+                labelDevelopmentAreas: '待發展領域：',
+                labelFeedbackSummary: '近期回饋摘要：',
+                sectionGoals: '📝 發展目標',
+                addGoalBtn: '➕ 新增發展目標',
+                sectionSkillsMatrix: '🛠️ 技能發展矩陣',
+                skillCatTechnical: '技術技能',
+                skillNameArch: '系統架構與設計',
+                skillNameDistributed: '分散式系統',
+                skillNameCloud: '雲端平台（AWS/GCP）',
+                skillNamePerf: '效能優化',
+                skillCatLeadership: '領導與溝通',
+                skillNameMentoring: '技術指導',
+                skillNameCollab: '跨團隊協作',
+                skillNamePresentations: '技術簡報',
+                skillNameProjLeadership: '專案領導',
+                skillCatBusiness: '商業與策略',
+                skillNameProductStrategy: '產品策略理解',
+                skillNameDecisionMaking: '技術決策',
+                skillNameStakeholder: '利害關係人溝通',
+                skillNameIndustry: '產業知識',
+                curLabel: '目前',
+                tgtLabel: '目標',
+                sectionReviewSchedule: '📅 檢視與 Check-in 排程',
+                reviewCadenceHeading: '🔄 規劃的檢視頻率',
+                reviewDateWeekly: '每週 1:1',
+                reviewTypeWeekly: '進度更新與阻礙',
+                reviewDateMonthly: '每月 Check-in',
+                reviewTypeMonthly: '目標進度與調整',
+                reviewDateQuarterly: '每季檢視',
+                reviewTypeQuarterly: '完整計畫檢視',
+                reviewDateAnnual: '年度規劃',
+                reviewTypeAnnual: '職涯軌跡與新目標',
+                labelSuccessMetrics: '成功指標與追蹤：',
+                sectionManagerSupport: '💼 主管支援與資源',
+                labelManagerCommitment: '主管承諾：',
+                labelResourcesNeeded: '所需資源與預算：',
+                labelPotentialObstacles: '潛在障礙與因應方式：',
+                summaryHeading: '📋 計畫摘要',
+                labelKeyCommitments: '主要承諾（員工）：',
+                labelManagerCommitmentsSummary: '主要承諾（主管）：',
+                btnGenerateSummary: '✨ 產生計畫摘要',
+                btnPrint: '🖨️ 列印計畫',
+                btnExport: '💾 匯出為文字檔',
+                btnClear: '🗑️ 清空計畫',
+                placeholders: {
+                    'employee-name': '例如：陳雅婷',
+                    'current-role': '例如：資深軟體工程師，Level 5',
+                    'manager-name': '你的名字',
+                    'career-vision': '例如：成為主導分散式系統架構決策的 Staff Engineer，或轉任工程經理領導 8-10 人的團隊',
+                    'motivations': '例如：熱衷於系統可擴展性、喜歡指導junior工程師、對機器學習應用有興趣、希望對產品方向有更多策略性影響力',
+                    'current-strengths': '例如：程式碼品質優異，測試覆蓋率達 95% 以上，主導的遷移案將 API 回應時間降低 60%，是 3 位junior工程師的優秀mentor，是付款處理系統的領域專家',
+                    'development-areas': '例如：大規模分散式系統的系統設計、公開演講與技術簡報、與產品和設計團隊的跨職能協作',
+                    'feedback-summary': '例如：技術表現持續超出預期，需加強在無正式權限下的影響力，同儕肯定其協作方式，可以在策略思考上多加琢磨',
+                    'success-metrics': '例如：於 Q2 前完成 AWS Solutions Architect 認證，主導 2 個重大功能的架構審查，於工程 all-hands 進行技術簡報，計畫期間結束前升遷至 Staff Engineer 職等',
+                    'manager-commitment': '例如：提供架構審查機會、推薦參與技術研討會演講、引薦 Staff Engineer 作為mentor、在時機成熟時倡議升遷、支持研討會參與與培訓預算配置',
+                    'resources-needed': '例如：$2000 用於 AWS 認證與課程的培訓預算、研討會簡報所需的時間配置、參與架構審查會議的權限、與外部資深工程師的mentor媒合',
+                    'potential-obstacles': '例如：繁重的專案工作可能限制學習時間——將每週保留 2 小時進行發展活動；公開演講機會有限——將建立內部技術分享系列；對架構決策有冒牌者症候群——前 3 個月將與資深架構師配對',
+                    'key-commitments': '這裡會根據上方的目標與發展活動自動填入...',
+                    'manager-commitments-summary': '這裡會根據上方的支援承諾自動填入...'
+                },
+                goalTypes: ['技術技能', '領導力', '溝通', '專案/交付', '學習/認證', '職涯里程碑', '商業影響', '指導/教練'],
+                selectGoalType: '選擇目標類型',
+                removeGoal: '移除',
+                priorityLabel: '優先順序',
+                priorityHigh: '高優先',
+                priorityMedium: '中優先',
+                priorityLow: '低優先',
+                goalDescLabel: '目標描述：',
+                goalDescPlaceholder: '例如：熟練掌握處理每秒 10 萬以上請求的分散式系統架構設計',
+                successCriteriaLabel: '成功標準：',
+                successCriteriaPlaceholder: '例如：成功設計並實作 2 個高規模功能的架構、通過 AWS Solutions Architect 認證、獲得資深架構師的正面回饋',
+                targetDateLabel: '目標完成日期：',
+                progressStatusLabel: '進度狀態：',
+                progress0: '尚未開始（0%）',
+                progress25: '剛起步（25%）',
+                progress50: '進行中（50%）',
+                progress75: '接近完成（75%）',
+                progress100: '已完成（100%）',
+                actionStepsLabel: '行動步驟與活動：',
+                actionStepsPlaceholder: '例如：1）完成《Designing Data-Intensive Applications》讀書會，2）參加 AWS 架構培訓，3）跟隨資深架構師觀摩設計審查，4）主導下一個重大專案的架構設計，5）向工程團隊發表架構提案',
+                keyMilestones: '🎯 關鍵里程碑：',
+                addMilestoneBtn: '+ 新增里程碑',
+                milestoneTextPlaceholder: '例如：完成 AWS 認證考試',
+                summaryEmployeeHeader: '主要發展承諾：\n',
+                summaryManagerHeader: '主管支援承諾：\n',
+                summaryGenerated: '✅ 計畫摘要已產生！請查看下方的摘要區塊。',
+                exportEmployeeDefault: '員工',
+                clearConfirm: '確定要清空所有計畫資料嗎？此動作無法復原。',
+                clearedAlert: '發展計畫已成功清空。'
+            }
+        };
+
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+            document.getElementById('pageTitle').textContent = dict.pageTitle;
+            document.getElementById('mainTitle').textContent = dict.mainTitle;
+            document.getElementById('mainSubtitle').textContent = dict.mainSubtitle;
+            document.getElementById('descHeading').textContent = dict.descHeading;
+            document.getElementById('descP1').textContent = dict.descP1;
+            document.getElementById('descWhyLabel').textContent = dict.descWhyLabel;
+            document.getElementById('descWhyText').textContent = dict.descWhyText;
+            document.getElementById('sectionEmployeeInfo').textContent = dict.sectionEmployeeInfo;
+            document.getElementById('labelEmployeeName').textContent = dict.labelEmployeeName;
+            document.getElementById('labelCurrentRole').textContent = dict.labelCurrentRole;
+            document.getElementById('labelManagerName').textContent = dict.labelManagerName;
+            document.getElementById('labelPlanPeriod').textContent = dict.labelPlanPeriod;
+            document.getElementById('optPeriodSelect').textContent = dict.optPeriodSelect;
+            document.getElementById('optPeriod6m').textContent = dict.optPeriod6m;
+            document.getElementById('optPeriod1y').textContent = dict.optPeriod1y;
+            document.getElementById('optPeriod18m').textContent = dict.optPeriod18m;
+            document.getElementById('optPeriod2y').textContent = dict.optPeriod2y;
+            document.getElementById('labelStartDate').textContent = dict.labelStartDate;
+            document.getElementById('labelNextReview').textContent = dict.labelNextReview;
+            document.getElementById('sectionAspirations').textContent = dict.sectionAspirations;
+            document.getElementById('labelCareerVision').textContent = dict.labelCareerVision;
+            document.getElementById('labelMotivations').textContent = dict.labelMotivations;
+            document.getElementById('labelPreferredPath').textContent = dict.labelPreferredPath;
+            document.getElementById('optPathSelect').textContent = dict.optPathSelect;
+            document.getElementById('optPathTechnical').textContent = dict.optPathTechnical;
+            document.getElementById('optPathManagement').textContent = dict.optPathManagement;
+            document.getElementById('optPathProduct').textContent = dict.optPathProduct;
+            document.getElementById('optPathArchitecture').textContent = dict.optPathArchitecture;
+            document.getElementById('optPathConsulting').textContent = dict.optPathConsulting;
+            document.getElementById('optPathEntrepreneurship').textContent = dict.optPathEntrepreneurship;
+            document.getElementById('optPathExploring').textContent = dict.optPathExploring;
+            document.getElementById('sectionAssessment').textContent = dict.sectionAssessment;
+            document.getElementById('labelCurrentStrengths').textContent = dict.labelCurrentStrengths;
+            document.getElementById('labelDevelopmentAreas').textContent = dict.labelDevelopmentAreas;
+            document.getElementById('labelFeedbackSummary').textContent = dict.labelFeedbackSummary;
+            document.getElementById('sectionGoals').textContent = dict.sectionGoals;
+            document.getElementById('addGoalBtn').textContent = dict.addGoalBtn;
+            document.getElementById('sectionSkillsMatrix').textContent = dict.sectionSkillsMatrix;
+            document.getElementById('skillCatTechnical').textContent = dict.skillCatTechnical;
+            document.getElementById('skillNameArch').textContent = dict.skillNameArch;
+            document.getElementById('skillNameDistributed').textContent = dict.skillNameDistributed;
+            document.getElementById('skillNameCloud').textContent = dict.skillNameCloud;
+            document.getElementById('skillNamePerf').textContent = dict.skillNamePerf;
+            document.getElementById('skillCatLeadership').textContent = dict.skillCatLeadership;
+            document.getElementById('skillNameMentoring').textContent = dict.skillNameMentoring;
+            document.getElementById('skillNameCollab').textContent = dict.skillNameCollab;
+            document.getElementById('skillNamePresentations').textContent = dict.skillNamePresentations;
+            document.getElementById('skillNameProjLeadership').textContent = dict.skillNameProjLeadership;
+            document.getElementById('skillCatBusiness').textContent = dict.skillCatBusiness;
+            document.getElementById('skillNameProductStrategy').textContent = dict.skillNameProductStrategy;
+            document.getElementById('skillNameDecisionMaking').textContent = dict.skillNameDecisionMaking;
+            document.getElementById('skillNameStakeholder').textContent = dict.skillNameStakeholder;
+            document.getElementById('skillNameIndustry').textContent = dict.skillNameIndustry;
+            document.getElementById('skillCurrentLabel1').textContent = dict.curLabel;
+            document.getElementById('skillTargetLabel1').textContent = dict.tgtLabel;
+            document.querySelectorAll('.cur-label').forEach(el => el.textContent = dict.curLabel);
+            document.querySelectorAll('.tgt-label').forEach(el => el.textContent = dict.tgtLabel);
+            document.getElementById('sectionReviewSchedule').textContent = dict.sectionReviewSchedule;
+            document.getElementById('reviewCadenceHeading').textContent = dict.reviewCadenceHeading;
+            document.getElementById('reviewDateWeekly').textContent = dict.reviewDateWeekly;
+            document.getElementById('reviewTypeWeekly').textContent = dict.reviewTypeWeekly;
+            document.getElementById('reviewDateMonthly').textContent = dict.reviewDateMonthly;
+            document.getElementById('reviewTypeMonthly').textContent = dict.reviewTypeMonthly;
+            document.getElementById('reviewDateQuarterly').textContent = dict.reviewDateQuarterly;
+            document.getElementById('reviewTypeQuarterly').textContent = dict.reviewTypeQuarterly;
+            document.getElementById('reviewDateAnnual').textContent = dict.reviewDateAnnual;
+            document.getElementById('reviewTypeAnnual').textContent = dict.reviewTypeAnnual;
+            document.getElementById('labelSuccessMetrics').textContent = dict.labelSuccessMetrics;
+            document.getElementById('sectionManagerSupport').textContent = dict.sectionManagerSupport;
+            document.getElementById('labelManagerCommitment').textContent = dict.labelManagerCommitment;
+            document.getElementById('labelResourcesNeeded').textContent = dict.labelResourcesNeeded;
+            document.getElementById('labelPotentialObstacles').textContent = dict.labelPotentialObstacles;
+            document.getElementById('summaryHeading').textContent = dict.summaryHeading;
+            document.getElementById('labelKeyCommitments').textContent = dict.labelKeyCommitments;
+            document.getElementById('labelManagerCommitmentsSummary').textContent = dict.labelManagerCommitmentsSummary;
+            document.getElementById('btnGenerateSummary').textContent = dict.btnGenerateSummary;
+            document.getElementById('btnPrint').textContent = dict.btnPrint;
+            document.getElementById('btnExport').textContent = dict.btnExport;
+            document.getElementById('btnClear').textContent = dict.btnClear;
+
+            Object.keys(dict.placeholders).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.placeholder = dict.placeholders[id];
+            });
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            // Re-render dynamic goal-type dropdown options and static labels inside existing goal cards
+            document.querySelectorAll('.goal-item').forEach(goalItem => {
+                const typeSelect = goalItem.querySelector('.goal-type');
+                if (typeSelect) {
+                    const selectedValue = typeSelect.value;
+                    const selectedIndex = dict.goalTypes.indexOf(selectedValue) >= 0 ? dict.goalTypes.indexOf(selectedValue) : -1;
+                    typeSelect.innerHTML = `<option value="">${dict.selectGoalType}</option>` +
+                        dict.goalTypes.map(type => `<option value="${type}">${type}</option>`).join('');
+                    if (selectedIndex >= 0) {
+                        typeSelect.selectedIndex = selectedIndex + 1;
+                    }
+                }
+                const prioritySelect = goalItem.querySelector('.goal-priority');
+                if (prioritySelect) {
+                    const priorityValue = prioritySelect.value;
+                    prioritySelect.innerHTML = `
+                        <option value="">${dict.priorityLabel}</option>
+                        <option value="high">${dict.priorityHigh}</option>
+                        <option value="medium">${dict.priorityMedium}</option>
+                        <option value="low">${dict.priorityLow}</option>
+                    `;
+                    prioritySelect.value = priorityValue;
+                }
+                const labels = goalItem.querySelectorAll(':scope > .goal-grid label, :scope > .form-group label');
+                labels.forEach(label => {
+                    if (label.dataset.i18n) {
+                        label.textContent = dict[label.dataset.i18n];
+                    }
+                });
+                const descTextarea = goalItem.querySelector('[data-role="goal-desc"]');
+                if (descTextarea) descTextarea.placeholder = dict.goalDescPlaceholder;
+                const criteriaTextarea = goalItem.querySelector('[data-role="success-criteria"]');
+                if (criteriaTextarea) criteriaTextarea.placeholder = dict.successCriteriaPlaceholder;
+                const actionTextarea = goalItem.querySelector('[data-role="action-steps"]');
+                if (actionTextarea) actionTextarea.placeholder = dict.actionStepsPlaceholder;
+                const progressSelect = goalItem.querySelector('[data-role="progress-select"]');
+                if (progressSelect) {
+                    const progressValue = progressSelect.value;
+                    progressSelect.innerHTML = `
+                        <option value="0">${dict.progress0}</option>
+                        <option value="25">${dict.progress25}</option>
+                        <option value="50">${dict.progress50}</option>
+                        <option value="75">${dict.progress75}</option>
+                        <option value="100">${dict.progress100}</option>
+                    `;
+                    progressSelect.value = progressValue;
+                }
+                const removeBtn = goalItem.querySelector('.remove-goal');
+                if (removeBtn) removeBtn.textContent = dict.removeGoal;
+                const milestonesHeading = goalItem.querySelector('.milestones h5');
+                if (milestonesHeading) milestonesHeading.textContent = dict.keyMilestones;
+                const addMilestoneBtn = goalItem.querySelector('.add-milestone-btn');
+                if (addMilestoneBtn) addMilestoneBtn.textContent = dict.addMilestoneBtn;
+                goalItem.querySelectorAll('.milestone-item input[type="text"]').forEach(input => {
+                    input.placeholder = dict.milestoneTextPlaceholder;
+                });
+            });
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        const goalTypes = I18N.en.goalTypes;
 
         function addGoal() {
             goalCount++;
+            const dict = t();
             const goalsContainer = document.getElementById('goals-list');
 
             const goalDiv = document.createElement('div');
@@ -720,45 +1173,45 @@
             goalDiv.id = `goal-${goalCount}`;
 
             goalDiv.innerHTML = `
-                <button class="remove-goal" onclick="removeGoal(${goalCount})">Remove</button>
+                <button class="remove-goal" onclick="removeGoal(${goalCount})">${dict.removeGoal}</button>
 
                 <div class="goal-header">
                     <select class="goal-type" onchange="updateGoalType(${goalCount})">
-                        <option value="">Select Goal Type</option>
-                        ${goalTypes.map(type => `<option value="${type}">${type}</option>`).join('')}
+                        <option value="">${dict.selectGoalType}</option>
+                        ${dict.goalTypes.map(type => `<option value="${type}">${type}</option>`).join('')}
                     </select>
                     <select class="goal-priority">
-                        <option value="">Priority</option>
-                        <option value="high">High Priority</option>
-                        <option value="medium">Medium Priority</option>
-                        <option value="low">Low Priority</option>
+                        <option value="">${dict.priorityLabel}</option>
+                        <option value="high">${dict.priorityHigh}</option>
+                        <option value="medium">${dict.priorityMedium}</option>
+                        <option value="low">${dict.priorityLow}</option>
                     </select>
                 </div>
 
                 <div class="goal-grid">
                     <div class="form-group">
-                        <label>Goal Description:</label>
-                        <textarea placeholder="e.g., Become proficient in system architecture design for distributed systems handling 100k+ requests/second"></textarea>
+                        <label data-i18n="goalDescLabel">${dict.goalDescLabel}</label>
+                        <textarea data-role="goal-desc" placeholder="${dict.goalDescPlaceholder}"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Success Criteria:</label>
-                        <textarea placeholder="e.g., Successfully design and implement architecture for 2 high-scale features, pass AWS Solutions Architect certification, receive positive feedback from senior architects"></textarea>
+                        <label data-i18n="successCriteriaLabel">${dict.successCriteriaLabel}</label>
+                        <textarea data-role="success-criteria" placeholder="${dict.successCriteriaPlaceholder}"></textarea>
                     </div>
                 </div>
 
                 <div class="goal-grid">
                     <div class="form-group">
-                        <label>Target Completion Date:</label>
+                        <label data-i18n="targetDateLabel">${dict.targetDateLabel}</label>
                         <input type="date">
                     </div>
                     <div class="form-group">
-                        <label>Progress Status:</label>
-                        <select onchange="updateProgress(${goalCount})">
-                            <option value="0">Not Started (0%)</option>
-                            <option value="25">Getting Started (25%)</option>
-                            <option value="50">In Progress (50%)</option>
-                            <option value="75">Nearly Complete (75%)</option>
-                            <option value="100">Completed (100%)</option>
+                        <label data-i18n="progressStatusLabel">${dict.progressStatusLabel}</label>
+                        <select data-role="progress-select" onchange="updateProgress(${goalCount})">
+                            <option value="0">${dict.progress0}</option>
+                            <option value="25">${dict.progress25}</option>
+                            <option value="50">${dict.progress50}</option>
+                            <option value="75">${dict.progress75}</option>
+                            <option value="100">${dict.progress100}</option>
                         </select>
                         <div class="progress-bar">
                             <div class="progress-fill" id="progress-${goalCount}"></div>
@@ -767,13 +1220,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Action Steps & Activities:</label>
-                    <textarea placeholder="e.g., 1) Complete 'Designing Data-Intensive Applications' book study, 2) Attend AWS architecture training, 3) Shadow senior architect in design reviews, 4) Lead architecture design for next major project, 5) Present architecture proposal to engineering team"></textarea>
+                    <label data-i18n="actionStepsLabel">${dict.actionStepsLabel}</label>
+                    <textarea data-role="action-steps" placeholder="${dict.actionStepsPlaceholder}"></textarea>
                 </div>
 
                 <div class="milestones">
-                    <h5>🎯 Key Milestones:</h5>
-                    <button class="add-milestone-btn" onclick="addMilestone(${goalCount})">+ Add Milestone</button>
+                    <h5>${dict.keyMilestones}</h5>
+                    <button class="add-milestone-btn" onclick="addMilestone(${goalCount})">${dict.addMilestoneBtn}</button>
                     <div id="milestones-${goalCount}">
                         <!-- Milestones will be added here -->
                     </div>
@@ -806,6 +1259,7 @@
         }
 
         function addMilestone(goalId) {
+            const dict = t();
             const milestonesContainer = document.getElementById(`milestones-${goalId}`);
             const milestoneCount = milestonesContainer.children.length;
 
@@ -814,7 +1268,7 @@
 
             milestoneDiv.innerHTML = `
                 <input type="checkbox" onchange="toggleMilestone(this)">
-                <input type="text" placeholder="e.g., Complete AWS certification exam" style="flex-grow: 1; border: none; background: transparent;">
+                <input type="text" placeholder="${dict.milestoneTextPlaceholder}" style="flex-grow: 1; border: none; background: transparent;">
                 <input type="date" style="width: auto; border: none; background: transparent;">
             `;
 
@@ -831,13 +1285,14 @@
         }
 
         function generateSummary() {
+            const dict = t();
             // Collect all goal information and generate summary
             const goals = document.querySelectorAll('.goal-item');
-            let employeeCommitments = "Key Development Commitments:\n";
-            let managerCommitments = "Manager Support Commitments:\n";
+            let employeeCommitments = dict.summaryEmployeeHeader;
+            let managerCommitments = dict.summaryManagerHeader;
 
             goals.forEach((goal, index) => {
-                const description = goal.querySelector('textarea[placeholder*="Goal Description"]')?.value;
+                const description = goal.querySelector('[data-role="goal-desc"]')?.value;
                 const type = goal.querySelector('.goal-type')?.value;
                 if (description && type) {
                     employeeCommitments += `• ${type}: ${description}\n`;
@@ -852,11 +1307,12 @@
             document.getElementById('key-commitments').value = employeeCommitments;
             document.getElementById('manager-commitments-summary').value = managerCommitments;
 
-            alert('✅ Plan summary generated! Review the summary section at the bottom.');
+            alert(dict.summaryGenerated);
         }
 
         function exportPlan() {
-            const employeeName = document.getElementById('employee-name').value || 'Employee';
+            const dict = t();
+            const employeeName = document.getElementById('employee-name').value || dict.exportEmployeeDefault;
             const planContent = document.querySelector('.container').innerText;
 
             const blob = new Blob([planContent], { type: 'text/plain' });
@@ -869,7 +1325,8 @@
         }
 
         function clearPlan() {
-            if (confirm('Are you sure you want to clear all plan data? This action cannot be undone.')) {
+            const dict = t();
+            if (confirm(dict.clearConfirm)) {
                 // Clear all inputs
                 document.querySelectorAll('input, textarea, select').forEach(element => {
                     if (element.type === 'checkbox') {
@@ -883,12 +1340,13 @@
                 document.getElementById('goals-list').innerHTML = '';
                 goalCount = 0;
 
-                alert('Development plan cleared successfully.');
+                alert(dict.clearedAlert);
             }
         }
 
         // Add first goal by default
         window.onload = function() {
+            renderLanguage();
             addGoal();
 
             // Set default dates

@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Documentation Summary Prompt Generator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: white;
+            color: #17a2b8;
+            border: 2px solid #17a2b8;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover {
+            background: #e1f5fe;
+        }
+
+        .lang-btn.active {
+            background: #17a2b8;
+            color: white;
+        }
+
+        h1 {
+            color: #17a2b8;
+            border-bottom: 3px solid #17a2b8;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            padding-right: 140px;
+        }
+
+        h2 {
+            color: #495057;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-left: 4px solid #28a745;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            background: #e1f5fe;
+            border: 1px solid #81d4fa;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .context-section {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 5px 0;
+            font-family: inherit;
+        }
+
+        .knowledge-type-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .knowledge-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .knowledge-card:hover {
+            border-color: #17a2b8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(23, 162, 184, 0.15);
+        }
+
+        .knowledge-card.selected {
+            border-color: #17a2b8;
+            background: #f0fdff;
+        }
+
+        .knowledge-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .knowledge-title {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        .knowledge-description {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .documentation-focus {
+            background: #fff8e1;
+            border: 2px solid #ffb74d;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .focus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .focus-item {
+            background: white;
+            border: 1px solid #ffcc02;
+            border-radius: 4px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .focus-checkbox {
+            margin: 0;
+        }
+
+        .focus-label {
+            font-size: 14px;
+            color: #495057;
+            flex: 1;
+        }
+
+        .extraction-methods {
+            background: #f3e5f5;
+            border: 2px solid #ba68c8;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .method-section {
+            margin: 20px 0;
+            border: 1px solid #ce93d8;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .method-header {
+            background: #f8bbd9;
+            padding: 12px 20px;
+            font-weight: 600;
+            color: #7b1fa2;
+        }
+
+        .method-content {
+            padding: 15px 20px;
+            background: white;
+        }
+
+        .method-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .method-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 8px 0;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 3px solid #ba68c8;
+        }
+
+        .method-checkbox {
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+
+        .method-text {
+            flex: 1;
+            font-size: 14px;
+            color: #495057;
+        }
+
+        .documentation-prompts {
+            background: #e8f5e8;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .prompt-category {
+            margin: 20px 0;
+            border: 1px solid #81c784;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .prompt-header {
+            background: #c8e6c9;
+            padding: 12px 20px;
+            font-weight: 600;
+            color: #2e7d32;
+        }
+
+        .prompt-content {
+            padding: 15px 20px;
+            background: white;
+        }
+
+        .prompt-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .prompt-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 8px 0;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 3px solid #4caf50;
+        }
+
+        .prompt-checkbox {
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+
+        .prompt-text {
+            flex: 1;
+            font-size: 14px;
+            color: #495057;
+        }
+
+        .generated-prompt {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .prompt-output {
+            background: white;
+            border: 1px solid #c3e6cb;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 15px;
+            min-height: 400px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .generate-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .generate-button:hover {
+            background: #218838;
+        }
+
+        .copy-button {
+            background: #17a2b8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .copy-button:hover {
+            background: #138496;
+        }
+
+        .instructions {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                max-width: none;
+                margin: 0;
+                padding: 10px;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            .instructions {
+                background: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .generate-button, .copy-button, .lang-switcher {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .knowledge-type-cards {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .focus-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+
+            h1 {
+                padding-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+            <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+        </div>
+
+        <h1 id="mainTitle">📚 Documentation Summary Prompt Generator</h1>
+
+        <div class="description">
+            <strong id="descPurposeLabel">Purpose:</strong> <span id="descPurposeText">This generator creates comprehensive, structured prompts for capturing and documenting tribal knowledge within engineering teams. Instead of ad-hoc knowledge transfer, this tool builds systematic documentation frameworks tailored to your specific knowledge domain and organizational needs.</span>
+
+            <br><br><strong id="descHowLabel">How to use:</strong> <span id="descHowText">Select your knowledge type, choose relevant documentation focus areas and extraction methods, then generate a complete documentation prompt. Use the output for team interviews, AI-assisted knowledge extraction, or structured documentation sessions.</span>
+        </div>
+
+        <div class="context-section">
+            <h2 id="contextHeading">📋 Documentation Initiative Context</h2>
+            <table style="width: 100%; border: none;">
+                <tr>
+                    <td style="border: none; width: 20%; vertical-align: top; padding: 5px 10px 5px 0;"><strong id="labelTeamSystem">Team/System:</strong></td>
+                    <td style="border: none; padding: 5px 0;"><input type="text" class="input-field" id="teamSystem" placeholder="e.g., Platform Engineering Team / Payment Processing System" /></td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 10px 5px 0;"><strong id="labelDocLead">Documentation Lead:</strong></td>
+                    <td style="border: none; padding: 5px 0;"><input type="text" class="input-field" id="docLead" placeholder="Your name" /></td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 10px 5px 0;"><strong id="labelKnowledgeHolders">Knowledge Holders:</strong></td>
+                    <td style="border: none; padding: 5px 0;"><input type="text" class="input-field" id="knowledgeHolders" placeholder="Sarah (DevOps), Mike (Backend), Alex (Frontend)" /></td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 10px 5px 0;"><strong id="labelDocGoal">Documentation Goal:</strong></td>
+                    <td style="border: none; padding: 5px 0;"><input type="text" class="input-field" id="docGoal" placeholder="Onboarding efficiency, knowledge retention, process standardization" /></td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 10px 5px 0;"><strong id="labelTargetAudience">Target Audience:</strong></td>
+                    <td style="border: none; padding: 5px 0;"><input type="text" class="input-field" id="targetAudience" placeholder="New team members, cross-functional partners, future maintainers" /></td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 id="knowledgeTypeHeading">🧠 Knowledge Type</h2>
+        <div class="instructions">
+            <strong id="knowledgeTypeInstrLabel">Instructions:</strong> <span id="knowledgeTypeInstrText">Select the type of knowledge you want to document. This customizes the prompt template to focus on the most relevant aspects for your specific domain.</span>
+        </div>
+
+        <div class="knowledge-type-cards">
+            <div class="knowledge-card" data-type="processes">
+                <div class="knowledge-icon">⚙️</div>
+                <div class="knowledge-title" id="cardProcessesTitle">Processes & Workflows</div>
+                <div class="knowledge-description" id="cardProcessesDesc">Deployment procedures, development workflows, operational processes</div>
+            </div>
+            <div class="knowledge-card" data-type="technical">
+                <div class="knowledge-icon">🔧</div>
+                <div class="knowledge-title" id="cardTechnicalTitle">Technical Systems</div>
+                <div class="knowledge-description" id="cardTechnicalDesc">Architecture, APIs, databases, integrations, system behaviors</div>
+            </div>
+            <div class="knowledge-card" data-type="troubleshooting">
+                <div class="knowledge-icon">🚨</div>
+                <div class="knowledge-title" id="cardTroubleshootingTitle">Troubleshooting & Support</div>
+                <div class="knowledge-description" id="cardTroubleshootingDesc">Common issues, diagnostic procedures, incident response</div>
+            </div>
+            <div class="knowledge-card" data-type="decisions">
+                <div class="knowledge-icon">🎯</div>
+                <div class="knowledge-title" id="cardDecisionsTitle">Decisions & Context</div>
+                <div class="knowledge-description" id="cardDecisionsDesc">Architecture decisions, trade-offs, historical context, rationale</div>
+            </div>
+            <div class="knowledge-card" data-type="domain">
+                <div class="knowledge-icon">🏢</div>
+                <div class="knowledge-title" id="cardDomainTitle">Domain & Business Logic</div>
+                <div class="knowledge-description" id="cardDomainDesc">Business rules, domain knowledge, customer workflows</div>
+            </div>
+            <div class="knowledge-card" data-type="tools">
+                <div class="knowledge-icon">🛠️</div>
+                <div class="knowledge-title" id="cardToolsTitle">Tools & Configuration</div>
+                <div class="knowledge-description" id="cardToolsDesc">Tool usage, configuration management, environment setup</div>
+            </div>
+        </div>
+
+        <div class="documentation-focus">
+            <h2 style="margin-top: 0; color: #e65100;" id="focusHeading">🎯 Documentation Focus Areas</h2>
+            <p style="color: #bf360c; margin-bottom: 15px;" id="focusIntro">Select the aspects of knowledge most critical to capture for your use case:</p>
+
+            <div class="focus-grid">
+                <div class="focus-item">
+                    <input type="checkbox" class="focus-checkbox" id="step-by-step" checked />
+                    <label class="focus-label" id="focusLabel-step-by-step" for="step-by-step">Step-by-Step Procedures</label>
+                </div>
+                <div class="focus-item">
+                    <input type="checkbox" class="focus-checkbox" id="gotchas" checked />
+                    <label class="focus-label" id="focusLabel-gotchas" for="gotchas">Gotchas & Common Mistakes</label>
+                </div>
+                <div class="focus-item">
+                    <input type="checkbox" class="focus-checkbox" id="historical-context" checked />
+                    <label class="focus-label" id="focusLabel-historical-context" for="historical-context">Historical Context & Rationale</label>
+                </div>
+                <div class="focus-item">
+                    <input type="checkbox" class="focus-checkbox" id="dependencies" />
+                    <label class="focus-label" id="focusLabel-dependencies" for="dependencies">Dependencies & Prerequisites</label>
+                </div>
+                <div class="focus-item">
+                    <input type="checkbox" class="focus-checkbox" id="troubleshooting" />
+                    <label class="focus-label" id="focusLabel-troubleshooting" for="troubleshooting">Troubleshooting & Recovery</label>
+                </div>
+                <div class="focus-item">
+                    <input type="checkbox" class="focus-checkbox" id="best-practices" />
+                    <label class="focus-label" id="focusLabel-best-practices" for="best-practices">Best Practices & Standards</label>
+                </div>
+                <div class="focus-item">
+                    <input type="checkbox" class="focus-checkbox" id="edge-cases" />
+                    <label class="focus-label" id="focusLabel-edge-cases" for="edge-cases">Edge Cases & Exceptions</label>
+                </div>
+                <div class="focus-item">
+                    <input type="checkbox" class="focus-checkbox" id="monitoring" />
+                    <label class="focus-label" id="focusLabel-monitoring" for="monitoring">Monitoring & Validation</label>
+                </div>
+                <div class="focus-item">
+                    <input type="checkbox" class="focus-checkbox" id="automation" />
+                    <label class="focus-label" id="focusLabel-automation" for="automation">Automation & Tools</label>
+                </div>
+                <div class="focus-item">
+                    <input type="checkbox" class="focus-checkbox" id="security" />
+                    <label class="focus-label" id="focusLabel-security" for="security">Security & Compliance</label>
+                </div>
+                <div class="focus-item">
+                    <input type="checkbox" class="focus-checkbox" id="performance" />
+                    <label class="focus-label" id="focusLabel-performance" for="performance">Performance Considerations</label>
+                </div>
+                <div class="focus-item">
+                    <input type="checkbox" class="focus-checkbox" id="contacts" />
+                    <label class="focus-label" id="focusLabel-contacts" for="contacts">Key Contacts & Escalation</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="extraction-methods">
+            <h2 style="margin-top: 0; color: #7b1fa2;" id="methodsHeading">🔎 Knowledge Extraction Methods</h2>
+            <p style="color: #495057; margin-bottom: 15px;" id="methodsIntro">Select methods to include in your documentation prompt for comprehensive knowledge capture:</p>
+
+            <div class="method-section">
+                <div class="method-header" id="methodSectionInterview">Interview Techniques</div>
+                <div class="method-content">
+                    <div class="method-list">
+                        <div class="method-item">
+                            <input type="checkbox" class="method-checkbox" id="walkthrough" checked />
+                            <div class="method-text" id="methodText-walkthrough">Guided Walkthrough (have expert demonstrate the process step-by-step)</div>
+                        </div>
+                        <div class="method-item">
+                            <input type="checkbox" class="method-checkbox" id="scenario-based" checked />
+                            <div class="method-text" id="methodText-scenario-based">Scenario-Based Questions (what happens when X occurs?)</div>
+                        </div>
+                        <div class="method-item">
+                            <input type="checkbox" class="method-checkbox" id="five-whys" />
+                            <div class="method-text" id="methodText-five-whys">Five Whys Analysis (dig deeper into the reasoning behind steps)</div>
+                        </div>
+                        <div class="method-item">
+                            <input type="checkbox" class="method-checkbox" id="exception-mapping" />
+                            <div class="method-text" id="methodText-exception-mapping">Exception Mapping (what are all the ways this can go wrong?)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="method-section">
+                <div class="method-header" id="methodSectionDocStrategies">Documentation Strategies</div>
+                <div class="method-content">
+                    <div class="method-list">
+                        <div class="method-item">
+                            <input type="checkbox" class="method-checkbox" id="templates" checked />
+                            <div class="method-text" id="methodText-templates">Structured Templates (consistent format for similar knowledge areas)</div>
+                        </div>
+                        <div class="method-item">
+                            <input type="checkbox" class="method-checkbox" id="visual-aids" />
+                            <div class="method-text" id="methodText-visual-aids">Visual Documentation (diagrams, screenshots, flowcharts)</div>
+                        </div>
+                        <div class="method-item">
+                            <input type="checkbox" class="method-checkbox" id="examples" />
+                            <div class="method-text" id="methodText-examples">Real Examples & Case Studies (concrete instances of the knowledge in action)</div>
+                        </div>
+                        <div class="method-item">
+                            <input type="checkbox" class="method-checkbox" id="cross-reference" />
+                            <div class="method-text" id="methodText-cross-reference">Cross-Reference Mapping (how this knowledge connects to other systems/processes)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="documentation-prompts">
+            <h2 style="margin-top: 0; color: #2e7d32;" id="promptsHeading">❓ Knowledge Extraction Prompts</h2>
+            <p style="color: #495057; margin-bottom: 15px;" id="promptsIntro">Select specific questions and prompts to include in your knowledge extraction framework:</p>
+
+            <div class="prompt-category">
+                <div class="prompt-header" id="promptCatProcess">Process & Procedure Questions</div>
+                <div class="prompt-content">
+                    <div class="prompt-list">
+                        <div class="prompt-item">
+                            <input type="checkbox" class="prompt-checkbox" id="step-details" checked />
+                            <div class="prompt-text" id="promptText-step-details">Walk me through each step of this process, including what happens between the obvious steps.</div>
+                        </div>
+                        <div class="prompt-item">
+                            <input type="checkbox" class="prompt-checkbox" id="prerequisites" checked />
+                            <div class="prompt-text" id="promptText-prerequisites">What needs to be in place before someone can start this process?</div>
+                        </div>
+                        <div class="prompt-item">
+                            <input type="checkbox" class="prompt-checkbox" id="validation" />
+                            <div class="prompt-text" id="promptText-validation">How do you know when each step has been completed successfully?</div>
+                        </div>
+                        <div class="prompt-item">
+                            <input type="checkbox" class="prompt-checkbox" id="variations" />
+                            <div class="prompt-text" id="promptText-variations">Are there different ways to do this depending on the situation? What determines which approach to use?</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prompt-category">
+                <div class="prompt-header" id="promptCatTroubleshooting">Problem-Solving & Troubleshooting</div>
+                <div class="prompt-content">
+                    <div class="prompt-list">
+                        <div class="prompt-item">
+                            <input type="checkbox" class="prompt-checkbox" id="common-issues" checked />
+                            <div class="prompt-text" id="promptText-common-issues">What are the most common problems you encounter with this system/process?</div>
+                        </div>
+                        <div class="prompt-item">
+                            <input type="checkbox" class="prompt-checkbox" id="diagnostic-steps" />
+                            <div class="prompt-text" id="promptText-diagnostic-steps">When something goes wrong, what's your diagnostic process? What do you check first?</div>
+                        </div>
+                        <div class="prompt-item">
+                            <input type="checkbox" class="prompt-checkbox" id="warning-signs" />
+                            <div class="prompt-text" id="promptText-warning-signs">What are the early warning signs that indicate a problem is developing?</div>
+                        </div>
+                        <div class="prompt-item">
+                            <input type="checkbox" class="prompt-checkbox" id="recovery-procedures" />
+                            <div class="prompt-text" id="promptText-recovery-procedures">If everything breaks, what's the recovery process? What's the fastest way to get back to working state?</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prompt-category">
+                <div class="prompt-header" id="promptCatContext">Context & Decision History</div>
+                <div class="prompt-content">
+                    <div class="prompt-list">
+                        <div class="prompt-item">
+                            <input type="checkbox" class="prompt-checkbox" id="why-designed" checked />
+                            <div class="prompt-text" id="promptText-why-designed">Why was this system/process designed this way? What problem was it solving?</div>
+                        </div>
+                        <div class="prompt-item">
+                            <input type="checkbox" class="prompt-checkbox" id="alternatives-considered" />
+                            <div class="prompt-text" id="promptText-alternatives-considered">What other approaches were considered? Why weren't they chosen?</div>
+                        </div>
+                        <div class="prompt-item">
+                            <input type="checkbox" class="prompt-checkbox" id="evolution" />
+                            <div class="prompt-text" id="promptText-evolution">How has this evolved over time? What lessons have been learned?</div>
+                        </div>
+                        <div class="prompt-item">
+                            <input type="checkbox" class="prompt-checkbox" id="constraints" />
+                            <div class="prompt-text" id="promptText-constraints">What constraints or limitations should people be aware of? What can't/shouldn't be changed?</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prompt-category">
+                <div class="prompt-header" id="promptCatLearning">Knowledge Transfer & Learning</div>
+                <div class="prompt-content">
+                    <div class="prompt-list">
+                        <div class="prompt-item">
+                            <input type="checkbox" class="prompt-checkbox" id="learning-path" />
+                            <div class="prompt-text" id="promptText-learning-path">What's the best way for someone new to learn this? What order should they learn things in?</div>
+                        </div>
+                        <div class="prompt-item">
+                            <input type="checkbox" class="prompt-checkbox" id="common-mistakes" />
+                            <div class="prompt-text" id="promptText-common-mistakes">What mistakes do people commonly make when learning this? How can we prevent them?</div>
+                        </div>
+                        <div class="prompt-item">
+                            <input type="checkbox" class="prompt-checkbox" id="expertise-levels" />
+                            <div class="prompt-text" id="promptText-expertise-levels">What separates a beginner from an expert in this area? What intuition do experts have?</div>
+                        </div>
+                        <div class="prompt-item">
+                            <input type="checkbox" class="prompt-checkbox" id="resources" />
+                            <div class="prompt-text" id="promptText-resources">What resources, tools, or references are essential for working with this effectively?</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="prompt-builder">
+            <h2 style="margin-top: 0; color: #856404;" id="generateHeading">🚀 Generate Your Documentation Prompt</h2>
+            <button class="generate-button" id="generateBtn" onclick="generateDocPrompt()">Generate Documentation Summary Prompt</button>
+        </div>
+
+        <div class="generated-prompt" id="promptSection" style="display: none;">
+            <h3 style="margin-top: 0; color: #155724;" id="generatedHeading">📄 Your Generated Documentation Prompt</h3>
+            <button class="copy-button" id="copyBtn" onclick="copyPrompt()">Copy to Clipboard</button>
+            <div class="prompt-output" id="promptOutput"></div>
+        </div>
+
+        <h2 id="tipsHeading">💡 Usage Tips</h2>
+        <div class="context-section">
+            <div style="margin-bottom: 15px;">
+                <strong id="tip1Label">For Knowledge Interviews:</strong> <span id="tip1Text">Use the generated prompt as a structured interview guide with subject matter experts.</span>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <strong id="tip2Label">For AI-Assisted Extraction:</strong> <span id="tip2Text">Paste the prompt into ChatGPT/Claude along with system/process details for automated documentation.</span>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <strong id="tip3Label">For Documentation Sessions:</strong> <span id="tip3Text">Use as an agenda template for team knowledge-sharing workshops.</span>
+            </div>
+            <div>
+                <strong id="tip4Label">For Quality Assurance:</strong> <span id="tip4Text">The structured format ensures comprehensive coverage and consistent documentation quality.</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p id="footerText">Documentation Summary Prompt Generator | Save this file for future reference | Systematize tribal knowledge capture</p>
+        </div>
+    </div>
+
+    <script>
+        const I18N = {
+            en: {
+                pageTitle: 'Documentation Summary Prompt Generator',
+                mainTitle: '📚 Documentation Summary Prompt Generator',
+                descPurposeLabel: 'Purpose:',
+                descPurposeText: 'This generator creates comprehensive, structured prompts for capturing and documenting tribal knowledge within engineering teams. Instead of ad-hoc knowledge transfer, this tool builds systematic documentation frameworks tailored to your specific knowledge domain and organizational needs.',
+                descHowLabel: 'How to use:',
+                descHowText: 'Select your knowledge type, choose relevant documentation focus areas and extraction methods, then generate a complete documentation prompt. Use the output for team interviews, AI-assisted knowledge extraction, or structured documentation sessions.',
+                contextHeading: '📋 Documentation Initiative Context',
+                labelTeamSystem: 'Team/System:',
+                labelDocLead: 'Documentation Lead:',
+                labelKnowledgeHolders: 'Knowledge Holders:',
+                labelDocGoal: 'Documentation Goal:',
+                labelTargetAudience: 'Target Audience:',
+                placeholders: {
+                    teamSystem: 'e.g., Platform Engineering Team / Payment Processing System',
+                    docLead: 'Your name',
+                    knowledgeHolders: 'Sarah (DevOps), Mike (Backend), Alex (Frontend)',
+                    docGoal: 'Onboarding efficiency, knowledge retention, process standardization',
+                    targetAudience: 'New team members, cross-functional partners, future maintainers'
+                },
+                knowledgeTypeHeading: '🧠 Knowledge Type',
+                knowledgeTypeInstrLabel: 'Instructions:',
+                knowledgeTypeInstrText: 'Select the type of knowledge you want to document. This customizes the prompt template to focus on the most relevant aspects for your specific domain.',
+                cardProcessesTitle: 'Processes & Workflows',
+                cardProcessesDesc: 'Deployment procedures, development workflows, operational processes',
+                cardTechnicalTitle: 'Technical Systems',
+                cardTechnicalDesc: 'Architecture, APIs, databases, integrations, system behaviors',
+                cardTroubleshootingTitle: 'Troubleshooting & Support',
+                cardTroubleshootingDesc: 'Common issues, diagnostic procedures, incident response',
+                cardDecisionsTitle: 'Decisions & Context',
+                cardDecisionsDesc: 'Architecture decisions, trade-offs, historical context, rationale',
+                cardDomainTitle: 'Domain & Business Logic',
+                cardDomainDesc: 'Business rules, domain knowledge, customer workflows',
+                cardToolsTitle: 'Tools & Configuration',
+                cardToolsDesc: 'Tool usage, configuration management, environment setup',
+                knowledgeTypeLabels: {
+                    processes: 'Processes & Workflows',
+                    technical: 'Technical Systems',
+                    troubleshooting: 'Troubleshooting & Support',
+                    decisions: 'Decisions & Context',
+                    domain: 'Domain & Business Logic',
+                    tools: 'Tools & Configuration',
+                    general: 'General'
+                },
+                focusHeading: '🎯 Documentation Focus Areas',
+                focusIntro: 'Select the aspects of knowledge most critical to capture for your use case:',
+                focusLabels: {
+                    'step-by-step': 'Step-by-Step Procedures',
+                    'gotchas': 'Gotchas & Common Mistakes',
+                    'historical-context': 'Historical Context & Rationale',
+                    'dependencies': 'Dependencies & Prerequisites',
+                    'troubleshooting': 'Troubleshooting & Recovery',
+                    'best-practices': 'Best Practices & Standards',
+                    'edge-cases': 'Edge Cases & Exceptions',
+                    'monitoring': 'Monitoring & Validation',
+                    'automation': 'Automation & Tools',
+                    'security': 'Security & Compliance',
+                    'performance': 'Performance Considerations',
+                    'contacts': 'Key Contacts & Escalation'
+                },
+                methodsHeading: '🔎 Knowledge Extraction Methods',
+                methodsIntro: 'Select methods to include in your documentation prompt for comprehensive knowledge capture:',
+                methodSectionInterview: 'Interview Techniques',
+                methodSectionDocStrategies: 'Documentation Strategies',
+                methodTexts: {
+                    'walkthrough': 'Guided Walkthrough (have expert demonstrate the process step-by-step)',
+                    'scenario-based': 'Scenario-Based Questions (what happens when X occurs?)',
+                    'five-whys': 'Five Whys Analysis (dig deeper into the reasoning behind steps)',
+                    'exception-mapping': 'Exception Mapping (what are all the ways this can go wrong?)',
+                    'templates': 'Structured Templates (consistent format for similar knowledge areas)',
+                    'visual-aids': 'Visual Documentation (diagrams, screenshots, flowcharts)',
+                    'examples': 'Real Examples & Case Studies (concrete instances of the knowledge in action)',
+                    'cross-reference': 'Cross-Reference Mapping (how this knowledge connects to other systems/processes)'
+                },
+                promptsHeading: '❓ Knowledge Extraction Prompts',
+                promptsIntro: 'Select specific questions and prompts to include in your knowledge extraction framework:',
+                promptCatProcess: 'Process & Procedure Questions',
+                promptCatTroubleshooting: 'Problem-Solving & Troubleshooting',
+                promptCatContext: 'Context & Decision History',
+                promptCatLearning: 'Knowledge Transfer & Learning',
+                promptTexts: {
+                    'step-details': 'Walk me through each step of this process, including what happens between the obvious steps.',
+                    'prerequisites': 'What needs to be in place before someone can start this process?',
+                    'validation': 'How do you know when each step has been completed successfully?',
+                    'variations': 'Are there different ways to do this depending on the situation? What determines which approach to use?',
+                    'common-issues': 'What are the most common problems you encounter with this system/process?',
+                    'diagnostic-steps': "When something goes wrong, what's your diagnostic process? What do you check first?",
+                    'warning-signs': 'What are the early warning signs that indicate a problem is developing?',
+                    'recovery-procedures': "If everything breaks, what's the recovery process? What's the fastest way to get back to working state?",
+                    'why-designed': 'Why was this system/process designed this way? What problem was it solving?',
+                    'alternatives-considered': "What other approaches were considered? Why weren't they chosen?",
+                    'evolution': 'How has this evolved over time? What lessons have been learned?',
+                    'constraints': "What constraints or limitations should people be aware of? What can't/shouldn't be changed?",
+                    'learning-path': "What's the best way for someone new to learn this? What order should they learn things in?",
+                    'common-mistakes': 'What mistakes do people commonly make when learning this? How can we prevent them?',
+                    'expertise-levels': 'What separates a beginner from an expert in this area? What intuition do experts have?',
+                    'resources': 'What resources, tools, or references are essential for working with this effectively?'
+                },
+                generateHeading: '🚀 Generate Your Documentation Prompt',
+                generateBtn: 'Generate Documentation Summary Prompt',
+                generatedHeading: '📄 Your Generated Documentation Prompt',
+                copyBtn: 'Copy to Clipboard',
+                copiedBtn: 'Copied!',
+                tipsHeading: '💡 Usage Tips',
+                tip1Label: 'For Knowledge Interviews:',
+                tip1Text: 'Use the generated prompt as a structured interview guide with subject matter experts.',
+                tip2Label: 'For AI-Assisted Extraction:',
+                tip2Text: 'Paste the prompt into ChatGPT/Claude along with system/process details for automated documentation.',
+                tip3Label: 'For Documentation Sessions:',
+                tip3Text: 'Use as an agenda template for team knowledge-sharing workshops.',
+                tip4Label: 'For Quality Assurance:',
+                tip4Text: 'The structured format ensures comprehensive coverage and consistent documentation quality.',
+                footerText: 'Documentation Summary Prompt Generator | Save this file for future reference | Systematize tribal knowledge capture',
+                promptTemplate: {
+                    mainTitle: 'COMPREHENSIVE KNOWLEDGE DOCUMENTATION',
+                    contextHeading: 'DOCUMENTATION CONTEXT:',
+                    ctxTeamSystem: 'Team/System',
+                    ctxDocLead: 'Documentation Lead',
+                    ctxKnowledgeHolders: 'Knowledge Holders',
+                    ctxDocGoal: 'Documentation Goal',
+                    ctxTargetAudience: 'Target Audience',
+                    ctxKnowledgeType: 'Knowledge Type',
+                    instructionsHeading: 'KNOWLEDGE EXTRACTION INSTRUCTIONS:',
+                    instructionsText: 'Please help create comprehensive documentation by systematically capturing tribal knowledge from subject matter experts. Use structured questioning and documentation methods to ensure nothing critical is missed.',
+                    focusHeading: 'DOCUMENTATION FOCUS AREAS:',
+                    focusIntro: 'Prioritize capturing these aspects of the knowledge:',
+                    focusEmpty: '[Please select focus areas above to customize this section]',
+                    methodsHeading: 'KNOWLEDGE EXTRACTION METHODS:',
+                    methodsIntro: 'Use these approaches for comprehensive knowledge capture:',
+                    promptsHeading: 'KEY INTERVIEW QUESTIONS:',
+                    promptsIntro: 'Use these specific prompts during knowledge extraction sessions:',
+                    outputHeading: 'DOCUMENTATION OUTPUT REQUIREMENTS:',
+                    execSummaryHeading: '**EXECUTIVE SUMMARY:**',
+                    execPurpose: '- Purpose: [What this knowledge enables/solves]',
+                    execScope: "- Scope: [What is and isn't covered]",
+                    execAudience: '- Audience: [Who should use this documentation]',
+                    execUpdated: '- Last Updated: [Date and by whom]',
+                    coreAreasHeading: '**CORE KNOWLEDGE AREAS:**',
+                    coreAreasIntro: 'For each major knowledge domain, provide:',
+                    coreAreaName: '**[Knowledge Area Name]**',
+                    coreOverview: "- **Overview:** [What this area covers and why it's important]",
+                    coreConcepts: '- **Key Concepts:** [Essential terms, concepts, or principles]',
+                    coreSteps: '- **Step-by-Step Process:** [Detailed procedures with decision points]',
+                    corePrereqs: '- **Prerequisites:** [What users need before starting]',
+                    coreScenarios: '- **Common Scenarios:** [Typical use cases and variations]',
+                    coreTroubleshooting: '- **Troubleshooting:** [Common issues and resolution steps]',
+                    coreBestPractices: '- **Best Practices:** [Proven approaches and standards]',
+                    coreGotchas: '- **Gotchas & Warnings:** [Common mistakes and how to avoid them]',
+                    coreSuccess: '- **Success Criteria:** [How to verify correct completion]',
+                    coreRelated: '- **Related Knowledge:** [Connections to other systems/processes]',
+                    practicalHeading: '**PRACTICAL INFORMATION:**',
+                    practicalTools: '- **Tools & Resources:** [Required tools, access, references]',
+                    practicalEnv: '- **Environment Setup:** [Configuration, permissions, prerequisites]',
+                    practicalTesting: '- **Testing & Validation:** [How to verify everything works]',
+                    practicalMonitoring: '- **Monitoring & Maintenance:** [Ongoing care and attention needed]',
+                    contextDecisionsHeading: '**CONTEXT & DECISIONS:**',
+                    ctxHistorical: '- **Historical Background:** [Why things are designed this way]',
+                    ctxRationale: '- **Decision Rationale:** [Trade-offs and alternatives considered]',
+                    ctxEvolution: '- **Evolution Timeline:** [How this has changed over time]',
+                    ctxFuture: '- **Future Considerations:** [Known limitations and planned improvements]',
+                    supportHeading: '**SUPPORT INFORMATION:**',
+                    supportContacts: '- **Key Contacts:** [Who to ask for help or escalation]',
+                    supportRelatedDocs: '- **Related Documentation:** [Links to other relevant resources]',
+                    supportTraining: '- **Training Resources:** [How to develop expertise in this area]',
+                    supportReview: '- **Review Schedule:** [How often this should be updated]',
+                    validationHeading: '**KNOWLEDGE VALIDATION:**',
+                    validationIntro: 'After creating initial documentation:',
+                    validation1: '- Have subject matter experts review for accuracy and completeness',
+                    validation2: '- Test procedures with someone unfamiliar to identify gaps',
+                    validation3: '- Validate that target audience can successfully use the documentation',
+                    validation4: '- Establish process for keeping documentation current',
+                    checklistHeading: '**QUALITY CHECKLIST:**',
+                    checklistIntro: 'Ensure documentation includes:',
+                    checklist1: '- [ ] Clear purpose and scope definition',
+                    checklist2: '- [ ] Step-by-step procedures that can be followed by target audience',
+                    checklist3: '- [ ] Real examples and concrete scenarios',
+                    checklist4: '- [ ] Comprehensive troubleshooting guidance',
+                    checklist5: '- [ ] Historical context and decision rationale',
+                    checklist6: '- [ ] Prerequisites and dependencies clearly stated',
+                    checklist7: '- [ ] Success criteria and validation steps',
+                    checklist8: '- [ ] Contact information for further help',
+                    checklist9: '- [ ] Regular review and update process established',
+                    closingText: 'Please be thorough, specific, and focus on actionable knowledge that can be immediately applied by the target audience.'
+                }
+            },
+            zh: {
+                pageTitle: '文件摘要 Prompt 產生器',
+                mainTitle: '📚 文件摘要 Prompt 產生器',
+                descPurposeLabel: '用途：',
+                descPurposeText: '這個產生器會建立完整、結構化的 prompt，用來擷取並記錄工程團隊內部的內隱知識（tribal knowledge）。不再依賴臨時的口頭交接，這個工具會依照你的知識領域與組織需求，建立系統化的文件框架。',
+                descHowLabel: '使用方式：',
+                descHowText: '選擇你的知識類型，勾選相關的文件重點與擷取方法，然後產生完整的文件 prompt。你可以把產生的內容用於團隊訪談、AI 輔助知識擷取，或結構化的文件整理工作坊。',
+                contextHeading: '📋 文件專案背景',
+                labelTeamSystem: '團隊/系統：',
+                labelDocLead: '文件負責人：',
+                labelKnowledgeHolders: '知識持有人：',
+                labelDocGoal: '文件目標：',
+                labelTargetAudience: '目標讀者：',
+                placeholders: {
+                    teamSystem: '例如：Platform Engineering Team / 付款處理系統',
+                    docLead: '你的名字',
+                    knowledgeHolders: 'Sarah（DevOps）、Mike（後端）、Alex（前端）',
+                    docGoal: '加速onboarding、知識保存、流程標準化',
+                    targetAudience: '新進團隊成員、跨職能夥伴、未來的維護者'
+                },
+                knowledgeTypeHeading: '🧠 知識類型',
+                knowledgeTypeInstrLabel: '說明：',
+                knowledgeTypeInstrText: '選擇你想記錄的知識類型。這會調整 prompt 範本，聚焦在你這個領域最相關的面向。',
+                cardProcessesTitle: '流程與工作流',
+                cardProcessesDesc: '部署程序、開發工作流程、營運流程',
+                cardTechnicalTitle: '技術系統',
+                cardTechnicalDesc: '架構、API、資料庫、整合、系統行為',
+                cardTroubleshootingTitle: '故障排除與支援',
+                cardTroubleshootingDesc: '常見問題、診斷程序、事件應變',
+                cardDecisionsTitle: '決策與背景脈絡',
+                cardDecisionsDesc: '架構決策、取捨、歷史脈絡、理由依據',
+                cardDomainTitle: '領域與商業邏輯',
+                cardDomainDesc: '商業規則、領域知識、客戶工作流程',
+                cardToolsTitle: '工具與設定',
+                cardToolsDesc: '工具使用方式、設定管理、環境建置',
+                knowledgeTypeLabels: {
+                    processes: '流程與工作流',
+                    technical: '技術系統',
+                    troubleshooting: '故障排除與支援',
+                    decisions: '決策與背景脈絡',
+                    domain: '領域與商業邏輯',
+                    tools: '工具與設定',
+                    general: '一般'
+                },
+                focusHeading: '🎯 文件重點領域',
+                focusIntro: '選擇對你的使用情境最關鍵、必須記錄的知識面向：',
+                focusLabels: {
+                    'step-by-step': '逐步操作程序',
+                    'gotchas': '常見陷阱與錯誤',
+                    'historical-context': '歷史脈絡與理由',
+                    'dependencies': '相依性與前置條件',
+                    'troubleshooting': '故障排除與復原',
+                    'best-practices': '最佳實務與標準',
+                    'edge-cases': '邊界案例與例外情況',
+                    'monitoring': '監控與驗證',
+                    'automation': '自動化與工具',
+                    'security': '安全性與合規',
+                    'performance': '效能考量',
+                    'contacts': '重要聯絡人與升級管道'
+                },
+                methodsHeading: '🔎 知識擷取方法',
+                methodsIntro: '選擇要納入文件 prompt 的方法，以完整擷取知識：',
+                methodSectionInterview: '訪談技巧',
+                methodSectionDocStrategies: '文件策略',
+                methodTexts: {
+                    'walkthrough': '引導式演練（請專家逐步示範整個流程）',
+                    'scenario-based': '情境式提問（當 X 發生時會怎麼樣？）',
+                    'five-whys': '五個為什麼分析（深入挖掘步驟背後的理由）',
+                    'exception-mapping': '例外情況盤點（這件事有哪些可能出錯的方式？）',
+                    'templates': '結構化範本（類似知識領域採用一致的格式）',
+                    'visual-aids': '視覺化文件（圖表、截圖、流程圖）',
+                    'examples': '真實範例與案例研究（知識實際運作的具體例子）',
+                    'cross-reference': '交叉參照對應（這個知識如何與其他系統/流程連結）'
+                },
+                promptsHeading: '❓ 知識擷取提問',
+                promptsIntro: '選擇要納入知識擷取框架的具體問題與提示：',
+                promptCatProcess: '流程與程序相關問題',
+                promptCatTroubleshooting: '問題解決與故障排除',
+                promptCatContext: '背景脈絡與決策歷史',
+                promptCatLearning: '知識傳承與學習',
+                promptTexts: {
+                    'step-details': '請帶我一步一步走過這個流程，包括那些明顯步驟之間實際發生的事。',
+                    'prerequisites': '在開始這個流程之前，需要先具備哪些條件？',
+                    'validation': '你怎麼知道每個步驟已經成功完成？',
+                    'variations': '依照不同情況，有沒有不同的做法？是什麼決定要用哪一種方式？',
+                    'common-issues': '你在這個系統/流程中最常遇到的問題是什麼？',
+                    'diagnostic-steps': '當出狀況時，你的診斷流程是什麼？你會先檢查什麼？',
+                    'warning-signs': '有哪些早期警訊會顯示問題正在醞釀？',
+                    'recovery-procedures': '如果全部都壞掉了，復原流程是什麼？回到正常運作狀態最快的方式是什麼？',
+                    'why-designed': '這個系統/流程當初為什麼要這樣設計？它想解決什麼問題？',
+                    'alternatives-considered': '當初考慮過哪些其他做法？為什麼沒有採用？',
+                    'evolution': '這個東西是怎麼演變到現在的？學到了哪些教訓？',
+                    'constraints': '大家應該知道哪些限制或約束？什麼是不能/不應該改動的？',
+                    'learning-path': '新手學習這個東西最好的方式是什麼？該按照什麼順序學？',
+                    'common-mistakes': '大家在學這個東西時常犯什麼錯誤？我們要怎麼預防？',
+                    'expertise-levels': '在這個領域裡，新手和專家的差別在哪裡？專家有什麼直覺判斷？',
+                    'resources': '要有效處理這件事，有哪些必要的資源、工具或參考資料？'
+                },
+                generateHeading: '🚀 產生你的文件 Prompt',
+                generateBtn: '產生文件摘要 Prompt',
+                generatedHeading: '📄 你產生的文件 Prompt',
+                copyBtn: '複製到剪貼簿',
+                copiedBtn: '已複製！',
+                tipsHeading: '💡 使用小技巧',
+                tip1Label: '用於知識訪談：',
+                tip1Text: '把產生的 prompt 當作與領域專家訪談的結構化訪綱。',
+                tip2Label: '用於 AI 輔助擷取：',
+                tip2Text: '把 prompt 貼到 ChatGPT/Claude，連同系統/流程細節一起，讓 AI 協助自動整理文件。',
+                tip3Label: '用於文件整理工作坊：',
+                tip3Text: '當作團隊知識分享工作坊的議程範本。',
+                tip4Label: '用於品質把關：',
+                tip4Text: '結構化的格式能確保涵蓋範圍完整、文件品質一致。',
+                footerText: '文件摘要 Prompt 產生器 | 請將此檔案存檔以供未來使用 | 讓內隱知識擷取系統化',
+                promptTemplate: {
+                    mainTitle: '完整知識文件記錄',
+                    contextHeading: '文件背景：',
+                    ctxTeamSystem: '團隊/系統',
+                    ctxDocLead: '文件負責人',
+                    ctxKnowledgeHolders: '知識持有人',
+                    ctxDocGoal: '文件目標',
+                    ctxTargetAudience: '目標讀者',
+                    ctxKnowledgeType: '知識類型',
+                    instructionsHeading: '知識擷取說明：',
+                    instructionsText: '請協助系統化地從領域專家身上擷取內隱知識，建立完整的文件。請使用結構化的提問方式與文件記錄方法，確保不遺漏任何關鍵資訊。',
+                    focusHeading: '文件重點領域：',
+                    focusIntro: '請優先擷取以下知識面向：',
+                    focusEmpty: '[請在上方選擇重點領域以客製化這個區塊]',
+                    methodsHeading: '知識擷取方法：',
+                    methodsIntro: '請使用以下方法完整擷取知識：',
+                    promptsHeading: '關鍵訪談問題：',
+                    promptsIntro: '請在知識擷取過程中使用以下具體提問：',
+                    outputHeading: '文件輸出要求：',
+                    execSummaryHeading: '**摘要總覽：**',
+                    execPurpose: '- 目的：[這份知識能達成/解決什麼]',
+                    execScope: '- 範圍：[涵蓋與不涵蓋的內容]',
+                    execAudience: '- 讀者：[誰應該使用這份文件]',
+                    execUpdated: '- 最後更新：[日期與更新者]',
+                    coreAreasHeading: '**核心知識領域：**',
+                    coreAreasIntro: '針對每個主要知識領域，請提供：',
+                    coreAreaName: '**[知識領域名稱]**',
+                    coreOverview: '- **概述：**[這個領域涵蓋什麼、為什麼重要]',
+                    coreConcepts: '- **關鍵概念：**[必要的術語、概念或原則]',
+                    coreSteps: '- **逐步流程：**[詳細程序與決策點]',
+                    corePrereqs: '- **前置條件：**[開始前使用者需要具備什麼]',
+                    coreScenarios: '- **常見情境：**[典型使用案例與變化]',
+                    coreTroubleshooting: '- **故障排除：**[常見問題與解決步驟]',
+                    coreBestPractices: '- **最佳實務：**[經驗證有效的做法與標準]',
+                    coreGotchas: '- **陷阱與警示：**[常見錯誤與如何避免]',
+                    coreSuccess: '- **成功標準：**[如何確認正確完成]',
+                    coreRelated: '- **相關知識：**[與其他系統/流程的連結]',
+                    practicalHeading: '**實務資訊：**',
+                    practicalTools: '- **工具與資源：**[所需的工具、權限、參考資料]',
+                    practicalEnv: '- **環境建置：**[設定、權限、前置條件]',
+                    practicalTesting: '- **測試與驗證：**[如何確認一切正常運作]',
+                    practicalMonitoring: '- **監控與維護：**[需要持續關注的事項]',
+                    contextDecisionsHeading: '**背景與決策：**',
+                    ctxHistorical: '- **歷史背景：**[為什麼要這樣設計]',
+                    ctxRationale: '- **決策理由：**[考慮過的取捨與替代方案]',
+                    ctxEvolution: '- **演變時間軸：**[這件事是如何隨時間變化的]',
+                    ctxFuture: '- **未來考量：**[已知限制與規劃中的改善]',
+                    supportHeading: '**支援資訊：**',
+                    supportContacts: '- **重要聯絡人：**[遇到問題或需要升級時該找誰]',
+                    supportRelatedDocs: '- **相關文件：**[其他相關資源的連結]',
+                    supportTraining: '- **培訓資源：**[如何培養這個領域的專業能力]',
+                    supportReview: '- **檢視排程：**[這份文件應該多久更新一次]',
+                    validationHeading: '**知識驗證：**',
+                    validationIntro: '建立初版文件之後：',
+                    validation1: '- 請領域專家審閱正確性與完整性',
+                    validation2: '- 找不熟悉的人實際測試程序，找出缺口',
+                    validation3: '- 確認目標讀者能夠成功使用這份文件',
+                    validation4: '- 建立讓文件保持最新狀態的機制',
+                    checklistHeading: '**品質檢核清單：**',
+                    checklistIntro: '請確認文件涵蓋以下項目：',
+                    checklist1: '- [ ] 清楚的目的與範圍定義',
+                    checklist2: '- [ ] 目標讀者能夠遵循的逐步程序',
+                    checklist3: '- [ ] 真實範例與具體情境',
+                    checklist4: '- [ ] 完整的故障排除指引',
+                    checklist5: '- [ ] 歷史脈絡與決策理由',
+                    checklist6: '- [ ] 清楚陳述的前置條件與相依性',
+                    checklist7: '- [ ] 成功標準與驗證步驟',
+                    checklist8: '- [ ] 進一步協助的聯絡資訊',
+                    checklist9: '- [ ] 已建立定期檢視與更新機制',
+                    closingText: '請務必詳盡、具體，並聚焦在目標讀者能夠立即應用的可執行知識。'
+                }
+            }
+        };
+
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+            document.getElementById('pageTitle').textContent = dict.pageTitle;
+            document.getElementById('mainTitle').textContent = dict.mainTitle;
+            document.getElementById('descPurposeLabel').textContent = dict.descPurposeLabel;
+            document.getElementById('descPurposeText').textContent = dict.descPurposeText;
+            document.getElementById('descHowLabel').textContent = dict.descHowLabel;
+            document.getElementById('descHowText').textContent = dict.descHowText;
+            document.getElementById('contextHeading').textContent = dict.contextHeading;
+            document.getElementById('labelTeamSystem').textContent = dict.labelTeamSystem;
+            document.getElementById('labelDocLead').textContent = dict.labelDocLead;
+            document.getElementById('labelKnowledgeHolders').textContent = dict.labelKnowledgeHolders;
+            document.getElementById('labelDocGoal').textContent = dict.labelDocGoal;
+            document.getElementById('labelTargetAudience').textContent = dict.labelTargetAudience;
+            document.getElementById('teamSystem').placeholder = dict.placeholders.teamSystem;
+            document.getElementById('docLead').placeholder = dict.placeholders.docLead;
+            document.getElementById('knowledgeHolders').placeholder = dict.placeholders.knowledgeHolders;
+            document.getElementById('docGoal').placeholder = dict.placeholders.docGoal;
+            document.getElementById('targetAudience').placeholder = dict.placeholders.targetAudience;
+            document.getElementById('knowledgeTypeHeading').textContent = dict.knowledgeTypeHeading;
+            document.getElementById('knowledgeTypeInstrLabel').textContent = dict.knowledgeTypeInstrLabel;
+            document.getElementById('knowledgeTypeInstrText').textContent = dict.knowledgeTypeInstrText;
+            document.getElementById('cardProcessesTitle').textContent = dict.cardProcessesTitle;
+            document.getElementById('cardProcessesDesc').textContent = dict.cardProcessesDesc;
+            document.getElementById('cardTechnicalTitle').textContent = dict.cardTechnicalTitle;
+            document.getElementById('cardTechnicalDesc').textContent = dict.cardTechnicalDesc;
+            document.getElementById('cardTroubleshootingTitle').textContent = dict.cardTroubleshootingTitle;
+            document.getElementById('cardTroubleshootingDesc').textContent = dict.cardTroubleshootingDesc;
+            document.getElementById('cardDecisionsTitle').textContent = dict.cardDecisionsTitle;
+            document.getElementById('cardDecisionsDesc').textContent = dict.cardDecisionsDesc;
+            document.getElementById('cardDomainTitle').textContent = dict.cardDomainTitle;
+            document.getElementById('cardDomainDesc').textContent = dict.cardDomainDesc;
+            document.getElementById('cardToolsTitle').textContent = dict.cardToolsTitle;
+            document.getElementById('cardToolsDesc').textContent = dict.cardToolsDesc;
+            document.getElementById('focusHeading').textContent = dict.focusHeading;
+            document.getElementById('focusIntro').textContent = dict.focusIntro;
+            Object.keys(dict.focusLabels).forEach(key => {
+                const el = document.getElementById('focusLabel-' + key);
+                if (el) el.textContent = dict.focusLabels[key];
+            });
+            document.getElementById('methodsHeading').textContent = dict.methodsHeading;
+            document.getElementById('methodsIntro').textContent = dict.methodsIntro;
+            document.getElementById('methodSectionInterview').textContent = dict.methodSectionInterview;
+            document.getElementById('methodSectionDocStrategies').textContent = dict.methodSectionDocStrategies;
+            Object.keys(dict.methodTexts).forEach(key => {
+                const el = document.getElementById('methodText-' + key);
+                if (el) el.textContent = dict.methodTexts[key];
+            });
+            document.getElementById('promptsHeading').textContent = dict.promptsHeading;
+            document.getElementById('promptsIntro').textContent = dict.promptsIntro;
+            document.getElementById('promptCatProcess').textContent = dict.promptCatProcess;
+            document.getElementById('promptCatTroubleshooting').textContent = dict.promptCatTroubleshooting;
+            document.getElementById('promptCatContext').textContent = dict.promptCatContext;
+            document.getElementById('promptCatLearning').textContent = dict.promptCatLearning;
+            Object.keys(dict.promptTexts).forEach(key => {
+                const el = document.getElementById('promptText-' + key);
+                if (el) el.textContent = dict.promptTexts[key];
+            });
+            document.getElementById('generateHeading').textContent = dict.generateHeading;
+            document.getElementById('generateBtn').textContent = dict.generateBtn;
+            document.getElementById('generatedHeading').textContent = dict.generatedHeading;
+            document.getElementById('copyBtn').textContent = dict.copyBtn;
+            document.getElementById('tipsHeading').textContent = dict.tipsHeading;
+            document.getElementById('tip1Label').textContent = dict.tip1Label;
+            document.getElementById('tip1Text').textContent = dict.tip1Text;
+            document.getElementById('tip2Label').textContent = dict.tip2Label;
+            document.getElementById('tip2Text').textContent = dict.tip2Text;
+            document.getElementById('tip3Label').textContent = dict.tip3Label;
+            document.getElementById('tip3Text').textContent = dict.tip3Text;
+            document.getElementById('tip4Label').textContent = dict.tip4Label;
+            document.getElementById('tip4Text').textContent = dict.tip4Text;
+            document.getElementById('footerText').textContent = dict.footerText;
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            // If a prompt was already generated, regenerate it in the new language
+            const promptSection = document.getElementById('promptSection');
+            if (promptSection.style.display !== 'none') {
+                generateDocPrompt();
+            }
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        // Handle knowledge type selection
+        document.querySelectorAll('.knowledge-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.knowledge-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        function generateDocPrompt() {
+            const dict = t();
+            const pt = dict.promptTemplate;
+            const teamSystem = document.getElementById('teamSystem').value || `[${dict.labelTeamSystem.replace(':', '')}]`;
+            const docLead = document.getElementById('docLead').value || `[${dict.labelDocLead.replace(':', '')}]`;
+            const knowledgeHolders = document.getElementById('knowledgeHolders').value || `[${dict.labelKnowledgeHolders.replace(':', '')}]`;
+            const docGoal = document.getElementById('docGoal').value || `[${dict.labelDocGoal.replace(':', '')}]`;
+            const targetAudience = document.getElementById('targetAudience').value || `[${dict.labelTargetAudience.replace(':', '')}]`;
+
+            const selectedType = document.querySelector('.knowledge-card.selected')?.dataset.type || 'general';
+            const knowledgeTypeLabel = dict.knowledgeTypeLabels[selectedType] || dict.knowledgeTypeLabels.general;
+
+            // Get selected focus areas (read from live DOM, already in current language)
+            const selectedFocus = [];
+            document.querySelectorAll('.focus-checkbox:checked').forEach(checkbox => {
+                selectedFocus.push(checkbox.nextElementSibling.textContent);
+            });
+
+            // Get selected methods
+            const selectedMethods = [];
+            document.querySelectorAll('.method-checkbox:checked').forEach(checkbox => {
+                selectedMethods.push(checkbox.nextElementSibling.textContent);
+            });
+
+            // Get selected prompts
+            const selectedPrompts = [];
+            document.querySelectorAll('.prompt-checkbox:checked').forEach(checkbox => {
+                selectedPrompts.push(checkbox.nextElementSibling.textContent);
+            });
+
+            let prompt = `${pt.mainTitle}: ${teamSystem}
+
+${pt.contextHeading}
+- ${pt.ctxTeamSystem}: ${teamSystem}
+- ${pt.ctxDocLead}: ${docLead}
+- ${pt.ctxKnowledgeHolders}: ${knowledgeHolders}
+- ${pt.ctxDocGoal}: ${docGoal}
+- ${pt.ctxTargetAudience}: ${targetAudience}
+- ${pt.ctxKnowledgeType}: ${knowledgeTypeLabel}
+
+${pt.instructionsHeading}
+${pt.instructionsText}
+
+${pt.focusHeading}`;
+
+            if (selectedFocus.length > 0) {
+                prompt += `\n${pt.focusIntro}\n`;
+                selectedFocus.forEach((focus, index) => {
+                    prompt += `${index + 1}. ${focus}\n`;
+                });
+            } else {
+                prompt += `\n${pt.focusEmpty}\n`;
+            }
+
+            if (selectedMethods.length > 0) {
+                prompt += `\n${pt.methodsHeading}\n${pt.methodsIntro}\n`;
+                selectedMethods.forEach((method, index) => {
+                    prompt += `${index + 1}. ${method}\n`;
+                });
+            }
+
+            if (selectedPrompts.length > 0) {
+                prompt += `\n${pt.promptsHeading}\n${pt.promptsIntro}\n`;
+                selectedPrompts.forEach((promptText, index) => {
+                    prompt += `${index + 1}. ${promptText}\n`;
+                });
+            }
+
+            prompt += `\n${pt.outputHeading}
+
+${pt.execSummaryHeading}
+${pt.execPurpose}
+${pt.execScope}
+${pt.execAudience}
+${pt.execUpdated}
+
+${pt.coreAreasHeading}
+${pt.coreAreasIntro}
+
+${pt.coreAreaName}
+${pt.coreOverview}
+${pt.coreConcepts}
+${pt.coreSteps}
+${pt.corePrereqs}
+${pt.coreScenarios}
+${pt.coreTroubleshooting}
+${pt.coreBestPractices}
+${pt.coreGotchas}
+${pt.coreSuccess}
+${pt.coreRelated}
+
+${pt.practicalHeading}
+${pt.practicalTools}
+${pt.practicalEnv}
+${pt.practicalTesting}
+${pt.practicalMonitoring}
+
+${pt.contextDecisionsHeading}
+${pt.ctxHistorical}
+${pt.ctxRationale}
+${pt.ctxEvolution}
+${pt.ctxFuture}
+
+${pt.supportHeading}
+${pt.supportContacts}
+${pt.supportRelatedDocs}
+${pt.supportTraining}
+${pt.supportReview}
+
+${pt.validationHeading}
+${pt.validationIntro}
+${pt.validation1}
+${pt.validation2}
+${pt.validation3}
+${pt.validation4}
+
+${pt.checklistHeading}
+${pt.checklistIntro}
+${pt.checklist1}
+${pt.checklist2}
+${pt.checklist3}
+${pt.checklist4}
+${pt.checklist5}
+${pt.checklist6}
+${pt.checklist7}
+${pt.checklist8}
+${pt.checklist9}
+
+${pt.closingText}`;
+
+            document.getElementById('promptOutput').textContent = prompt;
+            document.getElementById('promptSection').style.display = 'block';
+        }
+
+        function copyPrompt() {
+            const dict = t();
+            const promptText = document.getElementById('promptOutput').textContent;
+            navigator.clipboard.writeText(promptText).then(function() {
+                const button = document.getElementById('copyBtn');
+                const originalText = button.textContent;
+                button.textContent = dict.copiedBtn;
+                button.style.background = '#28a745';
+                setTimeout(() => {
+                    button.textContent = dict.copyBtn;
+                    button.style.background = '#17a2b8';
+                }, 2000);
+            });
+        }
+
+        window.onload = function() {
+            renderLanguage();
+            // Set default selection
+            document.querySelector('.knowledge-card[data-type="processes"]').classList.add('selected');
+        };
+    </script>
+</body>
+</html>

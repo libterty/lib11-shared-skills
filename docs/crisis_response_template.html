@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Engineering Crisis Response & Scenario Planning Template</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            position: relative;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #e74c3c;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: white;
+            color: #c0392b;
+            border: 2px solid #c0392b;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover {
+            background: #fdecea;
+        }
+
+        .lang-btn.active {
+            background: #c0392b;
+            color: white;
+        }
+
+        .header h1 {
+            color: #c0392b;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            background: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .section-content {
+            padding: 20px;
+        }
+
+        .crisis-level {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .level-p0 { background: #dc3545; color: white; }
+        .level-p1 { background: #fd7e14; color: white; }
+        .level-p2 { background: #ffc107; color: #212529; }
+        .level-p3 { background: #28a745; color: white; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .input-field {
+            width: 100%;
+            min-height: 80px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 8px;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .checkbox-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checkbox-list li {
+            margin-bottom: 8px;
+            padding: 5px 0;
+        }
+
+        .checkbox-list input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .timeline-item {
+            border-left: 3px solid #3498db;
+            padding-left: 20px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 5px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #3498db;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .contact-card {
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 4px;
+            background: #f8f9fa;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-operational { background: #28a745; }
+        .status-degraded { background: #ffc107; }
+        .status-down { background: #dc3545; }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .section { break-inside: avoid; }
+            .lang-switcher { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1 data-i18n="mainTitle">🚨 Crisis Response & Scenario Planning Template</h1>
+            <p><strong data-i18n="headerArtifact">Engineering Management Artifact</strong> <span data-i18n="headerLastUpdated">| Last Updated:</span> <span id="current-date"></span></p>
+        </div>
+
+        <div class="description">
+            <h3 data-i18n="descHeading">Purpose & Usage</h3>
+            <p data-i18n="descText">This template helps engineering managers prepare for and respond to crisis situations through structured scenario planning, clear escalation procedures, and coordinated response protocols. Use this during crisis preparation, active incident response, and post-crisis analysis to ensure systematic handling of critical situations affecting engineering systems, teams, or business operations.</p>
+        </div>
+
+        <!-- Crisis Classification -->
+        <div class="section">
+            <div class="section-header"><span>🔍</span> <span data-i18n="secClassification">Crisis Classification & Initial Assessment</span></div>
+            <div class="section-content">
+                <table>
+                    <tr>
+                        <td><strong data-i18n="crisisTypeLabel">Crisis Type:</strong></td>
+                        <td>
+                            <select style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                                <option class="opt-ct-outage">System Outage</option>
+                                <option class="opt-ct-breach">Security Breach</option>
+                                <option class="opt-ct-dataloss">Data Loss</option>
+                                <option class="opt-ct-perf">Performance Degradation</option>
+                                <option class="opt-ct-staffing">Team/Staffing Crisis</option>
+                                <option class="opt-ct-dependency">External Dependency Failure</option>
+                                <option class="opt-ct-compliance">Compliance Violation</option>
+                                <option class="opt-ct-other">Other</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong data-i18n="severityLabel">Severity Level:</strong></td>
+                        <td>
+                            <span class="crisis-level level-p0">P0 - <span data-i18n="sevCritical">Critical</span></span>
+                            <span class="crisis-level level-p1">P1 - <span data-i18n="sevHigh">High</span></span>
+                            <span class="crisis-level level-p2">P2 - <span data-i18n="sevMedium">Medium</span></span>
+                            <span class="crisis-level level-p3">P3 - <span data-i18n="sevLow">Low</span></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong data-i18n="detectionTimeLabel">Detection Time:</strong></td>
+                        <td><input type="datetime-local" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;"></td>
+                    </tr>
+                    <tr>
+                        <td><strong data-i18n="impactAssessmentLabel">Impact Assessment:</strong></td>
+                        <td><textarea class="input-field" data-i18n-ph="impactAssessmentPh" placeholder="Describe customer impact, affected systems, business consequences..."></textarea></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Emergency Contacts -->
+        <div class="section">
+            <div class="section-header"><span>📞</span> <span data-i18n="secContacts">Emergency Contacts & Escalation Tree</span></div>
+            <div class="section-content">
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h4 data-i18n="contactIC">Incident Commander</h4>
+                        <p><strong data-i18n="contactNameLabel">Name:</strong> _______________</p>
+                        <p><strong data-i18n="contactPhoneLabel">Phone:</strong> _______________</p>
+                        <p><strong data-i18n="contactEmailLabel">Email:</strong> _______________</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4 data-i18n="contactEngLead">Engineering Lead</h4>
+                        <p><strong class="lbl-name">Name:</strong> _______________</p>
+                        <p><strong class="lbl-phone">Phone:</strong> _______________</p>
+                        <p><strong class="lbl-email">Email:</strong> _______________</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4 data-i18n="contactSRE">DevOps/SRE On-Call</h4>
+                        <p><strong class="lbl-name">Name:</strong> _______________</p>
+                        <p><strong class="lbl-phone">Phone:</strong> _______________</p>
+                        <p><strong class="lbl-email">Email:</strong> _______________</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4 data-i18n="contactSecurity">Security Team</h4>
+                        <p><strong class="lbl-name">Name:</strong> _______________</p>
+                        <p><strong class="lbl-phone">Phone:</strong> _______________</p>
+                        <p><strong class="lbl-email">Email:</strong> _______________</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4 data-i18n="contactExec">Executive Escalation</h4>
+                        <p><strong class="lbl-name">Name:</strong> _______________</p>
+                        <p><strong class="lbl-phone">Phone:</strong> _______________</p>
+                        <p><strong class="lbl-email">Email:</strong> _______________</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4 data-i18n="contactComms">Communications/PR</h4>
+                        <p><strong class="lbl-name">Name:</strong> _______________</p>
+                        <p><strong class="lbl-phone">Phone:</strong> _______________</p>
+                        <p><strong class="lbl-email">Email:</strong> _______________</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Immediate Response Checklist -->
+        <div class="section">
+            <div class="section-header"><span>⚡</span> <span data-i18n="secImmediate">Immediate Response Checklist (First 30 Minutes)</span></div>
+            <div class="section-content">
+                <ul class="checkbox-list">
+                    <li><input type="checkbox"> <span data-i18n="ir1">Acknowledge incident and assign Incident Commander</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ir2">Create incident channel/war room (Slack, Teams, etc.)</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ir3">Notify key stakeholders and on-call team</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ir4">Begin impact assessment and customer communication</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ir5">Start incident timeline documentation</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ir6">Implement immediate containment measures</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ir7">Activate monitoring and logging</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ir8">Schedule regular update cadence (every 15-30 min)</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ir9">Prepare status page update (if applicable)</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ir10">Consider escalation to executive team (P0/P1 incidents)</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- System Status -->
+        <div class="section">
+            <div class="section-header"><span>🖥️</span> <span data-i18n="secSystemStatus">System Status & Dependencies</span></div>
+            <div class="section-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="thSystemService">System/Service</th>
+                            <th data-i18n="thStatus">Status</th>
+                            <th data-i18n="thImpact">Impact</th>
+                            <th data-i18n="thOwner">Owner</th>
+                            <th data-i18n="thLastChecked">Last Checked</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-i18n="sysMainApp">Main Application</td>
+                            <td><span class="status-indicator status-down"></span><span class="stat-down">Down</span></td>
+                            <td data-i18n="sysMainAppImpact">Complete service unavailable</td>
+                            <td>___________</td>
+                            <td>___________</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="sysDb">Database Cluster</td>
+                            <td><span class="status-indicator status-degraded"></span><span class="stat-degraded">Degraded</span></td>
+                            <td data-i18n="sysDbImpact">Slow queries, timeouts</td>
+                            <td>___________</td>
+                            <td>___________</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="sysCdn">CDN/Static Assets</td>
+                            <td><span class="status-indicator status-operational"></span><span class="stat-operational">Operational</span></td>
+                            <td data-i18n="sysNoImpact1">No impact</td>
+                            <td>___________</td>
+                            <td>___________</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="sysThirdParty">Third-party API</td>
+                            <td><span class="status-indicator status-operational"></span><span class="stat-operational">Operational</span></td>
+                            <td data-i18n="sysNoImpact2">No impact</td>
+                            <td>___________</td>
+                            <td>___________</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Response Timeline -->
+        <div class="section">
+            <div class="section-header"><span>⏰</span> <span data-i18n="secTimeline">Response Timeline & Actions</span></div>
+            <div class="section-content">
+                <div class="timeline-item">
+                    <strong>T+0 <span class="unit-min">min</span>:</strong> <input type="time"> - <input type="text" data-i18n-ph="tl1Ph" placeholder="Initial detection and alert" style="width: 400px; padding: 5px; margin-left: 10px;">
+                </div>
+                <div class="timeline-item">
+                    <strong>T+5 <span class="unit-min">min</span>:</strong> <input type="time"> - <input type="text" data-i18n-ph="tl2Ph" placeholder="Team notified, war room established" style="width: 400px; padding: 5px; margin-left: 10px;">
+                </div>
+                <div class="timeline-item">
+                    <strong>T+15 <span class="unit-min">min</span>:</strong> <input type="time"> - <input type="text" data-i18n-ph="tl3Ph" placeholder="Impact assessment complete" style="width: 400px; padding: 5px; margin-left: 10px;">
+                </div>
+                <div class="timeline-item">
+                    <strong>T+30 <span class="unit-min">min</span>:</strong> <input type="time"> - <input type="text" data-i18n-ph="tl4Ph" placeholder="First stakeholder update sent" style="width: 400px; padding: 5px; margin-left: 10px;">
+                </div>
+                <div class="timeline-item">
+                    <strong>T+___ <span class="unit-min">min</span>:</strong> <input type="time"> - <input type="text" data-i18n-ph="tl5Ph" placeholder="Add additional timeline entries..." style="width: 400px; padding: 5px; margin-left: 10px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Communication Plan -->
+        <div class="section">
+            <div class="section-header"><span>💬</span> <span data-i18n="secCommPlan">Communication Plan</span></div>
+            <div class="section-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="thAudience">Audience</th>
+                            <th data-i18n="thChannel">Channel</th>
+                            <th data-i18n="thFrequency">Frequency</th>
+                            <th data-i18n="thOwner2">Owner</th>
+                            <th data-i18n="thTemplate">Template/Script</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-i18n="audInternal">Internal Team</td>
+                            <td data-i18n="chanSlack">Slack #incidents</td>
+                            <td data-i18n="freq15">Every 15 min</td>
+                            <td data-i18n="ownerIC">Incident Commander</td>
+                            <td><textarea class="input-field" style="height: 60px;" data-i18n-ph="commTpl1" placeholder="Status: [Brief update]. Impact: [Customer/business impact]. Next update: [Time]."></textarea></td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="audExec">Executives</td>
+                            <td data-i18n="chanEmailPhone">Email + Phone</td>
+                            <td data-i18n="freq30">Every 30 min</td>
+                            <td data-i18n="ownerEM">Engineering Manager</td>
+                            <td><textarea class="input-field" style="height: 60px;" data-i18n-ph="commTpl2" placeholder="Executive summary of incident, business impact, estimated resolution time, and any assistance needed."></textarea></td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="audCustomers">Customers</td>
+                            <td data-i18n="chanStatusPage">Status Page</td>
+                            <td data-i18n="freqAsNeeded">As needed</td>
+                            <td data-i18n="ownerCS">Customer Success</td>
+                            <td><textarea class="input-field" style="height: 60px;" data-i18n-ph="commTpl3" placeholder="We're experiencing issues with [service]. Our team is actively working on a resolution. We'll provide updates every 30 minutes."></textarea></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Scenario Analysis -->
+        <div class="section">
+            <div class="section-header"><span>🎯</span> <span data-i18n="secScenarios">Scenario Analysis & Response Plans</span></div>
+            <div class="section-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="thScenario">Scenario</th>
+                            <th data-i18n="thProbability">Probability</th>
+                            <th data-i18n="thImpact2">Impact</th>
+                            <th data-i18n="thPreplanned">Pre-planned Response</th>
+                            <th data-i18n="thResourcesNeeded">Resources Needed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-i18n="scen1Name">Complete system outage</td>
+                            <td class="prob-medium" data-i18n="probMedium">Medium</td>
+                            <td class="impact-high" data-i18n="impactHigh">High</td>
+                            <td><textarea class="input-field" style="height: 60px;" data-i18n-ph="scen1Resp" placeholder="1. Switch to backup systems 2. Implement read-only mode 3. Scale infrastructure 4. Fix root cause"></textarea></td>
+                            <td><textarea class="input-field" style="height: 60px;" data-i18n-ph="scen1Res" placeholder="DevOps team, Additional servers, Emergency budget approval"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="scen2Name">Data breach/Security incident</td>
+                            <td class="prob-low" data-i18n="probLow">Low</td>
+                            <td class="impact-critical" data-i18n="impactCritical">Critical</td>
+                            <td><textarea class="input-field" style="height: 60px;" data-i18n-ph="scen2Resp" placeholder="1. Isolate affected systems 2. Preserve evidence 3. Notify security team 4. Legal/compliance review"></textarea></td>
+                            <td><textarea class="input-field" style="height: 60px;" data-i18n-ph="scen2Res" placeholder="Security team, Legal counsel, Forensics tools, External security firm"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="scen3Name">Key team member unavailable</td>
+                            <td class="prob-medium" data-i18n="probMedium">Medium</td>
+                            <td class="impact-medium" data-i18n="impactMedium">Medium</td>
+                            <td><textarea class="input-field" style="height: 60px;" data-i18n-ph="scen3Resp" placeholder="1. Activate backup coverage plan 2. Redistribute critical responsibilities 3. Prioritize only essential tasks"></textarea></td>
+                            <td><textarea class="input-field" style="height: 60px;" data-i18n-ph="scen3Res" placeholder="Cross-trained team members, Documentation access, Temporary contractors"></textarea></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Post-Crisis Actions -->
+        <div class="section">
+            <div class="section-header"><span>📋</span> <span data-i18n="secPostCrisis">Post-Crisis Actions</span></div>
+            <div class="section-content">
+                <ul class="checkbox-list">
+                    <li><input type="checkbox"> <span data-i18n="pc1">Document complete incident timeline</span></li>
+                    <li><input type="checkbox"> <span data-i18n="pc2">Conduct blameless postmortem within 48 hours</span></li>
+                    <li><input type="checkbox"> <span data-i18n="pc3">Identify root causes and contributing factors</span></li>
+                    <li><input type="checkbox"> <span data-i18n="pc4">Create action items with owners and due dates</span></li>
+                    <li><input type="checkbox"> <span data-i18n="pc5">Update runbooks and documentation</span></li>
+                    <li><input type="checkbox"> <span data-i18n="pc6">Review and update crisis response procedures</span></li>
+                    <li><input type="checkbox"> <span data-i18n="pc7">Share lessons learned with broader team</span></li>
+                    <li><input type="checkbox"> <span data-i18n="pc8">Follow up on customer communications</span></li>
+                    <li><input type="checkbox"> <span data-i18n="pc9">Update monitoring and alerting systems</span></li>
+                    <li><input type="checkbox"> <span data-i18n="pc10">Schedule review of action item completion</span></li>
+                </ul>
+
+                <h4 style="margin-top: 20px;" data-i18n="metricsHeading">Key Metrics to Track:</h4>
+                <table style="margin-top: 10px;">
+                    <tr>
+                        <td><strong data-i18n="metricDetection">Time to Detection:</strong></td>
+                        <td><span class="unit-minutes-blank">_______ minutes</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong data-i18n="metricResponse">Time to Response:</strong></td>
+                        <td><span class="unit-minutes-blank">_______ minutes</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong data-i18n="metricResolution">Time to Resolution:</strong></td>
+                        <td><span class="unit-minutes-blank">_______ minutes</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong data-i18n="metricImpactDuration">Customer Impact Duration:</strong></td>
+                        <td><span class="unit-minutes-blank">_______ minutes</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong data-i18n="metricBizImpact">Estimated Business Impact:</strong></td>
+                        <td>$_______</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Additional Notes -->
+        <div class="section">
+            <div class="section-header"><span>📝</span> <span data-i18n="secNotes">Additional Notes & Lessons Learned</span></div>
+            <div class="section-content">
+                <textarea class="input-field" style="min-height: 120px;" data-i18n-ph="notesPh" placeholder="Document any additional observations, lessons learned, process improvements, or other relevant information that emerged during the crisis response..."></textarea>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #dee2e6; color: #666;">
+            <p><em data-i18n="footerVersion">Crisis Response Template v1.0 | Engineering Management Artifact</em></p>
+            <p>💡 <strong data-i18n="footerTipLabel">Tip:</strong> <span data-i18n="footerTipText">Print or save this template for offline access during actual emergencies</span></p>
+        </div>
+    </div>
+
+    <script>
+        const I18N = {
+            en: {
+                pageTitle: 'Engineering Crisis Response & Scenario Planning Template',
+                mainTitle: '🚨 Crisis Response & Scenario Planning Template',
+                headerArtifact: 'Engineering Management Artifact',
+                headerLastUpdated: '| Last Updated:',
+                descHeading: 'Purpose & Usage',
+                descText: 'This template helps engineering managers prepare for and respond to crisis situations through structured scenario planning, clear escalation procedures, and coordinated response protocols. Use this during crisis preparation, active incident response, and post-crisis analysis to ensure systematic handling of critical situations affecting engineering systems, teams, or business operations.',
+                secClassification: 'Crisis Classification & Initial Assessment',
+                crisisTypeLabel: 'Crisis Type:',
+                severityLabel: 'Severity Level:',
+                sevCritical: 'Critical', sevHigh: 'High', sevMedium: 'Medium', sevLow: 'Low',
+                detectionTimeLabel: 'Detection Time:',
+                impactAssessmentLabel: 'Impact Assessment:',
+                impactAssessmentPh: 'Describe customer impact, affected systems, business consequences...',
+                secContacts: 'Emergency Contacts & Escalation Tree',
+                contactIC: 'Incident Commander',
+                contactEngLead: 'Engineering Lead',
+                contactSRE: 'DevOps/SRE On-Call',
+                contactSecurity: 'Security Team',
+                contactExec: 'Executive Escalation',
+                contactComms: 'Communications/PR',
+                contactNameLabel: 'Name:',
+                contactPhoneLabel: 'Phone:',
+                contactEmailLabel: 'Email:',
+                secImmediate: 'Immediate Response Checklist (First 30 Minutes)',
+                ir1: 'Acknowledge incident and assign Incident Commander',
+                ir2: 'Create incident channel/war room (Slack, Teams, etc.)',
+                ir3: 'Notify key stakeholders and on-call team',
+                ir4: 'Begin impact assessment and customer communication',
+                ir5: 'Start incident timeline documentation',
+                ir6: 'Implement immediate containment measures',
+                ir7: 'Activate monitoring and logging',
+                ir8: 'Schedule regular update cadence (every 15-30 min)',
+                ir9: 'Prepare status page update (if applicable)',
+                ir10: 'Consider escalation to executive team (P0/P1 incidents)',
+                secSystemStatus: 'System Status & Dependencies',
+                thSystemService: 'System/Service',
+                thStatus: 'Status',
+                thImpact: 'Impact',
+                thOwner: 'Owner',
+                thLastChecked: 'Last Checked',
+                sysMainApp: 'Main Application',
+                sysMainAppImpact: 'Complete service unavailable',
+                sysDb: 'Database Cluster',
+                sysDbImpact: 'Slow queries, timeouts',
+                sysCdn: 'CDN/Static Assets',
+                sysNoImpact1: 'No impact',
+                sysThirdParty: 'Third-party API',
+                sysNoImpact2: 'No impact',
+                statDown: 'Down', statDegraded: 'Degraded', statOperational: 'Operational',
+                secTimeline: 'Response Timeline & Actions',
+                unitMin: 'min',
+                tl1Ph: 'Initial detection and alert',
+                tl2Ph: 'Team notified, war room established',
+                tl3Ph: 'Impact assessment complete',
+                tl4Ph: 'First stakeholder update sent',
+                tl5Ph: 'Add additional timeline entries...',
+                secCommPlan: 'Communication Plan',
+                thAudience: 'Audience', thChannel: 'Channel', thFrequency: 'Frequency', thOwner2: 'Owner', thTemplate: 'Template/Script',
+                audInternal: 'Internal Team', chanSlack: 'Slack #incidents', freq15: 'Every 15 min', ownerIC: 'Incident Commander',
+                commTpl1: 'Status: [Brief update]. Impact: [Customer/business impact]. Next update: [Time].',
+                audExec: 'Executives', chanEmailPhone: 'Email + Phone', freq30: 'Every 30 min', ownerEM: 'Engineering Manager',
+                commTpl2: 'Executive summary of incident, business impact, estimated resolution time, and any assistance needed.',
+                audCustomers: 'Customers', chanStatusPage: 'Status Page', freqAsNeeded: 'As needed', ownerCS: 'Customer Success',
+                commTpl3: "We're experiencing issues with [service]. Our team is actively working on a resolution. We'll provide updates every 30 minutes.",
+                secScenarios: 'Scenario Analysis & Response Plans',
+                thScenario: 'Scenario', thProbability: 'Probability', thImpact2: 'Impact', thPreplanned: 'Pre-planned Response', thResourcesNeeded: 'Resources Needed',
+                scen1Name: 'Complete system outage',
+                probMedium: 'Medium',
+                impactHigh: 'High',
+                scen1Resp: '1. Switch to backup systems 2. Implement read-only mode 3. Scale infrastructure 4. Fix root cause',
+                scen1Res: 'DevOps team, Additional servers, Emergency budget approval',
+                scen2Name: 'Data breach/Security incident',
+                probLow: 'Low',
+                impactCritical: 'Critical',
+                scen2Resp: '1. Isolate affected systems 2. Preserve evidence 3. Notify security team 4. Legal/compliance review',
+                scen2Res: 'Security team, Legal counsel, Forensics tools, External security firm',
+                scen3Name: 'Key team member unavailable',
+                impactMedium: 'Medium',
+                scen3Resp: '1. Activate backup coverage plan 2. Redistribute critical responsibilities 3. Prioritize only essential tasks',
+                scen3Res: 'Cross-trained team members, Documentation access, Temporary contractors',
+                secPostCrisis: 'Post-Crisis Actions',
+                pc1: 'Document complete incident timeline',
+                pc2: 'Conduct blameless postmortem within 48 hours',
+                pc3: 'Identify root causes and contributing factors',
+                pc4: 'Create action items with owners and due dates',
+                pc5: 'Update runbooks and documentation',
+                pc6: 'Review and update crisis response procedures',
+                pc7: 'Share lessons learned with broader team',
+                pc8: 'Follow up on customer communications',
+                pc9: 'Update monitoring and alerting systems',
+                pc10: 'Schedule review of action item completion',
+                metricsHeading: 'Key Metrics to Track:',
+                metricDetection: 'Time to Detection:',
+                metricResponse: 'Time to Response:',
+                metricResolution: 'Time to Resolution:',
+                metricImpactDuration: 'Customer Impact Duration:',
+                metricBizImpact: 'Estimated Business Impact:',
+                unitMinutesBlank: '_______ minutes',
+                secNotes: 'Additional Notes & Lessons Learned',
+                notesPh: 'Document any additional observations, lessons learned, process improvements, or other relevant information that emerged during the crisis response...',
+                footerVersion: 'Crisis Response Template v1.0 | Engineering Management Artifact',
+                footerTipLabel: 'Tip:',
+                footerTipText: 'Print or save this template for offline access during actual emergencies',
+                optCtOutage: 'System Outage', optCtBreach: 'Security Breach', optCtDataloss: 'Data Loss', optCtPerf: 'Performance Degradation',
+                optCtStaffing: 'Team/Staffing Crisis', optCtDependency: 'External Dependency Failure', optCtCompliance: 'Compliance Violation', optCtOther: 'Other',
+                localeCode: 'en-US'
+            },
+            zh: {
+                pageTitle: '工程危機應變與情境規劃範本',
+                mainTitle: '🚨 危機應變與情境規劃範本',
+                headerArtifact: '工程管理文件',
+                headerLastUpdated: '| 最後更新：',
+                descHeading: '目的與使用方式',
+                descText: '這份範本透過結構化的情境規劃、明確的升級處理程序，以及協調一致的應變協議，幫助工程主管為危機情境做好準備並有效應變。可用於危機準備、事件即時應變、以及事後分析，確保系統化處理影響工程系統、團隊或業務營運的重大情況。',
+                secClassification: '危機分類與初步評估',
+                crisisTypeLabel: '危機類型：',
+                severityLabel: '嚴重等級：',
+                sevCritical: '緊急', sevHigh: '高', sevMedium: '中', sevLow: '低',
+                detectionTimeLabel: '偵測時間：',
+                impactAssessmentLabel: '影響評估：',
+                impactAssessmentPh: '描述客戶影響、受影響的系統、業務後果……',
+                secContacts: '緊急聯絡人與升級處理鏈',
+                contactIC: '事件指揮官',
+                contactEngLead: '工程主管',
+                contactSRE: 'DevOps/SRE 值班人員',
+                contactSecurity: '資安團隊',
+                contactExec: '主管升級處理',
+                contactComms: '公關/溝通團隊',
+                contactNameLabel: '姓名：',
+                contactPhoneLabel: '電話：',
+                contactEmailLabel: 'Email：',
+                secImmediate: '立即應變檢核清單（前 30 分鐘）',
+                ir1: '確認事件發生並指派事件指揮官',
+                ir2: '建立事件頻道/作戰室（Slack、Teams 等）',
+                ir3: '通知關鍵利害關係人與值班團隊',
+                ir4: '開始進行影響評估與客戶溝通',
+                ir5: '開始記錄事件時間軸',
+                ir6: '實施立即的圍堵措施',
+                ir7: '啟動監控與日誌記錄',
+                ir8: '安排定期更新頻率（每 15-30 分鐘）',
+                ir9: '準備狀態頁更新（如適用）',
+                ir10: '考慮升級通報高階主管（P0/P1 事件）',
+                secSystemStatus: '系統狀態與相依性',
+                thSystemService: '系統/服務',
+                thStatus: '狀態',
+                thImpact: '影響',
+                thOwner: '負責人',
+                thLastChecked: '最後檢查時間',
+                sysMainApp: '主應用程式',
+                sysMainAppImpact: '服務完全無法使用',
+                sysDb: '資料庫叢集',
+                sysDbImpact: '查詢緩慢、逾時',
+                sysCdn: 'CDN/靜態資源',
+                sysNoImpact1: '無影響',
+                sysThirdParty: '第三方 API',
+                sysNoImpact2: '無影響',
+                statDown: '中斷', statDegraded: '效能降級', statOperational: '正常運作',
+                secTimeline: '應變時間軸與行動',
+                unitMin: '分鐘',
+                tl1Ph: '初步偵測與告警',
+                tl2Ph: '團隊已通知、作戰室已建立',
+                tl3Ph: '影響評估已完成',
+                tl4Ph: '已發出第一次利害關係人更新',
+                tl5Ph: '新增其他時間軸項目……',
+                secCommPlan: '溝通計畫',
+                thAudience: '對象', thChannel: '管道', thFrequency: '頻率', thOwner2: '負責人', thTemplate: '範本/講稿',
+                audInternal: '內部團隊', chanSlack: 'Slack #incidents', freq15: '每 15 分鐘', ownerIC: '事件指揮官',
+                commTpl1: '狀態：[簡短更新]。影響：[客戶/業務影響]。下次更新：[時間]。',
+                audExec: '高階主管', chanEmailPhone: 'Email + 電話', freq30: '每 30 分鐘', ownerEM: '工程主管',
+                commTpl2: '事件的主管摘要、業務影響、預估解決時間，以及需要的任何協助。',
+                audCustomers: '客戶', chanStatusPage: '狀態頁', freqAsNeeded: '視需要', ownerCS: '客戶成功團隊',
+                commTpl3: '我們目前遇到 [服務] 的問題，團隊正在積極處理中，我們會每 30 分鐘提供一次更新。',
+                secScenarios: '情境分析與應變計畫',
+                thScenario: '情境', thProbability: '發生機率', thImpact2: '影響', thPreplanned: '預先規劃的應變方式', thResourcesNeeded: '所需資源',
+                scen1Name: '系統完全中斷',
+                probMedium: '中',
+                impactHigh: '高',
+                scen1Resp: '1. 切換至備援系統 2. 啟用唯讀模式 3. 擴充基礎設施 4. 修復根本原因',
+                scen1Res: 'DevOps 團隊、額外伺服器、緊急預算核准',
+                scen2Name: '資料外洩/資安事件',
+                probLow: '低',
+                impactCritical: '緊急',
+                scen2Resp: '1. 隔離受影響的系統 2. 保存證據 3. 通知資安團隊 4. 法務/合規審查',
+                scen2Res: '資安團隊、法務顧問、鑑識工具、外部資安公司',
+                scen3Name: '關鍵團隊成員無法配合',
+                impactMedium: '中',
+                scen3Resp: '1. 啟動備援覆蓋計畫 2. 重新分配關鍵職責 3. 只優先處理必要任務',
+                scen3Res: '已交叉訓練的團隊成員、文件存取權限、臨時約聘人員',
+                secPostCrisis: '事後行動',
+                pc1: '記錄完整的事件時間軸',
+                pc2: '在 48 小時內進行無指責事後檢討（postmortem）',
+                pc3: '找出根本原因與促成因素',
+                pc4: '建立有負責人與截止日期的行動項目',
+                pc5: '更新 runbook 與文件',
+                pc6: '檢視並更新危機應變程序',
+                pc7: '與更大的團隊分享學到的教訓',
+                pc8: '跟進客戶溝通後續',
+                pc9: '更新監控與告警系統',
+                pc10: '安排行動項目完成度的檢視',
+                metricsHeading: '需追蹤的關鍵指標：',
+                metricDetection: '偵測時間：',
+                metricResponse: '應變時間：',
+                metricResolution: '解決時間：',
+                metricImpactDuration: '客戶受影響時長：',
+                metricBizImpact: '預估業務影響：',
+                unitMinutesBlank: '_______ 分鐘',
+                secNotes: '其他備註與經驗學習',
+                notesPh: '記錄危機應變過程中出現的其他觀察、學到的教訓、流程改善建議，或其他相關資訊……',
+                footerVersion: '危機應變範本 v1.0 | 工程管理文件',
+                footerTipLabel: '小提醒：',
+                footerTipText: '請列印或存檔這份範本，以便在實際緊急事件中離線也能使用',
+                optCtOutage: '系統中斷', optCtBreach: '資安事件', optCtDataloss: '資料遺失', optCtPerf: '效能降級',
+                optCtStaffing: '團隊/人力危機', optCtDependency: '外部相依服務故障', optCtCompliance: '合規違規', optCtOther: '其他',
+                localeCode: 'zh-TW'
+            }
+        };
+
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (dict[key] !== undefined) el.textContent = dict[key];
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.dataset.i18nPh;
+                if (dict[key] !== undefined) el.placeholder = dict[key];
+            });
+
+            document.querySelectorAll('.lbl-name').forEach(el => el.textContent = dict.contactNameLabel);
+            document.querySelectorAll('.lbl-phone').forEach(el => el.textContent = dict.contactPhoneLabel);
+            document.querySelectorAll('.lbl-email').forEach(el => el.textContent = dict.contactEmailLabel);
+            document.querySelectorAll('.unit-min').forEach(el => el.textContent = dict.unitMin);
+            document.querySelectorAll('.unit-minutes-blank').forEach(el => el.textContent = dict.unitMinutesBlank);
+            document.querySelectorAll('.stat-down').forEach(el => el.textContent = dict.statDown);
+            document.querySelectorAll('.stat-degraded').forEach(el => el.textContent = dict.statDegraded);
+            document.querySelectorAll('.stat-operational').forEach(el => el.textContent = dict.statOperational);
+            document.querySelectorAll('.prob-medium').forEach(el => el.textContent = dict.probMedium);
+            document.querySelectorAll('.prob-low').forEach(el => el.textContent = dict.probLow);
+            document.querySelectorAll('.impact-high').forEach(el => el.textContent = dict.impactHigh);
+            document.querySelectorAll('.impact-medium').forEach(el => el.textContent = dict.impactMedium);
+            document.querySelectorAll('.impact-critical').forEach(el => el.textContent = dict.impactCritical);
+
+            document.querySelectorAll('.opt-ct-outage').forEach(el => el.textContent = dict.optCtOutage);
+            document.querySelectorAll('.opt-ct-breach').forEach(el => el.textContent = dict.optCtBreach);
+            document.querySelectorAll('.opt-ct-dataloss').forEach(el => el.textContent = dict.optCtDataloss);
+            document.querySelectorAll('.opt-ct-perf').forEach(el => el.textContent = dict.optCtPerf);
+            document.querySelectorAll('.opt-ct-staffing').forEach(el => el.textContent = dict.optCtStaffing);
+            document.querySelectorAll('.opt-ct-dependency').forEach(el => el.textContent = dict.optCtDependency);
+            document.querySelectorAll('.opt-ct-compliance').forEach(el => el.textContent = dict.optCtCompliance);
+            document.querySelectorAll('.opt-ct-other').forEach(el => el.textContent = dict.optCtOther);
+
+            document.getElementById('current-date').textContent = new Date().toLocaleDateString(dict.localeCode);
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        window.onload = function() {
+            renderLanguage();
+        };
+    </script>
+</body>
+</html>

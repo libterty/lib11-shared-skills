@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Engineering Documentation Summary Template</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: white;
+            color: #17a2b8;
+            border: 2px solid #17a2b8;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover {
+            background: #e1f5fe;
+        }
+
+        .lang-btn.active {
+            background: #17a2b8;
+            color: white;
+        }
+
+        h1 {
+            color: #17a2b8;
+            border-bottom: 3px solid #17a2b8;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            padding-right: 140px;
+        }
+
+        h2 {
+            color: #495057;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-left: 4px solid #28a745;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            background: #e1f5fe;
+            border: 1px solid #81d4fa;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .context-section {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .knowledge-section {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 5px 0;
+            font-family: inherit;
+        }
+
+        .knowledge-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .knowledge-header {
+            background: linear-gradient(135deg, #4fc3f7 0%, #29b6f6 100%);
+            color: white;
+            padding: 12px 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .knowledge-content {
+            padding: 20px;
+        }
+
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .field-group {
+            margin-bottom: 15px;
+        }
+
+        .field-label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .textarea-field {
+            width: 100%;
+            min-height: 80px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            resize: vertical;
+            background: #fafafa;
+        }
+
+        .documentation-checklist {
+            background: #f0f4f8;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 4px;
+            background: white;
+            border: 1px solid #e2e8f0;
+        }
+
+        .checklist-checkbox {
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+
+        .checklist-text {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .knowledge-gaps {
+            background: #fef5e7;
+            border: 2px solid #f59e0b;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .gaps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .gap-item {
+            background: white;
+            border: 1px solid #fed7aa;
+            border-radius: 6px;
+            padding: 15px;
+        }
+
+        .action-plan {
+            background: #ecfdf5;
+            border: 2px solid #10b981;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .action-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .action-table th {
+            background: #059669;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .action-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+
+        .action-table tr:hover {
+            background: #f0fdf4;
+        }
+
+        .template-section {
+            background: #f8fafc;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .template-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .template-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .instructions {
+            background: #dbeafe;
+            border: 1px solid #93c5fd;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                max-width: none;
+                margin: 0;
+                padding: 10px;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            .instructions {
+                background: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .lang-switcher {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .knowledge-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .gaps-grid, .template-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .action-table {
+                font-size: 12px;
+            }
+
+            .action-table th, .action-table td {
+                padding: 8px;
+            }
+
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+
+            h1 {
+                padding-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+            <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+        </div>
+
+        <h1 data-i18n="mainTitle">📚 Documentation Summary Template</h1>
+
+        <div class="description">
+            <strong data-i18n="descPurposeLabel">Purpose:</strong> <span data-i18n="descPurposeText">This template helps engineering managers systematically capture and convert tribal knowledge into structured, accessible documentation. Use this to identify critical knowledge gaps, prioritize documentation efforts, and create actionable plans for knowledge preservation.</span>
+
+            <br><br><strong data-i18n="descHowLabel">How to use:</strong> <span data-i18n="descHowText">Interview team members, identify undocumented processes and knowledge, assess impact and urgency, then create a structured documentation plan. Perfect for onboarding preparation, knowledge transfer, and reducing bus factor risks.</span>
+        </div>
+
+        <div class="context-section">
+            <h2 data-i18n="contextHeading">📋 Documentation Initiative Context</h2>
+            <table style="width: 100%; border: none;">
+                <tr>
+                    <td style="border: none; width: 20%; vertical-align: top; padding: 5px 10px 5px 0;"><strong data-i18n="labelTeamProject">Team/Project:</strong></td>
+                    <td style="border: none; padding: 5px 0;"><input type="text" class="input-field" data-i18n-ph="phTeamProject" placeholder="e.g., Platform Engineering Team" /></td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 10px 5px 0;"><strong data-i18n="labelDocLead">Documentation Lead:</strong></td>
+                    <td style="border: none; padding: 5px 0;"><input type="text" class="input-field" data-i18n-ph="phYourName" placeholder="Your name" /></td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 10px 5px 0;"><strong data-i18n="labelAssessmentDate">Assessment Date:</strong></td>
+                    <td style="border: none; padding: 5px 0;"><input type="date" class="input-field" /></td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 10px 5px 0;"><strong data-i18n="labelScope">Scope:</strong></td>
+                    <td style="border: none; padding: 5px 0;"><input type="text" class="input-field" data-i18n-ph="phScope" placeholder="Systems, processes, or knowledge areas to document" /></td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 10px 5px 0;"><strong data-i18n="labelBusinessDriver">Business Driver:</strong></td>
+                    <td style="border: none; padding: 5px 0;"><input type="text" class="input-field" data-i18n-ph="phBusinessDriver" placeholder="Team scaling, onboarding, knowledge retention, compliance" /></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="knowledge-section">
+            <h2 style="margin-top: 0; color: #e65100;" data-i18n="knowledgeHeading">🧠 Tribal Knowledge Inventory</h2>
+            <div class="instructions">
+                <strong data-i18n="knowledgeInstrLabel">Instructions:</strong> <span data-i18n="knowledgeInstrText">Interview team members to identify critical knowledge that exists only in people's heads. Focus on processes, system quirks, troubleshooting steps, historical context, and decision rationales that aren't written down anywhere.</span>
+            </div>
+
+            <!-- Knowledge Item 1 -->
+            <div class="knowledge-item">
+                <div class="knowledge-header">
+                    <span>🔧</span>
+                    <input type="text" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 4px; padding: 6px 10px; flex: 1; font-size: 14px;" data-i18n-ph="phKnowledgeArea" data-i18n-val="k1Title" placeholder="Knowledge Area (e.g., Payment Service Deployment Process)" value="Payment Service Deployment Process" />
+                    <select style="background: rgba(255,255,255,0.9); border: none; border-radius: 4px; padding: 4px 8px; font-size: 12px;">
+                        <option value="critical" class="opt-critical" selected>Critical</option>
+                        <option value="high" class="opt-high">High</option>
+                        <option value="medium" class="opt-medium">Medium</option>
+                        <option value="low" class="opt-low">Low</option>
+                    </select>
+                </div>
+                <div class="knowledge-content">
+                    <div class="knowledge-grid">
+                        <div class="field-group">
+                            <label class="field-label" data-i18n="labelKnowledgeHolder">Knowledge Holder(s)</label>
+                            <input type="text" class="input-field" data-i18n-ph="phHolderExample" data-i18n-val="k1Holder" placeholder="Sarah (Senior DevOps), Mike (backup)" value="Sarah (Senior DevOps), Mike (backup)" />
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label" data-i18n="labelSystemDomain">System/Domain</label>
+                            <input type="text" class="input-field" data-i18n-ph="phSystemExample" data-i18n-val="k1System" placeholder="Payments platform, Kubernetes deployment" value="Payments platform, Kubernetes deployment" />
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" data-i18n="labelCurrentGap">Current Knowledge Gap</label>
+                        <textarea class="textarea-field" data-i18n-ph="phGap" data-i18n-val="k1Gap" placeholder="What specific knowledge is undocumented?">Manual steps for payment service deployment including database migration sequence, feature flag configuration, and rollback procedures. Only Sarah knows the exact order and gotchas.</textarea>
+                    </div>
+
+                    <div class="knowledge-grid">
+                        <div class="field-group">
+                            <label class="field-label" data-i18n="labelBusinessImpact">Business Impact if Lost</label>
+                            <textarea class="textarea-field" style="min-height: 60px;" data-i18n-ph="phImpact" data-i18n-val="k1Impact" placeholder="What happens if this knowledge becomes unavailable?">Deployment failures, potential payment outages, 4-8 hour delays while figuring out process, risk of data corruption if migration steps done wrong.</textarea>
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label" data-i18n="labelFrequency">Frequency of Use</label>
+                            <select class="input-field">
+                                <option value="daily" class="opt-daily">Daily</option>
+                                <option value="weekly" class="opt-weekly">Weekly</option>
+                                <option value="monthly" class="opt-monthly" selected>Monthly</option>
+                                <option value="quarterly" class="opt-quarterly">Quarterly</option>
+                                <option value="rarely" class="opt-rarely">Rarely</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" data-i18n="labelKeyDetails">Key Details to Capture</label>
+                        <textarea class="textarea-field" data-i18n-ph="phKeyDetails" data-i18n-val="k1Details" placeholder="Specific steps, commands, configurations, gotchas, historical context">1. Pre-deployment checklist and dependencies, 2. Database migration sequence and validation, 3. Feature flag setup and testing, 4. Monitoring and alerting configuration, 5. Rollback procedures and decision criteria, 6. Common issues and troubleshooting steps</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Knowledge Item 2 -->
+            <div class="knowledge-item">
+                <div class="knowledge-header">
+                    <span>🚨</span>
+                    <input type="text" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 4px; padding: 6px 10px; flex: 1; font-size: 14px;" data-i18n-ph="phKnowledgeAreaGeneric" data-i18n-val="k2Title" placeholder="Knowledge Area" value="Legacy API Troubleshooting" />
+                    <select style="background: rgba(255,255,255,0.9); border: none; border-radius: 4px; padding: 4px 8px; font-size: 12px;">
+                        <option value="critical" class="opt-critical">Critical</option>
+                        <option value="high" class="opt-high" selected>High</option>
+                        <option value="medium" class="opt-medium">Medium</option>
+                        <option value="low" class="opt-low">Low</option>
+                    </select>
+                </div>
+                <div class="knowledge-content">
+                    <div class="knowledge-grid">
+                        <div class="field-group">
+                            <label class="field-label" data-i18n="labelKnowledgeHolder">Knowledge Holder(s)</label>
+                            <input type="text" class="input-field" data-i18n-ph="phHolderGeneric" data-i18n-val="k2Holder" placeholder="Name(s) and role(s)" value="Alex (Tech Lead), inherited from John (left company)" />
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label" data-i18n="labelSystemDomain">System/Domain</label>
+                            <input type="text" class="input-field" data-i18n-ph="phSystemGeneric" data-i18n-val="k2System" placeholder="Which system or area" value="Customer API v1.2, legacy authentication flow" />
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" data-i18n="labelCurrentGap">Current Knowledge Gap</label>
+                        <textarea class="textarea-field" data-i18n-ph="phGap" data-i18n-val="k2Gap" placeholder="What specific knowledge is undocumented?">Complex troubleshooting scenarios for the legacy API, including weird edge cases with token expiration, cache invalidation sequences, and database connection pooling issues that cause intermittent 500 errors.</textarea>
+                    </div>
+
+                    <div class="knowledge-grid">
+                        <div class="field-group">
+                            <label class="field-label" data-i18n="labelBusinessImpact">Business Impact if Lost</label>
+                            <textarea class="textarea-field" style="min-height: 60px;" data-i18n-ph="phImpact" data-i18n-val="k2Impact" placeholder="What happens if this knowledge becomes unavailable?">Extended outages during incidents, customer support escalations, inability to debug production issues quickly, potential data integrity problems.</textarea>
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label" data-i18n="labelFrequency">Frequency of Use</label>
+                            <select class="input-field">
+                                <option value="daily" class="opt-daily">Daily</option>
+                                <option value="weekly" class="opt-weekly" selected>Weekly</option>
+                                <option value="monthly" class="opt-monthly">Monthly</option>
+                                <option value="quarterly" class="opt-quarterly">Quarterly</option>
+                                <option value="rarely" class="opt-rarely">Rarely</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" data-i18n="labelKeyDetails">Key Details to Capture</label>
+                        <textarea class="textarea-field" data-i18n-ph="phKeyDetails" data-i18n-val="k2Details" placeholder="Specific steps, commands, configurations, gotchas, historical context">1. Common error patterns and root causes, 2. Diagnostic queries and log analysis techniques, 3. System architecture quirks and dependencies, 4. Historical incidents and resolution patterns, 5. Performance tuning parameters, 6. Contact information for external dependencies</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Knowledge Item 3 -->
+            <div class="knowledge-item">
+                <div class="knowledge-header">
+                    <span>⚙️</span>
+                    <input type="text" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 4px; padding: 6px 10px; flex: 1; font-size: 14px;" data-i18n-ph="phKnowledgeAreaGeneric" data-i18n-val="k3Title" placeholder="Knowledge Area" value="Infrastructure Architecture Decisions" />
+                    <select style="background: rgba(255,255,255,0.9); border: none; border-radius: 4px; padding: 4px 8px; font-size: 12px;">
+                        <option value="critical" class="opt-critical">Critical</option>
+                        <option value="high" class="opt-high">High</option>
+                        <option value="medium" class="opt-medium" selected>Medium</option>
+                        <option value="low" class="opt-low">Low</option>
+                    </select>
+                </div>
+                <div class="knowledge-content">
+                    <div class="knowledge-grid">
+                        <div class="field-group">
+                            <label class="field-label" data-i18n="labelKnowledgeHolder">Knowledge Holder(s)</label>
+                            <input type="text" class="input-field" data-i18n-ph="phHolderGeneric" data-i18n-val="k3Holder" placeholder="Name(s) and role(s)" value="DevOps team, Maria (Principal Engineer)" />
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label" data-i18n="labelSystemDomain">System/Domain</label>
+                            <input type="text" class="input-field" data-i18n-ph="phSystemGeneric" data-i18n-val="k3System" placeholder="Which system or area" value="AWS infrastructure, networking, security policies" />
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" data-i18n="labelCurrentGap">Current Knowledge Gap</label>
+                        <textarea class="textarea-field" data-i18n-ph="phGap" data-i18n-val="k3Gap" placeholder="What specific knowledge is undocumented?">Historical context for why certain architectural decisions were made, including network topology choices, security group configurations, and cost optimization strategies. The reasoning behind current patterns isn't documented.</textarea>
+                    </div>
+
+                    <div class="knowledge-grid">
+                        <div class="field-group">
+                            <label class="field-label" data-i18n="labelBusinessImpact">Business Impact if Lost</label>
+                            <textarea class="textarea-field" style="min-height: 60px;" data-i18n-ph="phImpact" data-i18n-val="k3Impact" placeholder="What happens if this knowledge becomes unavailable?">Poor decision-making on infrastructure changes, potential security vulnerabilities, increased costs from suboptimal configurations, repeated architectural mistakes.</textarea>
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label" data-i18n="labelFrequency">Frequency of Use</label>
+                            <select class="input-field">
+                                <option value="daily" class="opt-daily">Daily</option>
+                                <option value="weekly" class="opt-weekly">Weekly</option>
+                                <option value="monthly" class="opt-monthly">Monthly</option>
+                                <option value="quarterly" class="opt-quarterly" selected>Quarterly</option>
+                                <option value="rarely" class="opt-rarely">Rarely</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" data-i18n="labelKeyDetails">Key Details to Capture</label>
+                        <textarea class="textarea-field" data-i18n-ph="phKeyDetails" data-i18n-val="k3Details" placeholder="Specific steps, commands, configurations, gotchas, historical context">1. Architecture decision records (ADRs), 2. Cost-benefit analysis for major decisions, 3. Security requirements and compliance considerations, 4. Performance and scaling constraints, 5. Integration patterns and standards, 6. Lessons learned and anti-patterns to avoid</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 20px 0; color: #666; font-style: italic;" data-i18n="additionalItemsNote">
+                [Additional knowledge items can be added by duplicating the knowledge item block above]
+            </div>
+        </div>
+
+        <div class="knowledge-gaps">
+            <h3 style="margin-top: 0; color: #d97706;" data-i18n="gapsHeading">🚨 Critical Knowledge Gaps Analysis</h3>
+            <div class="gaps-grid">
+                <div class="gap-item">
+                    <h4 style="margin-top: 0; color: #92400e;" data-i18n="gapSpofTitle">Single Points of Failure</h4>
+                    <textarea class="textarea-field" data-i18n-ph="phGapSpof" data-i18n-val="gapSpofVal" placeholder="Knowledge held by only one person...">Sarah is only person who knows payment deployment process. Alex is sole expert on legacy API troubleshooting since John left.</textarea>
+                </div>
+                <div class="gap-item">
+                    <h4 style="margin-top: 0; color: #92400e;" data-i18n="gapHighRiskTitle">High-Risk Areas</h4>
+                    <textarea class="textarea-field" data-i18n-ph="phGapHighRisk" data-i18n-val="gapHighRiskVal" placeholder="Critical processes without documentation...">Production incident response procedures, database recovery processes, security incident handling, customer data access protocols.</textarea>
+                </div>
+                <div class="gap-item">
+                    <h4 style="margin-top: 0; color: #92400e;" data-i18n="gapOnboardingTitle">Onboarding Blockers</h4>
+                    <textarea class="textarea-field" data-i18n-ph="phGapOnboarding" data-i18n-val="gapOnboardingVal" placeholder="Knowledge needed for new team members...">Development environment setup, testing procedures, code review standards, deployment workflows, monitoring and alerting setup.</textarea>
+                </div>
+                <div class="gap-item">
+                    <h4 style="margin-top: 0; color: #92400e;" data-i18n="gapComplianceTitle">Compliance & Security</h4>
+                    <textarea class="textarea-field" data-i18n-ph="phGapCompliance" data-i18n-val="gapComplianceVal" placeholder="Regulatory or security-critical knowledge...">PCI compliance procedures, data retention policies, access control management, audit trail requirements, security incident response.</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="documentation-checklist">
+            <h3 style="margin-top: 0; color: #2563eb;" data-i18n="checklistHeading">📝 Documentation Quality Checklist</h3>
+            <p style="margin-bottom: 15px; color: #64748b;" data-i18n="checklistIntro">Use this checklist to ensure comprehensive documentation for each knowledge area:</p>
+
+            <div class="checklist-item">
+                <input type="checkbox" class="checklist-checkbox" />
+                <div class="checklist-text"><strong data-i18n="cl1Label">Clear Purpose:</strong> <span data-i18n="cl1Text">Document explains why this process/system exists and its business value</span></div>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" class="checklist-checkbox" />
+                <div class="checklist-text"><strong data-i18n="cl2Label">Step-by-Step Instructions:</strong> <span data-i18n="cl2Text">Detailed procedures that someone unfamiliar can follow</span></div>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" class="checklist-checkbox" />
+                <div class="checklist-text"><strong data-i18n="cl3Label">Prerequisites & Dependencies:</strong> <span data-i18n="cl3Text">What needs to be in place before starting</span></div>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" class="checklist-checkbox" />
+                <div class="checklist-text"><strong data-i18n="cl4Label">Examples & Screenshots:</strong> <span data-i18n="cl4Text">Visual aids and real examples to clarify complex steps</span></div>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" class="checklist-checkbox" />
+                <div class="checklist-text"><strong data-i18n="cl5Label">Troubleshooting Guide:</strong> <span data-i18n="cl5Text">Common issues and their solutions</span></div>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" class="checklist-checkbox" />
+                <div class="checklist-text"><strong data-i18n="cl6Label">Success Criteria:</strong> <span data-i18n="cl6Text">How to verify the process completed correctly</span></div>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" class="checklist-checkbox" />
+                <div class="checklist-text"><strong data-i18n="cl7Label">Historical Context:</strong> <span data-i18n="cl7Text">Why decisions were made, what was tried before</span></div>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" class="checklist-checkbox" />
+                <div class="checklist-text"><strong data-i18n="cl8Label">Owner & Contacts:</strong> <span data-i18n="cl8Text">Who maintains this, who to ask questions</span></div>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" class="checklist-checkbox" />
+                <div class="checklist-text"><strong data-i18n="cl9Label">Review Schedule:</strong> <span data-i18n="cl9Text">When and how often this documentation should be updated</span></div>
+            </div>
+        </div>
+
+        <div class="action-plan">
+            <h2 style="margin-top: 0; color: #047857;" data-i18n="actionPlanHeading">📅 Documentation Action Plan</h2>
+
+            <table class="action-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;" data-i18n="thKnowledgeArea">Knowledge Area</th>
+                        <th style="width: 15%;" data-i18n="thPriority">Priority</th>
+                        <th style="width: 20%;" data-i18n="thAssignedTo">Assigned To</th>
+                        <th style="width: 15%;" data-i18n="thTargetDate">Target Date</th>
+                        <th style="width: 25%;" data-i18n="thDocType">Documentation Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="input-field" style="font-size: 12px;" data-i18n-val="row1Area" value="Payment Service Deployment" /></td>
+                        <td>
+                            <select class="input-field" style="font-size: 12px;">
+                                <option value="critical" class="opt-critical" selected>Critical</option>
+                                <option value="high" class="opt-high">High</option>
+                                <option value="medium" class="opt-medium">Medium</option>
+                                <option value="low" class="opt-low">Low</option>
+                            </select>
+                        </td>
+                        <td><input type="text" class="input-field" style="font-size: 12px;" data-i18n-val="row1Assigned" value="Sarah + Tech Writer" /></td>
+                        <td><input type="date" class="input-field" style="font-size: 12px;" /></td>
+                        <td><input type="text" class="input-field" style="font-size: 12px;" data-i18n-val="row1DocType" value="Runbook, Process Guide" /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="input-field" style="font-size: 12px;" data-i18n-val="row2Area" value="Legacy API Troubleshooting" /></td>
+                        <td>
+                            <select class="input-field" style="font-size: 12px;">
+                                <option value="critical" class="opt-critical">Critical</option>
+                                <option value="high" class="opt-high" selected>High</option>
+                                <option value="medium" class="opt-medium">Medium</option>
+                                <option value="low" class="opt-low">Low</option>
+                            </select>
+                        </td>
+                        <td><input type="text" class="input-field" style="font-size: 12px;" data-i18n-val="row2Assigned" value="Alex + Junior Dev" /></td>
+                        <td><input type="date" class="input-field" style="font-size: 12px;" /></td>
+                        <td><input type="text" class="input-field" style="font-size: 12px;" data-i18n-val="row2DocType" value="Troubleshooting Guide, FAQ" /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="input-field" style="font-size: 12px;" data-i18n-val="row3Area" value="Infrastructure ADRs" /></td>
+                        <td>
+                            <select class="input-field" style="font-size: 12px;">
+                                <option value="critical" class="opt-critical">Critical</option>
+                                <option value="high" class="opt-high">High</option>
+                                <option value="medium" class="opt-medium" selected>Medium</option>
+                                <option value="low" class="opt-low">Low</option>
+                            </select>
+                        </td>
+                        <td><input type="text" class="input-field" style="font-size: 12px;" data-i18n-val="row3Assigned" value="Maria" /></td>
+                        <td><input type="date" class="input-field" style="font-size: 12px;" /></td>
+                        <td><input type="text" class="input-field" style="font-size: 12px;" data-i18n-val="row3DocType" value="Architecture Decision Records" /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="input-field" style="font-size: 12px;" data-i18n-ph="phAdditionalArea" placeholder="Additional knowledge area..." /></td>
+                        <td>
+                            <select class="input-field" style="font-size: 12px;">
+                                <option value="critical" class="opt-critical">Critical</option>
+                                <option value="high" class="opt-high">High</option>
+                                <option value="medium" class="opt-medium">Medium</option>
+                                <option value="low" class="opt-low">Low</option>
+                            </select>
+                        </td>
+                        <td><input type="text" class="input-field" style="font-size: 12px;" data-i18n-ph="phOwner" placeholder="Owner" /></td>
+                        <td><input type="date" class="input-field" style="font-size: 12px;" /></td>
+                        <td><input type="text" class="input-field" style="font-size: 12px;" data-i18n-ph="phDocType" placeholder="Document type" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="template-section">
+            <h2 style="margin-top: 0; color: #1f2937;" data-i18n="templatesHeading">📑 Documentation Templates</h2>
+            <p style="color: #6b7280; margin-bottom: 15px;" data-i18n="templatesIntro">Choose appropriate templates for different types of knowledge:</p>
+
+            <div class="template-grid">
+                <div class="template-card">
+                    <div class="template-icon">📘</div>
+                    <h4 data-i18n="tpl1Title">Process Runbook</h4>
+                    <p style="font-size: 14px; color: #6b7280;" data-i18n="tpl1Desc">Step-by-step procedures, checklists, prerequisites</p>
+                </div>
+                <div class="template-card">
+                    <div class="template-icon">🔧</div>
+                    <h4 data-i18n="tpl2Title">Troubleshooting Guide</h4>
+                    <p style="font-size: 14px; color: #6b7280;" data-i18n="tpl2Desc">Common issues, diagnostic steps, solutions</p>
+                </div>
+                <div class="template-card">
+                    <div class="template-icon">🏛️</div>
+                    <h4 data-i18n="tpl3Title">Architecture Decision Record</h4>
+                    <p style="font-size: 14px; color: #6b7280;" data-i18n="tpl3Desc">Context, decision, consequences, alternatives</p>
+                </div>
+                <div class="template-card">
+                    <div class="template-icon">🗺️</div>
+                    <h4 data-i18n="tpl4Title">System Overview</h4>
+                    <p style="font-size: 14px; color: #6b7280;" data-i18n="tpl4Desc">Architecture, components, data flow, integrations</p>
+                </div>
+                <div class="template-card">
+                    <div class="template-icon">🚀</div>
+                    <h4 data-i18n="tpl5Title">Onboarding Guide</h4>
+                    <p style="font-size: 14px; color: #6b7280;" data-i18n="tpl5Desc">Setup instructions, first tasks, key contacts</p>
+                </div>
+                <div class="template-card">
+                    <div class="template-icon">❓</div>
+                    <h4 data-i18n="tpl6Title">FAQ Document</h4>
+                    <p style="font-size: 14px; color: #6b7280;" data-i18n="tpl6Desc">Common questions, quick answers, links</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 data-i18n="successHeading">📈 Success Metrics & Review</h2>
+        <div class="context-section">
+            <div style="margin-bottom: 15px;">
+                <strong data-i18n="successGoalLabel">Documentation Goal:</strong> <input type="text" class="input-field" data-i18n-ph="phSuccessGoal" placeholder="e.g., Reduce onboarding time from 2 weeks to 1 week" />
+            </div>
+            <div style="margin-bottom: 15px;">
+                <strong data-i18n="successMetricsLabel">Success Metrics:</strong>
+                <textarea class="input-field" style="height: 80px;" data-i18n-ph="phSuccessMetrics" data-i18n-val="successMetricsVal" placeholder="How will you measure success? Time to resolution, onboarding speed, knowledge transfer effectiveness, incident response times...">1. New team member can deploy payment service within first week, 2. Average incident resolution time reduced by 30%, 3. Zero critical knowledge held by single person, 4. Documentation review/update cycle established</textarea>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <strong data-i18n="reviewScheduleLabel">Review Schedule:</strong>
+                <select class="input-field" style="width: 200px; display: inline-block;">
+                    <option class="opt-review-monthly">Monthly</option>
+                    <option class="opt-review-quarterly" selected>Quarterly</option>
+                    <option class="opt-review-biannual">Bi-annually</option>
+                </select>
+            </div>
+            <div>
+                <strong data-i18n="maintenancePlanLabel">Maintenance Plan:</strong>
+                <textarea class="input-field" style="height: 80px;" data-i18n-ph="phMaintenancePlan" data-i18n-val="maintenancePlanVal" placeholder="How will documentation stay current? Review processes, update triggers, ownership model...">Each document has assigned owner responsible for updates. Quarterly review cycle with team leads. Process changes trigger documentation updates. New team members provide feedback on doc quality during onboarding.</textarea>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p data-i18n="footerText">Engineering Documentation Summary Template | Save this file for future reference | Update as tribal knowledge is captured</p>
+        </div>
+    </div>
+
+    <script>
+        const I18N = {
+            en: {
+                pageTitle: 'Engineering Documentation Summary Template',
+                mainTitle: '📚 Documentation Summary Template',
+                descPurposeLabel: 'Purpose:',
+                descPurposeText: 'This template helps engineering managers systematically capture and convert tribal knowledge into structured, accessible documentation. Use this to identify critical knowledge gaps, prioritize documentation efforts, and create actionable plans for knowledge preservation.',
+                descHowLabel: 'How to use:',
+                descHowText: 'Interview team members, identify undocumented processes and knowledge, assess impact and urgency, then create a structured documentation plan. Perfect for onboarding preparation, knowledge transfer, and reducing bus factor risks.',
+                contextHeading: '📋 Documentation Initiative Context',
+                labelTeamProject: 'Team/Project:',
+                phTeamProject: 'e.g., Platform Engineering Team',
+                labelDocLead: 'Documentation Lead:',
+                phYourName: 'Your name',
+                labelAssessmentDate: 'Assessment Date:',
+                labelScope: 'Scope:',
+                phScope: 'Systems, processes, or knowledge areas to document',
+                labelBusinessDriver: 'Business Driver:',
+                phBusinessDriver: 'Team scaling, onboarding, knowledge retention, compliance',
+                knowledgeHeading: '🧠 Tribal Knowledge Inventory',
+                knowledgeInstrLabel: 'Instructions:',
+                knowledgeInstrText: "Interview team members to identify critical knowledge that exists only in people's heads. Focus on processes, system quirks, troubleshooting steps, historical context, and decision rationales that aren't written down anywhere.",
+                labelKnowledgeHolder: 'Knowledge Holder(s)',
+                labelSystemDomain: 'System/Domain',
+                labelCurrentGap: 'Current Knowledge Gap',
+                labelBusinessImpact: 'Business Impact if Lost',
+                labelFrequency: 'Frequency of Use',
+                labelKeyDetails: 'Key Details to Capture',
+                phKnowledgeArea: 'Knowledge Area (e.g., Payment Service Deployment Process)',
+                phKnowledgeAreaGeneric: 'Knowledge Area',
+                phHolderExample: 'Sarah (Senior DevOps), Mike (backup)',
+                phHolderGeneric: 'Name(s) and role(s)',
+                phSystemExample: 'Payments platform, Kubernetes deployment',
+                phSystemGeneric: 'Which system or area',
+                phGap: 'What specific knowledge is undocumented?',
+                phImpact: 'What happens if this knowledge becomes unavailable?',
+                phKeyDetails: 'Specific steps, commands, configurations, gotchas, historical context',
+                k1Title: 'Payment Service Deployment Process',
+                k1Holder: 'Sarah (Senior DevOps), Mike (backup)',
+                k1System: 'Payments platform, Kubernetes deployment',
+                k1Gap: 'Manual steps for payment service deployment including database migration sequence, feature flag configuration, and rollback procedures. Only Sarah knows the exact order and gotchas.',
+                k1Impact: '4-8 hour delays while figuring out process, risk of data corruption if migration steps done wrong, potential payment outages, deployment failures.',
+                k1Details: '1. Pre-deployment checklist and dependencies, 2. Database migration sequence and validation, 3. Feature flag setup and testing, 4. Monitoring and alerting configuration, 5. Rollback procedures and decision criteria, 6. Common issues and troubleshooting steps',
+                k2Title: 'Legacy API Troubleshooting',
+                k2Holder: 'Alex (Tech Lead), inherited from John (left company)',
+                k2System: 'Customer API v1.2, legacy authentication flow',
+                k2Gap: 'Complex troubleshooting scenarios for the legacy API, including weird edge cases with token expiration, cache invalidation sequences, and database connection pooling issues that cause intermittent 500 errors.',
+                k2Impact: 'Extended outages during incidents, customer support escalations, inability to debug production issues quickly, potential data integrity problems.',
+                k2Details: '1. Common error patterns and root causes, 2. Diagnostic queries and log analysis techniques, 3. System architecture quirks and dependencies, 4. Historical incidents and resolution patterns, 5. Performance tuning parameters, 6. Contact information for external dependencies',
+                k3Title: 'Infrastructure Architecture Decisions',
+                k3Holder: 'DevOps team, Maria (Principal Engineer)',
+                k3System: 'AWS infrastructure, networking, security policies',
+                k3Gap: "Historical context for why certain architectural decisions were made, including network topology choices, security group configurations, and cost optimization strategies. The reasoning behind current patterns isn't documented.",
+                k3Impact: 'Poor decision-making on infrastructure changes, potential security vulnerabilities, increased costs from suboptimal configurations, repeated architectural mistakes.',
+                k3Details: '1. Architecture decision records (ADRs), 2. Cost-benefit analysis for major decisions, 3. Security requirements and compliance considerations, 4. Performance and scaling constraints, 5. Integration patterns and standards, 6. Lessons learned and anti-patterns to avoid',
+                additionalItemsNote: '[Additional knowledge items can be added by duplicating the knowledge item block above]',
+                gapsHeading: '🚨 Critical Knowledge Gaps Analysis',
+                gapSpofTitle: 'Single Points of Failure',
+                phGapSpof: 'Knowledge held by only one person...',
+                gapSpofVal: 'Sarah is only person who knows payment deployment process. Alex is sole expert on legacy API troubleshooting since John left.',
+                gapHighRiskTitle: 'High-Risk Areas',
+                phGapHighRisk: 'Critical processes without documentation...',
+                gapHighRiskVal: 'Production incident response procedures, database recovery processes, security incident handling, customer data access protocols.',
+                gapOnboardingTitle: 'Onboarding Blockers',
+                phGapOnboarding: 'Knowledge needed for new team members...',
+                gapOnboardingVal: 'Development environment setup, testing procedures, code review standards, deployment workflows, monitoring and alerting setup.',
+                gapComplianceTitle: 'Compliance & Security',
+                phGapCompliance: 'Regulatory or security-critical knowledge...',
+                gapComplianceVal: 'PCI compliance procedures, data retention policies, access control management, audit trail requirements, security incident response.',
+                checklistHeading: '📝 Documentation Quality Checklist',
+                checklistIntro: 'Use this checklist to ensure comprehensive documentation for each knowledge area:',
+                cl1Label: 'Clear Purpose:',
+                cl1Text: 'Document explains why this process/system exists and its business value',
+                cl2Label: 'Step-by-Step Instructions:',
+                cl2Text: 'Detailed procedures that someone unfamiliar can follow',
+                cl3Label: 'Prerequisites & Dependencies:',
+                cl3Text: 'What needs to be in place before starting',
+                cl4Label: 'Examples & Screenshots:',
+                cl4Text: 'Visual aids and real examples to clarify complex steps',
+                cl5Label: 'Troubleshooting Guide:',
+                cl5Text: 'Common issues and their solutions',
+                cl6Label: 'Success Criteria:',
+                cl6Text: 'How to verify the process completed correctly',
+                cl7Label: 'Historical Context:',
+                cl7Text: 'Why decisions were made, what was tried before',
+                cl8Label: 'Owner & Contacts:',
+                cl8Text: 'Who maintains this, who to ask questions',
+                cl9Label: 'Review Schedule:',
+                cl9Text: 'When and how often this documentation should be updated',
+                actionPlanHeading: '📅 Documentation Action Plan',
+                thKnowledgeArea: 'Knowledge Area',
+                thPriority: 'Priority',
+                thAssignedTo: 'Assigned To',
+                thTargetDate: 'Target Date',
+                thDocType: 'Documentation Type',
+                row1Area: 'Payment Service Deployment',
+                row1Assigned: 'Sarah + Tech Writer',
+                row1DocType: 'Runbook, Process Guide',
+                row2Area: 'Legacy API Troubleshooting',
+                row2Assigned: 'Alex + Junior Dev',
+                row2DocType: 'Troubleshooting Guide, FAQ',
+                row3Area: 'Infrastructure ADRs',
+                row3Assigned: 'Maria',
+                row3DocType: 'Architecture Decision Records',
+                phAdditionalArea: 'Additional knowledge area...',
+                phOwner: 'Owner',
+                phDocType: 'Document type',
+                templatesHeading: '📑 Documentation Templates',
+                templatesIntro: 'Choose appropriate templates for different types of knowledge:',
+                tpl1Title: 'Process Runbook',
+                tpl1Desc: 'Step-by-step procedures, checklists, prerequisites',
+                tpl2Title: 'Troubleshooting Guide',
+                tpl2Desc: 'Common issues, diagnostic steps, solutions',
+                tpl3Title: 'Architecture Decision Record',
+                tpl3Desc: 'Context, decision, consequences, alternatives',
+                tpl4Title: 'System Overview',
+                tpl4Desc: 'Architecture, components, data flow, integrations',
+                tpl5Title: 'Onboarding Guide',
+                tpl5Desc: 'Setup instructions, first tasks, key contacts',
+                tpl6Title: 'FAQ Document',
+                tpl6Desc: 'Common questions, quick answers, links',
+                successHeading: '📈 Success Metrics & Review',
+                successGoalLabel: 'Documentation Goal:',
+                phSuccessGoal: 'e.g., Reduce onboarding time from 2 weeks to 1 week',
+                successMetricsLabel: 'Success Metrics:',
+                phSuccessMetrics: 'How will you measure success? Time to resolution, onboarding speed, knowledge transfer effectiveness, incident response times...',
+                successMetricsVal: '1. New team member can deploy payment service within first week, 2. Average incident resolution time reduced by 30%, 3. Zero critical knowledge held by single person, 4. Documentation review/update cycle established',
+                reviewScheduleLabel: 'Review Schedule:',
+                maintenancePlanLabel: 'Maintenance Plan:',
+                phMaintenancePlan: 'How will documentation stay current? Review processes, update triggers, ownership model...',
+                maintenancePlanVal: 'Each document has assigned owner responsible for updates. Quarterly review cycle with team leads. Process changes trigger documentation updates. New team members provide feedback on doc quality during onboarding.',
+                footerText: 'Engineering Documentation Summary Template | Save this file for future reference | Update as tribal knowledge is captured',
+                optCritical: 'Critical',
+                optHigh: 'High',
+                optMedium: 'Medium',
+                optLow: 'Low',
+                optDaily: 'Daily',
+                optWeekly: 'Weekly',
+                optMonthly: 'Monthly',
+                optQuarterly: 'Quarterly',
+                optRarely: 'Rarely',
+                optReviewMonthly: 'Monthly',
+                optReviewQuarterly: 'Quarterly',
+                optReviewBiannual: 'Bi-annually'
+            },
+            zh: {
+                pageTitle: '工程文件摘要範本',
+                mainTitle: '📚 文件摘要範本',
+                descPurposeLabel: '用途：',
+                descPurposeText: '這份範本幫助工程主管系統化地擷取內隱知識，並轉化為結構化、易於取用的文件。用它來找出關鍵知識缺口、排定文件工作的優先順序，並建立可執行的知識保存計畫。',
+                descHowLabel: '使用方式：',
+                descHowText: '訪談團隊成員，找出未記錄的流程與知識，評估其影響與急迫性，接著建立結構化的文件計畫。非常適合用於onboarding準備、知識傳承、降低 bus factor（人員異動）風險。',
+                contextHeading: '📋 文件專案背景',
+                labelTeamProject: '團隊/專案：',
+                phTeamProject: '例如：Platform Engineering Team',
+                labelDocLead: '文件負責人：',
+                phYourName: '你的名字',
+                labelAssessmentDate: '評估日期：',
+                labelScope: '範圍：',
+                phScope: '要記錄的系統、流程或知識領域',
+                labelBusinessDriver: '業務驅動因素：',
+                phBusinessDriver: '團隊擴編、onboarding、知識保存、合規要求',
+                knowledgeHeading: '🧠 內隱知識盤點',
+                knowledgeInstrLabel: '說明：',
+                knowledgeInstrText: '訪談團隊成員，找出只存在於個人腦中的關鍵知識。聚焦在流程、系統特殊行為、故障排除步驟、歷史脈絡，以及沒有被記錄下來的決策理由。',
+                labelKnowledgeHolder: '知識持有人',
+                labelSystemDomain: '系統/領域',
+                labelCurrentGap: '目前的知識缺口',
+                labelBusinessImpact: '若遺失的業務衝擊',
+                labelFrequency: '使用頻率',
+                labelKeyDetails: '需要記錄的關鍵細節',
+                phKnowledgeArea: '知識領域（例如：付款服務部署流程）',
+                phKnowledgeAreaGeneric: '知識領域',
+                phHolderExample: 'Sarah（資深 DevOps）、Mike（備援）',
+                phHolderGeneric: '姓名與角色',
+                phSystemExample: '付款平台、Kubernetes 部署',
+                phSystemGeneric: '哪個系統或領域',
+                phGap: '有哪些具體知識尚未被記錄下來？',
+                phImpact: '如果這份知識無法取得，會發生什麼事？',
+                phKeyDetails: '具體步驟、指令、設定、常見陷阱、歷史脈絡',
+                k1Title: '付款服務部署流程',
+                k1Holder: 'Sarah（資深 DevOps）、Mike（備援）',
+                k1System: '付款平台、Kubernetes 部署',
+                k1Gap: '付款服務部署的手動步驟，包括資料庫遷移順序、feature flag 設定、以及回滾程序。只有 Sarah 知道確切的順序與其中的陷阱。',
+                k1Impact: '因為要摸索流程而延誤 4-8 小時、如果遷移步驟出錯有資料損壞風險、可能造成付款服務中斷、部署失敗。',
+                k1Details: '1. 部署前檢查清單與相依項目，2. 資料庫遷移順序與驗證，3. Feature flag 設定與測試，4. 監控與告警設定，5. 回滾程序與判斷標準，6. 常見問題與故障排除步驟',
+                k2Title: '舊版 API 故障排除',
+                k2Holder: 'Alex（技術主管），從已離職的 John 手上接手',
+                k2System: 'Customer API v1.2，舊版身分驗證流程',
+                k2Gap: '舊版 API 的複雜故障排除情境，包括 token 過期的特殊邊界案例、快取失效順序，以及會導致間歇性 500 錯誤的資料庫連線池問題。',
+                k2Impact: '事件期間延長中斷時間、客服升級案件增加、無法快速debug正式環境問題、潛在的資料完整性問題。',
+                k2Details: '1. 常見錯誤模式與根本原因，2. 診斷查詢與日誌分析技巧，3. 系統架構的特殊行為與相依性，4. 過往事件與解決模式，5. 效能調校參數，6. 外部相依方的聯絡資訊',
+                k3Title: '基礎設施架構決策',
+                k3Holder: 'DevOps 團隊、Maria（首席工程師）',
+                k3System: 'AWS 基礎設施、網路、安全性政策',
+                k3Gap: '某些架構決策當初為何這樣做的歷史脈絡，包括網路拓撲選擇、安全群組設定、以及成本優化策略。目前模式背後的理由沒有被記錄下來。',
+                k3Impact: '基礎設施變更時做出不良決策、潛在的安全漏洞、因設定不理想導致成本增加、重複犯下相同的架構錯誤。',
+                k3Details: '1. 架構決策紀錄（ADR），2. 重大決策的成本效益分析，3. 安全需求與合規考量，4. 效能與擴展限制，5. 整合模式與標準，6. 學到的教訓與應避免的反模式',
+                additionalItemsNote: '[可以複製上方的知識項目區塊來新增其他知識項目]',
+                gapsHeading: '🚨 關鍵知識缺口分析',
+                gapSpofTitle: '單點失效風險',
+                phGapSpof: '只有一個人知道的知識……',
+                gapSpofVal: '只有 Sarah 知道付款部署流程。自從 John 離開後，Alex 是舊版 API 故障排除的唯一專家。',
+                gapHighRiskTitle: '高風險領域',
+                phGapHighRisk: '沒有文件記錄的關鍵流程……',
+                gapHighRiskVal: '正式環境事件應變程序、資料庫復原流程、資安事件處理、客戶資料存取協議。',
+                gapOnboardingTitle: 'Onboarding 阻礙',
+                phGapOnboarding: '新進團隊成員需要的知識……',
+                gapOnboardingVal: '開發環境建置、測試程序、程式碼審查標準、部署工作流程、監控與告警設定。',
+                gapComplianceTitle: '合規與資安',
+                phGapCompliance: '法規或資安相關的關鍵知識……',
+                gapComplianceVal: 'PCI 合規程序、資料保存政策、存取控制管理、稽核軌跡要求、資安事件應變。',
+                checklistHeading: '📝 文件品質檢核清單',
+                checklistIntro: '使用這份檢核清單，確保每個知識領域的文件都夠完整：',
+                cl1Label: '目的明確：',
+                cl1Text: '文件說明了這個流程/系統存在的原因與業務價值',
+                cl2Label: '逐步操作說明：',
+                cl2Text: '不熟悉的人也能照著執行的詳細程序',
+                cl3Label: '前置條件與相依性：',
+                cl3Text: '開始前需要先具備什麼',
+                cl4Label: '範例與截圖：',
+                cl4Text: '用視覺輔助與真實範例釐清複雜步驟',
+                cl5Label: '故障排除指引：',
+                cl5Text: '常見問題與對應的解決方式',
+                cl6Label: '成功標準：',
+                cl6Text: '如何驗證流程正確完成',
+                cl7Label: '歷史脈絡：',
+                cl7Text: '當初為什麼這樣決定，之前試過什麼方法',
+                cl8Label: '負責人與聯絡方式：',
+                cl8Text: '誰在維護這份文件、有問題該找誰',
+                cl9Label: '檢視排程：',
+                cl9Text: '這份文件應該多久檢視/更新一次',
+                actionPlanHeading: '📅 文件行動計畫',
+                thKnowledgeArea: '知識領域',
+                thPriority: '優先順序',
+                thAssignedTo: '指派給',
+                thTargetDate: '目標日期',
+                thDocType: '文件類型',
+                row1Area: '付款服務部署',
+                row1Assigned: 'Sarah + 技術文件撰寫人',
+                row1DocType: 'Runbook、流程指南',
+                row2Area: '舊版 API 故障排除',
+                row2Assigned: 'Alex + Junior 工程師',
+                row2DocType: '故障排除指南、FAQ',
+                row3Area: '基礎設施 ADR',
+                row3Assigned: 'Maria',
+                row3DocType: '架構決策紀錄',
+                phAdditionalArea: '其他知識領域……',
+                phOwner: '負責人',
+                phDocType: '文件類型',
+                templatesHeading: '📑 文件範本',
+                templatesIntro: '依知識類型選擇合適的範本：',
+                tpl1Title: '流程 Runbook',
+                tpl1Desc: '逐步程序、檢核清單、前置條件',
+                tpl2Title: '故障排除指南',
+                tpl2Desc: '常見問題、診斷步驟、解決方式',
+                tpl3Title: '架構決策紀錄',
+                tpl3Desc: '背景脈絡、決策、後果、替代方案',
+                tpl4Title: '系統總覽',
+                tpl4Desc: '架構、元件、資料流、整合',
+                tpl5Title: 'Onboarding 指南',
+                tpl5Desc: '建置說明、第一批任務、重要聯絡人',
+                tpl6Title: 'FAQ 文件',
+                tpl6Desc: '常見問題、快速解答、相關連結',
+                successHeading: '📈 成功指標與檢視',
+                successGoalLabel: '文件目標：',
+                phSuccessGoal: '例如：將onboarding時間從 2 週縮短為 1 週',
+                successMetricsLabel: '成功指標：',
+                phSuccessMetrics: '你要怎麼衡量成功？解決時間、onboarding速度、知識傳承成效、事件應變時間……',
+                successMetricsVal: '1. 新進成員在第一週內就能部署付款服務，2. 平均事件解決時間縮短 30%，3. 沒有任何關鍵知識只由單一個人持有，4. 建立文件檢視/更新週期',
+                reviewScheduleLabel: '檢視排程：',
+                maintenancePlanLabel: '維護計畫：',
+                phMaintenancePlan: '文件要如何保持最新？檢視流程、更新觸發條件、負責制模式……',
+                maintenancePlanVal: '每份文件都有指定負責人負責更新。與team lead進行每季檢視週期。流程變更會觸發文件更新。新進成員在onboarding期間提供文件品質回饋。',
+                footerText: '工程文件摘要範本 | 請將此檔案存檔以供未來使用 | 隨著內隱知識被擷取持續更新',
+                optCritical: '緊急',
+                optHigh: '高',
+                optMedium: '中',
+                optLow: '低',
+                optDaily: '每日',
+                optWeekly: '每週',
+                optMonthly: '每月',
+                optQuarterly: '每季',
+                optRarely: '很少',
+                optReviewMonthly: '每月',
+                optReviewQuarterly: '每季',
+                optReviewBiannual: '每半年'
+            }
+        };
+
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (dict[key] !== undefined) el.textContent = dict[key];
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.dataset.i18nPh;
+                if (dict[key] !== undefined) el.placeholder = dict[key];
+            });
+            document.querySelectorAll('[data-i18n-val]').forEach(el => {
+                const key = el.dataset.i18nVal;
+                if (dict[key] !== undefined) el.value = dict[key];
+            });
+
+            document.querySelectorAll('.opt-critical').forEach(el => el.textContent = dict.optCritical);
+            document.querySelectorAll('.opt-high').forEach(el => el.textContent = dict.optHigh);
+            document.querySelectorAll('.opt-medium').forEach(el => el.textContent = dict.optMedium);
+            document.querySelectorAll('.opt-low').forEach(el => el.textContent = dict.optLow);
+            document.querySelectorAll('.opt-daily').forEach(el => el.textContent = dict.optDaily);
+            document.querySelectorAll('.opt-weekly').forEach(el => el.textContent = dict.optWeekly);
+            document.querySelectorAll('.opt-monthly').forEach(el => el.textContent = dict.optMonthly);
+            document.querySelectorAll('.opt-quarterly').forEach(el => el.textContent = dict.optQuarterly);
+            document.querySelectorAll('.opt-rarely').forEach(el => el.textContent = dict.optRarely);
+            document.querySelectorAll('.opt-review-monthly').forEach(el => el.textContent = dict.optReviewMonthly);
+            document.querySelectorAll('.opt-review-quarterly').forEach(el => el.textContent = dict.optReviewQuarterly);
+            document.querySelectorAll('.opt-review-biannual').forEach(el => el.textContent = dict.optReviewBiannual);
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        window.onload = function() {
+            renderLanguage();
+        };
+    </script>
+</body>
+</html>

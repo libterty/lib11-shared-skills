@@ -28,6 +28,10 @@ docs/
 ├── risk_analysis_template.html        # 專案風險矩陣 + 風險登錄表活文件，支援英文/繁體中文介面與結構化內容複製（公開，追蹤進 git）
 ├── scenario_comparison_template.html  # 2-3 個方案的優缺點/風險/投入比較活文件，支援英文/繁體中文介面與結構化內容複製（公開，追蹤進 git）
 ├── decision_matrix_template.html      # 加權決策矩陣工具，支援英文/繁體中文介面與結構化內容複製（公開，追蹤進 git）
+├── documentation_summary_prompt_generator.html # 產生擷取內隱知識（tribal knowledge）的 AI prompt 工具，支援英文/繁體中文介面與 prompt 產出（公開，追蹤進 git）
+├── documentation_summary_template.html         # 內隱知識盤點/缺口分析/文件行動計畫活文件，支援英文/繁體中文介面（公開，追蹤進 git）
+├── strategic_alignment_template.html  # 把工程專案對應到業務目標的季度策略對齊活文件，支援英文/繁體中文介面（公開，追蹤進 git）
+├── crisis_response_template.html      # 事件/危機應變準備與情境規劃活文件（緊急聯絡人、應變檢核清單、溝通計畫），支援英文/繁體中文介面（公開，追蹤進 git）
 ├── ar/                                 # 實際的 Action Register 內容（.gitignore 排除，只留 .gitkeep）
 ├── raci/                               # 實際的 RACI Matrix 內容（.gitignore 排除，只留 .gitkeep）
 ├── adr/                                 # 實際的 ADR 內容，一個決策一個檔案（.gitignore 排除，只留 .gitkeep）
@@ -88,6 +92,10 @@ cp docs/mn.template.md docs/mn/2026-07-15-weekly.md
 | 針對專案、上線、遷移或營運變更做風險辨識、風險評分與緩解計畫 | 想請 AI 先幫忙發散與整理時，用 `docs/risk_analysis_prompt_generator.html` 產生 prompt；已經要正式追蹤風險時，用 `docs/risk_analysis_template.html` 維護風險矩陣與風險登錄表 |
 | 比較多個工程/產品/流程/投資方案，形成決策建議 | 想請 AI 先做結構化比較時，用 `docs/scenario_comparison_prompt_generator.html`；想手動整理 2-3 個方案的優缺點、風險、投入與建議時，用 `docs/scenario_comparison_template.html` |
 | 用加權分數讓決策取捨更明確 | 用瀏覽器打開 `docs/decision_matrix_template.html`，設定準則權重、替每個方案評 1-5 分，再搭配質化分析決定最後建議；適合供應商選型、架構選型、roadmap 取捨、工具導入等需要留下決策理由的情境 |
+| 把某個人腦中的內隱知識（部署程序、故障排除訣竅、架構決策脈絡）系統化地擷取成 AI 訪談 prompt | 用瀏覽器打開 `docs/documentation_summary_prompt_generator.html`，選知識類型、勾選重點領域與擷取方法後產生 prompt，右上角可切換英文/繁體中文，產出的 prompt 內容也會跟著切換 |
+| 盤點團隊有哪些知識只有單一個人知道（bus factor 風險）、排出文件優先順序與負責人 | 用瀏覽器打開 `docs/documentation_summary_template.html` 填寫知識項目、缺口分析與行動計畫，右上角可切換英文/繁體中文 |
+| 把工程專案對應到公司/業務目標，追蹤策略對齊度、KPI、利害關係人溝通與策略風險 | 用瀏覽器打開 `docs/strategic_alignment_template.html` 填寫，通常每季檢視一次，右上角可切換英文/繁體中文 |
+| 為系統中斷/資安事件/團隊危機等情況預先準備應變計畫（緊急聯絡人、30 分鐘內應變清單、溝通範本、情境分析），或在危機發生當下即時記錄 | 用瀏覽器打開 `docs/crisis_response_template.html`，右上角可切換英文/繁體中文；建議危機發生前就先印出或存成 PDF 備用 |
 
 ### Decision/Risk Analysis 工作台
 
@@ -160,8 +168,8 @@ scenario_comparison_prompt_generator.html
 
 ## 隱私提醒
 
-`docs/1on1/`、`docs/updates/`、`docs/mn/`、`docs/coaching/` 底下的檔案會包含真實姓名、筆記或專案內部資訊，屬於機密/內部資料，跟 `docs/ar/`、`docs/raci/`、`docs/adr/` 一樣被 `.gitignore` 排除，不會被提交進這個公開 repo。`ai_one_on_one_prep_prompt.html`、`team_update_email_prompt.html`、`ai_meeting_summary_template.html`、`ai_coaching_prompt_template.html`、`skill_gap_analysis_template.html`、`ai_career_path_prompt_template.html`、`email_draft_generator.html`、`meeting_agenda_generator.html`、`risk_analysis_prompt_generator.html`、`scenario_comparison_prompt_generator.html` 產生的 prompt 在貼給第三方 AI 工具前，也要先檢查是否包含不該外流的機密資訊。`risk_analysis_template.html`、`scenario_comparison_template.html`、`decision_matrix_template.html` 填寫後也可能包含內部 roadmap、供應商、成本或架構資訊，複製或列印保存時不要放進會被公開提交的位置。
+`docs/1on1/`、`docs/updates/`、`docs/mn/`、`docs/coaching/` 底下的檔案會包含真實姓名、筆記或專案內部資訊，屬於機密/內部資料，跟 `docs/ar/`、`docs/raci/`、`docs/adr/` 一樣被 `.gitignore` 排除，不會被提交進這個公開 repo。`ai_one_on_one_prep_prompt.html`、`team_update_email_prompt.html`、`ai_meeting_summary_template.html`、`ai_coaching_prompt_template.html`、`skill_gap_analysis_template.html`、`ai_career_path_prompt_template.html`、`email_draft_generator.html`、`meeting_agenda_generator.html`、`risk_analysis_prompt_generator.html`、`scenario_comparison_prompt_generator.html`、`documentation_summary_prompt_generator.html` 產生的 prompt 在貼給第三方 AI 工具前，也要先檢查是否包含不該外流的機密資訊。`documentation_summary_template.html` 填寫後可能包含內部系統架構、部署細節、troubleshooting 內部資訊，這兩個文件工具都沒有下載功能，複製或列印保存時不要放進會被公開提交的位置。`risk_analysis_template.html`、`scenario_comparison_template.html`、`decision_matrix_template.html` 填寫後也可能包含內部 roadmap、供應商、成本或架構資訊，複製或列印保存時不要放進會被公開提交的位置。
 
-`coaching_plan_tracker.html`、`skill_gap_analysis_template.html` 填寫後通常會包含真實姓名、技能評分、教練筆記，屬於敏感人事內容——這兩個工具沒有「下載」按鈕，只能列印/存 PDF 或截圖，存檔時不要存進任何會被提交進版控的位置（不論是這個 repo 還是你自己使用的專案 repo）。`career_development_plan_template.html` 有下載按鈕，填寫後的 `.txt` 檔同樣屬於敏感人事內容，只能存進 `docs/coaching/`（已被 `.gitignore` 排除）。
+`coaching_plan_tracker.html`、`skill_gap_analysis_template.html` 填寫後通常會包含真實姓名、技能評分、教練筆記，屬於敏感人事內容——這兩個工具沒有「下載」按鈕，只能列印/存 PDF 或截圖，存檔時不要存進任何會被提交進版控的位置（不論是這個 repo 還是你自己使用的專案 repo）。`strategic_alignment_template.html`、`crisis_response_template.html` 填寫後同樣可能包含利害關係人姓名、緊急聯絡方式、內部系統狀態或業務指標，也沒有下載按鈕，只能列印/存 PDF，存檔時比照辦理。`career_development_plan_template.html` 有下載按鈕，填寫後的 `.txt` 檔同樣屬於敏感人事內容，只能存進 `docs/coaching/`（已被 `.gitignore` 排除）。
 
 `ai_career_path_prompt_template.html` 產生的 prompt 內建一段提醒：AI 給的「晉升準備評估」只是給主管自己參考的建議，不是正式的晉升決定——正式的晉升判斷仍然要走公司自己的 calibration 流程，不能把 AI 輸出直接當成依據。

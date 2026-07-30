@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Strategic Alignment Template - Engineering Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            position: relative;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #2c3e50;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: white;
+            color: #2c3e50;
+            border: 2px solid #2c3e50;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover {
+            background: #ecf0f1;
+        }
+
+        .lang-btn.active {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.4em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .description {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .description h3 {
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            padding: 15px 25px;
+            font-weight: 600;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-content {
+            padding: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+
+        th, td {
+            border: 1px solid #e1e8ed;
+            padding: 14px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .input-field {
+            width: 100%;
+            min-height: 80px;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.2s ease;
+        }
+
+        .input-field:focus {
+            border-color: #74b9ff;
+            outline: none;
+        }
+
+        .input-short {
+            min-height: 40px;
+            padding: 8px 12px;
+        }
+
+        .objective-card {
+            background: #f8f9fa;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #74b9ff;
+        }
+
+        .objective-card h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: #f8f9fa;
+            border: 1px solid #e1e8ed;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .metric-card h4 {
+            color: #2c3e50;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .metric-value {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #74b9ff;
+        }
+
+        .checkbox-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checkbox-list li {
+            margin-bottom: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f2f6;
+        }
+
+        .checkbox-list input[type="checkbox"] {
+            margin-right: 12px;
+            transform: scale(1.3);
+            accent-color: #74b9ff;
+        }
+
+        .timeline-quarter {
+            background: #f8f9fa;
+            border: 1px solid #e1e8ed;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .timeline-quarter h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        select.sel-field {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .section { break-inside: avoid; page-break-inside: avoid; }
+            .lang-switcher { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            .metrics-grid { grid-template-columns: 1fr; }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1 data-i18n="mainTitle">🎯 Strategic Alignment Template</h1>
+            <p class="subtitle"><span data-i18n="headerSubtitle">Engineering Management Artifact | Quarter:</span> <strong>Q<span id="current-quarter"></span> <span id="current-year"></span></strong></p>
+        </div>
+
+        <div class="description">
+            <h3 data-i18n="descHeading">Purpose & Strategic Value</h3>
+            <p data-i18n="descText">This template ensures engineering initiatives directly support business objectives by mapping technical work to organizational goals, tracking alignment metrics, and facilitating strategic communication with stakeholders. Use this to prioritize projects, justify resource allocation, demonstrate business impact, and maintain strategic focus across engineering teams.</p>
+        </div>
+
+        <!-- Business Context -->
+        <div class="section">
+            <div class="section-header">
+                <span>🏢</span> <span data-i18n="secBusinessContext">Business Context & Organizational Objectives</span>
+            </div>
+            <div class="section-content">
+                <div class="objective-card">
+                    <h4 data-i18n="missionCardTitle">Company Mission & Vision Alignment</h4>
+                    <textarea class="input-field" data-i18n-ph="missionCardPh" placeholder="How does your engineering work support the company's core mission and long-term vision? Be specific about the connection between technical initiatives and business purpose."></textarea>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="thBusinessObjective">Business Objective</th>
+                            <th data-i18n="thSuccessMetrics">Success Metrics</th>
+                            <th data-i18n="thTimeline">Timeline</th>
+                            <th data-i18n="thEngContribution">Engineering Contribution</th>
+                            <th data-i18n="thPriorityLevel">Priority Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><textarea class="input-field input-short" data-i18n-ph="bizObj1" placeholder="e.g., Increase market share by 15%"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="bizMetric1" placeholder="e.g., +15% new customers, +$2M ARR"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="bizTimeline1" placeholder="e.g., Q1-Q3 2025"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="bizContrib1" placeholder="e.g., Platform scalability, new features"></textarea></td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-critical">Critical</option>
+                                    <option class="opt-high">High</option>
+                                    <option class="opt-medium">Medium</option>
+                                    <option class="opt-low">Low</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><textarea class="input-field input-short" data-i18n-ph="bizObj2" placeholder="e.g., Improve operational efficiency"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="bizMetric2" placeholder="e.g., -30% manual processes, +25% team productivity"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="bizTimeline2" placeholder="e.g., Ongoing through 2025"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="bizContrib2" placeholder="e.g., Automation tools, CI/CD improvements"></textarea></td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-critical">Critical</option>
+                                    <option class="opt-high">High</option>
+                                    <option class="opt-medium">Medium</option>
+                                    <option class="opt-low">Low</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><textarea class="input-field input-short" data-i18n-ph="bizObj3" placeholder="e.g., Expand into new markets"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="bizMetric3" placeholder="e.g., 3 new geographic regions, compliance achieved"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="bizTimeline3" placeholder="e.g., Q2-Q4 2025"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="bizContrib3" placeholder="e.g., Internationalization, security compliance"></textarea></td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-critical">Critical</option>
+                                    <option class="opt-high">High</option>
+                                    <option class="opt-medium">Medium</option>
+                                    <option class="opt-low">Low</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Engineering Initiatives -->
+        <div class="section">
+            <div class="section-header">
+                <span>⚙️</span> <span data-i18n="secEngInitiatives">Engineering Initiatives & Strategic Mapping</span>
+            </div>
+            <div class="section-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="thEngInitiative">Engineering Initiative</th>
+                            <th data-i18n="thObjSupported">Business Objective Supported</th>
+                            <th data-i18n="thExpectedImpact">Expected Business Impact</th>
+                            <th data-i18n="thResourceInvestment">Resource Investment</th>
+                            <th data-i18n="thAlignmentScore">Alignment Score</th>
+                            <th data-i18n="thRiskLevel">Risk Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><textarea class="input-field input-short" data-i18n-ph="init1Name" placeholder="e.g., Microservices Migration"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="init1Obj" placeholder="e.g., Platform Scalability"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="init1Impact" placeholder="e.g., Support 10x user growth, reduce downtime by 90%"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="init1Resource" placeholder="e.g., 4 engineers, 6 months"></textarea></td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-align-high">High (9-10)</option>
+                                    <option class="opt-align-medium">Medium (6-8)</option>
+                                    <option class="opt-align-low">Low (1-5)</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-low">Low</option>
+                                    <option class="opt-medium">Medium</option>
+                                    <option class="opt-high">High</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><textarea class="input-field input-short" data-i18n-ph="init2Name" placeholder="e.g., ML-Powered Recommendations"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="init2Obj" placeholder="e.g., Increase Customer Engagement"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="init2Impact" placeholder="e.g., +20% user engagement, +15% retention"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="init2Resource" placeholder="e.g., 3 engineers, 4 months"></textarea></td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-align-high">High (9-10)</option>
+                                    <option class="opt-align-medium">Medium (6-8)</option>
+                                    <option class="opt-align-low">Low (1-5)</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-low">Low</option>
+                                    <option class="opt-medium">Medium</option>
+                                    <option class="opt-high">High</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><textarea class="input-field input-short" data-i18n-ph="init3Name" placeholder="e.g., Security Infrastructure Upgrade"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="init3Obj" placeholder="e.g., Compliance & Risk Reduction"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="init3Impact" placeholder="e.g., SOC2 compliance, zero security incidents"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="init3Resource" placeholder="e.g., 2 engineers, 3 months"></textarea></td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-align-high">High (9-10)</option>
+                                    <option class="opt-align-medium">Medium (6-8)</option>
+                                    <option class="opt-align-low">Low (1-5)</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-low">Low</option>
+                                    <option class="opt-medium">Medium</option>
+                                    <option class="opt-high">High</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Success Metrics -->
+        <div class="section">
+            <div class="section-header">
+                <span>📊</span> <span data-i18n="secSuccessMetrics">Success Metrics & KPI Tracking</span>
+            </div>
+            <div class="section-content">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h4 data-i18n="metricBizImpact">Business Impact Score</h4>
+                        <div class="metric-value">___ / 10</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4 data-i18n="metricAlignmentPct">Strategic Alignment %</h4>
+                        <div class="metric-value">___%</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4 data-i18n="metricResourceUtil">Resource Utilization</h4>
+                        <div class="metric-value">___%</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4 data-i18n="metricDeliveryConf">Delivery Confidence</h4>
+                        <div class="metric-value">___ / 10</div>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="thKeyResultArea">Key Result Area</th>
+                            <th data-i18n="thLeadingIndicators">Leading Indicators</th>
+                            <th data-i18n="thLaggingIndicators">Lagging Indicators</th>
+                            <th data-i18n="thCurrentStatus">Current Status</th>
+                            <th data-i18n="thTarget">Target</th>
+                            <th data-i18n="thOwner">Owner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-i18n="kraPlatform">Platform Performance</td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="kra1Leading" placeholder="e.g., Code deployment frequency, test coverage"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="kra1Lagging" placeholder="e.g., System uptime, page load times"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="kra1Current" placeholder="e.g., 99.5% uptime, 2.1s avg load time"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="kra1Target" placeholder="e.g., 99.9% uptime, <1.5s load time"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="kra1Owner" placeholder="e.g., Platform Team Lead"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="kraFeature">Feature Delivery</td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="kra2Leading" placeholder="e.g., Sprint velocity, story completion rate"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="kra2Lagging" placeholder="e.g., Time-to-market, customer adoption rates"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="kra2Current" placeholder="e.g., 85% stories completed, 3-week avg delivery"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="kra2Target" placeholder="e.g., 95% completion, 2-week delivery"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="kra2Owner" placeholder="e.g., Product Engineering Lead"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="kraCustomer">Customer Satisfaction</td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="kra3Leading" placeholder="e.g., Support ticket volume, bug reports"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="kra3Lagging" placeholder="e.g., NPS scores, churn rate"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="kra3Current" placeholder="e.g., NPS 42, 3% monthly churn"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="kra3Target" placeholder="e.g., NPS >50, <2% churn"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="kra3Owner" placeholder="e.g., Customer Success Engineer"></textarea></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Stakeholder Alignment -->
+        <div class="section">
+            <div class="section-header">
+                <span>🤝</span> <span data-i18n="secStakeholderAlignment">Stakeholder Alignment & Communication</span>
+            </div>
+            <div class="section-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="thStakeholder">Stakeholder</th>
+                            <th data-i18n="thRoleDept">Role/Department</th>
+                            <th data-i18n="thPrimaryInterests">Primary Interests</th>
+                            <th data-i18n="thCommFrequency">Communication Frequency</th>
+                            <th data-i18n="thPreferredUpdates">Preferred Updates</th>
+                            <th data-i18n="thAlignmentStatus">Alignment Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="input-field input-short" data-i18n-ph="stk1Name" placeholder="e.g., Sarah Chen (CPO)"></td>
+                            <td data-i18n="stk1Role">Chief Product Officer</td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="stk1Interests" placeholder="Feature roadmap, time-to-market, user impact"></textarea></td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-weekly">Weekly</option>
+                                    <option class="opt-biweekly">Bi-weekly</option>
+                                    <option class="opt-monthly">Monthly</option>
+                                    <option class="opt-quarterly">Quarterly</option>
+                                </select>
+                            </td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="stk1Updates" placeholder="e.g., Dashboard metrics, milestone reports"></textarea></td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-fully-aligned">Fully Aligned</option>
+                                    <option class="opt-mostly-aligned">Mostly Aligned</option>
+                                    <option class="opt-partially-aligned">Partially Aligned</option>
+                                    <option class="opt-needs-alignment">Needs Alignment</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="input-field input-short" data-i18n-ph="stk2Name" placeholder="e.g., Mike Rodriguez (CFO)"></td>
+                            <td data-i18n="stk2Role">Chief Financial Officer</td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="stk2Interests" placeholder="Budget efficiency, ROI, cost optimization"></textarea></td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-weekly">Weekly</option>
+                                    <option class="opt-biweekly">Bi-weekly</option>
+                                    <option class="opt-monthly">Monthly</option>
+                                    <option class="opt-quarterly">Quarterly</option>
+                                </select>
+                            </td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="stk2Updates" placeholder="e.g., Budget reports, cost-benefit analysis"></textarea></td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-fully-aligned">Fully Aligned</option>
+                                    <option class="opt-mostly-aligned">Mostly Aligned</option>
+                                    <option class="opt-partially-aligned">Partially Aligned</option>
+                                    <option class="opt-needs-alignment">Needs Alignment</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="input-field input-short" data-i18n-ph="stk3Name" placeholder="e.g., Lisa Park (Head of Sales)"></td>
+                            <td data-i18n="stk3Role">Head of Sales</td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="stk3Interests" placeholder="Feature requests, customer feedback, competitive advantage"></textarea></td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-weekly">Weekly</option>
+                                    <option class="opt-biweekly">Bi-weekly</option>
+                                    <option class="opt-monthly">Monthly</option>
+                                    <option class="opt-quarterly">Quarterly</option>
+                                </select>
+                            </td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="stk3Updates" placeholder="e.g., Feature demos, customer impact stories"></textarea></td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-fully-aligned">Fully Aligned</option>
+                                    <option class="opt-mostly-aligned">Mostly Aligned</option>
+                                    <option class="opt-partially-aligned">Partially Aligned</option>
+                                    <option class="opt-needs-alignment">Needs Alignment</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Strategic Timeline -->
+        <div class="section">
+            <div class="section-header">
+                <span>🗓️</span> <span data-i18n="secTimeline">Strategic Timeline & Milestones</span>
+            </div>
+            <div class="section-content">
+                <div class="timeline-quarter">
+                    <h4 data-i18n="tlQ1Title">Q1 2025 - Foundation & Planning</h4>
+                    <textarea class="input-field" data-i18n-ph="tlQ1Ph" placeholder="Major initiatives, key milestones, expected deliverables, and strategic objectives for this quarter..."></textarea>
+                </div>
+
+                <div class="timeline-quarter">
+                    <h4 data-i18n="tlQ2Title">Q2 2025 - Build & Execute</h4>
+                    <textarea class="input-field" data-i18n-ph="tlQ2Ph" placeholder="Development focus, critical features, infrastructure improvements, and business impact goals..."></textarea>
+                </div>
+
+                <div class="timeline-quarter">
+                    <h4 data-i18n="tlQ3Title">Q3 2025 - Scale & Optimize</h4>
+                    <textarea class="input-field" data-i18n-ph="tlQ3Ph" placeholder="Scaling efforts, performance optimization, market expansion support, operational excellence..."></textarea>
+                </div>
+
+                <div class="timeline-quarter">
+                    <h4 data-i18n="tlQ4Title">Q4 2025 - Innovate & Prepare</h4>
+                    <textarea class="input-field" data-i18n-ph="tlQ4Ph" placeholder="Innovation projects, next-year preparation, strategic positioning, competitive advantages..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk Assessment -->
+        <div class="section">
+            <div class="section-header">
+                <span>⚠️</span> <span data-i18n="secRiskAssessment">Strategic Risk Assessment</span>
+            </div>
+            <div class="section-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="thRiskCategory">Risk Category</th>
+                            <th data-i18n="thSpecificRisk">Specific Risk</th>
+                            <th data-i18n="thImpactOnGoals">Impact on Strategic Goals</th>
+                            <th data-i18n="thProbability">Probability</th>
+                            <th data-i18n="thMitigation">Mitigation Strategy</th>
+                            <th data-i18n="thOwner2">Owner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-i18n="riskCatTechnical">Technical</td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="risk1Specific" placeholder="e.g., Legacy system scalability limits"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="risk1Impact" placeholder="e.g., Cannot support 10x user growth target"></textarea></td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-prob-high">High (70-90%)</option>
+                                    <option class="opt-prob-medium">Medium (30-70%)</option>
+                                    <option class="opt-prob-low">Low (&lt;30%)</option>
+                                </select>
+                            </td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="risk1Mitigation" placeholder="e.g., Accelerate microservices migration timeline"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="risk1Owner" placeholder="e.g., Platform Team"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="riskCatResource">Resource</td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="risk2Specific" placeholder="e.g., Key talent retention challenges"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="risk2Impact" placeholder="e.g., Delays in critical feature development"></textarea></td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-prob-high">High (70-90%)</option>
+                                    <option class="opt-prob-medium">Medium (30-70%)</option>
+                                    <option class="opt-prob-low">Low (&lt;30%)</option>
+                                </select>
+                            </td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="risk2Mitigation" placeholder="e.g., Enhanced compensation, knowledge documentation"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="risk2Owner" placeholder="e.g., Engineering Manager"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="riskCatMarket">Market</td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="risk3Specific" placeholder="e.g., Competitive pressure on time-to-market"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="risk3Impact" placeholder="e.g., Loss of competitive advantage"></textarea></td>
+                            <td>
+                                <select class="sel-field">
+                                    <option class="opt-prob-high">High (70-90%)</option>
+                                    <option class="opt-prob-medium">Medium (30-70%)</option>
+                                    <option class="opt-prob-low">Low (&lt;30%)</option>
+                                </select>
+                            </td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="risk3Mitigation" placeholder="e.g., Parallel development streams, MVP approach"></textarea></td>
+                            <td><textarea class="input-field input-short" data-i18n-ph="risk3Owner" placeholder="e.g., Product Engineering"></textarea></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Action Items -->
+        <div class="section">
+            <div class="section-header">
+                <span>✅</span> <span data-i18n="secActionItems">Strategic Action Items & Next Steps</span>
+            </div>
+            <div class="section-content">
+                <ul class="checkbox-list">
+                    <li><input type="checkbox"> <span data-i18n="ai1">Schedule quarterly strategic alignment review with all stakeholders</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ai2">Establish regular business impact reporting cadence</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ai3">Create engineering-to-business impact dashboard</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ai4">Identify and document key strategic dependencies</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ai5">Align engineering OKRs with business objectives</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ai6">Develop communication templates for different stakeholder groups</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ai7">Schedule cross-functional strategic planning sessions</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ai8">Implement tracking mechanisms for alignment metrics</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ai9">Create escalation procedures for strategic misalignment</span></li>
+                    <li><input type="checkbox"> <span data-i18n="ai10">Document lessons learned and strategic insights</span></li>
+                </ul>
+
+                <h4 style="margin-top: 25px; color: #2c3e50;" data-i18n="reviewScheduleHeading">Strategic Review Schedule:</h4>
+                <table style="margin-top: 10px;">
+                    <tr>
+                        <td><strong data-i18n="nextReviewLabel">Next Strategic Review:</strong></td>
+                        <td><input type="date" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;"></td>
+                    </tr>
+                    <tr>
+                        <td><strong data-i18n="quarterlyPlanningLabel">Quarterly Planning Session:</strong></td>
+                        <td><input type="date" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;"></td>
+                    </tr>
+                    <tr>
+                        <td><strong data-i18n="stakeholderCheckLabel">Stakeholder Alignment Check:</strong></td>
+                        <td><input type="date" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;"></td>
+                    </tr>
+                    <tr>
+                        <td><strong data-i18n="metricsReviewLabel">Metrics Review Meeting:</strong></td>
+                        <td><input type="date" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Strategic Notes -->
+        <div class="section">
+            <div class="section-header">
+                <span>📝</span> <span data-i18n="secNotes">Strategic Insights & Lessons Learned</span>
+            </div>
+            <div class="section-content">
+                <textarea class="input-field" style="min-height: 120px;" data-i18n-ph="notesPh" placeholder="Document key insights from strategic alignment activities, lessons learned from stakeholder interactions, emerging strategic opportunities, and recommendations for improving the alignment process..."></textarea>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e1e8ed; color: #7f8c8d;">
+            <p><em data-i18n="footerVersion">Strategic Alignment Template v1.0 | Engineering Management Artifact</em></p>
+            <p>🎯 <strong data-i18n="footerSuccessLabel">Success Factor:</strong> <span data-i18n="footerSuccessText">Consistent use and regular review ensure sustained strategic alignment</span></p>
+        </div>
+    </div>
+
+    <script>
+        const I18N = {
+            en: {
+                pageTitle: 'Strategic Alignment Template - Engineering Management',
+                mainTitle: '🎯 Strategic Alignment Template',
+                headerSubtitle: 'Engineering Management Artifact | Quarter:',
+                descHeading: 'Purpose & Strategic Value',
+                descText: 'This template ensures engineering initiatives directly support business objectives by mapping technical work to organizational goals, tracking alignment metrics, and facilitating strategic communication with stakeholders. Use this to prioritize projects, justify resource allocation, demonstrate business impact, and maintain strategic focus across engineering teams.',
+                secBusinessContext: 'Business Context & Organizational Objectives',
+                missionCardTitle: 'Company Mission & Vision Alignment',
+                missionCardPh: "How does your engineering work support the company's core mission and long-term vision? Be specific about the connection between technical initiatives and business purpose.",
+                thBusinessObjective: 'Business Objective',
+                thSuccessMetrics: 'Success Metrics',
+                thTimeline: 'Timeline',
+                thEngContribution: 'Engineering Contribution',
+                thPriorityLevel: 'Priority Level',
+                bizObj1: 'e.g., Increase market share by 15%',
+                bizMetric1: 'e.g., +15% new customers, +$2M ARR',
+                bizTimeline1: 'e.g., Q1-Q3 2025',
+                bizContrib1: 'e.g., Platform scalability, new features',
+                bizObj2: 'e.g., Improve operational efficiency',
+                bizMetric2: 'e.g., -30% manual processes, +25% team productivity',
+                bizTimeline2: 'e.g., Ongoing through 2025',
+                bizContrib2: 'e.g., Automation tools, CI/CD improvements',
+                bizObj3: 'e.g., Expand into new markets',
+                bizMetric3: 'e.g., 3 new geographic regions, compliance achieved',
+                bizTimeline3: 'e.g., Q2-Q4 2025',
+                bizContrib3: 'e.g., Internationalization, security compliance',
+                secEngInitiatives: 'Engineering Initiatives & Strategic Mapping',
+                thEngInitiative: 'Engineering Initiative',
+                thObjSupported: 'Business Objective Supported',
+                thExpectedImpact: 'Expected Business Impact',
+                thResourceInvestment: 'Resource Investment',
+                thAlignmentScore: 'Alignment Score',
+                thRiskLevel: 'Risk Level',
+                init1Name: 'e.g., Microservices Migration',
+                init1Obj: 'e.g., Platform Scalability',
+                init1Impact: 'e.g., Support 10x user growth, reduce downtime by 90%',
+                init1Resource: 'e.g., 4 engineers, 6 months',
+                init2Name: 'e.g., ML-Powered Recommendations',
+                init2Obj: 'e.g., Increase Customer Engagement',
+                init2Impact: 'e.g., +20% user engagement, +15% retention',
+                init2Resource: 'e.g., 3 engineers, 4 months',
+                init3Name: 'e.g., Security Infrastructure Upgrade',
+                init3Obj: 'e.g., Compliance & Risk Reduction',
+                init3Impact: 'e.g., SOC2 compliance, zero security incidents',
+                init3Resource: 'e.g., 2 engineers, 3 months',
+                secSuccessMetrics: 'Success Metrics & KPI Tracking',
+                metricBizImpact: 'Business Impact Score',
+                metricAlignmentPct: 'Strategic Alignment %',
+                metricResourceUtil: 'Resource Utilization',
+                metricDeliveryConf: 'Delivery Confidence',
+                thKeyResultArea: 'Key Result Area',
+                thLeadingIndicators: 'Leading Indicators',
+                thLaggingIndicators: 'Lagging Indicators',
+                thCurrentStatus: 'Current Status',
+                thTarget: 'Target',
+                thOwner: 'Owner',
+                kraPlatform: 'Platform Performance',
+                kra1Leading: 'e.g., Code deployment frequency, test coverage',
+                kra1Lagging: 'e.g., System uptime, page load times',
+                kra1Current: 'e.g., 99.5% uptime, 2.1s avg load time',
+                kra1Target: 'e.g., 99.9% uptime, <1.5s load time',
+                kra1Owner: 'e.g., Platform Team Lead',
+                kraFeature: 'Feature Delivery',
+                kra2Leading: 'e.g., Sprint velocity, story completion rate',
+                kra2Lagging: 'e.g., Time-to-market, customer adoption rates',
+                kra2Current: 'e.g., 85% stories completed, 3-week avg delivery',
+                kra2Target: 'e.g., 95% completion, 2-week delivery',
+                kra2Owner: 'e.g., Product Engineering Lead',
+                kraCustomer: 'Customer Satisfaction',
+                kra3Leading: 'e.g., Support ticket volume, bug reports',
+                kra3Lagging: 'e.g., NPS scores, churn rate',
+                kra3Current: 'e.g., NPS 42, 3% monthly churn',
+                kra3Target: 'e.g., NPS >50, <2% churn',
+                kra3Owner: 'e.g., Customer Success Engineer',
+                secStakeholderAlignment: 'Stakeholder Alignment & Communication',
+                thStakeholder: 'Stakeholder',
+                thRoleDept: 'Role/Department',
+                thPrimaryInterests: 'Primary Interests',
+                thCommFrequency: 'Communication Frequency',
+                thPreferredUpdates: 'Preferred Updates',
+                thAlignmentStatus: 'Alignment Status',
+                stk1Name: 'e.g., Sarah Chen (CPO)',
+                stk1Role: 'Chief Product Officer',
+                stk1Interests: 'Feature roadmap, time-to-market, user impact',
+                stk1Updates: 'e.g., Dashboard metrics, milestone reports',
+                stk2Name: 'e.g., Mike Rodriguez (CFO)',
+                stk2Role: 'Chief Financial Officer',
+                stk2Interests: 'Budget efficiency, ROI, cost optimization',
+                stk2Updates: 'e.g., Budget reports, cost-benefit analysis',
+                stk3Name: 'e.g., Lisa Park (Head of Sales)',
+                stk3Role: 'Head of Sales',
+                stk3Interests: 'Feature requests, customer feedback, competitive advantage',
+                stk3Updates: 'e.g., Feature demos, customer impact stories',
+                secTimeline: 'Strategic Timeline & Milestones',
+                tlQ1Title: 'Q1 2025 - Foundation & Planning',
+                tlQ1Ph: 'Major initiatives, key milestones, expected deliverables, and strategic objectives for this quarter...',
+                tlQ2Title: 'Q2 2025 - Build & Execute',
+                tlQ2Ph: 'Development focus, critical features, infrastructure improvements, and business impact goals...',
+                tlQ3Title: 'Q3 2025 - Scale & Optimize',
+                tlQ3Ph: 'Scaling efforts, performance optimization, market expansion support, operational excellence...',
+                tlQ4Title: 'Q4 2025 - Innovate & Prepare',
+                tlQ4Ph: 'Innovation projects, next-year preparation, strategic positioning, competitive advantages...',
+                secRiskAssessment: 'Strategic Risk Assessment',
+                thRiskCategory: 'Risk Category',
+                thSpecificRisk: 'Specific Risk',
+                thImpactOnGoals: 'Impact on Strategic Goals',
+                thProbability: 'Probability',
+                thMitigation: 'Mitigation Strategy',
+                thOwner2: 'Owner',
+                riskCatTechnical: 'Technical',
+                risk1Specific: 'e.g., Legacy system scalability limits',
+                risk1Impact: 'e.g., Cannot support 10x user growth target',
+                risk1Mitigation: 'e.g., Accelerate microservices migration timeline',
+                risk1Owner: 'e.g., Platform Team',
+                riskCatResource: 'Resource',
+                risk2Specific: 'e.g., Key talent retention challenges',
+                risk2Impact: 'e.g., Delays in critical feature development',
+                risk2Mitigation: 'e.g., Enhanced compensation, knowledge documentation',
+                risk2Owner: 'e.g., Engineering Manager',
+                riskCatMarket: 'Market',
+                risk3Specific: 'e.g., Competitive pressure on time-to-market',
+                risk3Impact: 'e.g., Loss of competitive advantage',
+                risk3Mitigation: 'e.g., Parallel development streams, MVP approach',
+                risk3Owner: 'e.g., Product Engineering',
+                secActionItems: 'Strategic Action Items & Next Steps',
+                ai1: 'Schedule quarterly strategic alignment review with all stakeholders',
+                ai2: 'Establish regular business impact reporting cadence',
+                ai3: 'Create engineering-to-business impact dashboard',
+                ai4: 'Identify and document key strategic dependencies',
+                ai5: 'Align engineering OKRs with business objectives',
+                ai6: 'Develop communication templates for different stakeholder groups',
+                ai7: 'Schedule cross-functional strategic planning sessions',
+                ai8: 'Implement tracking mechanisms for alignment metrics',
+                ai9: 'Create escalation procedures for strategic misalignment',
+                ai10: 'Document lessons learned and strategic insights',
+                reviewScheduleHeading: 'Strategic Review Schedule:',
+                nextReviewLabel: 'Next Strategic Review:',
+                quarterlyPlanningLabel: 'Quarterly Planning Session:',
+                stakeholderCheckLabel: 'Stakeholder Alignment Check:',
+                metricsReviewLabel: 'Metrics Review Meeting:',
+                secNotes: 'Strategic Insights & Lessons Learned',
+                notesPh: 'Document key insights from strategic alignment activities, lessons learned from stakeholder interactions, emerging strategic opportunities, and recommendations for improving the alignment process...',
+                footerVersion: 'Strategic Alignment Template v1.0 | Engineering Management Artifact',
+                footerSuccessLabel: 'Success Factor:',
+                footerSuccessText: 'Consistent use and regular review ensure sustained strategic alignment',
+                optCritical: 'Critical', optHigh: 'High', optMedium: 'Medium', optLow: 'Low',
+                optAlignHigh: 'High (9-10)', optAlignMedium: 'Medium (6-8)', optAlignLow: 'Low (1-5)',
+                optWeekly: 'Weekly', optBiweekly: 'Bi-weekly', optMonthly: 'Monthly', optQuarterly: 'Quarterly',
+                optFullyAligned: 'Fully Aligned', optMostlyAligned: 'Mostly Aligned', optPartiallyAligned: 'Partially Aligned', optNeedsAlignment: 'Needs Alignment',
+                optProbHigh: 'High (70-90%)', optProbMedium: 'Medium (30-70%)', optProbLow: 'Low (<30%)'
+            },
+            zh: {
+                pageTitle: '策略對齊範本 - 工程管理',
+                mainTitle: '🎯 策略對齊範本',
+                headerSubtitle: '工程管理文件 | 季度：',
+                descHeading: '目的與策略價值',
+                descText: '這份範本透過把技術工作對應到組織目標、追蹤對齊指標、促進與利害關係人的策略溝通，確保工程專案直接支持業務目標。用它來排定專案優先順序、佐證資源配置的理由、展示業務影響，並維持工程團隊的策略聚焦。',
+                secBusinessContext: '業務背景與組織目標',
+                missionCardTitle: '公司使命與願景對齊',
+                missionCardPh: '你的工程工作如何支持公司的核心使命與長期願景？請具體說明技術專案與業務目的之間的連結。',
+                thBusinessObjective: '業務目標',
+                thSuccessMetrics: '成功指標',
+                thTimeline: '時程',
+                thEngContribution: '工程貢獻',
+                thPriorityLevel: '優先等級',
+                bizObj1: '例如：市佔率提升 15%',
+                bizMetric1: '例如：新增 15% 客戶、+$200 萬 ARR',
+                bizTimeline1: '例如：2025 年 Q1-Q3',
+                bizContrib1: '例如：平台可擴展性、新功能',
+                bizObj2: '例如：提升營運效率',
+                bizMetric2: '例如：手動流程減少 30%、團隊生產力提升 25%',
+                bizTimeline2: '例如：2025 年全年持續',
+                bizContrib2: '例如：自動化工具、CI/CD 改善',
+                bizObj3: '例如：拓展新市場',
+                bizMetric3: '例如：3 個新地理區域、達成合規要求',
+                bizTimeline3: '例如：2025 年 Q2-Q4',
+                bizContrib3: '例如：國際化、資安合規',
+                secEngInitiatives: '工程專案與策略對應',
+                thEngInitiative: '工程專案',
+                thObjSupported: '對應的業務目標',
+                thExpectedImpact: '預期業務影響',
+                thResourceInvestment: '資源投入',
+                thAlignmentScore: '對齊分數',
+                thRiskLevel: '風險等級',
+                init1Name: '例如：微服務遷移',
+                init1Obj: '例如：平台可擴展性',
+                init1Impact: '例如：支撐 10 倍用戶成長、降低 90% 停機時間',
+                init1Resource: '例如：4 位工程師、6 個月',
+                init2Name: '例如：機器學習推薦系統',
+                init2Obj: '例如：提升客戶互動',
+                init2Impact: '例如：用戶互動 +20%、留存率 +15%',
+                init2Resource: '例如：3 位工程師、4 個月',
+                init3Name: '例如：資安基礎設施升級',
+                init3Obj: '例如：合規與風險降低',
+                init3Impact: '例如：達成 SOC2 合規、零資安事件',
+                init3Resource: '例如：2 位工程師、3 個月',
+                secSuccessMetrics: '成功指標與 KPI 追蹤',
+                metricBizImpact: '業務影響分數',
+                metricAlignmentPct: '策略對齊百分比',
+                metricResourceUtil: '資源使用率',
+                metricDeliveryConf: '交付信心',
+                thKeyResultArea: '關鍵成果領域',
+                thLeadingIndicators: '領先指標',
+                thLaggingIndicators: '落後指標',
+                thCurrentStatus: '目前狀態',
+                thTarget: '目標',
+                thOwner: '負責人',
+                kraPlatform: '平台效能',
+                kra1Leading: '例如：部署頻率、測試覆蓋率',
+                kra1Lagging: '例如：系統正常運作時間、頁面載入時間',
+                kra1Current: '例如：99.5% 正常運作時間、平均載入 2.1 秒',
+                kra1Target: '例如：99.9% 正常運作時間、載入 <1.5 秒',
+                kra1Owner: '例如：平台團隊 Lead',
+                kraFeature: '功能交付',
+                kra2Leading: '例如：Sprint velocity、故事完成率',
+                kra2Lagging: '例如：上市時間、客戶採用率',
+                kra2Current: '例如：85% 故事完成、平均交付 3 週',
+                kra2Target: '例如：95% 完成率、交付 2 週',
+                kra2Owner: '例如：產品工程 Lead',
+                kraCustomer: '客戶滿意度',
+                kra3Leading: '例如：支援工單量、bug 回報數',
+                kra3Lagging: '例如：NPS 分數、流失率',
+                kra3Current: '例如：NPS 42、每月流失率 3%',
+                kra3Target: '例如：NPS >50、流失率 <2%',
+                kra3Owner: '例如：客戶成功工程師',
+                secStakeholderAlignment: '利害關係人對齊與溝通',
+                thStakeholder: '利害關係人',
+                thRoleDept: '角色/部門',
+                thPrimaryInterests: '主要關注點',
+                thCommFrequency: '溝通頻率',
+                thPreferredUpdates: '偏好的更新方式',
+                thAlignmentStatus: '對齊狀態',
+                stk1Name: '例如：陳雅婷（CPO）',
+                stk1Role: '產品長',
+                stk1Interests: '功能藍圖、上市時間、使用者影響',
+                stk1Updates: '例如：儀表板指標、里程碑報告',
+                stk2Name: '例如：林志明（CFO）',
+                stk2Role: '財務長',
+                stk2Interests: '預算效率、投資報酬率、成本優化',
+                stk2Updates: '例如：預算報告、成本效益分析',
+                stk3Name: '例如：王美玲（業務主管）',
+                stk3Role: '業務主管',
+                stk3Interests: '功能需求、客戶回饋、競爭優勢',
+                stk3Updates: '例如：功能展示、客戶影響案例',
+                secTimeline: '策略時程與里程碑',
+                tlQ1Title: '2025 Q1 — 基礎建設與規劃',
+                tlQ1Ph: '本季主要專案、關鍵里程碑、預期交付物與策略目標……',
+                tlQ2Title: '2025 Q2 — 建置與執行',
+                tlQ2Ph: '開發重點、關鍵功能、基礎設施改善、業務影響目標……',
+                tlQ3Title: '2025 Q3 — 擴展與優化',
+                tlQ3Ph: '擴展工作、效能優化、市場拓展支援、營運卓越……',
+                tlQ4Title: '2025 Q4 — 創新與備戰',
+                tlQ4Ph: '創新專案、次年準備工作、策略定位、競爭優勢……',
+                secRiskAssessment: '策略風險評估',
+                thRiskCategory: '風險類別',
+                thSpecificRisk: '具體風險',
+                thImpactOnGoals: '對策略目標的影響',
+                thProbability: '發生機率',
+                thMitigation: '緩解策略',
+                thOwner2: '負責人',
+                riskCatTechnical: '技術',
+                risk1Specific: '例如：舊系統擴展性限制',
+                risk1Impact: '例如：無法支撐 10 倍用戶成長目標',
+                risk1Mitigation: '例如：加速微服務遷移時程',
+                risk1Owner: '例如：平台團隊',
+                riskCatResource: '人力資源',
+                risk2Specific: '例如：關鍵人才留任挑戰',
+                risk2Impact: '例如：關鍵功能開發延誤',
+                risk2Mitigation: '例如：提升薪酬待遇、補齊知識文件',
+                risk2Owner: '例如：工程主管',
+                riskCatMarket: '市場',
+                risk3Specific: '例如：上市時間的競爭壓力',
+                risk3Impact: '例如：喪失競爭優勢',
+                risk3Mitigation: '例如：並行開發、採用 MVP 做法',
+                risk3Owner: '例如：產品工程團隊',
+                secActionItems: '策略行動項目與後續步驟',
+                ai1: '安排與所有利害關係人的季度策略對齊檢視會議',
+                ai2: '建立定期的業務影響回報頻率',
+                ai3: '建立工程對業務影響的儀表板',
+                ai4: '找出並記錄關鍵策略相依項目',
+                ai5: '讓工程 OKR 與業務目標對齊',
+                ai6: '為不同利害關係人族群制定溝通範本',
+                ai7: '安排跨職能策略規劃會議',
+                ai8: '建立對齊指標的追蹤機制',
+                ai9: '建立策略失準時的升級處理程序',
+                ai10: '記錄學到的教訓與策略洞察',
+                reviewScheduleHeading: '策略檢視排程：',
+                nextReviewLabel: '下次策略檢視：',
+                quarterlyPlanningLabel: '季度規劃會議：',
+                stakeholderCheckLabel: '利害關係人對齊檢查：',
+                metricsReviewLabel: '指標檢視會議：',
+                secNotes: '策略洞察與經驗學習',
+                notesPh: '記錄策略對齊活動中的關鍵洞察、與利害關係人互動中學到的教訓、新浮現的策略機會，以及改善對齊流程的建議……',
+                footerVersion: '策略對齊範本 v1.0 | 工程管理文件',
+                footerSuccessLabel: '成功關鍵：',
+                footerSuccessText: '持續使用並定期檢視，才能維持長期的策略對齊',
+                optCritical: '緊急', optHigh: '高', optMedium: '中', optLow: '低',
+                optAlignHigh: '高（9-10）', optAlignMedium: '中（6-8）', optAlignLow: '低（1-5）',
+                optWeekly: '每週', optBiweekly: '每兩週', optMonthly: '每月', optQuarterly: '每季',
+                optFullyAligned: '完全對齊', optMostlyAligned: '大致對齊', optPartiallyAligned: '部分對齊', optNeedsAlignment: '需要對齊',
+                optProbHigh: '高（70-90%）', optProbMedium: '中（30-70%）', optProbLow: '低（<30%）'
+            }
+        };
+
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (dict[key] !== undefined) el.textContent = dict[key];
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.dataset.i18nPh;
+                if (dict[key] !== undefined) el.placeholder = dict[key];
+            });
+
+            document.querySelectorAll('.opt-critical').forEach(el => el.textContent = dict.optCritical);
+            document.querySelectorAll('.opt-high').forEach(el => el.textContent = dict.optHigh);
+            document.querySelectorAll('.opt-medium').forEach(el => el.textContent = dict.optMedium);
+            document.querySelectorAll('.opt-low').forEach(el => el.textContent = dict.optLow);
+            document.querySelectorAll('.opt-align-high').forEach(el => el.textContent = dict.optAlignHigh);
+            document.querySelectorAll('.opt-align-medium').forEach(el => el.textContent = dict.optAlignMedium);
+            document.querySelectorAll('.opt-align-low').forEach(el => el.textContent = dict.optAlignLow);
+            document.querySelectorAll('.opt-weekly').forEach(el => el.textContent = dict.optWeekly);
+            document.querySelectorAll('.opt-biweekly').forEach(el => el.textContent = dict.optBiweekly);
+            document.querySelectorAll('.opt-monthly').forEach(el => el.textContent = dict.optMonthly);
+            document.querySelectorAll('.opt-quarterly').forEach(el => el.textContent = dict.optQuarterly);
+            document.querySelectorAll('.opt-fully-aligned').forEach(el => el.textContent = dict.optFullyAligned);
+            document.querySelectorAll('.opt-mostly-aligned').forEach(el => el.textContent = dict.optMostlyAligned);
+            document.querySelectorAll('.opt-partially-aligned').forEach(el => el.textContent = dict.optPartiallyAligned);
+            document.querySelectorAll('.opt-needs-alignment').forEach(el => el.textContent = dict.optNeedsAlignment);
+            document.querySelectorAll('.opt-prob-high').forEach(el => el.textContent = dict.optProbHigh);
+            document.querySelectorAll('.opt-prob-medium').forEach(el => el.textContent = dict.optProbMedium);
+            document.querySelectorAll('.opt-prob-low').forEach(el => el.textContent = dict.optProbLow);
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        // Set current quarter and year
+        const now = new Date();
+        const quarter = Math.floor(now.getMonth() / 3) + 1;
+        document.getElementById('current-quarter').textContent = quarter;
+        document.getElementById('current-year').textContent = now.getFullYear();
+
+        // Add basic interactivity for better user experience
+        document.querySelectorAll('textarea, input, select').forEach(element => {
+            element.addEventListener('change', function() {
+                this.style.borderColor = '#27ae60';
+                setTimeout(() => {
+                    this.style.borderColor = '#e1e8ed';
+                }, 1000);
+            });
+        });
+
+        window.onload = function() {
+            renderLanguage();
+        };
+    </script>
+</body>
+</html>
