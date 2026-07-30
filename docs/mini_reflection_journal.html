@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Mini Reflection Journal / Action Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f7f8fc;
+            line-height: 1.5;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 25px;
+        }
+        .header-bar {
+            position: relative;
+            text-align: center;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        h1 {
+            color: #2d3748;
+            font-size: 1.8em;
+            margin: 0;
+        }
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+        .lang-btn {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { background: #edf0fd; }
+        .lang-btn.active { background: #667eea; color: white; }
+        .description {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .date-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            border-left: 4px solid #667eea;
+        }
+        .date-section input[type="date"], .date-section input[type="text"] {
+            padding: 8px 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .reflection-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .reflection-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid #48bb78;
+        }
+        .reflection-card h3 {
+            margin-top: 0;
+            color: #2d3748;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .reflection-card textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-family: inherit;
+            resize: vertical;
+            background: white;
+        }
+        .quick-wins {
+            background: #e6fffa;
+            border-left-color: #38b2ac;
+        }
+        .challenges {
+            background: #fed7d7;
+            border-left-color: #f56565;
+        }
+        .insights {
+            background: #faf5ff;
+            border-left-color: #9f7aea;
+        }
+        .next-actions {
+            background: #f0fff4;
+            border-left-color: #68d391;
+        }
+        .action-tracker {
+            background: #fff5f5;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 2px solid #feb2b2;
+        }
+        .action-tracker h3 {
+            color: #c53030;
+            margin-top: 0;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .actions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .actions-table th {
+            background: #c53030;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-size: 0.9em;
+        }
+        .actions-table td {
+            padding: 10px;
+            border-bottom: 1px solid #fed7d7;
+            vertical-align: top;
+        }
+        .actions-table tr:nth-child(even) {
+            background: #fffaf0;
+        }
+        .actions-table input, .actions-table select {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+        .mood-tracker {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .mood-card {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+        }
+        .mood-card h4 {
+            margin: 0 0 10px 0;
+            color: #4a5568;
+            font-size: 0.9em;
+        }
+        .mood-scale {
+            display: flex;
+            justify-content: space-around;
+            margin: 10px 0;
+        }
+        .mood-scale input[type="radio"] {
+            transform: scale(1.2);
+        }
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8em;
+            color: #718096;
+            margin-top: 5px;
+        }
+        .key-metrics {
+            background: #edf2f7;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-left: 4px solid #4299e1;
+        }
+        .key-metrics h3 {
+            color: #2b6cb0;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .metric-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .metric-item label {
+            display: block;
+            font-size: 0.9em;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+        .metric-item input {
+            width: 80px;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .notes-section {
+            background: #fffbeb;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid #f6ad55;
+        }
+        .notes-section h3 {
+            color: #c05621;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .notes-section textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-family: inherit;
+            resize: vertical;
+            background: white;
+        }
+        .add-action-btn {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .add-action-btn:hover {
+            background: #38a169;
+        }
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .add-action-btn { display: none; }
+            .lang-switcher { display: none; }
+        }
+        @media (max-width: 768px) {
+            .reflection-grid { grid-template-columns: 1fr; }
+            .mood-tracker { grid-template-columns: 1fr; }
+            .date-section { flex-direction: column; gap: 10px; }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1 data-i18n="mainTitle">📝 Mini Reflection Journal / Action Tracker</h1>
+        </div>
+
+        <div class="description">
+            <strong data-i18n="descPurposeLabel">Purpose:</strong> <span data-i18n="descPurposeText">A quick daily/weekly capture tool for engineering managers to reflect on wins, challenges, and insights while tracking actionable follow-ups. Designed for 5-10 minute daily use to maintain momentum and visibility on important items.</span>
+            <br><br>
+            <strong data-i18n="descHowLabel">How to Use:</strong> <span data-i18n="descHowText">Complete brief reflections, rate your energy levels, capture key metrics, and log action items with priorities. Review regularly to identify patterns and ensure nothing falls through the cracks.</span>
+        </div>
+
+        <div class="date-section">
+            <div>
+                <strong data-i18n="entryDateLabel">📅 Entry Date:</strong>
+                <input type="date" id="entry-date">
+            </div>
+            <div>
+                <strong data-i18n="weekSprintLabel">🏷️ Week/Sprint:</strong>
+                <input type="text" data-i18n-ph="phWeekSprint" placeholder="Sprint 23, Week 47" style="width: 150px;">
+            </div>
+            <div>
+                <strong data-i18n="teamFocusLabel">👥 Team Focus:</strong>
+                <input type="text" data-i18n-ph="phTeamFocus" placeholder="Backend Team, Full Squad" style="width: 150px;">
+            </div>
+        </div>
+
+        <!-- Quick Reflections Grid -->
+        <div class="reflection-grid">
+            <div class="reflection-card quick-wins">
+                <h3 data-i18n="quickWinsHeading">🎯 Quick Wins Today</h3>
+                <textarea data-i18n-ph="quickWinsPh" placeholder="What went well? Small victories? Positive moments?
+Examples:
+• Resolved P2 incident in 30 mins
+• Great feedback in code review
+• Team member showed growth"></textarea>
+            </div>
+
+            <div class="reflection-card challenges">
+                <h3 data-i18n="challengesHeading">🚧 Challenges & Blockers</h3>
+                <textarea data-i18n-ph="challengesPh" placeholder="What was difficult? What's blocking progress?
+Examples:
+• Integration test failures
+• Unclear requirements from PM
+• Team member struggling with task"></textarea>
+            </div>
+
+            <div class="reflection-card insights">
+                <h3 data-i18n="insightsHeading">💡 Key Insights</h3>
+                <textarea data-i18n-ph="insightsPh" placeholder="What did you learn? Patterns noticed?
+Examples:
+• Need better error handling strategy
+• 1:1s more effective when shorter
+• Architecture decision paying off"></textarea>
+            </div>
+
+            <div class="reflection-card next-actions">
+                <h3 data-i18n="tomorrowHeading">📌 Tomorrow's Focus</h3>
+                <textarea data-i18n-ph="tomorrowPh" placeholder="Top 2-3 priorities for tomorrow?
+Examples:
+• Follow up on deployment issue
+• Schedule team retrospective
+• Review Sarah's design proposal"></textarea>
+            </div>
+        </div>
+
+        <!-- Energy & Mood Tracker -->
+        <div class="mood-tracker">
+            <div class="mood-card">
+                <h4 data-i18n="energyLevelHeading">⚡ Energy Level</h4>
+                <div class="mood-scale">
+                    <input type="radio" name="energy" value="1" id="energy-1">
+                    <input type="radio" name="energy" value="2" id="energy-2">
+                    <input type="radio" name="energy" value="3" id="energy-3">
+                    <input type="radio" name="energy" value="4" id="energy-4">
+                    <input type="radio" name="energy" value="5" id="energy-5">
+                </div>
+                <div class="scale-labels">
+                    <span data-i18n="energyLow">Drained</span>
+                    <span data-i18n="energyHigh">Energized</span>
+                </div>
+            </div>
+
+            <div class="mood-card">
+                <h4 data-i18n="focusQualityHeading">🎯 Focus Quality</h4>
+                <div class="mood-scale">
+                    <input type="radio" name="focus" value="1" id="focus-1">
+                    <input type="radio" name="focus" value="2" id="focus-2">
+                    <input type="radio" name="focus" value="3" id="focus-3">
+                    <input type="radio" name="focus" value="4" id="focus-4">
+                    <input type="radio" name="focus" value="5" id="focus-5">
+                </div>
+                <div class="scale-labels">
+                    <span data-i18n="focusLow">Scattered</span>
+                    <span data-i18n="focusHigh">Sharp</span>
+                </div>
+            </div>
+
+            <div class="mood-card">
+                <h4 data-i18n="teamMoodHeading">🤝 Team Mood</h4>
+                <div class="mood-scale">
+                    <input type="radio" name="team-mood" value="1" id="team-1">
+                    <input type="radio" name="team-mood" value="2" id="team-2">
+                    <input type="radio" name="team-mood" value="3" id="team-3">
+                    <input type="radio" name="team-mood" value="4" id="team-4">
+                    <input type="radio" name="team-mood" value="5" id="team-5">
+                </div>
+                <div class="scale-labels">
+                    <span data-i18n="teamMoodLow">Struggling</span>
+                    <span data-i18n="teamMoodHigh">Thriving</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="key-metrics">
+            <h3 data-i18n="metricsHeading">📊 Quick Metrics Check</h3>
+            <div class="metrics-grid">
+                <div class="metric-item">
+                    <label data-i18n="metricPRs">PRs Merged</label>
+                    <input type="number" placeholder="12">
+                </div>
+                <div class="metric-item">
+                    <label data-i18n="metricIncidents">Incidents</label>
+                    <input type="number" placeholder="1">
+                </div>
+                <div class="metric-item">
+                    <label data-i18n="metricOneOnOnes">1:1s Held</label>
+                    <input type="number" placeholder="4">
+                </div>
+                <div class="metric-item">
+                    <label data-i18n="metricSprintProgress">Sprint Progress %</label>
+                    <input type="number" placeholder="85">
+                </div>
+                <div class="metric-item">
+                    <label data-i18n="metricUnplanned">Unplanned Work %</label>
+                    <input type="number" placeholder="20">
+                </div>
+                <div class="metric-item">
+                    <label data-i18n="metricSatisfaction">Team Satisfaction</label>
+                    <input type="number" placeholder="8" min="1" max="10">
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Tracker -->
+        <div class="action-tracker">
+            <h3 data-i18n="actionTrackerHeading">✅ Action Items & Follow-ups</h3>
+            <table class="actions-table">
+                <thead>
+                    <tr>
+                        <th data-i18n="thDone">✓</th>
+                        <th data-i18n="thActionItem">Action Item</th>
+                        <th data-i18n="thPriority">Priority</th>
+                        <th data-i18n="thOwner">Owner</th>
+                        <th data-i18n="thDueDate">Due Date</th>
+                        <th data-i18n="thStatus">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="actions-tbody">
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><input type="text" data-i18n-ph="action1Ph" placeholder="Follow up on API performance issues"></td>
+                        <td>
+                            <select>
+                                <option value="high" class="opt-priority-high">🔴 High</option>
+                                <option value="medium" class="opt-priority-medium" selected>🟡 Medium</option>
+                                <option value="low" class="opt-priority-low">🟢 Low</option>
+                            </select>
+                        </td>
+                        <td><input type="text" data-i18n-ph="phOwnerAlex" placeholder="Alex"></td>
+                        <td><input type="date"></td>
+                        <td>
+                            <select>
+                                <option value="todo" class="opt-status-todo" selected>To Do</option>
+                                <option value="progress" class="opt-status-progress">In Progress</option>
+                                <option value="blocked" class="opt-status-blocked">Blocked</option>
+                                <option value="done" class="opt-status-done">Done</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><input type="text" data-i18n-ph="action2Ph" placeholder="Schedule architecture review meeting"></td>
+                        <td>
+                            <select>
+                                <option value="medium" class="opt-priority-medium" selected>🟡 Medium</option>
+                                <option value="high" class="opt-priority-high">🔴 High</option>
+                                <option value="low" class="opt-priority-low">🟢 Low</option>
+                            </select>
+                        </td>
+                        <td><input type="text" data-i18n-ph="phOwnerMe" placeholder="Me"></td>
+                        <td><input type="date"></td>
+                        <td>
+                            <select>
+                                <option value="todo" class="opt-status-todo" selected>To Do</option>
+                                <option value="progress" class="opt-status-progress">In Progress</option>
+                                <option value="blocked" class="opt-status-blocked">Blocked</option>
+                                <option value="done" class="opt-status-done">Done</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><input type="text" data-i18n-ph="action3Ph" placeholder="Review junior dev's code more thoroughly"></td>
+                        <td>
+                            <select>
+                                <option value="low" class="opt-priority-low" selected>🟢 Low</option>
+                                <option value="high" class="opt-priority-high">🔴 High</option>
+                                <option value="medium" class="opt-priority-medium">🟡 Medium</option>
+                            </select>
+                        </td>
+                        <td><input type="text" data-i18n-ph="phOwnerMe2" placeholder="Me"></td>
+                        <td><input type="date"></td>
+                        <td>
+                            <select>
+                                <option value="todo" class="opt-status-todo" selected>To Do</option>
+                                <option value="progress" class="opt-status-progress">In Progress</option>
+                                <option value="blocked" class="opt-status-blocked">Blocked</option>
+                                <option value="done" class="opt-status-done">Done</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><input type="text" data-i18n-ph="action4Ph" placeholder="Update team on deployment process changes"></td>
+                        <td>
+                            <select>
+                                <option value="high" class="opt-priority-high" selected>🔴 High</option>
+                                <option value="medium" class="opt-priority-medium">🟡 Medium</option>
+                                <option value="low" class="opt-priority-low">🟢 Low</option>
+                            </select>
+                        </td>
+                        <td><input type="text" data-i18n-ph="phOwnerMe3" placeholder="Me"></td>
+                        <td><input type="date"></td>
+                        <td>
+                            <select>
+                                <option value="progress" class="opt-status-progress" selected>In Progress</option>
+                                <option value="todo" class="opt-status-todo">To Do</option>
+                                <option value="blocked" class="opt-status-blocked">Blocked</option>
+                                <option value="done" class="opt-status-done">Done</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="add-action-btn" id="addActionBtn" onclick="addActionRow()">+ Add Action Item</button>
+        </div>
+
+        <!-- Additional Notes -->
+        <div class="notes-section">
+            <h3 data-i18n="notesHeading">🗒️ Additional Notes & Context</h3>
+            <textarea data-i18n-ph="notesPh" placeholder="Anything else worth capturing? Meeting notes, random thoughts, future ideas...
+
+Examples:
+• Sarah mentioned interest in leading next feature - follow up next week
+• Need to research new monitoring tools for Q2
+• Good discussion in team standup about testing approach
+• Reminder: budget planning due next Friday"></textarea>
+        </div>
+
+        <div style="margin-top: 25px; padding: 15px; background: #f0f4f8; border-radius: 6px; text-align: center; font-size: 0.9em; color: #4a5568;">
+            <strong data-i18n="footerTipLabel">💡 Tip:</strong> <span data-i18n="footerTipText">Aim for 5-10 minutes daily or 15-20 minutes at week end. Focus on capturing, not perfecting. Review weekly to spot patterns and ensure follow-through.</span>
+        </div>
+    </div>
+
+    <script>
+        const I18N = {
+            en: {
+                pageTitle: 'Mini Reflection Journal / Action Tracker',
+                mainTitle: '📝 Mini Reflection Journal / Action Tracker',
+                descPurposeLabel: 'Purpose:',
+                descPurposeText: 'A quick daily/weekly capture tool for engineering managers to reflect on wins, challenges, and insights while tracking actionable follow-ups. Designed for 5-10 minute daily use to maintain momentum and visibility on important items.',
+                descHowLabel: 'How to Use:',
+                descHowText: 'Complete brief reflections, rate your energy levels, capture key metrics, and log action items with priorities. Review regularly to identify patterns and ensure nothing falls through the cracks.',
+                entryDateLabel: '📅 Entry Date:',
+                weekSprintLabel: '🏷️ Week/Sprint:',
+                phWeekSprint: 'Sprint 23, Week 47',
+                teamFocusLabel: '👥 Team Focus:',
+                phTeamFocus: 'Backend Team, Full Squad',
+                quickWinsHeading: '🎯 Quick Wins Today',
+                quickWinsPh: 'What went well? Small victories? Positive moments?\nExamples:\n• Resolved P2 incident in 30 mins\n• Great feedback in code review\n• Team member showed growth',
+                challengesHeading: '🚧 Challenges & Blockers',
+                challengesPh: "What was difficult? What's blocking progress?\nExamples:\n• Integration test failures\n• Unclear requirements from PM\n• Team member struggling with task",
+                insightsHeading: '💡 Key Insights',
+                insightsPh: 'What did you learn? Patterns noticed?\nExamples:\n• Need better error handling strategy\n• 1:1s more effective when shorter\n• Architecture decision paying off',
+                tomorrowHeading: "📌 Tomorrow's Focus",
+                tomorrowPh: "Top 2-3 priorities for tomorrow?\nExamples:\n• Follow up on deployment issue\n• Schedule team retrospective\n• Review Sarah's design proposal",
+                energyLevelHeading: '⚡ Energy Level',
+                energyLow: 'Drained',
+                energyHigh: 'Energized',
+                focusQualityHeading: '🎯 Focus Quality',
+                focusLow: 'Scattered',
+                focusHigh: 'Sharp',
+                teamMoodHeading: '🤝 Team Mood',
+                teamMoodLow: 'Struggling',
+                teamMoodHigh: 'Thriving',
+                metricsHeading: '📊 Quick Metrics Check',
+                metricPRs: 'PRs Merged',
+                metricIncidents: 'Incidents',
+                metricOneOnOnes: '1:1s Held',
+                metricSprintProgress: 'Sprint Progress %',
+                metricUnplanned: 'Unplanned Work %',
+                metricSatisfaction: 'Team Satisfaction',
+                actionTrackerHeading: '✅ Action Items & Follow-ups',
+                thDone: '✓',
+                thActionItem: 'Action Item',
+                thPriority: 'Priority',
+                thOwner: 'Owner',
+                thDueDate: 'Due Date',
+                thStatus: 'Status',
+                action1Ph: 'Follow up on API performance issues',
+                action2Ph: 'Schedule architecture review meeting',
+                action3Ph: "Review junior dev's code more thoroughly",
+                action4Ph: 'Update team on deployment process changes',
+                newActionPh: 'New action item...',
+                phOwnerAlex: 'Alex',
+                phOwnerMe: 'Me',
+                phOwnerMe2: 'Me',
+                phOwnerMe3: 'Me',
+                phOwner: 'Owner',
+                addActionBtn: '+ Add Action Item',
+                optPriorityHigh: '🔴 High',
+                optPriorityMedium: '🟡 Medium',
+                optPriorityLow: '🟢 Low',
+                optStatusTodo: 'To Do',
+                optStatusProgress: 'In Progress',
+                optStatusBlocked: 'Blocked',
+                optStatusDone: 'Done',
+                notesHeading: '🗒️ Additional Notes & Context',
+                notesPh: 'Anything else worth capturing? Meeting notes, random thoughts, future ideas...\n\nExamples:\n• Sarah mentioned interest in leading next feature - follow up next week\n• Need to research new monitoring tools for Q2\n• Good discussion in team standup about testing approach\n• Reminder: budget planning due next Friday',
+                footerTipLabel: '💡 Tip:',
+                footerTipText: 'Aim for 5-10 minutes daily or 15-20 minutes at week end. Focus on capturing, not perfecting. Review weekly to spot patterns and ensure follow-through.'
+            },
+            zh: {
+                pageTitle: '每日反思日誌／行動追蹤器',
+                mainTitle: '📝 每日反思日誌／行動追蹤器',
+                descPurposeLabel: '用途：',
+                descPurposeText: '一個給工程主管的每日/每週快速記錄工具，用來反思成就、挑戰與洞察，同時追蹤可執行的後續事項。設計為每天 5-10 分鐘即可完成，幫助你維持動能並掌握重要事項的可見度。',
+                descHowLabel: '使用方式：',
+                descHowText: '完成簡短的反思、為你的能量狀態評分、記錄關鍵指標，並記下附優先順序的行動項目。定期檢視以找出模式，確保沒有事項被遺漏。',
+                entryDateLabel: '📅 記錄日期：',
+                weekSprintLabel: '🏷️ 週次/Sprint：',
+                phWeekSprint: '例如：Sprint 23、第 47 週',
+                teamFocusLabel: '👥 團隊焦點：',
+                phTeamFocus: '例如：後端團隊、全體團隊',
+                quickWinsHeading: '🎯 今日小勝利',
+                quickWinsPh: '有哪些事做得不錯？小小的勝利？正面的時刻？\n範例：\n• 30 分鐘內解決 P2 事件\n• code review 收到很棒的回饋\n• 團隊成員展現成長',
+                challengesHeading: '🚧 挑戰與阻礙',
+                challengesPh: '有什麼困難的地方？什麼在阻礙進度？\n範例：\n• 整合測試失敗\n• PM 給的需求不明確\n• 團隊成員在某個任務上遇到困難',
+                insightsHeading: '💡 關鍵洞察',
+                insightsPh: '你學到了什麼？注意到什麼模式？\n範例：\n• 需要更好的錯誤處理策略\n• 1:1 開短一點反而更有效\n• 架構決策開始看到成效',
+                tomorrowHeading: '📌 明天的重點',
+                tomorrowPh: '明天最重要的 2-3 個優先事項？\n範例：\n• 跟進部署問題\n• 安排團隊回顧會議\n• 審閱 Sarah 的設計提案',
+                energyLevelHeading: '⚡ 能量等級',
+                energyLow: '耗盡',
+                energyHigh: '充滿活力',
+                focusQualityHeading: '🎯 專注品質',
+                focusLow: '渙散',
+                focusHigh: '敏銳',
+                teamMoodHeading: '🤝 團隊氛圍',
+                teamMoodLow: '掙扎中',
+                teamMoodHigh: '狀態很好',
+                metricsHeading: '📊 快速指標檢查',
+                metricPRs: '已合併 PR 數',
+                metricIncidents: '事件數',
+                metricOneOnOnes: '已進行的 1:1 數',
+                metricSprintProgress: 'Sprint 進度 %',
+                metricUnplanned: '非計畫工作 %',
+                metricSatisfaction: '團隊滿意度',
+                actionTrackerHeading: '✅ 行動項目與後續追蹤',
+                thDone: '✓',
+                thActionItem: '行動項目',
+                thPriority: '優先順序',
+                thOwner: '負責人',
+                thDueDate: '截止日期',
+                thStatus: '狀態',
+                action1Ph: '跟進 API 效能問題',
+                action2Ph: '安排架構審查會議',
+                action3Ph: '更仔細地審查 junior 工程師的程式碼',
+                action4Ph: '向團隊更新部署流程變更',
+                newActionPh: '新的行動項目……',
+                phOwnerAlex: 'Alex',
+                phOwnerMe: '我',
+                phOwnerMe2: '我',
+                phOwnerMe3: '我',
+                phOwner: '負責人',
+                addActionBtn: '+ 新增行動項目',
+                optPriorityHigh: '🔴 高',
+                optPriorityMedium: '🟡 中',
+                optPriorityLow: '🟢 低',
+                optStatusTodo: '待辦',
+                optStatusProgress: '進行中',
+                optStatusBlocked: '受阻',
+                optStatusDone: '已完成',
+                notesHeading: '🗒️ 其他備註與背景',
+                notesPh: '還有什麼值得記錄的？會議筆記、隨想、未來的點子……\n\n範例：\n• Sarah 提到有興趣主導下一個功能——下週跟進\n• 需要研究 Q2 的新監控工具\n• 團隊 standup 上關於測試方式的討論很不錯\n• 提醒：預算規劃下週五截止',
+                footerTipLabel: '💡 小提醒：',
+                footerTipText: '目標是每天 5-10 分鐘，或週末花 15-20 分鐘整理。重點在於記錄，不是寫得完美。每週檢視找出模式，確保有後續追蹤。'
+            }
+        };
+
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+        let actionRowCount = 0;
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (dict[key] !== undefined) el.textContent = dict[key];
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.dataset.i18nPh;
+                if (dict[key] !== undefined) el.placeholder = dict[key];
+            });
+
+            document.getElementById('addActionBtn').textContent = dict.addActionBtn;
+
+            document.querySelectorAll('.opt-priority-high').forEach(el => el.textContent = dict.optPriorityHigh);
+            document.querySelectorAll('.opt-priority-medium').forEach(el => el.textContent = dict.optPriorityMedium);
+            document.querySelectorAll('.opt-priority-low').forEach(el => el.textContent = dict.optPriorityLow);
+            document.querySelectorAll('.opt-status-todo').forEach(el => el.textContent = dict.optStatusTodo);
+            document.querySelectorAll('.opt-status-progress').forEach(el => el.textContent = dict.optStatusProgress);
+            document.querySelectorAll('.opt-status-blocked').forEach(el => el.textContent = dict.optStatusBlocked);
+            document.querySelectorAll('.opt-status-done').forEach(el => el.textContent = dict.optStatusDone);
+
+            document.querySelectorAll('.new-action-input').forEach(el => el.placeholder = dict.newActionPh);
+            document.querySelectorAll('.new-owner-input').forEach(el => el.placeholder = dict.phOwner);
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        function addActionRow() {
+            const dict = t();
+            actionRowCount++;
+            const tbody = document.getElementById('actions-tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><input type="checkbox"></td>
+                <td><input type="text" class="new-action-input" placeholder="${dict.newActionPh}"></td>
+                <td>
+                    <select>
+                        <option value="medium" class="opt-priority-medium" selected>${dict.optPriorityMedium}</option>
+                        <option value="high" class="opt-priority-high">${dict.optPriorityHigh}</option>
+                        <option value="low" class="opt-priority-low">${dict.optPriorityLow}</option>
+                    </select>
+                </td>
+                <td><input type="text" class="new-owner-input" placeholder="${dict.phOwner}"></td>
+                <td><input type="date"></td>
+                <td>
+                    <select>
+                        <option value="todo" class="opt-status-todo" selected>${dict.optStatusTodo}</option>
+                        <option value="progress" class="opt-status-progress">${dict.optStatusProgress}</option>
+                        <option value="blocked" class="opt-status-blocked">${dict.optStatusBlocked}</option>
+                        <option value="done" class="opt-status-done">${dict.optStatusDone}</option>
+                    </select>
+                </td>
+            `;
+            tbody.appendChild(newRow);
+        }
+
+        window.onload = function() {
+            document.getElementById('entry-date').valueAsDate = new Date();
+            renderLanguage();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">EM Personal 30/60/90-Day Action Plan</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        .header-bar {
+            position: relative;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #2c3e50;
+            margin: 0;
+        }
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+        .lang-btn {
+            background: white;
+            color: #3498db;
+            border: 2px solid #3498db;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { background: #e8f4fd; }
+        .lang-btn.active { background: #3498db; color: white; }
+        .description {
+            background: #e8f4fd;
+            padding: 20px;
+            border-left: 4px solid #3498db;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            background: #f1f2f6;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        .meta-field {
+            flex: 1;
+            margin-right: 15px;
+        }
+        .meta-field:last-child {
+            margin-right: 0;
+        }
+        .meta-field label {
+            font-weight: bold;
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .meta-field input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .period-section {
+            margin-bottom: 40px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .period-header {
+            padding: 15px 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: white;
+            margin: 0;
+        }
+        .days-30 { background: #e74c3c; }
+        .days-60 { background: #f39c12; }
+        .days-90 { background: #27ae60; }
+        .period-content {
+            padding: 25px;
+        }
+        .focus-areas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .focus-area {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+        .focus-area h4 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        .goals-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .goals-table th {
+            background: #34495e;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .goals-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ecf0f1;
+            vertical-align: top;
+        }
+        .goals-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .checkbox-item {
+            margin: 8px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            margin-top: 4px;
+        }
+        .metrics-section {
+            background: #fff5f5;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #fed7d7;
+            margin-bottom: 20px;
+        }
+        .metrics-section h4 {
+            color: #c53030;
+            margin-top: 0;
+        }
+        .reflection-box {
+            background: #f0fff4;
+            border: 1px solid #c6f6d5;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+        .reflection-box label {
+            font-weight: bold;
+            color: #2d3748;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .reflection-box textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-family: inherit;
+            resize: vertical;
+        }
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .period-section { break-inside: avoid; }
+            .lang-switcher { display: none; }
+        }
+        @media (max-width: 768px) {
+            .focus-areas { grid-template-columns: 1fr; }
+            .meta-info { flex-direction: column; }
+            .meta-field { margin-right: 0; margin-bottom: 15px; }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1 data-i18n="mainTitle">Engineering Manager Personal 30/60/90-Day Action Plan</h1>
+        </div>
+
+        <div class="description">
+            <strong data-i18n="descPurposeLabel">Purpose:</strong> <span data-i18n="descPurposeText">This template helps engineering managers create a structured personal development plan focused on leadership growth, technical skills, and team impact. Unlike new hire onboarding plans, this focuses on continuous professional development and strategic career advancement.</span>
+            <br><br>
+            <strong data-i18n="descHowLabel">How to Use:</strong> <span data-i18n="descHowText">Set specific, measurable goals for each time period. Focus on building skills, relationships, and delivering measurable impact. Review and adjust regularly based on progress and changing priorities.</span>
+        </div>
+
+        <div class="meta-info">
+            <div class="meta-field">
+                <label for="manager-name" data-i18n="labelManagerName">Manager Name:</label>
+                <input type="text" id="manager-name" data-i18n-ph="phYourName" placeholder="Your Name">
+            </div>
+            <div class="meta-field">
+                <label for="start-date" data-i18n="labelStartDate">Plan Start Date:</label>
+                <input type="date" id="start-date">
+            </div>
+            <div class="meta-field">
+                <label for="reporting-manager" data-i18n="labelReportingManager">Reporting Manager:</label>
+                <input type="text" id="reporting-manager" data-i18n-ph="phManagerName" placeholder="Manager's Name">
+            </div>
+            <div class="meta-field">
+                <label for="team-size" data-i18n="labelTeamSize">Team Size:</label>
+                <input type="number" id="team-size" data-i18n-ph="phTeamSize" placeholder="# of reports">
+            </div>
+        </div>
+
+        <!-- 30-Day Section -->
+        <div class="period-section">
+            <h2 class="period-header days-30" data-i18n="p30Header">First 30 Days: Foundation & Assessment</h2>
+            <div class="period-content">
+                <div class="focus-areas">
+                    <div class="focus-area">
+                        <h4 data-i18n="p30FocusTitle">🎯 Primary Focus</h4>
+                        <p data-i18n="p30FocusText">Assess current state, identify skill gaps, and establish baseline metrics for team performance and personal effectiveness.</p>
+                    </div>
+                    <div class="focus-area">
+                        <h4 data-i18n="p30OutcomesTitle">📊 Key Outcomes</h4>
+                        <p data-i18n="p30OutcomesText">Complete skills assessment, establish 1:1 rhythms, baseline team metrics, and create learning plan.</p>
+                    </div>
+                </div>
+
+                <table class="goals-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="thGoalCategory">Goal Category</th>
+                            <th data-i18n="thSpecificGoals">Specific Goals</th>
+                            <th data-i18n="thSuccessMetrics">Success Metrics</th>
+                            <th data-i18n="thResourcesNeeded">Resources Needed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong data-i18n="p30Cat1">Leadership Skills</strong></td>
+                            <td data-i18n-html="p30Goals1">Complete leadership 360 assessment<br>Schedule 1:1s with all team members<br>Identify coaching opportunities</td>
+                            <td data-i18n-html="p30Metrics1">360 feedback collected<br>1:1 schedule established<br>2-3 coaching areas identified</td>
+                            <td data-i18n-html="p30Resources1">360 assessment tool<br>Calendar blocking<br>Feedback collection</td>
+                        </tr>
+                        <tr>
+                            <td><strong data-i18n="p30Cat2">Technical Growth</strong></td>
+                            <td data-i18n-html="p30Goals2">Assess current tech stack knowledge<br>Identify architecture gaps<br>Create learning roadmap</td>
+                            <td data-i18n-html="p30Metrics2">Skills matrix completed<br>3-5 learning goals defined<br>Study plan created</td>
+                            <td data-i18n-html="p30Resources2">Technical assessment<br>Team architecture docs<br>Online courses/books</td>
+                        </tr>
+                        <tr>
+                            <td><strong data-i18n="p30Cat3">Team Performance</strong></td>
+                            <td data-i18n-html="p30Goals3">Establish baseline DORA metrics<br>Review current sprint processes<br>Assess team satisfaction</td>
+                            <td data-i18n-html="p30Metrics3">Metrics dashboard created<br>Process gaps documented<br>Team survey completed</td>
+                            <td data-i18n-html="p30Resources3">Monitoring tools<br>Survey platform<br>Process documentation</td>
+                        </tr>
+                        <tr>
+                            <td><strong data-i18n="p30Cat4">Stakeholder Relations</strong></td>
+                            <td data-i18n-html="p30Goals4">Map key stakeholders<br>Schedule stakeholder meetings<br>Understand business priorities</td>
+                            <td data-i18n-html="p30Metrics4">Stakeholder map created<br>5-7 intro meetings held<br>Priority matrix defined</td>
+                            <td data-i18n-html="p30Resources4">Org chart access<br>Meeting scheduling<br>Business context docs</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="metrics-section">
+                    <h4 data-i18n="p30MetricsHeading">📈 30-Day Success Metrics</h4>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="metric-30-1">
+                        <label for="metric-30-1" data-i18n="p30Metric1">Team velocity baseline established with 3 sprint average</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="metric-30-2">
+                        <label for="metric-30-2" data-i18n="p30Metric2">100% of team members have completed initial 1:1 assessment</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="metric-30-3">
+                        <label for="metric-30-3" data-i18n="p30Metric3">Personal development plan created with 3-5 specific learning goals</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="metric-30-4">
+                        <label for="metric-30-4" data-i18n="p30Metric4">Stakeholder alignment achieved on team priorities and expectations</label>
+                    </div>
+                </div>
+
+                <div class="reflection-box">
+                    <label for="reflection-30" data-i18n="p30ReflectionLabel">30-Day Reflection Notes:</label>
+                    <textarea id="reflection-30" data-i18n-ph="p30ReflectionPh" placeholder="What went well? What challenges did you face? What would you do differently? Key insights gained..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 60-Day Section -->
+        <div class="period-section">
+            <h2 class="period-header days-60" data-i18n="p60Header">60 Days: Implementation & Optimization</h2>
+            <div class="period-content">
+                <div class="focus-areas">
+                    <div class="focus-area">
+                        <h4 data-i18n="p60FocusTitle">⚙️ Primary Focus</h4>
+                        <p data-i18n="p60FocusText">Implement improvements based on initial assessment, optimize processes, and begin delivering measurable impact on team performance.</p>
+                    </div>
+                    <div class="focus-area">
+                        <h4 data-i18n="p60OutcomesTitle">📊 Key Outcomes</h4>
+                        <p data-i18n="p60OutcomesText">Process improvements implemented, team performance trending up, personal skills development showing progress.</p>
+                    </div>
+                </div>
+
+                <table class="goals-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="thGoalCategory">Goal Category</th>
+                            <th data-i18n="thSpecificGoals">Specific Goals</th>
+                            <th data-i18n="thSuccessMetrics">Success Metrics</th>
+                            <th data-i18n="thResourcesNeeded">Resources Needed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong data-i18n="p60Cat1">Leadership Skills</strong></td>
+                            <td data-i18n-html="p60Goals1">Implement feedback from 360<br>Launch team development program<br>Begin mentoring high-potential ICs</td>
+                            <td data-i18n-html="p60Metrics1">2-3 improvement areas addressed<br>Development program running<br>2-3 mentoring relationships established</td>
+                            <td data-i18n-html="p60Resources1">Leadership coaching<br>Training materials<br>Mentoring framework</td>
+                        </tr>
+                        <tr>
+                            <td><strong data-i18n="p60Cat2">Technical Growth</strong></td>
+                            <td data-i18n-html="p60Goals2">Complete first technical learning goal<br>Lead architecture discussion<br>Review code quality practices</td>
+                            <td data-i18n-html="p60Metrics2">1 certification/course completed<br>Architecture proposal presented<br>Code review process improved</td>
+                            <td data-i18n-html="p60Resources2">Learning resources<br>Architecture tools<br>Code analysis tools</td>
+                        </tr>
+                        <tr>
+                            <td><strong data-i18n="p60Cat3">Team Performance</strong></td>
+                            <td data-i18n-html="p60Goals3">Improve deployment frequency<br>Reduce lead time by 20%<br>Increase team satisfaction score</td>
+                            <td data-i18n-html="p60Metrics3">DORA metrics improved<br>Lead time reduction achieved<br>Team NPS increased by 10+</td>
+                            <td data-i18n-html="p60Resources3">CI/CD improvements<br>Process optimization<br>Team feedback tools</td>
+                        </tr>
+                        <tr>
+                            <td><strong data-i18n="p60Cat4">Strategic Impact</strong></td>
+                            <td data-i18n-html="p60Goals4">Deliver key business milestone<br>Propose process improvements<br>Build cross-team relationships</td>
+                            <td data-i18n-html="p60Metrics4">Milestone delivered on time<br>2-3 process improvements adopted<br>3-4 peer relationships established</td>
+                            <td data-i18n-html="p60Resources4">Project resources<br>Change management<br>Networking opportunities</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="metrics-section">
+                    <h4 data-i18n="p60MetricsHeading">📈 60-Day Success Metrics</h4>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="metric-60-1">
+                        <label for="metric-60-1" data-i18n="p60Metric1">Team velocity improved by 15% compared to baseline</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="metric-60-2">
+                        <label for="metric-60-2" data-i18n="p60Metric2">One major technical skill advancement completed (certification, course, etc.)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="metric-60-3">
+                        <label for="metric-60-3" data-i18n="p60Metric3">Process improvement implemented resulting in measurable efficiency gain</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="metric-60-4">
+                        <label for="metric-60-4" data-i18n="p60Metric4">Positive feedback received from stakeholders on team collaboration</label>
+                    </div>
+                </div>
+
+                <div class="reflection-box">
+                    <label for="reflection-60" data-i18n="p60ReflectionLabel">60-Day Reflection Notes:</label>
+                    <textarea id="reflection-60" data-i18n-ph="p60ReflectionPh" placeholder="Progress on goals? What's working well? Where are you struggling? Adjustments needed for final 30 days..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 90-Day Section -->
+        <div class="period-section">
+            <h2 class="period-header days-90" data-i18n="p90Header">90 Days: Mastery & Strategic Planning</h2>
+            <div class="period-content">
+                <div class="focus-areas">
+                    <div class="focus-area">
+                        <h4 data-i18n="p90FocusTitle">🏆 Primary Focus</h4>
+                        <p data-i18n="p90FocusText">Demonstrate mastery of new skills, deliver significant team improvements, and establish plans for continued growth beyond 90 days.</p>
+                    </div>
+                    <div class="focus-area">
+                        <h4 data-i18n="p90OutcomesTitle">🚀 Key Outcomes</h4>
+                        <p data-i18n="p90OutcomesText">Measurable team performance improvement, personal skill advancement, and next 90-day growth plan established.</p>
+                    </div>
+                </div>
+
+                <table class="goals-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="thGoalCategory">Goal Category</th>
+                            <th data-i18n="thSpecificGoals">Specific Goals</th>
+                            <th data-i18n="thSuccessMetrics">Success Metrics</th>
+                            <th data-i18n="thResourcesNeeded">Resources Needed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong data-i18n="p90Cat1">Leadership Mastery</strong></td>
+                            <td data-i18n-html="p90Goals1">Lead cross-team initiative<br>Present to senior leadership<br>Mentor other managers</td>
+                            <td data-i18n-html="p90Metrics1">Initiative successfully delivered<br>Executive presentation completed<br>1-2 peer mentoring relationships</td>
+                            <td data-i18n-html="p90Resources1">Project resources<br>Presentation tools<br>Mentoring framework</td>
+                        </tr>
+                        <tr>
+                            <td><strong data-i18n="p90Cat2">Technical Leadership</strong></td>
+                            <td data-i18n-html="p90Goals2">Drive significant architecture decision<br>Establish tech standards<br>Lead technical community</td>
+                            <td data-i18n-html="p90Metrics2">Architecture decision adopted<br>Standards documented & followed<br>Tech community engagement</td>
+                            <td data-i18n-html="p90Resources2">Architecture tools<br>Documentation platform<br>Community forums</td>
+                        </tr>
+                        <tr>
+                            <td><strong data-i18n="p90Cat3">Team Excellence</strong></td>
+                            <td data-i18n-html="p90Goals3">Achieve top-quartile DORA metrics<br>Team recognized for achievement<br>Zero production incidents</td>
+                            <td data-i18n-html="p90Metrics3">Metrics in top 25%<br>External recognition received<br>Reliability targets met</td>
+                            <td data-i18n-html="p90Resources3">Monitoring tools<br>Recognition platforms<br>Reliability practices</td>
+                        </tr>
+                        <tr>
+                            <td><strong data-i18n="p90Cat4">Future Planning</strong></td>
+                            <td data-i18n-html="p90Goals4">Create next 90-day plan<br>Identify promotion readiness<br>Plan team expansion/changes</td>
+                            <td data-i18n-html="p90Metrics4">Next plan completed<br>Career progression plan defined<br>Team roadmap updated</td>
+                            <td data-i18n-html="p90Resources4">Planning templates<br>Career framework<br>Resource planning</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="metrics-section">
+                    <h4 data-i18n="p90MetricsHeading">📈 90-Day Success Metrics</h4>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="metric-90-1">
+                        <label for="metric-90-1" data-i18n="p90Metric1">Team consistently delivering 25% faster than original baseline</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="metric-90-2">
+                        <label for="metric-90-2" data-i18n="p90Metric2">Personal technical skills advanced to support team architecture decisions</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="metric-90-3">
+                        <label for="metric-90-3" data-i18n="p90Metric3">Led successful cross-team project or initiative</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="metric-90-4">
+                        <label for="metric-90-4" data-i18n="p90Metric4">Received positive performance feedback and clear path for next growth phase</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="metric-90-5">
+                        <label for="metric-90-5" data-i18n="p90Metric5">Team members report increased job satisfaction and professional growth</label>
+                    </div>
+                </div>
+
+                <div class="reflection-box">
+                    <label for="reflection-90" data-i18n="p90ReflectionLabel">90-Day Final Reflection & Next Steps:</label>
+                    <textarea id="reflection-90" data-i18n-ph="p90ReflectionPh" placeholder="Overall assessment of growth achieved? Key lessons learned? What exceeded expectations? Areas still needing work? Priorities for next 90-day cycle..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 6px; text-align: center;">
+            <p><strong data-i18n="footerTipLabel">💡 Pro Tip:</strong> <span data-i18n="footerTipText">Save this template, review progress weekly, and adjust goals based on changing business priorities and team needs. Share with your manager for alignment and support.</span></p>
+        </div>
+    </div>
+
+    <script>
+        const I18N = {
+            en: {
+                pageTitle: 'EM Personal 30/60/90-Day Action Plan',
+                mainTitle: 'Engineering Manager Personal 30/60/90-Day Action Plan',
+                descPurposeLabel: 'Purpose:',
+                descPurposeText: 'This template helps engineering managers create a structured personal development plan focused on leadership growth, technical skills, and team impact. Unlike new hire onboarding plans, this focuses on continuous professional development and strategic career advancement.',
+                descHowLabel: 'How to Use:',
+                descHowText: 'Set specific, measurable goals for each time period. Focus on building skills, relationships, and delivering measurable impact. Review and adjust regularly based on progress and changing priorities.',
+                labelManagerName: 'Manager Name:',
+                phYourName: 'Your Name',
+                labelStartDate: 'Plan Start Date:',
+                labelReportingManager: 'Reporting Manager:',
+                phManagerName: "Manager's Name",
+                labelTeamSize: 'Team Size:',
+                phTeamSize: '# of reports',
+                thGoalCategory: 'Goal Category',
+                thSpecificGoals: 'Specific Goals',
+                thSuccessMetrics: 'Success Metrics',
+                thResourcesNeeded: 'Resources Needed',
+                p30Header: 'First 30 Days: Foundation & Assessment',
+                p30FocusTitle: '🎯 Primary Focus',
+                p30FocusText: 'Assess current state, identify skill gaps, and establish baseline metrics for team performance and personal effectiveness.',
+                p30OutcomesTitle: '📊 Key Outcomes',
+                p30OutcomesText: 'Complete skills assessment, establish 1:1 rhythms, baseline team metrics, and create learning plan.',
+                p30Cat1: 'Leadership Skills',
+                p30Goals1: 'Complete leadership 360 assessment<br>Schedule 1:1s with all team members<br>Identify coaching opportunities',
+                p30Metrics1: '360 feedback collected<br>1:1 schedule established<br>2-3 coaching areas identified',
+                p30Resources1: '360 assessment tool<br>Calendar blocking<br>Feedback collection',
+                p30Cat2: 'Technical Growth',
+                p30Goals2: 'Assess current tech stack knowledge<br>Identify architecture gaps<br>Create learning roadmap',
+                p30Metrics2: 'Skills matrix completed<br>3-5 learning goals defined<br>Study plan created',
+                p30Resources2: 'Technical assessment<br>Team architecture docs<br>Online courses/books',
+                p30Cat3: 'Team Performance',
+                p30Goals3: 'Establish baseline DORA metrics<br>Review current sprint processes<br>Assess team satisfaction',
+                p30Metrics3: 'Metrics dashboard created<br>Process gaps documented<br>Team survey completed',
+                p30Resources3: 'Monitoring tools<br>Survey platform<br>Process documentation',
+                p30Cat4: 'Stakeholder Relations',
+                p30Goals4: 'Map key stakeholders<br>Schedule stakeholder meetings<br>Understand business priorities',
+                p30Metrics4: 'Stakeholder map created<br>5-7 intro meetings held<br>Priority matrix defined',
+                p30Resources4: 'Org chart access<br>Meeting scheduling<br>Business context docs',
+                p30MetricsHeading: '📈 30-Day Success Metrics',
+                p30Metric1: 'Team velocity baseline established with 3 sprint average',
+                p30Metric2: '100% of team members have completed initial 1:1 assessment',
+                p30Metric3: 'Personal development plan created with 3-5 specific learning goals',
+                p30Metric4: 'Stakeholder alignment achieved on team priorities and expectations',
+                p30ReflectionLabel: '30-Day Reflection Notes:',
+                p30ReflectionPh: 'What went well? What challenges did you face? What would you do differently? Key insights gained...',
+                p60Header: '60 Days: Implementation & Optimization',
+                p60FocusTitle: '⚙️ Primary Focus',
+                p60FocusText: 'Implement improvements based on initial assessment, optimize processes, and begin delivering measurable impact on team performance.',
+                p60OutcomesTitle: '📊 Key Outcomes',
+                p60OutcomesText: 'Process improvements implemented, team performance trending up, personal skills development showing progress.',
+                p60Cat1: 'Leadership Skills',
+                p60Goals1: 'Implement feedback from 360<br>Launch team development program<br>Begin mentoring high-potential ICs',
+                p60Metrics1: '2-3 improvement areas addressed<br>Development program running<br>2-3 mentoring relationships established',
+                p60Resources1: 'Leadership coaching<br>Training materials<br>Mentoring framework',
+                p60Cat2: 'Technical Growth',
+                p60Goals2: 'Complete first technical learning goal<br>Lead architecture discussion<br>Review code quality practices',
+                p60Metrics2: '1 certification/course completed<br>Architecture proposal presented<br>Code review process improved',
+                p60Resources2: 'Learning resources<br>Architecture tools<br>Code analysis tools',
+                p60Cat3: 'Team Performance',
+                p60Goals3: 'Improve deployment frequency<br>Reduce lead time by 20%<br>Increase team satisfaction score',
+                p60Metrics3: 'DORA metrics improved<br>Lead time reduction achieved<br>Team NPS increased by 10+',
+                p60Resources3: 'CI/CD improvements<br>Process optimization<br>Team feedback tools',
+                p60Cat4: 'Strategic Impact',
+                p60Goals4: 'Deliver key business milestone<br>Propose process improvements<br>Build cross-team relationships',
+                p60Metrics4: 'Milestone delivered on time<br>2-3 process improvements adopted<br>3-4 peer relationships established',
+                p60Resources4: 'Project resources<br>Change management<br>Networking opportunities',
+                p60MetricsHeading: '📈 60-Day Success Metrics',
+                p60Metric1: 'Team velocity improved by 15% compared to baseline',
+                p60Metric2: 'One major technical skill advancement completed (certification, course, etc.)',
+                p60Metric3: 'Process improvement implemented resulting in measurable efficiency gain',
+                p60Metric4: 'Positive feedback received from stakeholders on team collaboration',
+                p60ReflectionLabel: '60-Day Reflection Notes:',
+                p60ReflectionPh: "Progress on goals? What's working well? Where are you struggling? Adjustments needed for final 30 days...",
+                p90Header: '90 Days: Mastery & Strategic Planning',
+                p90FocusTitle: '🏆 Primary Focus',
+                p90FocusText: 'Demonstrate mastery of new skills, deliver significant team improvements, and establish plans for continued growth beyond 90 days.',
+                p90OutcomesTitle: '🚀 Key Outcomes',
+                p90OutcomesText: 'Measurable team performance improvement, personal skill advancement, and next 90-day growth plan established.',
+                p90Cat1: 'Leadership Mastery',
+                p90Goals1: 'Lead cross-team initiative<br>Present to senior leadership<br>Mentor other managers',
+                p90Metrics1: 'Initiative successfully delivered<br>Executive presentation completed<br>1-2 peer mentoring relationships',
+                p90Resources1: 'Project resources<br>Presentation tools<br>Mentoring framework',
+                p90Cat2: 'Technical Leadership',
+                p90Goals2: 'Drive significant architecture decision<br>Establish tech standards<br>Lead technical community',
+                p90Metrics2: 'Architecture decision adopted<br>Standards documented & followed<br>Tech community engagement',
+                p90Resources2: 'Architecture tools<br>Documentation platform<br>Community forums',
+                p90Cat3: 'Team Excellence',
+                p90Goals3: 'Achieve top-quartile DORA metrics<br>Team recognized for achievement<br>Zero production incidents',
+                p90Metrics3: 'Metrics in top 25%<br>External recognition received<br>Reliability targets met',
+                p90Resources3: 'Monitoring tools<br>Recognition platforms<br>Reliability practices',
+                p90Cat4: 'Future Planning',
+                p90Goals4: 'Create next 90-day plan<br>Identify promotion readiness<br>Plan team expansion/changes',
+                p90Metrics4: 'Next plan completed<br>Career progression plan defined<br>Team roadmap updated',
+                p90Resources4: 'Planning templates<br>Career framework<br>Resource planning',
+                p90MetricsHeading: '📈 90-Day Success Metrics',
+                p90Metric1: 'Team consistently delivering 25% faster than original baseline',
+                p90Metric2: 'Personal technical skills advanced to support team architecture decisions',
+                p90Metric3: 'Led successful cross-team project or initiative',
+                p90Metric4: 'Received positive performance feedback and clear path for next growth phase',
+                p90Metric5: 'Team members report increased job satisfaction and professional growth',
+                p90ReflectionLabel: '90-Day Final Reflection & Next Steps:',
+                p90ReflectionPh: 'Overall assessment of growth achieved? Key lessons learned? What exceeded expectations? Areas still needing work? Priorities for next 90-day cycle...',
+                footerTipLabel: '💡 Pro Tip:',
+                footerTipText: 'Save this template, review progress weekly, and adjust goals based on changing business priorities and team needs. Share with your manager for alignment and support.'
+            },
+            zh: {
+                pageTitle: '工程主管個人 30/60/90 天行動計畫',
+                mainTitle: '工程主管個人 30/60/90 天行動計畫',
+                descPurposeLabel: '用途：',
+                descPurposeText: '這份範本幫助工程主管建立一份聚焦領導力成長、技術技能與團隊影響力的結構化個人發展計畫。跟新人 onboarding 計畫不同，這裡聚焦的是持續的專業發展與策略性職涯進展。',
+                descHowLabel: '使用方式：',
+                descHowText: '為每個時間區段設定具體、可衡量的目標。聚焦在建立技能、關係，並產出可衡量的影響力。定期檢視並依照進度與優先順序變化調整計畫。',
+                labelManagerName: '主管姓名：',
+                phYourName: '你的名字',
+                labelStartDate: '計畫開始日期：',
+                labelReportingManager: '回報對象：',
+                phManagerName: '你主管的名字',
+                labelTeamSize: '團隊規模：',
+                phTeamSize: '直屬部屬人數',
+                thGoalCategory: '目標類別',
+                thSpecificGoals: '具體目標',
+                thSuccessMetrics: '成功指標',
+                thResourcesNeeded: '所需資源',
+                p30Header: '前 30 天：打底與評估',
+                p30FocusTitle: '🎯 主要重點',
+                p30FocusText: '評估目前狀態、找出技能缺口，並為團隊表現與個人效能建立基準指標。',
+                p30OutcomesTitle: '📊 關鍵成果',
+                p30OutcomesText: '完成技能評估、建立 1:1 節奏、確立團隊基準指標、制定學習計畫。',
+                p30Cat1: '領導技能',
+                p30Goals1: '完成領導力 360 評估<br>安排與所有團隊成員的 1:1<br>找出可指導的機會',
+                p30Metrics1: '已收集 360 回饋<br>已建立 1:1 排程<br>已找出 2-3 個指導領域',
+                p30Resources1: '360 評估工具<br>行事曆時間規劃<br>回饋收集機制',
+                p30Cat2: '技術成長',
+                p30Goals2: '評估目前技術堆疊的了解程度<br>找出架構缺口<br>制定學習藍圖',
+                p30Metrics2: '完成技能矩陣<br>定義 3-5 個學習目標<br>制定學習計畫',
+                p30Resources2: '技術評估<br>團隊架構文件<br>線上課程/書籍',
+                p30Cat3: '團隊表現',
+                p30Goals3: '建立 DORA 指標基準<br>檢視目前 sprint 流程<br>評估團隊滿意度',
+                p30Metrics3: '建立指標儀表板<br>記錄流程缺口<br>完成團隊調查',
+                p30Resources3: '監控工具<br>調查平台<br>流程文件',
+                p30Cat4: '利害關係人關係',
+                p30Goals4: '盤點關鍵利害關係人<br>安排與利害關係人的會議<br>了解業務優先順序',
+                p30Metrics4: '完成利害關係人地圖<br>已進行 5-7 場初次會議<br>已定義優先順序矩陣',
+                p30Resources4: '組織圖存取權限<br>會議排程<br>業務背景文件',
+                p30MetricsHeading: '📈 30 天成功指標',
+                p30Metric1: '已建立團隊 velocity 基準（3 個 sprint 平均）',
+                p30Metric2: '100% 團隊成員已完成初次 1:1 評估',
+                p30Metric3: '已建立個人發展計畫，含 3-5 個具體學習目標',
+                p30Metric4: '已在團隊優先順序與期望上與利害關係人達成共識',
+                p30ReflectionLabel: '30 天反思筆記：',
+                p30ReflectionPh: '哪些事做得不錯？遇到什麼挑戰？如果重來會怎麼做不同？獲得了哪些關鍵洞察……',
+                p60Header: '60 天：落實與優化',
+                p60FocusTitle: '⚙️ 主要重點',
+                p60FocusText: '根據初步評估落實改善措施、優化流程，並開始對團隊表現產出可衡量的影響力。',
+                p60OutcomesTitle: '📊 關鍵成果',
+                p60OutcomesText: '已落實流程改善、團隊表現呈上升趨勢、個人技能發展有明顯進展。',
+                p60Cat1: '領導技能',
+                p60Goals1: '落實 360 回饋的改善行動<br>啟動團隊發展方案<br>開始指導高潛力 IC',
+                p60Metrics1: '已處理 2-3 個改善領域<br>發展方案已運作<br>已建立 2-3 段指導關係',
+                p60Resources1: '領導力教練指導<br>培訓教材<br>指導架構',
+                p60Cat2: '技術成長',
+                p60Goals2: '完成第一個技術學習目標<br>主持架構討論<br>檢視程式碼品質實務',
+                p60Metrics2: '完成 1 項認證/課程<br>已提出架構提案<br>程式碼審查流程已改善',
+                p60Resources2: '學習資源<br>架構工具<br>程式碼分析工具',
+                p60Cat3: '團隊表現',
+                p60Goals3: '提升部署頻率<br>將前置時間縮短 20%<br>提升團隊滿意度分數',
+                p60Metrics3: 'DORA 指標已改善<br>已達成前置時間縮短<br>團隊 NPS 提升 10 分以上',
+                p60Resources3: 'CI/CD 改善<br>流程優化<br>團隊回饋工具',
+                p60Cat4: '策略影響力',
+                p60Goals4: '交付關鍵業務里程碑<br>提出流程改善建議<br>建立跨團隊關係',
+                p60Metrics4: '里程碑準時交付<br>採納 2-3 項流程改善<br>建立 3-4 段跨部門關係',
+                p60Resources4: '專案資源<br>變革管理<br>人脈拓展機會',
+                p60MetricsHeading: '📈 60 天成功指標',
+                p60Metric1: '團隊 velocity 較基準提升 15%',
+                p60Metric2: '完成一項重大技術技能提升（認證、課程等）',
+                p60Metric3: '已落實流程改善並帶來可衡量的效率提升',
+                p60Metric4: '收到利害關係人對團隊協作的正面回饋',
+                p60ReflectionLabel: '60 天反思筆記：',
+                p60ReflectionPh: '目標進展如何？哪些做得順利？在哪裡卡關？最後 30 天需要哪些調整……',
+                p90Header: '90 天：精熟與策略規劃',
+                p90FocusTitle: '🏆 主要重點',
+                p90FocusText: '展現新技能的精熟度、交付顯著的團隊改善成果，並為 90 天之後的持續成長制定計畫。',
+                p90OutcomesTitle: '🚀 關鍵成果',
+                p90OutcomesText: '可衡量的團隊表現提升、個人技能進階，並已建立下一個 90 天的成長計畫。',
+                p90Cat1: '領導力精熟',
+                p90Goals1: '主導跨團隊專案<br>向高階主管簡報<br>指導其他主管',
+                p90Metrics1: '專案成功交付<br>完成高階主管簡報<br>建立 1-2 段同儕指導關係',
+                p90Resources1: '專案資源<br>簡報工具<br>指導架構',
+                p90Cat2: '技術領導力',
+                p90Goals2: '主導重大架構決策<br>建立技術標準<br>領導技術社群',
+                p90Metrics2: '架構決策已被採納<br>標準已文件化並被遵循<br>技術社群參與度提升',
+                p90Resources2: '架構工具<br>文件平台<br>社群論壇',
+                p90Cat3: '團隊卓越',
+                p90Goals3: '達成前 25% 的 DORA 指標<br>團隊因成果受到肯定<br>零正式環境事件',
+                p90Metrics3: '指標排在前 25%<br>獲得外部肯定<br>達成可靠性目標',
+                p90Resources3: '監控工具<br>表揚平台<br>可靠性實務',
+                p90Cat4: '未來規劃',
+                p90Goals4: '制定下一個 90 天計畫<br>評估晉升準備度<br>規劃團隊擴編/調整',
+                p90Metrics4: '完成下一份計畫<br>已定義職涯發展計畫<br>已更新團隊藍圖',
+                p90Resources4: '規劃範本<br>職涯框架<br>資源規劃',
+                p90MetricsHeading: '📈 90 天成功指標',
+                p90Metric1: '團隊持續交付速度比原始基準快 25%',
+                p90Metric2: '個人技術能力已進階到能支撐團隊架構決策',
+                p90Metric3: '成功主導跨團隊專案或提案',
+                p90Metric4: '收到正面績效回饋，並清楚知道下一步成長方向',
+                p90Metric5: '團隊成員回報工作滿意度與專業成長都有提升',
+                p90ReflectionLabel: '90 天最終反思與下一步：',
+                p90ReflectionPh: '整體來看達成了多少成長？學到哪些關鍵教訓？哪些超出預期？哪些領域還需要加強？下一個 90 天週期的優先順序……',
+                footerTipLabel: '💡 小提醒：',
+                footerTipText: '請保存這份範本，每週檢視進度，並依照業務優先順序與團隊需求的變化調整目標。與你的主管分享，取得對齊與支持。'
+            }
+        };
+
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (dict[key] !== undefined) el.textContent = dict[key];
+            });
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                const key = el.dataset.i18nHtml;
+                if (dict[key] !== undefined) el.innerHTML = dict[key];
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.dataset.i18nPh;
+                if (dict[key] !== undefined) el.placeholder = dict[key];
+            });
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        window.onload = function() {
+            renderLanguage();
+        };
+    </script>
+</body>
+</html>
