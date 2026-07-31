@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">AI Sentiment Analysis Prompt Template</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+        }
+
+        .header-bar {
+            position: relative;
+            text-align: center;
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #1a202c;
+            margin: 0;
+            font-size: 2.2em;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { background: #e0e7ff; }
+        .lang-btn.active { background: #667eea; color: white; }
+
+        .description {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .privacy-warning {
+            background: #fff5f5;
+            border: 2px solid #feb2b2;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 5px solid #f56565;
+        }
+
+        .data-source-selector {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 5px solid #4299e1;
+        }
+
+        .source-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .source-tab {
+            background: #e2e8f0;
+            border: 2px solid #cbd5e0;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .source-tab.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .source-tab:hover:not(.active) {
+            background: #cbd5e0;
+        }
+
+        .source-content {
+            display: none;
+        }
+
+        .source-content.active {
+            display: block;
+        }
+
+        .config-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 4px solid #28a745;
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .field {
+            margin-bottom: 15px;
+        }
+
+        .field-label {
+            font-weight: 600;
+            color: #2d3748;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .field-input, .field-select, .field-textarea {
+            border: 2px solid #e2e8f0;
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+
+        .field-input:focus, .field-select:focus, .field-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        .field-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .data-input-area {
+            min-height: 150px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+
+        .prompt-section {
+            margin-bottom: 30px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .prompt-header {
+            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+            color: white;
+            padding: 18px 25px;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .prompt-content {
+            padding: 25px;
+        }
+
+        .prompt-box {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            border: 1px solid #4a5568;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            position: relative;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .copy-button:hover {
+            background: #5a67d8;
+        }
+
+        .example-section {
+            background: #f0fff4;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #38a169;
+            margin-top: 20px;
+        }
+
+        .example-output {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 15px;
+            border: 1px solid #c6f6d5;
+        }
+
+        .sentiment-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin: 2px 4px;
+        }
+
+        .positive { background: #c6f6d5; color: #276749; }
+        .negative { background: #fed7d7; color: #c53030; }
+        .neutral { background: #e2e8f0; color: #4a5568; }
+        .mixed { background: #fef5e7; color: #dd6b20; }
+
+        .usage-steps {
+            background: #e6fffa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #38b2ac;
+            margin: 20px 0;
+        }
+
+        .step-number {
+            background: #38b2ac;
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .tips-section {
+            background: #fffaf0;
+            border: 2px solid #feb2b2;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .tip-icon {
+            background: #f6ad55;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .metric-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background: #5a67d8;
+        }
+
+        .btn-secondary {
+            background: #718096;
+        }
+
+        .btn-secondary:hover {
+            background: #4a5568;
+        }
+
+        .btn-success {
+            background: #38a169;
+        }
+
+        .btn-success:hover {
+            background: #2f855a;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; padding: 0; }
+            .actions { display: none; }
+            .copy-button { display: none; }
+            .lang-switcher { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            .config-grid { grid-template-columns: 1fr; }
+            .source-tabs { flex-direction: column; }
+            .metric-grid { grid-template-columns: repeat(2, 1fr); }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1 data-i18n="mainTitle">💭 AI Sentiment Analysis Generator</h1>
+        </div>
+
+        <div class="description">
+            <strong data-i18n="descPurposeLabel">Purpose:</strong> <span data-i18n="descPurposeText">This template creates AI prompts to analyze team sentiment from surveys, Slack messages, Teams chats, or other feedback sources. Get instant insights into team morale, identify concerns early, and track sentiment trends over time. Compatible with ChatGPT, Claude, and other AI tools.</span>
+        </div>
+
+        <div class="privacy-warning">
+            <strong data-i18n="privacyLabel">🔒 Privacy & Ethics Notice:</strong> <span data-i18n="privacyText">Always ensure you have proper consent before analyzing team communications. Remove personally identifiable information and follow your organization's data privacy policies. Consider anonymizing data and being transparent with your team about sentiment analysis usage.</span>
+        </div>
+
+        <!-- Data Source Selection -->
+        <div class="data-source-selector">
+            <h3 data-i18n="step1Heading">Step 1: Select Data Source Type</h3>
+            <div class="source-tabs">
+                <div class="source-tab active" onclick="switchSource('survey')" data-i18n="tabSurvey">📋 Survey Responses</div>
+                <div class="source-tab" onclick="switchSource('slack')" data-i18n="tabSlack">💬 Slack/Teams Messages</div>
+                <div class="source-tab" onclick="switchSource('feedback')" data-i18n="tabFeedback">📝 Written Feedback</div>
+                <div class="source-tab" onclick="switchSource('retrospective')" data-i18n="tabRetro">🔄 Retrospective Notes</div>
+                <div class="source-tab" onclick="switchSource('custom')" data-i18n="tabCustom">⚙️ Custom Analysis</div>
+            </div>
+
+            <div id="survey-content" class="source-content active">
+                <h4 data-i18n="surveyHeading">Survey Response Analysis</h4>
+                <p data-i18n="surveyIntro">Perfect for analyzing anonymous survey responses, culture surveys, or feedback forms.</p>
+                <div class="field">
+                    <span class="field-label" data-i18n="surveyTopicLabel">Survey Topic/Title:</span>
+                    <input type="text" class="field-input" id="survey-topic" data-i18n-ph="surveyTopicPh" placeholder="e.g., Q1 Team Culture Survey, Post-Sprint Feedback">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="responseDataLabel">Response Data:</span>
+                    <textarea class="field-textarea data-input-area" id="survey-data" data-i18n-ph="surveyDataPh" placeholder="Paste your survey responses here... Each response on a new line or separated by clear delimiters."></textarea>
+                </div>
+            </div>
+
+            <div id="slack-content" class="source-content">
+                <h4 data-i18n="slackHeading">Slack/Teams Message Analysis</h4>
+                <p data-i18n="slackIntro">Analyze team communication patterns and sentiment from chat messages.</p>
+                <div class="field">
+                    <span class="field-label" data-i18n="slackContextLabel">Channel/Context:</span>
+                    <input type="text" class="field-input" id="slack-context" data-i18n-ph="slackContextPh" placeholder="e.g., #engineering-team, Sprint Planning Channel, All-Hands Q&A">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="messageDataLabel">Message Data:</span>
+                    <textarea class="field-textarea data-input-area" id="slack-data" data-i18n-ph="slackDataPh" placeholder="Paste messages here... Remove usernames and timestamps if needed for privacy."></textarea>
+                </div>
+            </div>
+
+            <div id="feedback-content" class="source-content">
+                <h4 data-i18n="feedbackHeading">Written Feedback Analysis</h4>
+                <p data-i18n="feedbackIntro">Analyze written feedback from 1:1s, performance reviews, or feedback sessions.</p>
+                <div class="field">
+                    <span class="field-label" data-i18n="feedbackContextLabel">Feedback Context:</span>
+                    <input type="text" class="field-input" id="feedback-context" data-i18n-ph="feedbackContextPh" placeholder="e.g., Monthly 1:1 Feedback, Performance Review Comments">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="feedbackDataLabel">Feedback Data:</span>
+                    <textarea class="field-textarea data-input-area" id="feedback-data" data-i18n-ph="feedbackDataPh" placeholder="Paste feedback comments here..."></textarea>
+                </div>
+            </div>
+
+            <div id="retrospective-content" class="source-content">
+                <h4 data-i18n="retroHeading">Retrospective Notes Analysis</h4>
+                <p data-i18n="retroIntro">Analyze team retrospective feedback to identify patterns and sentiment trends.</p>
+                <div class="field">
+                    <span class="field-label" data-i18n="retroContextLabel">Retrospective Context:</span>
+                    <input type="text" class="field-input" id="retro-context" data-i18n-ph="retroContextPh" placeholder="e.g., Sprint 23 Retro, Q1 Team Retrospective">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="retroDataLabel">Retrospective Data:</span>
+                    <textarea class="field-textarea data-input-area" id="retro-data" data-i18n-ph="retroDataPh" placeholder="Paste retrospective comments (Start/Stop/Continue, Mad/Sad/Glad, etc.)"></textarea>
+                </div>
+            </div>
+
+            <div id="custom-content" class="source-content">
+                <h4 data-i18n="customHeading">Custom Analysis</h4>
+                <p data-i18n="customIntro">Define your own analysis parameters for specific use cases.</p>
+                <div class="field">
+                    <span class="field-label" data-i18n="customContextLabel">Analysis Context:</span>
+                    <input type="text" class="field-input" id="custom-context" data-i18n-ph="customContextPh" placeholder="e.g., Exit Interview Themes, Product Launch Feedback">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="customDataLabel">Custom Data:</span>
+                    <textarea class="field-textarea data-input-area" id="custom-data" data-i18n-ph="customDataPh" placeholder="Paste your data here..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuration Section -->
+        <div class="config-section">
+            <h3 data-i18n="step2Heading">Step 2: Analysis Configuration</h3>
+            <div class="config-grid">
+                <div class="field">
+                    <span class="field-label" data-i18n="teamNameLabel">Team/Department:</span>
+                    <input type="text" class="field-input" id="team-name" data-i18n-ph="teamNamePh" placeholder="e.g., Engineering Team, Platform Squad">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="timePeriodLabel">Time Period:</span>
+                    <input type="text" class="field-input" id="time-period" data-i18n-ph="timePeriodPh" placeholder="e.g., January 2024, Sprint 15, Last Quarter">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="analysisFocusLabel">Analysis Focus:</span>
+                    <select class="field-select" id="analysis-focus">
+                        <option value="general" data-i18n="focusGeneral">General Sentiment</option>
+                        <option value="morale" data-i18n="focusMorale">Team Morale</option>
+                        <option value="processes" data-i18n="focusProcesses">Process Satisfaction</option>
+                        <option value="leadership" data-i18n="focusLeadership">Leadership Perception</option>
+                        <option value="workload" data-i18n="focusWorkload">Workload & Stress</option>
+                        <option value="collaboration" data-i18n="focusCollaboration">Team Collaboration</option>
+                        <option value="growth" data-i18n="focusGrowth">Growth & Development</option>
+                        <option value="culture" data-i18n="focusCulture">Culture & Environment</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="responseCountLabel">Response Count:</span>
+                    <input type="number" class="field-input" id="response-count" data-i18n-ph="responseCountPh" placeholder="e.g., 15">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="sensitivityLabel">Sensitivity Level:</span>
+                    <select class="field-select" id="sensitivity-level">
+                        <option value="standard" data-i18n="sensStandard">Standard Analysis</option>
+                        <option value="sensitive" data-i18n="sensHigh">High Sensitivity (detect subtle concerns)</option>
+                        <option value="conservative" data-i18n="sensConservative">Conservative (focus on clear patterns)</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="outputFormatLabel">Output Format:</span>
+                    <select class="field-select" id="output-format">
+                        <option value="executive" data-i18n="outExecutive">Executive Summary</option>
+                        <option value="detailed" data-i18n="outDetailed">Detailed Analysis</option>
+                        <option value="actionable" data-i18n="outActionable">Action-Focused Report</option>
+                        <option value="trends" data-i18n="outTrends">Trend Analysis</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage Instructions -->
+        <div class="usage-steps">
+            <h4 data-i18n="howToUseHeading">How to Use This Template</h4>
+            <div class="step-item"><span class="step-number">1</span><span data-i18n="usageStep1">Select your data source type and paste your data</span></div>
+            <div class="step-item"><span class="step-number">2</span><span data-i18n="usageStep2">Configure analysis parameters (team, focus area, etc.)</span></div>
+            <div class="step-item"><span class="step-number">3</span><span data-i18n="usageStep3">Click "Generate Prompt" to create your AI analysis prompt</span></div>
+            <div class="step-item"><span class="step-number">4</span><span data-i18n="usageStep4">Copy the prompt and paste into ChatGPT, Claude, or your preferred AI tool</span></div>
+            <div class="step-item"><span class="step-number">5</span><span data-i18n="usageStep5">Review results and take action based on insights</span></div>
+        </div>
+
+        <!-- Generated Prompt Section -->
+        <div class="prompt-section">
+            <div class="prompt-header"><span data-i18n="step3Heading">Step 3: Generated AI Analysis Prompt</span></div>
+            <div class="prompt-content">
+                <div class="prompt-box" id="generated-prompt" data-i18n="promptPlaceholder">
+Configure your analysis settings above and click "Generate Prompt" to create your customized sentiment analysis prompt.
+                </div>
+                <button class="copy-button" id="copyBtn" onclick="copyPrompt()">Copy Prompt</button>
+            </div>
+        </div>
+
+        <!-- Example Output Section -->
+        <div class="example-section">
+            <h4 data-i18n="exampleHeading">📊 Example AI Analysis Output</h4>
+            <p data-i18n="exampleIntro">Here's what the AI might generate for a team culture survey:</p>
+
+            <div class="example-output">
+                <h5 data-i18n="exSummaryHeading">Sentiment Analysis Summary</h5>
+                <div class="metric-grid">
+                    <div class="metric-card"><div class="metric-value positive">72%</div><div class="metric-label" data-i18n="metricPositive">Positive</div></div>
+                    <div class="metric-card"><div class="metric-value neutral">20%</div><div class="metric-label" data-i18n="metricNeutral">Neutral</div></div>
+                    <div class="metric-card"><div class="metric-value negative">8%</div><div class="metric-label" data-i18n="metricNegative">Negative</div></div>
+                    <div class="metric-card"><div class="metric-value">7.2/10</div><div class="metric-label" data-i18n="metricOverall">Overall Score</div></div>
+                </div>
+
+                <h5 data-i18n="themesHeading">Key Themes Identified</h5>
+                <p><span class="sentiment-badge positive" data-i18n="badgePositive">Positive</span> <strong data-i18n="theme1Label">Team Collaboration:</strong> <span data-i18n="theme1Text">Strong appreciation for peer support and knowledge sharing</span></p>
+                <p><span class="sentiment-badge positive" data-i18n="badgePositive">Positive</span> <strong data-i18n="theme2Label">Technical Growth:</strong> <span data-i18n="theme2Text">Team members feel they're learning and developing skills</span></p>
+                <p><span class="sentiment-badge neutral" data-i18n="badgeNeutral">Neutral</span> <strong data-i18n="theme3Label">Work-Life Balance:</strong> <span data-i18n="theme3Text">Mixed responses, some stress during sprint deadlines</span></p>
+                <p><span class="sentiment-badge negative" data-i18n="badgeConcern">Concern</span> <strong data-i18n="theme4Label">Communication:</strong> <span data-i18n="theme4Text">Several mentions of unclear requirements and changing priorities</span></p>
+
+                <h5 data-i18n="actionsHeading">Recommended Actions</h5>
+                <ul>
+                    <li><strong data-i18n="actImmediateLabel">Immediate:</strong> <span data-i18n="actImmediateText">Address communication gaps in requirements gathering</span></li>
+                    <li><strong data-i18n="actShortLabel">Short-term:</strong> <span data-i18n="actShortText">Implement better sprint planning to reduce deadline pressure</span></li>
+                    <li><strong data-i18n="actLongLabel">Long-term:</strong> <span data-i18n="actLongText">Continue fostering the positive collaboration culture</span></li>
+                </ul>
+
+                <h5 data-i18n="riskHeading">Risk Indicators</h5>
+                <p>⚠️ <strong data-i18n="riskModerateLabel">Moderate Risk:</strong> <span data-i18n="riskModerateText">3 responses mentioned feeling "overwhelmed" - monitor workload distribution</span></p>
+                <p>✅ <strong data-i18n="riskLowLabel">Low Risk:</strong> <span data-i18n="riskLowText">No indicators of burnout or team conflict</span></p>
+            </div>
+        </div>
+
+        <!-- Tips Section -->
+        <div class="tips-section">
+            <h4 data-i18n="tipsHeading">💡 Best Practices & Tips</h4>
+            <div class="tip-item"><div class="tip-icon">1</div><div><strong data-i18n="tip1Label">Privacy First:</strong> <span data-i18n="tip1Text">Always anonymize data and get consent before analyzing team communications. Focus on themes, not individuals.</span></div></div>
+            <div class="tip-item"><div class="tip-icon">2</div><div><strong data-i18n="tip2Label">Context Matters:</strong> <span data-i18n="tip2Text">Provide the AI with context about recent events (launches, reorganizations, etc.) that might influence sentiment.</span></div></div>
+            <div class="tip-item"><div class="tip-icon">3</div><div><strong data-i18n="tip3Label">Regular Analysis:</strong> <span data-i18n="tip3Text">Run sentiment analysis monthly or quarterly to track trends and identify patterns over time.</span></div></div>
+            <div class="tip-item"><div class="tip-icon">4</div><div><strong data-i18n="tip4Label">Action-Oriented:</strong> <span data-i18n="tip4Text">Always ask the AI to provide specific, actionable recommendations based on the sentiment findings.</span></div></div>
+            <div class="tip-item"><div class="tip-icon">5</div><div><strong data-i18n="tip5Label">Validate Insights:</strong> <span data-i18n="tip5Text">Cross-reference AI analysis with your own observations and follow up with 1:1 conversations when needed.</span></div></div>
+            <div class="tip-item"><div class="tip-icon">6</div><div><strong data-i18n="tip6Label">Share Transparently:</strong> <span data-i18n="tip6Text">Consider sharing sentiment trends (not individual responses) with the team to show you're listening.</span></div></div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-success" id="btnGenerate" onclick="generatePrompt()">Generate Prompt</button>
+            <button class="btn" id="btnPrint" onclick="window.print()">Print Template</button>
+            <button class="btn btn-secondary" id="btnDownload" onclick="downloadTemplate()">Download Template</button>
+            <button class="btn btn-secondary" id="btnReset" onclick="resetForm()">Reset Form</button>
+        </div>
+    </div>
+
+    <script>
+        const I18N = {
+            en: {
+                pageTitle: 'AI Sentiment Analysis Prompt Template',
+                mainTitle: '💭 AI Sentiment Analysis Generator',
+                descPurposeLabel: 'Purpose:',
+                descPurposeText: 'This template creates AI prompts to analyze team sentiment from surveys, Slack messages, Teams chats, or other feedback sources. Get instant insights into team morale, identify concerns early, and track sentiment trends over time. Compatible with ChatGPT, Claude, and other AI tools.',
+                privacyLabel: '🔒 Privacy & Ethics Notice:',
+                privacyText: "Always ensure you have proper consent before analyzing team communications. Remove personally identifiable information and follow your organization's data privacy policies. Consider anonymizing data and being transparent with your team about sentiment analysis usage.",
+                step1Heading: 'Step 1: Select Data Source Type',
+                tabSurvey: '📋 Survey Responses', tabSlack: '💬 Slack/Teams Messages', tabFeedback: '📝 Written Feedback', tabRetro: '🔄 Retrospective Notes', tabCustom: '⚙️ Custom Analysis',
+                surveyHeading: 'Survey Response Analysis',
+                surveyIntro: 'Perfect for analyzing anonymous survey responses, culture surveys, or feedback forms.',
+                surveyTopicLabel: 'Survey Topic/Title:', surveyTopicPh: 'e.g., Q1 Team Culture Survey, Post-Sprint Feedback',
+                responseDataLabel: 'Response Data:', surveyDataPh: 'Paste your survey responses here... Each response on a new line or separated by clear delimiters.',
+                slackHeading: 'Slack/Teams Message Analysis',
+                slackIntro: 'Analyze team communication patterns and sentiment from chat messages.',
+                slackContextLabel: 'Channel/Context:', slackContextPh: 'e.g., #engineering-team, Sprint Planning Channel, All-Hands Q&A',
+                messageDataLabel: 'Message Data:', slackDataPh: 'Paste messages here... Remove usernames and timestamps if needed for privacy.',
+                feedbackHeading: 'Written Feedback Analysis',
+                feedbackIntro: 'Analyze written feedback from 1:1s, performance reviews, or feedback sessions.',
+                feedbackContextLabel: 'Feedback Context:', feedbackContextPh: 'e.g., Monthly 1:1 Feedback, Performance Review Comments',
+                feedbackDataLabel: 'Feedback Data:', feedbackDataPh: 'Paste feedback comments here...',
+                retroHeading: 'Retrospective Notes Analysis',
+                retroIntro: 'Analyze team retrospective feedback to identify patterns and sentiment trends.',
+                retroContextLabel: 'Retrospective Context:', retroContextPh: 'e.g., Sprint 23 Retro, Q1 Team Retrospective',
+                retroDataLabel: 'Retrospective Data:', retroDataPh: 'Paste retrospective comments (Start/Stop/Continue, Mad/Sad/Glad, etc.)',
+                customHeading: 'Custom Analysis',
+                customIntro: 'Define your own analysis parameters for specific use cases.',
+                customContextLabel: 'Analysis Context:', customContextPh: 'e.g., Exit Interview Themes, Product Launch Feedback',
+                customDataLabel: 'Custom Data:', customDataPh: 'Paste your data here...',
+                step2Heading: 'Step 2: Analysis Configuration',
+                teamNameLabel: 'Team/Department:', teamNamePh: 'e.g., Engineering Team, Platform Squad',
+                timePeriodLabel: 'Time Period:', timePeriodPh: 'e.g., January 2024, Sprint 15, Last Quarter',
+                analysisFocusLabel: 'Analysis Focus:',
+                focusGeneral: 'General Sentiment', focusMorale: 'Team Morale', focusProcesses: 'Process Satisfaction', focusLeadership: 'Leadership Perception',
+                focusWorkload: 'Workload & Stress', focusCollaboration: 'Team Collaboration', focusGrowth: 'Growth & Development', focusCulture: 'Culture & Environment',
+                responseCountLabel: 'Response Count:', responseCountPh: 'e.g., 15',
+                sensitivityLabel: 'Sensitivity Level:',
+                sensStandard: 'Standard Analysis', sensHigh: 'High Sensitivity (detect subtle concerns)', sensConservative: 'Conservative (focus on clear patterns)',
+                outputFormatLabel: 'Output Format:',
+                outExecutive: 'Executive Summary', outDetailed: 'Detailed Analysis', outActionable: 'Action-Focused Report', outTrends: 'Trend Analysis',
+                howToUseHeading: 'How to Use This Template',
+                usageStep1: 'Select your data source type and paste your data',
+                usageStep2: 'Configure analysis parameters (team, focus area, etc.)',
+                usageStep3: 'Click "Generate Prompt" to create your AI analysis prompt',
+                usageStep4: 'Copy the prompt and paste into ChatGPT, Claude, or your preferred AI tool',
+                usageStep5: 'Review results and take action based on insights',
+                step3Heading: 'Step 3: Generated AI Analysis Prompt',
+                promptPlaceholder: 'Configure your analysis settings above and click "Generate Prompt" to create your customized sentiment analysis prompt.',
+                copyBtn: 'Copy Prompt', copiedBtn: 'Copied!',
+                exampleHeading: '📊 Example AI Analysis Output',
+                exampleIntro: "Here's what the AI might generate for a team culture survey:",
+                exSummaryHeading: 'Sentiment Analysis Summary',
+                metricPositive: 'Positive', metricNeutral: 'Neutral', metricNegative: 'Negative', metricOverall: 'Overall Score',
+                themesHeading: 'Key Themes Identified',
+                badgePositive: 'Positive', badgeNeutral: 'Neutral', badgeConcern: 'Concern',
+                theme1Label: 'Team Collaboration:', theme1Text: 'Strong appreciation for peer support and knowledge sharing',
+                theme2Label: 'Technical Growth:', theme2Text: "Team members feel they're learning and developing skills",
+                theme3Label: 'Work-Life Balance:', theme3Text: 'Mixed responses, some stress during sprint deadlines',
+                theme4Label: 'Communication:', theme4Text: 'Several mentions of unclear requirements and changing priorities',
+                actionsHeading: 'Recommended Actions',
+                actImmediateLabel: 'Immediate:', actImmediateText: 'Address communication gaps in requirements gathering',
+                actShortLabel: 'Short-term:', actShortText: 'Implement better sprint planning to reduce deadline pressure',
+                actLongLabel: 'Long-term:', actLongText: 'Continue fostering the positive collaboration culture',
+                riskHeading: 'Risk Indicators',
+                riskModerateLabel: 'Moderate Risk:', riskModerateText: '3 responses mentioned feeling "overwhelmed" - monitor workload distribution',
+                riskLowLabel: 'Low Risk:', riskLowText: 'No indicators of burnout or team conflict',
+                tipsHeading: '💡 Best Practices & Tips',
+                tip1Label: 'Privacy First:', tip1Text: 'Always anonymize data and get consent before analyzing team communications. Focus on themes, not individuals.',
+                tip2Label: 'Context Matters:', tip2Text: 'Provide the AI with context about recent events (launches, reorganizations, etc.) that might influence sentiment.',
+                tip3Label: 'Regular Analysis:', tip3Text: 'Run sentiment analysis monthly or quarterly to track trends and identify patterns over time.',
+                tip4Label: 'Action-Oriented:', tip4Text: 'Always ask the AI to provide specific, actionable recommendations based on the sentiment findings.',
+                tip5Label: 'Validate Insights:', tip5Text: 'Cross-reference AI analysis with your own observations and follow up with 1:1 conversations when needed.',
+                tip6Label: 'Share Transparently:', tip6Text: "Consider sharing sentiment trends (not individual responses) with the team to show you're listening.",
+                btnGenerate: 'Generate Prompt', btnPrint: 'Print Template', btnDownload: 'Download Template', btnReset: 'Reset Form',
+                resetConfirm: 'Are you sure you want to reset all fields? This will clear all your data.',
+                teamNameFallback: '[TEAM_NAME]', timePeriodFallback: '[TIME_PERIOD]', numberFallback: '[NUMBER]',
+                surveyContextFallback: '[SURVEY_CONTEXT]', surveyDataFallback: '[PASTE_SURVEY_DATA_HERE]',
+                channelContextFallback: '[CHANNEL_CONTEXT]', messagesFallback: '[PASTE_MESSAGES_HERE]',
+                feedbackContextFallback: '[FEEDBACK_CONTEXT]', feedbackDataFallback: '[PASTE_FEEDBACK_HERE]',
+                retroContextFallback: '[RETROSPECTIVE_CONTEXT]', retroDataFallback: '[PASTE_RETRO_DATA_HERE]',
+                customContextFallback: '[CUSTOM_CONTEXT]', customDataFallback: '[PASTE_CUSTOM_DATA_HERE]',
+                focusDescGeneral: 'overall team sentiment and satisfaction',
+                focusDescMorale: 'team morale, motivation, and energy levels',
+                focusDescProcesses: 'satisfaction with development processes, tools, and workflows',
+                focusDescLeadership: 'perception of leadership, management, and decision-making',
+                focusDescWorkload: 'workload balance, stress levels, and work-life balance',
+                focusDescCollaboration: 'team collaboration, communication, and relationships',
+                focusDescGrowth: 'professional development, learning opportunities, and career growth',
+                focusDescCulture: 'team culture, values alignment, and psychological safety',
+                outDescExecutive: 'concise executive summary with key insights and recommendations',
+                outDescDetailed: 'comprehensive analysis with detailed breakdowns and examples',
+                outDescActionable: 'action-focused report with specific next steps and priorities',
+                outDescTrends: 'trend analysis highlighting patterns and changes over time',
+                promptIntro: 'You are an expert in team sentiment analysis and organizational psychology. Please analyze the following feedback data from',
+                promptCollectedDuring: 'collected during',
+                promptContextHeading: '**Analysis Context:**',
+                pDataSource: '- Data Source:', pTeam: '- Team:', pTimePeriod: '- Time Period:', pNumResponses: '- Number of Responses: ~', pFocusArea: '- Focus Area:', pSensitivity: '- Analysis Sensitivity:', pOutputFormat: '- Output Format:',
+                dataToAnalyzeHeading: '**Data to Analyze:**',
+                instructionsHeading: '**Analysis Instructions:**',
+                instructionsIntro: 'Please provide a comprehensive sentiment analysis that includes:',
+                item1: '1. **Overall Sentiment Score** (1-10 scale with explanation)',
+                item2: '2. **Sentiment Breakdown** (% positive, neutral, negative responses)',
+                item3: '3. **Key Themes Identified** (categorize and prioritize major themes)',
+                item4: '4. **Emotional Indicators** (stress, satisfaction, frustration, excitement, etc.)',
+                item5: '5. **Risk Assessment** (identify potential issues or concerns)',
+                item6: "6. **Positive Highlights** (what's working well that should be maintained)",
+                item7: '7. **Areas of Concern** (specific issues that need attention)',
+                item8: '8. **Actionable Recommendations** (immediate, short-term, and long-term actions)',
+                item9: '9. **Trend Indicators** (patterns that suggest improving/declining sentiment)',
+                specialHeading: '**Special Instructions:**',
+                spFocusPrefix: '- Focus specifically on',
+                spSensitivityPrefix: '- Use', spSensitivitySuffix: 'sensitivity when detecting sentiment nuances',
+                spEvidence: '- Provide evidence/quotes for major findings (anonymized)',
+                spMetrics: '- Suggest specific metrics to track for ongoing monitoring',
+                spContextPrefix: '- Consider the context of', spContextSuffix: 'when interpreting responses',
+                spFlag: '- Flag any responses that suggest urgent attention needed',
+                outputReqHeading: '**Output Requirements:**',
+                or1: '- Be objective and evidence-based',
+                or2: '- Provide specific, actionable insights',
+                or3: '- Use clear categories and ratings',
+                or4: '- Include both quantitative and qualitative analysis',
+                or5: '- Suggest follow-up questions or deeper investigation areas',
+                closingText: 'Please analyze this data and provide insights that will help improve team dynamics and address any concerns proactively.'
+            },
+            zh: {
+                pageTitle: 'AI 團隊情緒分析 Prompt 範本',
+                mainTitle: '💭 AI 團隊情緒分析產生器',
+                descPurposeLabel: '用途：',
+                descPurposeText: '這份範本會建立 AI prompt，用來分析來自問卷調查、Slack 訊息、Teams 對話或其他回饋來源的團隊情緒。快速掌握團隊士氣、及早發現疑慮，並追蹤情緒趨勢變化。相容於 ChatGPT、Claude 等 AI 工具。',
+                privacyLabel: '🔒 隱私與倫理提醒：',
+                privacyText: '分析團隊溝通內容前，務必先確認已取得適當同意。移除個人識別資訊，並遵守你組織的資料隱私政策。建議將資料匿名化，並對團隊透明說明情緒分析的用途。',
+                step1Heading: '步驟 1：選擇資料來源類型',
+                tabSurvey: '📋 問卷回覆', tabSlack: '💬 Slack/Teams 訊息', tabFeedback: '📝 書面回饋', tabRetro: '🔄 回顧會議筆記', tabCustom: '⚙️ 自訂分析',
+                surveyHeading: '問卷回覆分析',
+                surveyIntro: '非常適合分析匿名問卷回覆、文化調查，或意見回饋表單。',
+                surveyTopicLabel: '問卷主題/標題：', surveyTopicPh: '例如：Q1 團隊文化調查、Sprint 後回饋',
+                responseDataLabel: '回覆資料：', surveyDataPh: '把你的問卷回覆貼在這裡……每則回覆換行，或用明確分隔符號區隔。',
+                slackHeading: 'Slack/Teams 訊息分析',
+                slackIntro: '從聊天訊息中分析團隊溝通模式與情緒。',
+                slackContextLabel: '頻道/背景：', slackContextPh: '例如：#engineering-team、Sprint Planning 頻道、All-Hands Q&A',
+                messageDataLabel: '訊息資料：', slackDataPh: '把訊息貼在這裡……如需保護隱私，請移除使用者名稱與時間戳記。',
+                feedbackHeading: '書面回饋分析',
+                feedbackIntro: '分析來自 1:1、績效考核或回饋會議的書面回饋。',
+                feedbackContextLabel: '回饋背景：', feedbackContextPh: '例如：每月 1:1 回饋、績效考核意見',
+                feedbackDataLabel: '回饋資料：', feedbackDataPh: '把回饋意見貼在這裡……',
+                retroHeading: '回顧會議筆記分析',
+                retroIntro: '分析團隊回顧會議的回饋，找出模式與情緒趨勢。',
+                retroContextLabel: '回顧會議背景：', retroContextPh: '例如：Sprint 23 回顧、Q1 團隊回顧',
+                retroDataLabel: '回顧會議資料：', retroDataPh: '把回顧會議意見貼在這裡（Start/Stop/Continue、Mad/Sad/Glad 等格式）',
+                customHeading: '自訂分析',
+                customIntro: '針對特定使用情境，自訂你的分析參數。',
+                customContextLabel: '分析背景：', customContextPh: '例如：離職面談主題、產品上線回饋',
+                customDataLabel: '自訂資料：', customDataPh: '把你的資料貼在這裡……',
+                step2Heading: '步驟 2：分析設定',
+                teamNameLabel: '團隊/部門：', teamNamePh: '例如：工程團隊、Platform Squad',
+                timePeriodLabel: '時間範圍：', timePeriodPh: '例如：2024 年 1 月、Sprint 15、上一季',
+                analysisFocusLabel: '分析重點：',
+                focusGeneral: '整體情緒', focusMorale: '團隊士氣', focusProcesses: '流程滿意度', focusLeadership: '對領導層的觀感',
+                focusWorkload: '工作量與壓力', focusCollaboration: '團隊協作', focusGrowth: '成長與發展', focusCulture: '文化與環境',
+                responseCountLabel: '回覆數量：', responseCountPh: '例如：15',
+                sensitivityLabel: '敏感度等級：',
+                sensStandard: '標準分析', sensHigh: '高敏感度（偵測細微疑慮）', sensConservative: '保守（只聚焦明顯模式）',
+                outputFormatLabel: '輸出格式：',
+                outExecutive: '主管摘要', outDetailed: '詳細分析', outActionable: '行動導向報告', outTrends: '趨勢分析',
+                howToUseHeading: '如何使用這份範本',
+                usageStep1: '選擇你的資料來源類型並貼上資料',
+                usageStep2: '設定分析參數（團隊、重點領域等）',
+                usageStep3: '點選「產生 Prompt」建立你的 AI 分析 prompt',
+                usageStep4: '複製 prompt 並貼到 ChatGPT、Claude 或你偏好的 AI 工具',
+                usageStep5: '檢視結果並根據洞察採取行動',
+                step3Heading: '步驟 3：產生的 AI 分析 Prompt',
+                promptPlaceholder: '在上方設定你的分析選項，然後點選「產生 Prompt」建立你的客製化情緒分析 prompt。',
+                copyBtn: '複製 Prompt', copiedBtn: '已複製！',
+                exampleHeading: '📊 AI 分析輸出範例',
+                exampleIntro: '以下是 AI 針對一份團隊文化問卷可能產生的內容：',
+                exSummaryHeading: '情緒分析摘要',
+                metricPositive: '正面', metricNeutral: '中立', metricNegative: '負面', metricOverall: '整體分數',
+                themesHeading: '找出的關鍵主題',
+                badgePositive: '正面', badgeNeutral: '中立', badgeConcern: '疑慮',
+                theme1Label: '團隊協作：', theme1Text: '對同儕支援與知識分享有很高的肯定',
+                theme2Label: '技術成長：', theme2Text: '團隊成員感覺自己正在學習並發展技能',
+                theme3Label: '工作生活平衡：', theme3Text: '回覆意見不一，sprint 截止前有些壓力',
+                theme4Label: '溝通：', theme4Text: '多次提到需求不明確、優先順序常變動',
+                actionsHeading: '建議行動',
+                actImmediateLabel: '立即：', actImmediateText: '解決需求蒐集階段的溝通落差',
+                actShortLabel: '短期：', actShortText: '落實更好的 sprint 規劃以降低截止期壓力',
+                actLongLabel: '長期：', actLongText: '持續培養正向的協作文化',
+                riskHeading: '風險指標',
+                riskModerateLabel: '中度風險：', riskModerateText: '3 則回覆提到感到「不堪負荷」——請留意工作量分配',
+                riskLowLabel: '低風險：', riskLowText: '沒有出現過勞或團隊衝突的跡象',
+                tipsHeading: '💡 最佳實務與小技巧',
+                tip1Label: '隱私優先：', tip1Text: '分析團隊溝通內容前，務必先匿名化資料並取得同意。聚焦在主題，不是個人。',
+                tip2Label: '脈絡很重要：', tip2Text: '提供 AI 近期事件（上線、組織調整等）的背景，這些都可能影響情緒。',
+                tip3Label: '定期分析：', tip3Text: '每月或每季執行一次情緒分析，追蹤趨勢並找出長期模式。',
+                tip4Label: '以行動為導向：', tip4Text: '務必要求 AI 根據情緒分析結果提供具體、可執行的建議。',
+                tip5Label: '驗證洞察：', tip5Text: '將 AI 分析結果與你自己的觀察交叉比對，必要時透過 1:1 對話跟進。',
+                tip6Label: '透明分享：', tip6Text: '考慮與團隊分享情緒趨勢（不是個別回覆），展現你有在傾聽。',
+                btnGenerate: '產生 Prompt', btnPrint: '列印範本', btnDownload: '下載範本', btnReset: '重設表單',
+                resetConfirm: '確定要重設所有欄位嗎？這會清空你所有的資料。',
+                teamNameFallback: '[團隊名稱]', timePeriodFallback: '[時間範圍]', numberFallback: '[數字]',
+                surveyContextFallback: '[問卷背景]', surveyDataFallback: '[請貼上問卷資料]',
+                channelContextFallback: '[頻道背景]', messagesFallback: '[請貼上訊息內容]',
+                feedbackContextFallback: '[回饋背景]', feedbackDataFallback: '[請貼上回饋內容]',
+                retroContextFallback: '[回顧會議背景]', retroDataFallback: '[請貼上回顧會議資料]',
+                customContextFallback: '[自訂背景]', customDataFallback: '[請貼上自訂資料]',
+                focusDescGeneral: '整體團隊情緒與滿意度',
+                focusDescMorale: '團隊士氣、動機與能量狀態',
+                focusDescProcesses: '對開發流程、工具與工作流的滿意度',
+                focusDescLeadership: '對領導層、管理方式與決策的觀感',
+                focusDescWorkload: '工作量平衡、壓力程度與工作生活平衡',
+                focusDescCollaboration: '團隊協作、溝通與人際關係',
+                focusDescGrowth: '專業發展、學習機會與職涯成長',
+                focusDescCulture: '團隊文化、價值觀一致性與心理安全感',
+                outDescExecutive: '簡潔的主管摘要，含關鍵洞察與建議',
+                outDescDetailed: '完整分析，含詳細拆解與範例',
+                outDescActionable: '行動導向報告，含具體下一步與優先順序',
+                outDescTrends: '趨勢分析，凸顯隨時間變化的模式',
+                promptIntro: '你是團隊情緒分析與組織心理學專家。請分析以下來自',
+                promptCollectedDuring: '於期間收集的回饋資料：',
+                promptContextHeading: '**分析背景：**',
+                pDataSource: '- 資料來源：', pTeam: '- 團隊：', pTimePeriod: '- 時間範圍：', pNumResponses: '- 回覆數量：約 ', pFocusArea: '- 重點領域：', pSensitivity: '- 分析敏感度：', pOutputFormat: '- 輸出格式：',
+                dataToAnalyzeHeading: '**待分析資料：**',
+                instructionsHeading: '**分析指示：**',
+                instructionsIntro: '請提供完整的情緒分析，包含：',
+                item1: '1. **整體情緒分數**（1-10 分並附說明）',
+                item2: '2. **情緒分佈**（正面/中立/負面回覆百分比）',
+                item3: '3. **找出的關鍵主題**（分類並排出主要主題的優先順序）',
+                item4: '4. **情緒指標**（壓力、滿意度、挫折感、興奮感等）',
+                item5: '5. **風險評估**（找出潛在問題或疑慮）',
+                item6: '6. **正面亮點**（哪些做得好、應該維持的部分）',
+                item7: '7. **需關注領域**（需要注意的具體問題）',
+                item8: '8. **可執行建議**（立即/短期/長期的行動）',
+                item9: '9. **趨勢指標**（顯示情緒正在改善/惡化的模式）',
+                specialHeading: '**特別說明：**',
+                spFocusPrefix: '- 請特別聚焦在',
+                spSensitivityPrefix: '- 偵測情緒細微差異時請採用', spSensitivitySuffix: '敏感度',
+                spEvidence: '- 針對主要發現提供佐證/引述（已匿名化）',
+                spMetrics: '- 建議可供持續追蹤的具體指標',
+                spContextPrefix: '- 解讀回覆時請考量', spContextSuffix: '的背景脈絡',
+                spFlag: '- 標記出任何顯示需要緊急關注的回覆',
+                outputReqHeading: '**輸出要求：**',
+                or1: '- 保持客觀並以證據為依據',
+                or2: '- 提供具體、可執行的洞察',
+                or3: '- 使用清楚的分類與評分',
+                or4: '- 同時包含量化與質化分析',
+                or5: '- 建議後續追問或需要深入調查的方向',
+                closingText: '請分析這份資料，並提供能幫助改善團隊動態、主動處理疑慮的洞察。'
+            }
+        };
+
+        let currentSource = 'survey';
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+        const FOCUS_KEYS = { general: 'General', morale: 'Morale', processes: 'Processes', leadership: 'Leadership', workload: 'Workload', collaboration: 'Collaboration', growth: 'Growth', culture: 'Culture' };
+        const OUTPUT_KEYS = { executive: 'Executive', detailed: 'Detailed', actionable: 'Actionable', trends: 'Trends' };
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (dict[key] !== undefined) el.textContent = dict[key];
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.dataset.i18nPh;
+                if (dict[key] !== undefined) el.placeholder = dict[key];
+            });
+
+            document.getElementById('copyBtn').textContent = dict.copyBtn;
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            const promptEl = document.getElementById('generated-prompt');
+            if (promptEl.dataset.generated === 'true') {
+                generatePrompt();
+            } else {
+                promptEl.textContent = dict.promptPlaceholder;
+            }
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        function switchSource(sourceType) {
+            document.querySelectorAll('.source-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.querySelectorAll('.source-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(sourceType + '-content').classList.add('active');
+
+            currentSource = sourceType;
+        }
+
+        function generatePrompt() {
+            const dict = t();
+            const teamName = document.getElementById('team-name').value || dict.teamNameFallback;
+            const timePeriod = document.getElementById('time-period').value || dict.timePeriodFallback;
+            const analysisFocus = document.getElementById('analysis-focus').value || 'general';
+            const responseCount = document.getElementById('response-count').value || dict.numberFallback;
+            const sensitivityValue = document.getElementById('sensitivity-level').value || 'standard';
+            const outputValue = document.getElementById('output-format').value || 'executive';
+
+            let context = '';
+            let data = '';
+
+            switch(currentSource) {
+                case 'survey':
+                    context = document.getElementById('survey-topic').value || dict.surveyContextFallback;
+                    data = document.getElementById('survey-data').value || dict.surveyDataFallback;
+                    break;
+                case 'slack':
+                    context = document.getElementById('slack-context').value || dict.channelContextFallback;
+                    data = document.getElementById('slack-data').value || dict.messagesFallback;
+                    break;
+                case 'feedback':
+                    context = document.getElementById('feedback-context').value || dict.feedbackContextFallback;
+                    data = document.getElementById('feedback-data').value || dict.feedbackDataFallback;
+                    break;
+                case 'retrospective':
+                    context = document.getElementById('retro-context').value || dict.retroContextFallback;
+                    data = document.getElementById('retro-data').value || dict.retroDataFallback;
+                    break;
+                case 'custom':
+                    context = document.getElementById('custom-context').value || dict.customContextFallback;
+                    data = document.getElementById('custom-data').value || dict.customDataFallback;
+                    break;
+            }
+
+            const focusDesc = dict['focusDesc' + FOCUS_KEYS[analysisFocus]];
+            const outputDesc = dict['outDesc' + OUTPUT_KEYS[outputValue]];
+            const sensitivityLabel = dict[{standard: 'sensStandard', sensitive: 'sensHigh', conservative: 'sensConservative'}[sensitivityValue]];
+
+            const prompt = `${dict.promptIntro} ${teamName} ${dict.promptCollectedDuring} ${timePeriod}.
+
+${dict.promptContextHeading}
+${dict.pDataSource} ${context}
+${dict.pTeam} ${teamName}
+${dict.pTimePeriod} ${timePeriod}
+${dict.pNumResponses}${responseCount}
+${dict.pFocusArea} ${focusDesc}
+${dict.pSensitivity} ${sensitivityLabel}
+${dict.pOutputFormat} ${outputDesc}
+
+${dict.dataToAnalyzeHeading}
+${data}
+
+${dict.instructionsHeading}
+${dict.instructionsIntro}
+
+${dict.item1}
+${dict.item2}
+${dict.item3}
+${dict.item4}
+${dict.item5}
+${dict.item6}
+${dict.item7}
+${dict.item8}
+${dict.item9}
+
+${dict.specialHeading}
+${dict.spFocusPrefix} ${focusDesc}
+${dict.spSensitivityPrefix} ${sensitivityLabel} ${dict.spSensitivitySuffix}
+${dict.spEvidence}
+${dict.spMetrics}
+${dict.spContextPrefix} ${context} ${dict.spContextSuffix}
+${dict.spFlag}
+
+${dict.outputReqHeading}
+${dict.or1}
+${dict.or2}
+${dict.or3}
+${dict.or4}
+${dict.or5}
+
+${dict.closingText}`;
+
+            const promptEl = document.getElementById('generated-prompt');
+            promptEl.textContent = prompt;
+            promptEl.dataset.generated = 'true';
+            autoSave();
+        }
+
+        function copyPrompt() {
+            const dict = t();
+            const promptText = document.getElementById('generated-prompt').textContent;
+
+            const showCopied = () => {
+                const button = document.getElementById('copyBtn');
+                button.textContent = dict.copiedBtn;
+                button.style.background = '#38a169';
+                setTimeout(() => {
+                    button.textContent = dict.copyBtn;
+                    button.style.background = '#667eea';
+                }, 2000);
+            };
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(promptText).then(showCopied);
+            } else {
+                const textArea = document.createElement('textarea');
+                textArea.value = promptText;
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showCopied();
+                } catch (err) {
+                    console.error('Failed to copy text: ', err);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+        function autoSave() {
+            const data = {
+                currentSource: currentSource,
+                teamName: document.getElementById('team-name').value,
+                timePeriod: document.getElementById('time-period').value,
+                analysisFocus: document.getElementById('analysis-focus').value,
+                responseCount: document.getElementById('response-count').value,
+                sensitivityLevel: document.getElementById('sensitivity-level').value,
+                outputFormat: document.getElementById('output-format').value,
+                surveyTopic: document.getElementById('survey-topic').value,
+                surveyData: document.getElementById('survey-data').value,
+                slackContext: document.getElementById('slack-context').value,
+                slackData: document.getElementById('slack-data').value,
+                feedbackContext: document.getElementById('feedback-context').value,
+                feedbackData: document.getElementById('feedback-data').value,
+                retroContext: document.getElementById('retro-context').value,
+                retroData: document.getElementById('retro-data').value,
+                customContext: document.getElementById('custom-context').value,
+                customData: document.getElementById('custom-data').value,
+                generatedPrompt: document.getElementById('generated-prompt').textContent
+            };
+            localStorage.setItem('aiSentimentAnalysis', JSON.stringify(data));
+        }
+
+        function loadSaved() {
+            const saved = localStorage.getItem('aiSentimentAnalysis');
+            if (saved) {
+                const data = JSON.parse(saved);
+
+                Object.keys(data).forEach(key => {
+                    if (key === 'generatedPrompt' || key === 'currentSource') return;
+                    const element = document.getElementById(key.replace(/([A-Z])/g, '-$1').toLowerCase());
+                    if (element) {
+                        element.value = data[key];
+                    }
+                });
+
+                if (data.generatedPrompt) {
+                    const promptEl = document.getElementById('generated-prompt');
+                    promptEl.textContent = data.generatedPrompt;
+                    promptEl.dataset.generated = 'true';
+                }
+
+                if (data.currentSource) {
+                    switchSourceProgrammatically(data.currentSource);
+                }
+            }
+        }
+
+        function switchSourceProgrammatically(sourceType) {
+            document.querySelectorAll('.source-tab').forEach(tab => tab.classList.remove('active'));
+            const tabButton = document.querySelector(`[onclick="switchSource('${sourceType}')"]`);
+            if (tabButton) tabButton.classList.add('active');
+
+            document.querySelectorAll('.source-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(sourceType + '-content').classList.add('active');
+
+            currentSource = sourceType;
+        }
+
+        function downloadTemplate() {
+            const teamName = document.getElementById('team-name').value || 'sentiment_analysis';
+            const fileName = `ai_sentiment_analysis_${teamName.replace(/\s+/g, '_').toLowerCase()}.html`;
+
+            const element = document.createElement('a');
+            const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function resetForm() {
+            const dict = t();
+            if (confirm(dict.resetConfirm)) {
+                localStorage.removeItem('aiSentimentAnalysis');
+                location.reload();
+            }
+        }
+
+        window.onload = function() {
+            loadSaved();
+            renderLanguage();
+
+            document.addEventListener('input', autoSave);
+            document.addEventListener('change', autoSave);
+        };
+    </script>
+</body>
+</html>

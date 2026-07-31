@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Engineering Team Culture & Feedback Survey Template</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f7f8fc;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+        }
+
+        .header-bar {
+            position: relative;
+            text-align: center;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 2.3em;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: white;
+            color: #3498db;
+            border: 2px solid #3498db;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { background: #e8f4f8; }
+        .lang-btn.active { background: #3498db; color: white; }
+
+        .description {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .survey-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 5px solid #28a745;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .field {
+            margin-bottom: 12px;
+        }
+
+        .field-label {
+            font-weight: 600;
+            color: #495057;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .field-input {
+            border: 1px solid #ced4da;
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .field-input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #495057 0%, #6c757d 100%);
+            color: white;
+            padding: 18px 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-content {
+            padding: 25px;
+        }
+
+        .question-group {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .question {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .question-subtitle {
+            font-size: 14px;
+            color: #6c757d;
+            font-weight: normal;
+            margin-top: 5px;
+        }
+
+        .rating-scale {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .rating-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            min-width: 80px;
+        }
+
+        .rating-item:hover {
+            background: #e3f2fd;
+        }
+
+        .rating-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid #dee2e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+
+        .rating-circle.selected {
+            border-color: #3498db;
+            background: #3498db;
+            color: white;
+        }
+
+        .rating-label {
+            font-size: 12px;
+            text-align: center;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .rating-1 { border-color: #e74c3c; }
+        .rating-1.selected { background: #e74c3c; border-color: #e74c3c; }
+        .rating-2 { border-color: #f39c12; }
+        .rating-2.selected { background: #f39c12; border-color: #f39c12; }
+        .rating-3 { border-color: #f1c40f; }
+        .rating-3.selected { background: #f1c40f; border-color: #f1c40f; color: #333; }
+        .rating-4 { border-color: #2ecc71; }
+        .rating-4.selected { background: #2ecc71; border-color: #2ecc71; }
+        .rating-5 { border-color: #27ae60; }
+        .rating-5.selected { background: #27ae60; border-color: #27ae60; }
+
+        .multiple-choice {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .choice-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .choice-item:hover {
+            background: #f8f9fa;
+        }
+
+        .choice-item input[type="radio"],
+        .choice-item input[type="checkbox"] {
+            margin: 0;
+            transform: scale(1.2);
+        }
+
+        .text-response {
+            width: 100%;
+            min-height: 80px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            padding: 12px;
+            resize: vertical;
+            font-family: inherit;
+            margin-top: 10px;
+        }
+
+        .scale-legend {
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .legend-item {
+            display: inline-block;
+            margin: 0 20px 5px 0;
+        }
+
+        .legend-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .results-summary {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .score-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+        }
+
+        .score-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .score-label {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #dee2e6;
+        }
+
+        .btn {
+            background: #3498db;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .anonymous-note {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #0c5460;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; padding: 0; }
+            .actions { display: none; }
+            .lang-switcher { display: none; }
+            .section { break-inside: avoid; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            .rating-scale { justify-content: center; }
+            .info-grid { grid-template-columns: 1fr; }
+            .score-grid { grid-template-columns: repeat(2, 1fr); }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1 data-i18n="mainTitle">Team Culture & Feedback Survey</h1>
+        </div>
+
+        <div class="description">
+            <strong data-i18n="descPurposeLabel">Purpose:</strong> <span data-i18n="descPurposeText">This survey helps engineering managers assess team health, culture, and gather actionable feedback to improve team effectiveness. Use this template quarterly or after major changes to track team sentiment and identify areas for improvement. All responses can be anonymous to encourage honest feedback.</span>
+        </div>
+
+        <div class="anonymous-note">
+            <strong data-i18n="anonNoteLabel">📌 Note:</strong> <span data-i18n="anonNoteText">This survey can be conducted anonymously. Consider using tools like Google Forms, Typeform, or internal survey platforms to collect responses privately and aggregate results.</span>
+        </div>
+
+        <!-- Survey Information -->
+        <div class="survey-info">
+            <h3 data-i18n="surveyInfoHeading">Survey Information</h3>
+            <div class="info-grid">
+                <div class="field">
+                    <span class="field-label" data-i18n="labelSurveyDate">Survey Date:</span>
+                    <input type="date" class="field-input">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelTeamDept">Team/Department:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phTeamDept" placeholder="e.g., Platform Engineering, Frontend Team">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelSurveyPeriod">Survey Period:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phSurveyPeriod" placeholder="e.g., Q1 2024, Post-Project Retrospective">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelFacilitator">Manager/Facilitator:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phFacilitator" placeholder="Survey administrator">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelTeamSize">Team Size:</span>
+                    <input type="number" class="field-input" data-i18n-ph="phTeamSize" placeholder="Number of team members">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelResponseGoal">Response Goal:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phResponseGoal" placeholder="e.g., 100% participation, 8+ responses">
+                </div>
+            </div>
+        </div>
+
+        <!-- Rating Scale Legend -->
+        <div class="scale-legend">
+            <strong data-i18n="ratingScaleLabel">Rating Scale:</strong>
+            <div class="legend-item">
+                <span class="legend-circle" style="background: #e74c3c;"></span><span data-i18n="legend1">1 - Strongly Disagree</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-circle" style="background: #f39c12;"></span><span data-i18n="legend2">2 - Disagree</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-circle" style="background: #f1c40f;"></span><span data-i18n="legend3">3 - Neutral</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-circle" style="background: #2ecc71;"></span><span data-i18n="legend4">4 - Agree</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-circle" style="background: #27ae60;"></span><span data-i18n="legend5">5 - Strongly Agree</span>
+            </div>
+        </div>
+
+        <!-- Team Dynamics & Collaboration -->
+        <div class="section">
+            <div class="section-header">
+                <span data-i18n="secTeamDynamics">Team Dynamics & Collaboration</span>
+            </div>
+            <div class="section-content">
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q1Text">I feel comfortable sharing ideas and opinions with my team members</span>
+                        <div class="question-subtitle" data-i18n="q1Sub">Measures psychological safety and open communication</div>
+                    </div>
+                    <div class="rating-scale" data-question="team-comfort">
+                        <div class="rating-item" data-value="1"><div class="rating-circle rating-1">1</div><div class="rating-label scale-lbl-1">Strongly<br>Disagree</div></div>
+                        <div class="rating-item" data-value="2"><div class="rating-circle rating-2">2</div><div class="rating-label scale-lbl-2">Disagree</div></div>
+                        <div class="rating-item" data-value="3"><div class="rating-circle rating-3">3</div><div class="rating-label scale-lbl-3">Neutral</div></div>
+                        <div class="rating-item" data-value="4"><div class="rating-circle rating-4">4</div><div class="rating-label scale-lbl-4">Agree</div></div>
+                        <div class="rating-item" data-value="5"><div class="rating-circle rating-5">5</div><div class="rating-label scale-lbl-5">Strongly<br>Agree</div></div>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q2Text">Team members collaborate effectively across different projects and initiatives</span>
+                        <div class="question-subtitle" data-i18n="q2Sub">Evaluates cross-project collaboration and knowledge sharing</div>
+                    </div>
+                    <div class="rating-scale" data-question="collaboration">
+                        <div class="rating-item" data-value="1"><div class="rating-circle rating-1">1</div><div class="rating-label scale-lbl-1">Strongly<br>Disagree</div></div>
+                        <div class="rating-item" data-value="2"><div class="rating-circle rating-2">2</div><div class="rating-label scale-lbl-2">Disagree</div></div>
+                        <div class="rating-item" data-value="3"><div class="rating-circle rating-3">3</div><div class="rating-label scale-lbl-3">Neutral</div></div>
+                        <div class="rating-item" data-value="4"><div class="rating-circle rating-4">4</div><div class="rating-label scale-lbl-4">Agree</div></div>
+                        <div class="rating-item" data-value="5"><div class="rating-circle rating-5">5</div><div class="rating-label scale-lbl-5">Strongly<br>Agree</div></div>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q3Text">I receive constructive feedback regularly from my teammates</span>
+                        <div class="question-subtitle" data-i18n="q3Sub">Measures peer feedback culture and continuous improvement</div>
+                    </div>
+                    <div class="rating-scale" data-question="feedback">
+                        <div class="rating-item" data-value="1"><div class="rating-circle rating-1">1</div><div class="rating-label scale-lbl-1">Strongly<br>Disagree</div></div>
+                        <div class="rating-item" data-value="2"><div class="rating-circle rating-2">2</div><div class="rating-label scale-lbl-2">Disagree</div></div>
+                        <div class="rating-item" data-value="3"><div class="rating-circle rating-3">3</div><div class="rating-label scale-lbl-3">Neutral</div></div>
+                        <div class="rating-item" data-value="4"><div class="rating-circle rating-4">4</div><div class="rating-label scale-lbl-4">Agree</div></div>
+                        <div class="rating-item" data-value="5"><div class="rating-circle rating-5">5</div><div class="rating-label scale-lbl-5">Strongly<br>Agree</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Work Environment & Processes -->
+        <div class="section">
+            <div class="section-header">
+                <span data-i18n="secWorkEnv">Work Environment & Processes</span>
+            </div>
+            <div class="section-content">
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q4Text">Our development processes (code reviews, testing, deployment) are effective</span>
+                        <div class="question-subtitle" data-i18n="q4Sub">Evaluates technical process satisfaction</div>
+                    </div>
+                    <div class="rating-scale" data-question="processes">
+                        <div class="rating-item" data-value="1"><div class="rating-circle rating-1">1</div><div class="rating-label scale-lbl-1">Strongly<br>Disagree</div></div>
+                        <div class="rating-item" data-value="2"><div class="rating-circle rating-2">2</div><div class="rating-label scale-lbl-2">Disagree</div></div>
+                        <div class="rating-item" data-value="3"><div class="rating-circle rating-3">3</div><div class="rating-label scale-lbl-3">Neutral</div></div>
+                        <div class="rating-item" data-value="4"><div class="rating-circle rating-4">4</div><div class="rating-label scale-lbl-4">Agree</div></div>
+                        <div class="rating-item" data-value="5"><div class="rating-circle rating-5">5</div><div class="rating-label scale-lbl-5">Strongly<br>Agree</div></div>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q5Text">I have the tools and resources needed to do my job effectively</span>
+                        <div class="question-subtitle" data-i18n="q5Sub">Measures resource adequacy and tooling satisfaction</div>
+                    </div>
+                    <div class="rating-scale" data-question="resources">
+                        <div class="rating-item" data-value="1"><div class="rating-circle rating-1">1</div><div class="rating-label scale-lbl-1">Strongly<br>Disagree</div></div>
+                        <div class="rating-item" data-value="2"><div class="rating-circle rating-2">2</div><div class="rating-label scale-lbl-2">Disagree</div></div>
+                        <div class="rating-item" data-value="3"><div class="rating-circle rating-3">3</div><div class="rating-label scale-lbl-3">Neutral</div></div>
+                        <div class="rating-item" data-value="4"><div class="rating-circle rating-4">4</div><div class="rating-label scale-lbl-4">Agree</div></div>
+                        <div class="rating-item" data-value="5"><div class="rating-circle rating-5">5</div><div class="rating-label scale-lbl-5">Strongly<br>Agree</div></div>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q6Text">My workload is manageable and sustainable</span>
+                        <div class="question-subtitle" data-i18n="q6Sub">Assesses work-life balance and burnout prevention</div>
+                    </div>
+                    <div class="rating-scale" data-question="workload">
+                        <div class="rating-item" data-value="1"><div class="rating-circle rating-1">1</div><div class="rating-label scale-lbl-1">Strongly<br>Disagree</div></div>
+                        <div class="rating-item" data-value="2"><div class="rating-circle rating-2">2</div><div class="rating-label scale-lbl-2">Disagree</div></div>
+                        <div class="rating-item" data-value="3"><div class="rating-circle rating-3">3</div><div class="rating-label scale-lbl-3">Neutral</div></div>
+                        <div class="rating-item" data-value="4"><div class="rating-circle rating-4">4</div><div class="rating-label scale-lbl-4">Agree</div></div>
+                        <div class="rating-item" data-value="5"><div class="rating-circle rating-5">5</div><div class="rating-label scale-lbl-5">Strongly<br>Agree</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leadership & Management -->
+        <div class="section">
+            <div class="section-header">
+                <span data-i18n="secLeadership">Leadership & Management</span>
+            </div>
+            <div class="section-content">
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q7Text">I receive clear direction and expectations from my manager</span>
+                        <div class="question-subtitle" data-i18n="q7Sub">Evaluates management communication and clarity</div>
+                    </div>
+                    <div class="rating-scale" data-question="management-clarity">
+                        <div class="rating-item" data-value="1"><div class="rating-circle rating-1">1</div><div class="rating-label scale-lbl-1">Strongly<br>Disagree</div></div>
+                        <div class="rating-item" data-value="2"><div class="rating-circle rating-2">2</div><div class="rating-label scale-lbl-2">Disagree</div></div>
+                        <div class="rating-item" data-value="3"><div class="rating-circle rating-3">3</div><div class="rating-label scale-lbl-3">Neutral</div></div>
+                        <div class="rating-item" data-value="4"><div class="rating-circle rating-4">4</div><div class="rating-label scale-lbl-4">Agree</div></div>
+                        <div class="rating-item" data-value="5"><div class="rating-circle rating-5">5</div><div class="rating-label scale-lbl-5">Strongly<br>Agree</div></div>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q8Text">My manager supports my professional development and career growth</span>
+                        <div class="question-subtitle" data-i18n="q8Sub">Measures career development support</div>
+                    </div>
+                    <div class="rating-scale" data-question="career-support">
+                        <div class="rating-item" data-value="1"><div class="rating-circle rating-1">1</div><div class="rating-label scale-lbl-1">Strongly<br>Disagree</div></div>
+                        <div class="rating-item" data-value="2"><div class="rating-circle rating-2">2</div><div class="rating-label scale-lbl-2">Disagree</div></div>
+                        <div class="rating-item" data-value="3"><div class="rating-circle rating-3">3</div><div class="rating-label scale-lbl-3">Neutral</div></div>
+                        <div class="rating-item" data-value="4"><div class="rating-circle rating-4">4</div><div class="rating-label scale-lbl-4">Agree</div></div>
+                        <div class="rating-item" data-value="5"><div class="rating-circle rating-5">5</div><div class="rating-label scale-lbl-5">Strongly<br>Agree</div></div>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q9Text">Leadership decisions are communicated transparently to the team</span>
+                        <div class="question-subtitle" data-i18n="q9Sub">Assesses leadership transparency and communication</div>
+                    </div>
+                    <div class="rating-scale" data-question="transparency">
+                        <div class="rating-item" data-value="1"><div class="rating-circle rating-1">1</div><div class="rating-label scale-lbl-1">Strongly<br>Disagree</div></div>
+                        <div class="rating-item" data-value="2"><div class="rating-circle rating-2">2</div><div class="rating-label scale-lbl-2">Disagree</div></div>
+                        <div class="rating-item" data-value="3"><div class="rating-circle rating-3">3</div><div class="rating-label scale-lbl-3">Neutral</div></div>
+                        <div class="rating-item" data-value="4"><div class="rating-circle rating-4">4</div><div class="rating-label scale-lbl-4">Agree</div></div>
+                        <div class="rating-item" data-value="5"><div class="rating-circle rating-5">5</div><div class="rating-label scale-lbl-5">Strongly<br>Agree</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Growth & Learning -->
+        <div class="section">
+            <div class="section-header">
+                <span data-i18n="secGrowth">Growth & Learning Opportunities</span>
+            </div>
+            <div class="section-content">
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q10Text">I have opportunities to learn new technologies and develop my skills</span>
+                        <div class="question-subtitle" data-i18n="q10Sub">Measures learning and development opportunities</div>
+                    </div>
+                    <div class="rating-scale" data-question="learning">
+                        <div class="rating-item" data-value="1"><div class="rating-circle rating-1">1</div><div class="rating-label scale-lbl-1">Strongly<br>Disagree</div></div>
+                        <div class="rating-item" data-value="2"><div class="rating-circle rating-2">2</div><div class="rating-label scale-lbl-2">Disagree</div></div>
+                        <div class="rating-item" data-value="3"><div class="rating-circle rating-3">3</div><div class="rating-label scale-lbl-3">Neutral</div></div>
+                        <div class="rating-item" data-value="4"><div class="rating-circle rating-4">4</div><div class="rating-label scale-lbl-4">Agree</div></div>
+                        <div class="rating-item" data-value="5"><div class="rating-circle rating-5">5</div><div class="rating-label scale-lbl-5">Strongly<br>Agree</div></div>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q11Text">I feel challenged and engaged by my work</span>
+                        <div class="question-subtitle" data-i18n="q11Sub">Evaluates job satisfaction and engagement levels</div>
+                    </div>
+                    <div class="rating-scale" data-question="engagement">
+                        <div class="rating-item" data-value="1"><div class="rating-circle rating-1">1</div><div class="rating-label scale-lbl-1">Strongly<br>Disagree</div></div>
+                        <div class="rating-item" data-value="2"><div class="rating-circle rating-2">2</div><div class="rating-label scale-lbl-2">Disagree</div></div>
+                        <div class="rating-item" data-value="3"><div class="rating-circle rating-3">3</div><div class="rating-label scale-lbl-3">Neutral</div></div>
+                        <div class="rating-item" data-value="4"><div class="rating-circle rating-4">4</div><div class="rating-label scale-lbl-4">Agree</div></div>
+                        <div class="rating-item" data-value="5"><div class="rating-circle rating-5">5</div><div class="rating-label scale-lbl-5">Strongly<br>Agree</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Multiple Choice Questions -->
+        <div class="section">
+            <div class="section-header">
+                <span data-i18n="secPriorities">Team Priorities & Focus Areas</span>
+            </div>
+            <div class="section-content">
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q12Text">Which areas should the team prioritize for improvement? (Select up to 3)</span>
+                        <div class="question-subtitle" data-i18n="q12Sub">Helps identify top areas for team development focus</div>
+                    </div>
+                    <div class="multiple-choice">
+                        <div class="choice-item">
+                            <input type="checkbox" id="priority-communication" name="priorities">
+                            <label for="priority-communication" data-i18n="pri1">Communication and collaboration</label>
+                        </div>
+                        <div class="choice-item">
+                            <input type="checkbox" id="priority-technical" name="priorities">
+                            <label for="priority-technical" data-i18n="pri2">Technical skills and expertise</label>
+                        </div>
+                        <div class="choice-item">
+                            <input type="checkbox" id="priority-processes" name="priorities">
+                            <label for="priority-processes" data-i18n="pri3">Development processes and workflows</label>
+                        </div>
+                        <div class="choice-item">
+                            <input type="checkbox" id="priority-tools" name="priorities">
+                            <label for="priority-tools" data-i18n="pri4">Tools and infrastructure</label>
+                        </div>
+                        <div class="choice-item">
+                            <input type="checkbox" id="priority-planning" name="priorities">
+                            <label for="priority-planning" data-i18n="pri5">Project planning and estimation</label>
+                        </div>
+                        <div class="choice-item">
+                            <input type="checkbox" id="priority-culture" name="priorities">
+                            <label for="priority-culture" data-i18n="pri6">Team culture and morale</label>
+                        </div>
+                        <div class="choice-item">
+                            <input type="checkbox" id="priority-growth" name="priorities">
+                            <label for="priority-growth" data-i18n="pri7">Professional development and growth</label>
+                        </div>
+                        <div class="choice-item">
+                            <input type="checkbox" id="priority-workload" name="priorities">
+                            <label for="priority-workload" data-i18n="pri8">Workload management and work-life balance</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q13Text">How would you rate your overall job satisfaction?</span>
+                        <div class="question-subtitle" data-i18n="q13Sub">General satisfaction metric</div>
+                    </div>
+                    <div class="multiple-choice">
+                        <div class="choice-item">
+                            <input type="radio" id="satisfaction-very-high" name="satisfaction" value="very-high">
+                            <label for="satisfaction-very-high" data-i18n="sat1">Very satisfied - I love my job</label>
+                        </div>
+                        <div class="choice-item">
+                            <input type="radio" id="satisfaction-high" name="satisfaction" value="high">
+                            <label for="satisfaction-high" data-i18n="sat2">Satisfied - Generally happy with my role</label>
+                        </div>
+                        <div class="choice-item">
+                            <input type="radio" id="satisfaction-neutral" name="satisfaction" value="neutral">
+                            <label for="satisfaction-neutral" data-i18n="sat3">Neutral - It's okay, some good and bad aspects</label>
+                        </div>
+                        <div class="choice-item">
+                            <input type="radio" id="satisfaction-low" name="satisfaction" value="low">
+                            <label for="satisfaction-low" data-i18n="sat4">Dissatisfied - Several areas need improvement</label>
+                        </div>
+                        <div class="choice-item">
+                            <input type="radio" id="satisfaction-very-low" name="satisfaction" value="very-low">
+                            <label for="satisfaction-very-low" data-i18n="sat5">Very dissatisfied - Considering leaving</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Open-Ended Questions -->
+        <div class="section">
+            <div class="section-header">
+                <span data-i18n="secOpenFeedback">Open Feedback</span>
+            </div>
+            <div class="section-content">
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q14Text">What is working well on the team that we should continue doing?</span>
+                        <div class="question-subtitle" data-i18n="q14Sub">Identify strengths to maintain and reinforce</div>
+                    </div>
+                    <textarea class="text-response" data-i18n-ph="ph14" placeholder="Please share specific examples of what's working well..."></textarea>
+                </div>
+
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q15Text">What should we start doing to improve team effectiveness?</span>
+                        <div class="question-subtitle" data-i18n="q15Sub">Gather suggestions for new initiatives or changes</div>
+                    </div>
+                    <textarea class="text-response" data-i18n-ph="ph15" placeholder="What new practices, tools, or approaches would help the team?"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q16Text">What should we stop doing that isn't serving the team well?</span>
+                        <div class="question-subtitle" data-i18n="q16Sub">Identify processes or practices to eliminate</div>
+                    </div>
+                    <textarea class="text-response" data-i18n-ph="ph16" placeholder="What current practices or processes are hindering the team?"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q17Text">What support do you need from leadership to be more effective in your role?</span>
+                        <div class="question-subtitle" data-i18n="q17Sub">Understand what managers can provide to help team members succeed</div>
+                    </div>
+                    <textarea class="text-response" data-i18n-ph="ph17" placeholder="This could include resources, training, process changes, etc..."></textarea>
+                </div>
+
+                <div class="question-group">
+                    <div class="question">
+                        <span data-i18n="q18Text">Any additional comments or feedback?</span>
+                        <div class="question-subtitle" data-i18n="q18Sub">Open space for any other thoughts or concerns</div>
+                    </div>
+                    <textarea class="text-response" data-i18n-ph="ph18" placeholder="Share any other feedback, suggestions, or concerns..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Summary -->
+        <div class="results-summary">
+            <h3 data-i18n="resultsHeading">Survey Results Summary</h3>
+            <p><em data-i18n="resultsNote">This section is for managers to track results after collecting responses</em></p>
+
+            <div class="score-grid">
+                <div class="score-card">
+                    <div class="score-value" id="response-rate">--</div>
+                    <div class="score-label" data-i18n="scoreResponseRate">Response Rate</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-value" id="avg-score">--</div>
+                    <div class="score-label" data-i18n="scoreAvg">Avg. Score</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-value" id="satisfaction-score">--</div>
+                    <div class="score-label" data-i18n="scoreSatisfaction">Satisfaction</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-value" id="engagement-score">--</div>
+                    <div class="score-label" data-i18n="scoreEngagement">Engagement</div>
+                </div>
+            </div>
+
+            <div class="field" style="margin-top: 20px;">
+                <span class="field-label" data-i18n="labelKeyInsights">Key Insights & Action Items:</span>
+                <textarea class="text-response" data-i18n-ph="phKeyInsights" placeholder="Summarize key findings and specific action items based on survey results..."></textarea>
+            </div>
+
+            <div class="field">
+                <span class="field-label" data-i18n="labelFollowUp">Follow-up Plan:</span>
+                <textarea class="text-response" data-i18n-ph="phFollowUp" placeholder="Document how and when you'll address feedback and communicate back to the team..."></textarea>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-success" id="btnCalculate" onclick="calculateSummary()">Calculate Results</button>
+            <button class="btn" id="btnPrint" onclick="window.print()">Print Survey</button>
+            <button class="btn btn-secondary" id="btnDownload" onclick="downloadSurvey()">Download Template</button>
+            <button class="btn btn-secondary" id="btnReset" onclick="resetSurvey()">Reset Survey</button>
+        </div>
+    </div>
+
+    <script>
+        const I18N = {
+            en: {
+                pageTitle: 'Engineering Team Culture & Feedback Survey Template',
+                mainTitle: 'Team Culture & Feedback Survey',
+                descPurposeLabel: 'Purpose:',
+                descPurposeText: 'This survey helps engineering managers assess team health, culture, and gather actionable feedback to improve team effectiveness. Use this template quarterly or after major changes to track team sentiment and identify areas for improvement. All responses can be anonymous to encourage honest feedback.',
+                anonNoteLabel: '📌 Note:',
+                anonNoteText: 'This survey can be conducted anonymously. Consider using tools like Google Forms, Typeform, or internal survey platforms to collect responses privately and aggregate results.',
+                surveyInfoHeading: 'Survey Information',
+                labelSurveyDate: 'Survey Date:',
+                labelTeamDept: 'Team/Department:',
+                phTeamDept: 'e.g., Platform Engineering, Frontend Team',
+                labelSurveyPeriod: 'Survey Period:',
+                phSurveyPeriod: 'e.g., Q1 2024, Post-Project Retrospective',
+                labelFacilitator: 'Manager/Facilitator:',
+                phFacilitator: 'Survey administrator',
+                labelTeamSize: 'Team Size:',
+                phTeamSize: 'Number of team members',
+                labelResponseGoal: 'Response Goal:',
+                phResponseGoal: 'e.g., 100% participation, 8+ responses',
+                ratingScaleLabel: 'Rating Scale:',
+                legend1: '1 - Strongly Disagree', legend2: '2 - Disagree', legend3: '3 - Neutral', legend4: '4 - Agree', legend5: '5 - Strongly Agree',
+                scaleLbl1: 'Strongly Disagree', scaleLbl2: 'Disagree', scaleLbl3: 'Neutral', scaleLbl4: 'Agree', scaleLbl5: 'Strongly Agree',
+                secTeamDynamics: 'Team Dynamics & Collaboration',
+                q1Text: 'I feel comfortable sharing ideas and opinions with my team members',
+                q1Sub: 'Measures psychological safety and open communication',
+                q2Text: 'Team members collaborate effectively across different projects and initiatives',
+                q2Sub: 'Evaluates cross-project collaboration and knowledge sharing',
+                q3Text: 'I receive constructive feedback regularly from my teammates',
+                q3Sub: 'Measures peer feedback culture and continuous improvement',
+                secWorkEnv: 'Work Environment & Processes',
+                q4Text: 'Our development processes (code reviews, testing, deployment) are effective',
+                q4Sub: 'Evaluates technical process satisfaction',
+                q5Text: 'I have the tools and resources needed to do my job effectively',
+                q5Sub: 'Measures resource adequacy and tooling satisfaction',
+                q6Text: 'My workload is manageable and sustainable',
+                q6Sub: 'Assesses work-life balance and burnout prevention',
+                secLeadership: 'Leadership & Management',
+                q7Text: 'I receive clear direction and expectations from my manager',
+                q7Sub: 'Evaluates management communication and clarity',
+                q8Text: 'My manager supports my professional development and career growth',
+                q8Sub: 'Measures career development support',
+                q9Text: 'Leadership decisions are communicated transparently to the team',
+                q9Sub: 'Assesses leadership transparency and communication',
+                secGrowth: 'Growth & Learning Opportunities',
+                q10Text: 'I have opportunities to learn new technologies and develop my skills',
+                q10Sub: 'Measures learning and development opportunities',
+                q11Text: 'I feel challenged and engaged by my work',
+                q11Sub: 'Evaluates job satisfaction and engagement levels',
+                secPriorities: 'Team Priorities & Focus Areas',
+                q12Text: 'Which areas should the team prioritize for improvement? (Select up to 3)',
+                q12Sub: 'Helps identify top areas for team development focus',
+                pri1: 'Communication and collaboration', pri2: 'Technical skills and expertise', pri3: 'Development processes and workflows', pri4: 'Tools and infrastructure',
+                pri5: 'Project planning and estimation', pri6: 'Team culture and morale', pri7: 'Professional development and growth', pri8: 'Workload management and work-life balance',
+                q13Text: 'How would you rate your overall job satisfaction?',
+                q13Sub: 'General satisfaction metric',
+                sat1: 'Very satisfied - I love my job',
+                sat2: 'Satisfied - Generally happy with my role',
+                sat3: "Neutral - It's okay, some good and bad aspects",
+                sat4: 'Dissatisfied - Several areas need improvement',
+                sat5: 'Very dissatisfied - Considering leaving',
+                secOpenFeedback: 'Open Feedback',
+                q14Text: 'What is working well on the team that we should continue doing?',
+                q14Sub: 'Identify strengths to maintain and reinforce',
+                ph14: "Please share specific examples of what's working well...",
+                q15Text: 'What should we start doing to improve team effectiveness?',
+                q15Sub: 'Gather suggestions for new initiatives or changes',
+                ph15: 'What new practices, tools, or approaches would help the team?',
+                q16Text: "What should we stop doing that isn't serving the team well?",
+                q16Sub: 'Identify processes or practices to eliminate',
+                ph16: 'What current practices or processes are hindering the team?',
+                q17Text: 'What support do you need from leadership to be more effective in your role?',
+                q17Sub: 'Understand what managers can provide to help team members succeed',
+                ph17: 'This could include resources, training, process changes, etc...',
+                q18Text: 'Any additional comments or feedback?',
+                q18Sub: 'Open space for any other thoughts or concerns',
+                ph18: 'Share any other feedback, suggestions, or concerns...',
+                resultsHeading: 'Survey Results Summary',
+                resultsNote: 'This section is for managers to track results after collecting responses',
+                scoreResponseRate: 'Response Rate', scoreAvg: 'Avg. Score', scoreSatisfaction: 'Satisfaction', scoreEngagement: 'Engagement',
+                labelKeyInsights: 'Key Insights & Action Items:',
+                phKeyInsights: 'Summarize key findings and specific action items based on survey results...',
+                labelFollowUp: 'Follow-up Plan:',
+                phFollowUp: "Document how and when you'll address feedback and communicate back to the team...",
+                btnCalculate: 'Calculate Results',
+                btnPrint: 'Print Survey',
+                btnDownload: 'Download Template',
+                btnReset: 'Reset Survey',
+                resetConfirm: 'Are you sure you want to reset all responses? This cannot be undone.'
+            },
+            zh: {
+                pageTitle: '工程團隊文化與回饋調查範本',
+                mainTitle: '團隊文化與回饋調查',
+                descPurposeLabel: '用途：',
+                descPurposeText: '這份調查幫助工程主管評估團隊健康度與文化，並收集可執行的回饋以提升團隊效能。建議每季或重大變動後使用這份範本，追蹤團隊情緒並找出待改善之處。所有回覆都可以匿名進行，以鼓勵誠實回饋。',
+                anonNoteLabel: '📌 提醒：',
+                anonNoteText: '這份調查可以匿名進行。建議使用 Google Forms、Typeform 或內部調查平台私下收集回覆並彙整結果。',
+                surveyInfoHeading: '調查資訊',
+                labelSurveyDate: '調查日期：',
+                labelTeamDept: '團隊/部門：',
+                phTeamDept: '例如：Platform Engineering、前端團隊',
+                labelSurveyPeriod: '調查週期：',
+                phSurveyPeriod: '例如：2024 Q1、專案結束後回顧',
+                labelFacilitator: '主管/主辦人：',
+                phFacilitator: '調查發起人',
+                labelTeamSize: '團隊規模：',
+                phTeamSize: '團隊成員人數',
+                labelResponseGoal: '回覆目標：',
+                phResponseGoal: '例如：100% 參與率、8 份以上回覆',
+                ratingScaleLabel: '評分標準：',
+                legend1: '1 - 非常不同意', legend2: '2 - 不同意', legend3: '3 - 中立', legend4: '4 - 同意', legend5: '5 - 非常同意',
+                scaleLbl1: '非常不同意', scaleLbl2: '不同意', scaleLbl3: '中立', scaleLbl4: '同意', scaleLbl5: '非常同意',
+                secTeamDynamics: '團隊動態與協作',
+                q1Text: '我可以自在地與團隊成員分享想法與意見',
+                q1Sub: '衡量心理安全感與開放溝通',
+                q2Text: '團隊成員能有效跨不同專案與提案合作',
+                q2Sub: '評估跨專案協作與知識分享',
+                q3Text: '我經常從隊友那裡收到建設性的回饋',
+                q3Sub: '衡量同儕回饋文化與持續改進',
+                secWorkEnv: '工作環境與流程',
+                q4Text: '我們的開發流程（code review、測試、部署）是有效的',
+                q4Sub: '評估技術流程滿意度',
+                q5Text: '我擁有有效完成工作所需的工具與資源',
+                q5Sub: '衡量資源充足度與工具滿意度',
+                q6Text: '我的工作量是可管理且可持續的',
+                q6Sub: '評估工作生活平衡與過勞預防',
+                secLeadership: '領導與管理',
+                q7Text: '我從主管那裡得到清楚的方向與期望',
+                q7Sub: '評估管理溝通的清晰度',
+                q8Text: '我的主管支持我的專業發展與職涯成長',
+                q8Sub: '衡量職涯發展支持',
+                q9Text: '領導階層的決策有透明地傳達給團隊',
+                q9Sub: '評估領導透明度與溝通',
+                secGrowth: '成長與學習機會',
+                q10Text: '我有機會學習新技術並發展自己的技能',
+                q10Sub: '衡量學習與發展機會',
+                q11Text: '我對自己的工作感到有挑戰性且投入',
+                q11Sub: '評估工作滿意度與投入程度',
+                secPriorities: '團隊優先順序與重點領域',
+                q12Text: '團隊應該優先改善哪些領域？（最多選 3 項）',
+                q12Sub: '幫助找出團隊發展的首要重點領域',
+                pri1: '溝通與協作', pri2: '技術能力與專業度', pri3: '開發流程與工作流', pri4: '工具與基礎設施',
+                pri5: '專案規劃與估算', pri6: '團隊文化與士氣', pri7: '專業發展與成長', pri8: '工作量管理與工作生活平衡',
+                q13Text: '你對整體工作滿意度的評價如何？',
+                q13Sub: '整體滿意度指標',
+                sat1: '非常滿意——我熱愛我的工作',
+                sat2: '滿意——大致上對自己的角色感到開心',
+                sat3: '中立——還可以，有好有壞',
+                sat4: '不滿意——有幾個領域需要改善',
+                sat5: '非常不滿意——正在考慮離職',
+                secOpenFeedback: '開放式回饋',
+                q14Text: '團隊目前哪些做法效果很好、應該持續下去？',
+                q14Sub: '找出應該維持與強化的優點',
+                ph14: '請分享做得好的具體例子……',
+                q15Text: '我們應該開始做什麼來提升團隊效能？',
+                q15Sub: '收集新做法/新提案的建議',
+                ph15: '哪些新的做法、工具或方式會對團隊有幫助？',
+                q16Text: '我們應該停止哪些對團隊沒有幫助的做法？',
+                q16Sub: '找出應該淘汰的流程或做法',
+                ph16: '目前有哪些做法或流程在阻礙團隊？',
+                q17Text: '你需要主管提供什麼支持，才能在你的角色上更有效？',
+                q17Sub: '了解主管可以提供哪些協助幫助團隊成員成功',
+                ph17: '可能包括資源、培訓、流程調整等……',
+                q18Text: '還有其他意見或回饋嗎？',
+                q18Sub: '開放空間，供其他想法或疑慮使用',
+                ph18: '分享其他任何回饋、建議或疑慮……',
+                resultsHeading: '調查結果摘要',
+                resultsNote: '此區塊供主管在收集回覆後追蹤結果使用',
+                scoreResponseRate: '回覆率', scoreAvg: '平均分數', scoreSatisfaction: '滿意度', scoreEngagement: '投入度',
+                labelKeyInsights: '關鍵洞察與行動項目：',
+                phKeyInsights: '摘要調查結果的關鍵發現與具體行動項目……',
+                labelFollowUp: '後續追蹤計畫：',
+                phFollowUp: '記錄你將如何及何時處理回饋，並向團隊溝通……',
+                btnCalculate: '計算結果',
+                btnPrint: '列印調查',
+                btnDownload: '下載範本',
+                btnReset: '重設調查',
+                resetConfirm: '確定要重設所有回覆嗎？此動作無法復原。'
+            }
+        };
+
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (dict[key] !== undefined) el.textContent = dict[key];
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.dataset.i18nPh;
+                if (dict[key] !== undefined) el.placeholder = dict[key];
+            });
+
+            // Shared rating-scale labels (preserve the <br> line break for the two-line labels)
+            document.querySelectorAll('.scale-lbl-1').forEach(el => el.innerHTML = dict.scaleLbl1.replace(' ', '<br>'));
+            document.querySelectorAll('.scale-lbl-2').forEach(el => el.textContent = dict.scaleLbl2);
+            document.querySelectorAll('.scale-lbl-3').forEach(el => el.textContent = dict.scaleLbl3);
+            document.querySelectorAll('.scale-lbl-4').forEach(el => el.textContent = dict.scaleLbl4);
+            document.querySelectorAll('.scale-lbl-5').forEach(el => el.innerHTML = dict.scaleLbl5.replace(' ', '<br>'));
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        // Rating scale interaction
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.rating-item')) {
+                const ratingItem = e.target.closest('.rating-item');
+                const ratingScale = ratingItem.parentElement;
+
+                ratingScale.querySelectorAll('.rating-circle').forEach(circle => {
+                    circle.classList.remove('selected');
+                });
+
+                ratingItem.querySelector('.rating-circle').classList.add('selected');
+
+                autoSave();
+            }
+        });
+
+        // Calculate survey summary
+        function calculateSummary() {
+            const selectedRatings = document.querySelectorAll('.rating-circle.selected');
+            let totalScore = 0;
+            let ratingCount = 0;
+
+            selectedRatings.forEach(rating => {
+                const value = parseInt(rating.textContent);
+                totalScore += value;
+                ratingCount++;
+            });
+
+            const averageScore = ratingCount > 0 ? (totalScore / ratingCount).toFixed(1) : '--';
+            document.getElementById('avg-score').textContent = averageScore;
+
+            const engagementRating = document.querySelector('[data-question="engagement"] .rating-circle.selected');
+            const engagementScore = engagementRating ? engagementRating.textContent : '--';
+            document.getElementById('engagement-score').textContent = engagementScore;
+
+            const satisfactionRadio = document.querySelector('input[name="satisfaction"]:checked');
+            let satisfactionText = '--';
+            if (satisfactionRadio) {
+                const satisfactionMap = {
+                    'very-high': '5.0',
+                    'high': '4.0',
+                    'neutral': '3.0',
+                    'low': '2.0',
+                    'very-low': '1.0'
+                };
+                satisfactionText = satisfactionMap[satisfactionRadio.value] || '--';
+            }
+            document.getElementById('satisfaction-score').textContent = satisfactionText;
+
+            const totalQuestions = document.querySelectorAll('.rating-scale').length +
+                                 document.querySelectorAll('input[type="radio"]').length +
+                                 document.querySelectorAll('textarea').length;
+            const completedQuestions = selectedRatings.length +
+                                     document.querySelectorAll('input[type="radio"]:checked').length +
+                                     document.querySelectorAll('textarea').length;
+
+            const completionRate = totalQuestions > 0 ? Math.round((completedQuestions / totalQuestions) * 100) : 0;
+            document.getElementById('response-rate').textContent = `${completionRate}%`;
+
+            autoSave();
+        }
+
+        function autoSave() {
+            const data = { lang: currentLang };
+
+            document.querySelectorAll('input, textarea').forEach((input, index) => {
+                if (input.type === 'radio' || input.type === 'checkbox') {
+                    if (input.checked) {
+                        data[`${input.type}_${input.name || index}`] = input.value || true;
+                    }
+                } else {
+                    data[`field_${index}`] = input.value;
+                }
+            });
+
+            document.querySelectorAll('.rating-circle.selected').forEach(circle => {
+                const question = circle.closest('[data-question]').getAttribute('data-question');
+                data[`rating_${question}`] = circle.textContent;
+            });
+
+            localStorage.setItem('teamCultureSurvey', JSON.stringify(data));
+        }
+
+        function loadSaved() {
+            const saved = localStorage.getItem('teamCultureSurvey');
+            if (saved) {
+                const data = JSON.parse(saved);
+
+                document.querySelectorAll('input, textarea').forEach((input, index) => {
+                    if (input.type === 'radio' || input.type === 'checkbox') {
+                        const key = `${input.type}_${input.name || index}`;
+                        if (data[key] === input.value || (input.type === 'checkbox' && data[key] === true)) {
+                            input.checked = true;
+                        }
+                    } else if (data[`field_${index}`]) {
+                        input.value = data[`field_${index}`];
+                    }
+                });
+
+                Object.keys(data).forEach(key => {
+                    if (key.startsWith('rating_')) {
+                        const question = key.replace('rating_', '');
+                        const rating = data[key];
+                        const questionElement = document.querySelector(`[data-question="${question}"]`);
+                        if (questionElement) {
+                            const ratingItem = Array.from(questionElement.querySelectorAll('.rating-item'))
+                                .find(item => item.dataset.value === rating);
+                            if (ratingItem) {
+                                ratingItem.querySelector('.rating-circle').classList.add('selected');
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function downloadSurvey() {
+            const teamName = document.getElementById('langBtnEn') && document.querySelector('input[placeholder]');
+            const teamInput = Array.from(document.querySelectorAll('input[type="text"]'))[0];
+            const teamNameVal = (teamInput && teamInput.value) || 'team';
+            const fileName = `culture_survey_${teamNameVal.replace(/\s+/g, '_').toLowerCase()}.html`;
+
+            const element = document.createElement('a');
+            const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function resetSurvey() {
+            const dict = t();
+            if (confirm(dict.resetConfirm)) {
+                document.querySelectorAll('input, textarea').forEach(input => {
+                    if (input.type === 'radio' || input.type === 'checkbox') {
+                        input.checked = false;
+                    } else {
+                        input.value = '';
+                    }
+                });
+
+                document.querySelectorAll('.rating-circle.selected').forEach(circle => {
+                    circle.classList.remove('selected');
+                });
+
+                localStorage.removeItem('teamCultureSurvey');
+
+                ['response-rate', 'avg-score', 'satisfaction-score', 'engagement-score'].forEach(id => {
+                    document.getElementById(id).textContent = '--';
+                });
+            }
+        }
+
+        window.onload = function() {
+            renderLanguage();
+            loadSaved();
+
+            document.addEventListener('input', autoSave);
+            document.addEventListener('change', autoSave);
+
+            const dateInput = document.querySelector('input[type="date"]');
+            if (dateInput && !dateInput.value) {
+                dateInput.value = new Date().toISOString().split('T')[0];
+            }
+        };
+    </script>
+</body>
+</html>

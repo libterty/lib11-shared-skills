@@ -38,6 +38,9 @@ docs/
 ├── interview_scorecard_template.html  # 結構化面試評分卡（技術/溝通/文化與領導力三大類，每項評分要求附具體觀察筆記），支援英文/繁體中文介面（公開，追蹤進 git）
 ├── ai_interview_question_generator.html # 依職缺條件產生面試問題的 AI prompt 工具，支援英文/繁體中文介面與 prompt 產出（公開，追蹤進 git）
 ├── candidate_red_flags_checklist.html # 面試警訊檢核清單，所有項目皆為面試中直接觀察到的行為，不做履歷/背景推論，支援英文/繁體中文介面（公開，追蹤進 git）
+├── onboarding_plan_template.html      # 新人 30/60/90 天 onboarding 計畫（打底/建立能力/完全融入三階段檢核清單），支援英文/繁體中文介面（公開，追蹤進 git）
+├── team_culture_survey_template.html  # 團隊文化與健康度調查（心理安全感/流程/領導力/成長四大構面），支援英文/繁體中文介面（公開，追蹤進 git）
+├── ai_sentiment_analysis_prompt.html  # 把問卷/Slack/書面回饋/回顧會議資料整理成 AI 情緒分析 prompt 的工具，內建隱私與倫理提醒，支援英文/繁體中文介面與 prompt 產出（公開，追蹤進 git）
 ├── ar/                                 # 實際的 Action Register 內容（.gitignore 排除，只留 .gitkeep）
 ├── raci/                               # 實際的 RACI Matrix 內容（.gitignore 排除，只留 .gitkeep）
 ├── adr/                                 # 實際的 ADR 內容，一個決策一個檔案（.gitignore 排除，只留 .gitkeep）
@@ -108,6 +111,9 @@ cp docs/mn.template.md docs/mn/2026-07-15-weekly.md
 | 用結構化評分卡進行面試評分（技術能力/溝通協作/文化與領導力三大類，每項評分都要求附具體觀察筆記），並自動算出各類與整體平均分數 | 用瀏覽器打開 `docs/interview_scorecard_template.html`，右上角可切換英文/繁體中文；「文化適配度」欄位刻意要求附具體可觀察的行為佐證，不能只憑印象打分 |
 | 依職缺條件（職稱、經驗等級、技術、團隊、公司規模、面試類型）產生一份客製化的 AI 面試問題生成 prompt | 用瀏覽器打開 `docs/ai_interview_question_generator.html`，右上角可切換英文/繁體中文，產出的 prompt 與範例問題也會依語言切換；另外還附 4 個常見情境（系統設計/程式挑戰/行為面/文化適配）的即用 prompt 範本 |
 | 面試中或面試後快速檢核可能的候選人警訊（技術能力/溝通協作/工作態度/問題解決四大類），並自動統計嚴重程度與建議決策方向 | 用瀏覽器打開 `docs/candidate_red_flags_checklist.html`，右上角可切換英文/繁體中文；所有項目都定義為面試中直接觀察到的具體行為，不做履歷模式或個人背景的推論（例如換工作次數、對薪資的關注程度），避免對身心障礙調整、照顧責任、簽證狀況等背景產生歧視性影響，跟 `shared-skills/hiring-interview-calibration/SKILL.md` 的安全規則一致 |
+| 幫新進工程師建立一份 30/60/90 天的結構化 onboarding 計畫（環境建置、code review 觀摩、獨立作業、里程碑檢核表） | 用瀏覽器打開 `docs/onboarding_plan_template.html`，右上角可切換英文/繁體中文；跟 `docs/em_personal_action_plan.html` 不同——這個是給新人 onboarding 用的，`em_personal_action_plan.html` 是給已經在職一段時間的 EM 自己用的持續成長計畫 |
+| 定期（例如每季）對團隊做心理安全感、流程滿意度、領導力觀感、成長機會的健康度調查，並收集開放式回饋 | 用瀏覽器打開 `docs/team_culture_survey_template.html`，右上角可切換英文/繁體中文；可搭配 Google Forms/Typeform 等工具匿名收集回覆 |
+| 把問卷回覆、Slack/Teams 訊息、書面回饋或回顧會議筆記整理成一段 AI 情緒分析 prompt，快速掌握團隊士氣與潛在疑慮 | 用瀏覽器打開 `docs/ai_sentiment_analysis_prompt.html`，右上角可切換英文/繁體中文，產出的 prompt 也會依語言切換；工具內建隱私與倫理提醒，分析團隊溝通內容前務必先取得同意並移除個資 |
 
 ### Decision/Risk Analysis 工作台
 
@@ -182,6 +188,6 @@ scenario_comparison_prompt_generator.html
 
 `docs/1on1/`、`docs/updates/`、`docs/mn/`、`docs/coaching/` 底下的檔案會包含真實姓名、筆記或專案內部資訊，屬於機密/內部資料，跟 `docs/ar/`、`docs/raci/`、`docs/adr/` 一樣被 `.gitignore` 排除，不會被提交進這個公開 repo。`ai_one_on_one_prep_prompt.html`、`team_update_email_prompt.html`、`ai_meeting_summary_template.html`、`ai_coaching_prompt_template.html`、`skill_gap_analysis_template.html`、`ai_career_path_prompt_template.html`、`email_draft_generator.html`、`meeting_agenda_generator.html`、`risk_analysis_prompt_generator.html`、`scenario_comparison_prompt_generator.html`、`documentation_summary_prompt_generator.html` 產生的 prompt 在貼給第三方 AI 工具前，也要先檢查是否包含不該外流的機密資訊。`documentation_summary_template.html` 填寫後可能包含內部系統架構、部署細節、troubleshooting 內部資訊，這兩個文件工具都沒有下載功能，複製或列印保存時不要放進會被公開提交的位置。`risk_analysis_template.html`、`scenario_comparison_template.html`、`decision_matrix_template.html` 填寫後也可能包含內部 roadmap、供應商、成本或架構資訊，複製或列印保存時不要放進會被公開提交的位置。
 
-`coaching_plan_tracker.html`、`skill_gap_analysis_template.html` 填寫後通常會包含真實姓名、技能評分、教練筆記，屬於敏感人事內容——這兩個工具沒有「下載」按鈕，只能列印/存 PDF 或截圖，存檔時不要存進任何會被提交進版控的位置（不論是這個 repo 還是你自己使用的專案 repo）。`strategic_alignment_template.html`、`crisis_response_template.html` 填寫後同樣可能包含利害關係人姓名、緊急聯絡方式、內部系統狀態或業務指標，也沒有下載按鈕，只能列印/存 PDF，存檔時比照辦理。`em_personal_action_plan.html`、`mini_reflection_journal.html` 填寫後會包含你自己的個人反思、能量/情緒狀態、以及可能涉及具名團隊成員的觀察筆記，屬於個人化內容——這兩個工具同樣沒有下載按鈕，只能列印/存 PDF，存檔時不要放進會被公開提交的位置。`interview_scorecard_template.html`、`candidate_red_flags_checklist.html` 填寫後會包含候選人真實姓名與面試評語，`interview_scorecard_template.html` 有下載按鈕（存成單機 HTML 檔），`candidate_red_flags_checklist.html` 同樣有下載按鈕，兩者存檔時都不要放進會被公開提交的位置。`job_description_template.html` 的「Internal Notes」欄位可能包含預算、招募急迫性等內部資訊，下載/分享前留意是否要移除。`ai_interview_question_generator.html` 產生的 prompt 貼給第三方 AI 工具前，也要先檢查是否包含不該外流的機密資訊。`career_development_plan_template.html` 有下載按鈕，填寫後的 `.txt` 檔同樣屬於敏感人事內容，只能存進 `docs/coaching/`（已被 `.gitignore` 排除）。
+`coaching_plan_tracker.html`、`skill_gap_analysis_template.html` 填寫後通常會包含真實姓名、技能評分、教練筆記，屬於敏感人事內容——這兩個工具沒有「下載」按鈕，只能列印/存 PDF 或截圖，存檔時不要存進任何會被提交進版控的位置（不論是這個 repo 還是你自己使用的專案 repo）。`strategic_alignment_template.html`、`crisis_response_template.html` 填寫後同樣可能包含利害關係人姓名、緊急聯絡方式、內部系統狀態或業務指標，也沒有下載按鈕，只能列印/存 PDF，存檔時比照辦理。`em_personal_action_plan.html`、`mini_reflection_journal.html` 填寫後會包含你自己的個人反思、能量/情緒狀態、以及可能涉及具名團隊成員的觀察筆記，屬於個人化內容——這兩個工具同樣沒有下載按鈕，只能列印/存 PDF，存檔時不要放進會被公開提交的位置。`interview_scorecard_template.html`、`candidate_red_flags_checklist.html` 填寫後會包含候選人真實姓名與面試評語，`interview_scorecard_template.html` 有下載按鈕（存成單機 HTML 檔），`candidate_red_flags_checklist.html` 同樣有下載按鈕，兩者存檔時都不要放進會被公開提交的位置。`job_description_template.html` 的「Internal Notes」欄位可能包含預算、招募急迫性等內部資訊，下載/分享前留意是否要移除。`ai_interview_question_generator.html` 產生的 prompt 貼給第三方 AI 工具前，也要先檢查是否包含不該外流的機密資訊。`career_development_plan_template.html` 有下載按鈕，填寫後的 `.txt` 檔同樣屬於敏感人事內容，只能存進 `docs/coaching/`（已被 `.gitignore` 排除）。`onboarding_plan_template.html` 填寫後會包含新人姓名等個資，有下載按鈕，存檔時不要放進會被公開提交的位置。`team_culture_survey_template.html` 的開放式回饋欄位在小團隊中可能間接透露填答者身分，建議搭配匿名調查平台使用；`ai_sentiment_analysis_prompt.html` 讓你貼上 Slack 訊息、書面回饋等原始資料，貼上前務必先移除個資並取得同意（工具本身已內建這則提醒），產生的 prompt 貼給第三方 AI 工具前也要再次檢查是否包含不該外流的機密資訊。
 
 `ai_career_path_prompt_template.html` 產生的 prompt 內建一段提醒：AI 給的「晉升準備評估」只是給主管自己參考的建議，不是正式的晉升決定——正式的晉升判斷仍然要走公司自己的 calibration 流程，不能把 AI 輸出直接當成依據。

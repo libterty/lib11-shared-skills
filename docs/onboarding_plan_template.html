@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">30/60/90-Day Engineering Onboarding Plan Template</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-bar {
+            position: relative;
+            text-align: center;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 2.2em;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: white;
+            color: #3498db;
+            border: 2px solid #3498db;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { background: #e8f4f8; }
+        .lang-btn.active { background: #3498db; color: white; }
+
+        .description {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 20px;
+            border-left: 5px solid #2196f3;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .new-hire-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border: 2px solid #dee2e6;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .field {
+            margin-bottom: 12px;
+        }
+
+        .field-label {
+            font-weight: 600;
+            color: #495057;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .field-input {
+            border: 1px solid #ced4da;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .field-input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        .phase-section {
+            margin-bottom: 30px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: box-shadow 0.3s;
+        }
+
+        .phase-section:hover {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .phase-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .phase-title {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .phase-subtitle {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .phase-content {
+            padding: 25px;
+        }
+
+        .goals-section {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .goals-section h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .checklist-item {
+            background: white;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transition: background-color 0.2s;
+        }
+
+        .checklist-item:hover {
+            background: #f8f9fa;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin: 4px 0 0 0;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        .checklist-item.completed {
+            background: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .checklist-text {
+            flex: 1;
+        }
+
+        .checklist-category {
+            background: #495057;
+            color: white;
+            padding: 8px 15px;
+            margin: 15px 0 10px 0;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .notes-section {
+            margin-top: 20px;
+        }
+
+        .notes-textarea {
+            width: 100%;
+            min-height: 80px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 12px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            height: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #27ae60 0%, #2ecc71 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-weight: 600;
+            color: #495057;
+            margin-top: 5px;
+        }
+
+        .milestone-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .milestone-table th,
+        .milestone-table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .milestone-table th {
+            background: #495057;
+            color: white;
+            font-weight: 600;
+        }
+
+        .milestone-table tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .milestone-table tbody tr:hover {
+            background: #e3f2fd;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-not-started {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #dee2e6;
+        }
+
+        .btn {
+            background: #3498db;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .milestone-section {
+            margin-top: 30px;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; padding: 0; }
+            .actions { display: none; }
+            .lang-switcher { display: none; }
+            .phase-section { break-inside: avoid; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .summary-stats { grid-template-columns: repeat(2, 1fr); }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1 data-i18n="mainTitle">30/60/90-Day Engineering Onboarding Plan</h1>
+        </div>
+
+        <div class="description">
+            <strong data-i18n="descPurposeLabel">Purpose:</strong> <span data-i18n="descPurposeText">This structured onboarding plan ensures new engineers are effectively integrated into your team over their first 90 days. Use this template to set clear expectations, track progress, and provide consistent onboarding experiences. Each phase builds upon the previous one to gradually increase responsibility and independence.</span>
+        </div>
+
+        <!-- New Hire Information -->
+        <div class="new-hire-info">
+            <h3 data-i18n="newHireHeading">New Hire Information</h3>
+            <div class="info-grid">
+                <div class="field">
+                    <span class="field-label" data-i18n="labelEmployeeName">Employee Name:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phFullName" placeholder="Full name">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelPosition">Position:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phPosition" placeholder="e.g., Senior Software Engineer">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelStartDate">Start Date:</span>
+                    <input type="date" class="field-input">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelManager">Manager:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phManager" placeholder="Direct manager name">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelTeamDept">Team/Department:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phTeamDept" placeholder="e.g., Platform Engineering, Frontend Team">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelBuddy">Buddy/Mentor:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phBuddy" placeholder="Assigned onboarding buddy">
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Summary -->
+        <div class="summary-stats">
+            <div class="stat-card">
+                <div class="stat-number" id="total-progress">0%</div>
+                <div class="stat-label" data-i18n="statOverallProgress">Overall Progress</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="completed-tasks">0</div>
+                <div class="stat-label" data-i18n="statTasksCompleted">Tasks Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="current-phase" data-i18n-phase="1">Phase 1</div>
+                <div class="stat-label" data-i18n="statCurrentPhase">Current Phase</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="days-remaining">30</div>
+                <div class="stat-label" data-i18n="statDaysRemaining">Days Remaining</div>
+            </div>
+        </div>
+
+        <!-- 30-Day Plan -->
+        <div class="phase-section">
+            <div class="phase-header">
+                <div>
+                    <div class="phase-title" data-i18n="p1Title">Phase 1: First 30 Days</div>
+                    <div class="phase-subtitle" data-i18n="p1Subtitle">Foundation & Setup</div>
+                </div>
+                <div class="progress-text" id="phase1-progress" data-progress-template="progressComplete">0% Complete</div>
+            </div>
+            <div class="phase-content">
+                <div class="goals-section">
+                    <h4 data-i18n="p1GoalsHeading">Phase 1 Goals</h4>
+                    <p data-i18n="p1GoalsText">Focus on orientation, basic setup, and getting familiar with the team, processes, and codebase. By the end of 30 days, the new hire should feel welcomed, have all necessary access, and understand the team dynamics.</p>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-bar-1"></div>
+                </div>
+
+                <div class="checklist-category" data-i18n="week1Cat">Week 1: Orientation & Setup</div>
+                <ul class="checklist" data-phase="1">
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_1">Complete HR onboarding paperwork and orientation</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_2">Set up development environment (IDE, tools, accounts)</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_3">Obtain necessary system access and permissions</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_4">Meet with direct manager for role expectations discussion</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_5">Meet assigned buddy/mentor for team introduction</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_6">Attend team meetings as observer</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_7">Review team documentation and coding standards</div></li>
+                </ul>
+
+                <div class="checklist-category" data-i18n="week23Cat">Week 2-3: Learning & Exploration</div>
+                <ul class="checklist" data-phase="1">
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_8">Complete codebase walkthrough with senior team member</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_9">Set up local development environment and run tests</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_10">Shadow team members during code reviews</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_11">Complete assigned learning modules/documentation</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_12">Understand deployment process and CI/CD pipeline</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_13">Begin first small task (bug fix or documentation update)</div></li>
+                </ul>
+
+                <div class="checklist-category" data-i18n="week4Cat">Week 4: First Contributions</div>
+                <ul class="checklist" data-phase="1">
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_14">Submit first pull request with mentor review</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_15">Participate actively in team meetings and standups</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_16">Complete 30-day check-in meeting with manager</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t1_17">Provide feedback on onboarding process</div></li>
+                </ul>
+
+                <div class="notes-section">
+                    <h4 data-i18n="p1NotesHeading">30-Day Notes & Observations</h4>
+                    <textarea class="notes-textarea" data-i18n-ph="p1NotesPh" placeholder="Record progress, challenges, feedback, and any adjustments needed for the next phase..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 60-Day Plan -->
+        <div class="phase-section">
+            <div class="phase-header">
+                <div>
+                    <div class="phase-title" data-i18n="p2Title">Phase 2: Days 31-60</div>
+                    <div class="phase-subtitle" data-i18n="p2Subtitle">Building Competence</div>
+                </div>
+                <div class="progress-text" id="phase2-progress" data-progress-template="progressComplete">0% Complete</div>
+            </div>
+            <div class="phase-content">
+                <div class="goals-section">
+                    <h4 data-i18n="p2GoalsHeading">Phase 2 Goals</h4>
+                    <p data-i18n="p2GoalsText">Increase independence and responsibility. Take on meaningful work with guidance. Start contributing to team discussions and begin developing expertise in specific areas.</p>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-bar-2"></div>
+                </div>
+
+                <div class="checklist-category" data-i18n="techGrowthCat">Technical Growth</div>
+                <ul class="checklist" data-phase="2">
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t2_1">Take ownership of a small feature or improvement</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t2_2">Conduct independent code reviews for simple changes</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t2_3">Participate in architecture/design discussions</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t2_4">Complete advanced training in key technologies</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t2_5">Understand monitoring and debugging tools</div></li>
+                </ul>
+
+                <div class="checklist-category" data-i18n="teamIntegrationCat">Team Integration</div>
+                <ul class="checklist" data-phase="2">
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t2_6">Lead or present in a team meeting</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t2_7">Collaborate with other teams (product, design, etc.)</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t2_8">Mentor/help newer team members or interns</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t2_9">Contribute to team process improvements</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t2_10">Attend relevant company all-hands or engineering meetings</div></li>
+                </ul>
+
+                <div class="checklist-category" data-i18n="skillsDevCat">Skills Development</div>
+                <ul class="checklist" data-phase="2">
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t2_11">Complete incident response training</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t2_12">Understand team's on-call procedures</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t2_13">Shadow senior engineers during on-call rotation</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t2_14">Complete 60-day performance check-in</div></li>
+                </ul>
+
+                <div class="notes-section">
+                    <h4 data-i18n="p2NotesHeading">60-Day Notes & Observations</h4>
+                    <textarea class="notes-textarea" data-i18n-ph="p2NotesPh" placeholder="Document growth areas, technical competencies developing, team feedback, and goals for final 30 days..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 90-Day Plan -->
+        <div class="phase-section">
+            <div class="phase-header">
+                <div>
+                    <div class="phase-title" data-i18n="p3Title">Phase 3: Days 61-90</div>
+                    <div class="phase-subtitle" data-i18n="p3Subtitle">Full Integration & Independence</div>
+                </div>
+                <div class="progress-text" id="phase3-progress" data-progress-template="progressComplete">0% Complete</div>
+            </div>
+            <div class="phase-content">
+                <div class="goals-section">
+                    <h4 data-i18n="p3GoalsHeading">Phase 3 Goals</h4>
+                    <p data-i18n="p3GoalsText">Operate independently as a full team member. Take ownership of significant work, contribute to team strategy, and be ready for standard performance evaluation cycles.</p>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-bar-3"></div>
+                </div>
+
+                <div class="checklist-category" data-i18n="fullOwnershipCat">Full Ownership</div>
+                <ul class="checklist" data-phase="3">
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t3_1">Own a significant project or feature end-to-end</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t3_2">Participate in planning and estimation meetings</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t3_3">Make architectural decisions for owned components</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t3_4">Handle production issues independently</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t3_5">Join on-call rotation (if applicable)</div></li>
+                </ul>
+
+                <div class="checklist-category" data-i18n="leadershipGrowthCat">Leadership & Growth</div>
+                <ul class="checklist" data-phase="3">
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t3_6">Lead a technical discussion or design review</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t3_7">Mentor new team members or interns</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t3_8">Contribute to hiring process (interviews, technical screens)</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t3_9">Identify and propose process improvements</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t3_10">Set personal development goals for next quarter</div></li>
+                </ul>
+
+                <div class="checklist-category" data-i18n="finalEvalCat">90-Day Evaluation</div>
+                <ul class="checklist" data-phase="3">
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t3_11">Complete formal 90-day performance review</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t3_12">Receive 360-degree feedback from team members</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t3_13">Discuss career development path with manager</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t3_14">Set goals for next performance cycle</div></li>
+                    <li class="checklist-item"><input type="checkbox" class="task-checkbox"><div class="checklist-text" data-i18n="t3_15">Complete onboarding feedback survey</div></li>
+                </ul>
+
+                <div class="notes-section">
+                    <h4 data-i18n="p3NotesHeading">90-Day Final Assessment</h4>
+                    <textarea class="notes-textarea" data-i18n-ph="p3NotesPh" placeholder="Final evaluation of onboarding success, areas of strength, development opportunities, and transition to regular performance management..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Milestones Table -->
+        <div class="milestone-section">
+            <h3 data-i18n="milestonesHeading">Key Milestones & Checkpoints</h3>
+            <table class="milestone-table">
+                <thead>
+                    <tr>
+                        <th data-i18n="thTimeline">Timeline</th>
+                        <th data-i18n="thMilestone">Milestone</th>
+                        <th data-i18n="thSuccessCriteria">Success Criteria</th>
+                        <th data-i18n="thStatus">Status</th>
+                        <th data-i18n="thNotes">Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-i18n="ms1Day">Day 7</td>
+                        <td data-i18n="ms1Name">Environment Setup Complete</td>
+                        <td data-i18n="ms1Criteria">Can build and run code locally</td>
+                        <td><span class="status-badge status-not-started" data-i18n="statusNotStarted">Not Started</span></td>
+                        <td><input type="text" class="field-input" style="border: none; background: transparent;" data-i18n-ph="phAddNotes" placeholder="Add notes..."></td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="ms2Day">Day 14</td>
+                        <td data-i18n="ms2Name">First Code Contribution</td>
+                        <td data-i18n="ms2Criteria">Submitted first pull request</td>
+                        <td><span class="status-badge status-not-started" data-i18n="statusNotStarted">Not Started</span></td>
+                        <td><input type="text" class="field-input" style="border: none; background: transparent;" data-i18n-ph="phAddNotes" placeholder="Add notes..."></td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="ms3Day">Day 30</td>
+                        <td data-i18n="ms3Name">First Month Review</td>
+                        <td data-i18n="ms3Criteria">Completed check-in, feedback given</td>
+                        <td><span class="status-badge status-not-started" data-i18n="statusNotStarted">Not Started</span></td>
+                        <td><input type="text" class="field-input" style="border: none; background: transparent;" data-i18n-ph="phAddNotes" placeholder="Add notes..."></td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="ms4Day">Day 45</td>
+                        <td data-i18n="ms4Name">Independent Feature Work</td>
+                        <td data-i18n="ms4Criteria">Leading small project with minimal guidance</td>
+                        <td><span class="status-badge status-not-started" data-i18n="statusNotStarted">Not Started</span></td>
+                        <td><input type="text" class="field-input" style="border: none; background: transparent;" data-i18n-ph="phAddNotes" placeholder="Add notes..."></td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="ms5Day">Day 60</td>
+                        <td data-i18n="ms5Name">Mid-Point Assessment</td>
+                        <td data-i18n="ms5Criteria">60-day review completed, on track</td>
+                        <td><span class="status-badge status-not-started" data-i18n="statusNotStarted">Not Started</span></td>
+                        <td><input type="text" class="field-input" style="border: none; background: transparent;" data-i18n-ph="phAddNotes" placeholder="Add notes..."></td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="ms6Day">Day 90</td>
+                        <td data-i18n="ms6Name">Full Team Integration</td>
+                        <td data-i18n="ms6Criteria">Operating independently, ready for regular reviews</td>
+                        <td><span class="status-badge status-not-started" data-i18n="statusNotStarted">Not Started</span></td>
+                        <td><input type="text" class="field-input" style="border: none; background: transparent;" data-i18n-ph="phAddNotes" placeholder="Add notes..."></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-success" id="btnUpdate" onclick="calculateProgress()">Update Progress</button>
+            <button class="btn" id="btnPrint" onclick="window.print()">Print Plan</button>
+            <button class="btn btn-secondary" id="btnDownload" onclick="downloadPlan()">Download Plan</button>
+            <button class="btn btn-secondary" id="btnReset" onclick="resetPlan()">Reset Plan</button>
+        </div>
+    </div>
+
+    <script>
+        const I18N = {
+            en: {
+                pageTitle: '30/60/90-Day Engineering Onboarding Plan Template',
+                mainTitle: '30/60/90-Day Engineering Onboarding Plan',
+                descPurposeLabel: 'Purpose:',
+                descPurposeText: 'This structured onboarding plan ensures new engineers are effectively integrated into your team over their first 90 days. Use this template to set clear expectations, track progress, and provide consistent onboarding experiences. Each phase builds upon the previous one to gradually increase responsibility and independence.',
+                newHireHeading: 'New Hire Information',
+                labelEmployeeName: 'Employee Name:', phFullName: 'Full name',
+                labelPosition: 'Position:', phPosition: 'e.g., Senior Software Engineer',
+                labelStartDate: 'Start Date:',
+                labelManager: 'Manager:', phManager: 'Direct manager name',
+                labelTeamDept: 'Team/Department:', phTeamDept: 'e.g., Platform Engineering, Frontend Team',
+                labelBuddy: 'Buddy/Mentor:', phBuddy: 'Assigned onboarding buddy',
+                statOverallProgress: 'Overall Progress',
+                statTasksCompleted: 'Tasks Completed',
+                statCurrentPhase: 'Current Phase',
+                statDaysRemaining: 'Days Remaining',
+                phase1Label: 'Phase 1', phase2Label: 'Phase 2', phase3Label: 'Phase 3',
+                progressComplete: '% Complete',
+                p1Title: 'Phase 1: First 30 Days', p1Subtitle: 'Foundation & Setup',
+                p1GoalsHeading: 'Phase 1 Goals',
+                p1GoalsText: 'Focus on orientation, basic setup, and getting familiar with the team, processes, and codebase. By the end of 30 days, the new hire should feel welcomed, have all necessary access, and understand the team dynamics.',
+                week1Cat: 'Week 1: Orientation & Setup',
+                t1_1: 'Complete HR onboarding paperwork and orientation',
+                t1_2: 'Set up development environment (IDE, tools, accounts)',
+                t1_3: 'Obtain necessary system access and permissions',
+                t1_4: 'Meet with direct manager for role expectations discussion',
+                t1_5: 'Meet assigned buddy/mentor for team introduction',
+                t1_6: 'Attend team meetings as observer',
+                t1_7: 'Review team documentation and coding standards',
+                week23Cat: 'Week 2-3: Learning & Exploration',
+                t1_8: 'Complete codebase walkthrough with senior team member',
+                t1_9: 'Set up local development environment and run tests',
+                t1_10: 'Shadow team members during code reviews',
+                t1_11: 'Complete assigned learning modules/documentation',
+                t1_12: 'Understand deployment process and CI/CD pipeline',
+                t1_13: 'Begin first small task (bug fix or documentation update)',
+                week4Cat: 'Week 4: First Contributions',
+                t1_14: 'Submit first pull request with mentor review',
+                t1_15: 'Participate actively in team meetings and standups',
+                t1_16: 'Complete 30-day check-in meeting with manager',
+                t1_17: 'Provide feedback on onboarding process',
+                p1NotesHeading: '30-Day Notes & Observations',
+                p1NotesPh: 'Record progress, challenges, feedback, and any adjustments needed for the next phase...',
+                p2Title: 'Phase 2: Days 31-60', p2Subtitle: 'Building Competence',
+                p2GoalsHeading: 'Phase 2 Goals',
+                p2GoalsText: 'Increase independence and responsibility. Take on meaningful work with guidance. Start contributing to team discussions and begin developing expertise in specific areas.',
+                techGrowthCat: 'Technical Growth',
+                t2_1: 'Take ownership of a small feature or improvement',
+                t2_2: 'Conduct independent code reviews for simple changes',
+                t2_3: 'Participate in architecture/design discussions',
+                t2_4: 'Complete advanced training in key technologies',
+                t2_5: 'Understand monitoring and debugging tools',
+                teamIntegrationCat: 'Team Integration',
+                t2_6: 'Lead or present in a team meeting',
+                t2_7: 'Collaborate with other teams (product, design, etc.)',
+                t2_8: 'Mentor/help newer team members or interns',
+                t2_9: 'Contribute to team process improvements',
+                t2_10: 'Attend relevant company all-hands or engineering meetings',
+                skillsDevCat: 'Skills Development',
+                t2_11: 'Complete incident response training',
+                t2_12: "Understand team's on-call procedures",
+                t2_13: 'Shadow senior engineers during on-call rotation',
+                t2_14: 'Complete 60-day performance check-in',
+                p2NotesHeading: '60-Day Notes & Observations',
+                p2NotesPh: 'Document growth areas, technical competencies developing, team feedback, and goals for final 30 days...',
+                p3Title: 'Phase 3: Days 61-90', p3Subtitle: 'Full Integration & Independence',
+                p3GoalsHeading: 'Phase 3 Goals',
+                p3GoalsText: 'Operate independently as a full team member. Take ownership of significant work, contribute to team strategy, and be ready for standard performance evaluation cycles.',
+                fullOwnershipCat: 'Full Ownership',
+                t3_1: 'Own a significant project or feature end-to-end',
+                t3_2: 'Participate in planning and estimation meetings',
+                t3_3: 'Make architectural decisions for owned components',
+                t3_4: 'Handle production issues independently',
+                t3_5: 'Join on-call rotation (if applicable)',
+                leadershipGrowthCat: 'Leadership & Growth',
+                t3_6: 'Lead a technical discussion or design review',
+                t3_7: 'Mentor new team members or interns',
+                t3_8: 'Contribute to hiring process (interviews, technical screens)',
+                t3_9: 'Identify and propose process improvements',
+                t3_10: 'Set personal development goals for next quarter',
+                finalEvalCat: '90-Day Evaluation',
+                t3_11: 'Complete formal 90-day performance review',
+                t3_12: 'Receive 360-degree feedback from team members',
+                t3_13: 'Discuss career development path with manager',
+                t3_14: 'Set goals for next performance cycle',
+                t3_15: 'Complete onboarding feedback survey',
+                p3NotesHeading: '90-Day Final Assessment',
+                p3NotesPh: 'Final evaluation of onboarding success, areas of strength, development opportunities, and transition to regular performance management...',
+                milestonesHeading: 'Key Milestones & Checkpoints',
+                thTimeline: 'Timeline', thMilestone: 'Milestone', thSuccessCriteria: 'Success Criteria', thStatus: 'Status', thNotes: 'Notes',
+                phAddNotes: 'Add notes...',
+                statusNotStarted: 'Not Started',
+                ms1Day: 'Day 7', ms1Name: 'Environment Setup Complete', ms1Criteria: 'Can build and run code locally',
+                ms2Day: 'Day 14', ms2Name: 'First Code Contribution', ms2Criteria: 'Submitted first pull request',
+                ms3Day: 'Day 30', ms3Name: 'First Month Review', ms3Criteria: 'Completed check-in, feedback given',
+                ms4Day: 'Day 45', ms4Name: 'Independent Feature Work', ms4Criteria: 'Leading small project with minimal guidance',
+                ms5Day: 'Day 60', ms5Name: 'Mid-Point Assessment', ms5Criteria: '60-day review completed, on track',
+                ms6Day: 'Day 90', ms6Name: 'Full Team Integration', ms6Criteria: 'Operating independently, ready for regular reviews',
+                btnUpdate: 'Update Progress', btnPrint: 'Print Plan', btnDownload: 'Download Plan', btnReset: 'Reset Plan',
+                resetConfirm: 'Are you sure you want to reset all progress? This cannot be undone.'
+            },
+            zh: {
+                pageTitle: '工程新人 30/60/90 天 Onboarding 計畫範本',
+                mainTitle: '工程新人 30/60/90 天 Onboarding 計畫',
+                descPurposeLabel: '用途：',
+                descPurposeText: '這份結構化的 onboarding 計畫確保新進工程師在到職前 90 天內能有效融入團隊。使用這份範本設定清楚的期望、追蹤進度，並提供一致的 onboarding 體驗。每個階段都建立在前一階段之上，逐步增加責任與獨立性。',
+                newHireHeading: '新人資訊',
+                labelEmployeeName: '員工姓名：', phFullName: '全名',
+                labelPosition: '職位：', phPosition: '例如：資深軟體工程師',
+                labelStartDate: '到職日期：',
+                labelManager: '主管：', phManager: '直屬主管姓名',
+                labelTeamDept: '團隊/部門：', phTeamDept: '例如：Platform Engineering、前端團隊',
+                labelBuddy: '夥伴/導師：', phBuddy: '指派的 onboarding 夥伴',
+                statOverallProgress: '整體進度',
+                statTasksCompleted: '已完成任務數',
+                statCurrentPhase: '目前階段',
+                statDaysRemaining: '剩餘天數',
+                phase1Label: '階段 1', phase2Label: '階段 2', phase3Label: '階段 3',
+                progressComplete: '% 完成',
+                p1Title: '階段 1：前 30 天', p1Subtitle: '打底與環境建置',
+                p1GoalsHeading: '階段 1 目標',
+                p1GoalsText: '聚焦在導覽、基本環境建置，並熟悉團隊、流程與程式碼庫。30 天結束時，新人應該感到被歡迎、擁有所有必要的存取權限，並理解團隊動態。',
+                week1Cat: '第 1 週：導覽與環境建置',
+                t1_1: '完成人資 onboarding 文件與導覽',
+                t1_2: '建置開發環境（IDE、工具、帳號）',
+                t1_3: '取得必要的系統存取權限',
+                t1_4: '與直屬主管會面討論角色期望',
+                t1_5: '與指派的夥伴/導師會面認識團隊',
+                t1_6: '以觀察者身分參加團隊會議',
+                t1_7: '檢視團隊文件與程式碼規範',
+                week23Cat: '第 2-3 週：學習與探索',
+                t1_8: '與資深團隊成員完成程式碼庫導覽',
+                t1_9: '建置本地開發環境並執行測試',
+                t1_10: '跟隨團隊成員觀摩 code review',
+                t1_11: '完成指定的學習模組/文件',
+                t1_12: '了解部署流程與 CI/CD pipeline',
+                t1_13: '開始第一個小任務（bug 修復或文件更新）',
+                week4Cat: '第 4 週：首次貢獻',
+                t1_14: '在導師審查下提交第一個 pull request',
+                t1_15: '積極參與團隊會議與 standup',
+                t1_16: '完成與主管的 30 天 check-in 會議',
+                t1_17: '對 onboarding 流程提供回饋',
+                p1NotesHeading: '30 天筆記與觀察',
+                p1NotesPh: '記錄進度、挑戰、回饋，以及下個階段需要的調整……',
+                p2Title: '階段 2：第 31-60 天', p2Subtitle: '建立能力',
+                p2GoalsHeading: '階段 2 目標',
+                p2GoalsText: '提升獨立性與責任感。在指導下承接有意義的工作。開始為團隊討論做出貢獻，並開始在特定領域培養專業能力。',
+                techGrowthCat: '技術成長',
+                t2_1: '承接一個小功能或改善項目的所有權',
+                t2_2: '為簡單的變更獨立進行 code review',
+                t2_3: '參與架構/設計討論',
+                t2_4: '完成關鍵技術的進階培訓',
+                t2_5: '了解監控與除錯工具',
+                teamIntegrationCat: '團隊融入',
+                t2_6: '在團隊會議中主持或簡報',
+                t2_7: '與其他團隊協作（產品、設計等）',
+                t2_8: '指導/協助較新的團隊成員或實習生',
+                t2_9: '為團隊流程改善做出貢獻',
+                t2_10: '參加相關的公司 all-hands 或工程會議',
+                skillsDevCat: '技能發展',
+                t2_11: '完成事件應變培訓',
+                t2_12: '了解團隊的 on-call 程序',
+                t2_13: '在 on-call 輪值期間跟隨資深工程師觀摩',
+                t2_14: '完成 60 天績效 check-in',
+                p2NotesHeading: '60 天筆記與觀察',
+                p2NotesPh: '記錄成長領域、正在發展的技術能力、團隊回饋，以及最後 30 天的目標……',
+                p3Title: '階段 3：第 61-90 天', p3Subtitle: '完全融入與獨立作業',
+                p3GoalsHeading: '階段 3 目標',
+                p3GoalsText: '以完整團隊成員的身分獨立運作。承接重大工作的所有權、為團隊策略做出貢獻，並為標準績效評估週期做好準備。',
+                fullOwnershipCat: '完全所有權',
+                t3_1: '端到端擁有一個重大專案或功能',
+                t3_2: '參與規劃與估算會議',
+                t3_3: '為所負責的元件做出架構決策',
+                t3_4: '獨立處理正式環境問題',
+                t3_5: '加入 on-call 輪值（如適用）',
+                leadershipGrowthCat: '領導力與成長',
+                t3_6: '主持技術討論或設計審查',
+                t3_7: '指導新的團隊成員或實習生',
+                t3_8: '參與招募流程（面試、技術初篩）',
+                t3_9: '找出並提出流程改善建議',
+                t3_10: '設定下一季的個人發展目標',
+                finalEvalCat: '90 天評估',
+                t3_11: '完成正式的 90 天績效考核',
+                t3_12: '收到來自團隊成員的 360 度回饋',
+                t3_13: '與主管討論職涯發展路徑',
+                t3_14: '設定下一個績效週期的目標',
+                t3_15: '完成 onboarding 回饋調查',
+                p3NotesHeading: '90 天最終評估',
+                p3NotesPh: 'onboarding 成效的最終評估、優勢領域、發展機會，以及轉入常規績效管理的銜接……',
+                milestonesHeading: '關鍵里程碑與檢核點',
+                thTimeline: '時程', thMilestone: '里程碑', thSuccessCriteria: '成功標準', thStatus: '狀態', thNotes: '備註',
+                phAddNotes: '新增備註……',
+                statusNotStarted: '尚未開始',
+                ms1Day: '第 7 天', ms1Name: '環境建置完成', ms1Criteria: '能在本地建置並執行程式碼',
+                ms2Day: '第 14 天', ms2Name: '首次程式碼貢獻', ms2Criteria: '已提交第一個 pull request',
+                ms3Day: '第 30 天', ms3Name: '第一個月檢視', ms3Criteria: '已完成 check-in，已給予回饋',
+                ms4Day: '第 45 天', ms4Name: '獨立功能開發', ms4Criteria: '在最少指導下主導小型專案',
+                ms5Day: '第 60 天', ms5Name: '期中評估', ms5Criteria: '已完成 60 天檢視，進度正常',
+                ms6Day: '第 90 天', ms6Name: '完全融入團隊', ms6Criteria: '獨立運作中，已準備好進入常規考核',
+                btnUpdate: '更新進度', btnPrint: '列印計畫', btnDownload: '下載計畫', btnReset: '重設計畫',
+                resetConfirm: '確定要重設所有進度嗎？此動作無法復原。'
+            }
+        };
+
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (dict[key] !== undefined) el.textContent = dict[key];
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.dataset.i18nPh;
+                if (dict[key] !== undefined) el.placeholder = dict[key];
+            });
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            calculateProgress();
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        function calculateProgress() {
+            const dict = t();
+            const phases = [1, 2, 3];
+            let totalTasks = 0;
+            let completedTasks = 0;
+
+            phases.forEach(phase => {
+                const phaseCheckboxes = document.querySelectorAll(`[data-phase="${phase}"] .task-checkbox`);
+                const phaseCompleted = Array.from(phaseCheckboxes).filter(cb => cb.checked).length;
+                const phaseTotal = phaseCheckboxes.length;
+
+                totalTasks += phaseTotal;
+                completedTasks += phaseCompleted;
+
+                const phaseProgress = phaseTotal > 0 ? Math.round((phaseCompleted / phaseTotal) * 100) : 0;
+                document.getElementById(`phase${phase}-progress`).textContent = `${phaseProgress}${dict.progressComplete}`;
+                document.getElementById(`progress-bar-${phase}`).style.width = `${phaseProgress}%`;
+            });
+
+            const overallProgress = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            document.getElementById('total-progress').textContent = `${overallProgress}%`;
+            document.getElementById('completed-tasks').textContent = completedTasks;
+
+            const phaseLabels = [dict.phase1Label, dict.phase2Label, dict.phase3Label];
+            if (overallProgress < 33) {
+                document.getElementById('current-phase').textContent = phaseLabels[0];
+                document.getElementById('days-remaining').textContent = Math.max(0, 30 - Math.floor(overallProgress * 0.9));
+            } else if (overallProgress < 67) {
+                document.getElementById('current-phase').textContent = phaseLabels[1];
+                document.getElementById('days-remaining').textContent = Math.max(0, 60 - Math.floor(overallProgress * 0.9));
+            } else {
+                document.getElementById('current-phase').textContent = phaseLabels[2];
+                document.getElementById('days-remaining').textContent = Math.max(0, 90 - Math.floor(overallProgress * 0.9));
+            }
+
+            autoSave();
+        }
+
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('task-checkbox')) {
+                if (e.target.checked) {
+                    e.target.closest('.checklist-item').classList.add('completed');
+                } else {
+                    e.target.closest('.checklist-item').classList.remove('completed');
+                }
+                calculateProgress();
+            }
+        });
+
+        function autoSave() {
+            const data = {};
+
+            document.querySelectorAll('input, textarea').forEach((input, index) => {
+                if (input.type === 'checkbox') {
+                    data[`checkbox_${index}`] = input.checked;
+                } else {
+                    data[`field_${index}`] = input.value;
+                }
+            });
+
+            localStorage.setItem('onboardingPlan', JSON.stringify(data));
+        }
+
+        function loadSaved() {
+            const saved = localStorage.getItem('onboardingPlan');
+            if (saved) {
+                const data = JSON.parse(saved);
+
+                document.querySelectorAll('input, textarea').forEach((input, index) => {
+                    if (input.type === 'checkbox') {
+                        if (data[`checkbox_${index}`]) {
+                            input.checked = true;
+                            input.closest('.checklist-item').classList.add('completed');
+                        }
+                    } else if (data[`field_${index}`]) {
+                        input.value = data[`field_${index}`];
+                    }
+                });
+
+                calculateProgress();
+            }
+        }
+
+        function downloadPlan() {
+            const nameInput = document.querySelectorAll('input[type="text"]')[0];
+            const employeeName = (nameInput && nameInput.value) || 'new_hire';
+            const fileName = `onboarding_plan_${employeeName.replace(/\s+/g, '_').toLowerCase()}.html`;
+
+            const element = document.createElement('a');
+            const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function resetPlan() {
+            const dict = t();
+            if (confirm(dict.resetConfirm)) {
+                document.querySelectorAll('input, textarea').forEach(input => {
+                    if (input.type === 'checkbox') {
+                        input.checked = false;
+                    } else {
+                        input.value = '';
+                    }
+                });
+
+                document.querySelectorAll('.checklist-item.completed').forEach(item => {
+                    item.classList.remove('completed');
+                });
+
+                localStorage.removeItem('onboardingPlan');
+                calculateProgress();
+            }
+        }
+
+        window.onload = function() {
+            renderLanguage();
+            loadSaved();
+            calculateProgress();
+
+            document.addEventListener('input', autoSave);
+
+            const startDateInput = document.querySelector('input[type="date"]');
+            if (startDateInput && !startDateInput.value) {
+                startDateInput.value = new Date().toISOString().split('T')[0];
+            }
+        };
+    </script>
+</body>
+</html>
