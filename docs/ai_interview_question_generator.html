@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">AI Interview Question Generator Prompt Template</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+        }
+
+        .header-bar {
+            position: relative;
+            text-align: center;
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #1a202c;
+            margin: 0;
+            font-size: 2.2em;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { background: #e0e7ff; }
+        .lang-btn.active { background: #667eea; color: white; }
+
+        .description {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .ai-tools-note {
+            background: #e0e7ff;
+            border: 2px solid #c7d2fe;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .ai-tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .ai-tool {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            border: 2px solid #e2e8f0;
+        }
+
+        .prompt-section {
+            margin-bottom: 30px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .prompt-header {
+            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+            color: white;
+            padding: 18px 25px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .prompt-content {
+            padding: 25px;
+        }
+
+        .config-section {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 4px solid #667eea;
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .field {
+            margin-bottom: 12px;
+        }
+
+        .field-label {
+            font-weight: 600;
+            color: #2d3748;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .field-input, .field-select {
+            border: 2px solid #e2e8f0;
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .field-input:focus, .field-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        .prompt-box {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            border: 1px solid #4a5568;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .copy-button:hover {
+            background: #5a67d8;
+        }
+
+        .examples-section {
+            background: #f0fff4;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #38a169;
+            margin-top: 20px;
+        }
+
+        .example-output {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            border: 1px solid #c6f6d5;
+        }
+
+        .question-category {
+            background: #667eea;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .customization-tips {
+            background: #fffaf0;
+            border: 2px solid #feb2b2;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .tip-icon {
+            background: #f56565;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background: #5a67d8;
+        }
+
+        .btn-secondary {
+            background: #718096;
+        }
+
+        .btn-secondary:hover {
+            background: #4a5568;
+        }
+
+        .btn-success {
+            background: #38a169;
+        }
+
+        .btn-success:hover {
+            background: #2f855a;
+        }
+
+        .usage-steps {
+            background: #e6fffa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #38b2ac;
+            margin: 20px 0;
+        }
+
+        .step-number {
+            background: #38b2ac;
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; padding: 0; }
+            .actions { display: none; }
+            .copy-button { display: none; }
+            .lang-switcher { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            .config-grid { grid-template-columns: 1fr; }
+            .ai-tools-grid { grid-template-columns: repeat(2, 1fr); }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1 data-i18n="mainTitle">AI Interview Question Generator</h1>
+        </div>
+
+        <div class="description">
+            <strong data-i18n="descPurposeLabel">Purpose:</strong> <span data-i18n="descPurposeText">This template provides ready-to-use AI prompts that generate role-specific, high-quality interview questions for engineering positions. Simply customize the parameters and paste into any AI tool to get tailored questions for your interviews. Save hours of preparation time while ensuring comprehensive, relevant questions.</span>
+        </div>
+
+        <div class="ai-tools-note">
+            <h3 data-i18n="aiToolsHeading">🤖 Compatible AI Tools</h3>
+            <p data-i18n="aiToolsIntro">This prompt works with any AI assistant or language model:</p>
+            <div class="ai-tools-grid">
+                <div class="ai-tool">ChatGPT</div>
+                <div class="ai-tool">Claude</div>
+                <div class="ai-tool">Bard</div>
+                <div class="ai-tool">Copilot</div>
+                <div class="ai-tool">Gemini</div>
+                <div class="ai-tool" data-i18n="aiToolCustom">Custom LLMs</div>
+            </div>
+        </div>
+
+        <!-- Configuration Section -->
+        <div class="prompt-section">
+            <div class="prompt-header" data-i18n="step1Header">Step 1: Configure Your Requirements</div>
+            <div class="prompt-content">
+                <div class="config-section">
+                    <h4 data-i18n="configHeading">Interview Configuration</h4>
+                    <div class="config-grid">
+                        <div class="field">
+                            <span class="field-label" data-i18n="labelJobTitle">Job Title:</span>
+                            <input type="text" class="field-input" id="job-title" data-i18n-ph="phJobTitle" placeholder="e.g., Senior Software Engineer, DevOps Engineer">
+                        </div>
+                        <div class="field">
+                            <span class="field-label" data-i18n="labelExperienceLevel">Experience Level:</span>
+                            <select class="field-select" id="experience-level">
+                                <option value="" data-i18n="optSelectLevel">Select level</option>
+                                <option value="entry" data-i18n="optEntry">Entry Level (0-2 years)</option>
+                                <option value="mid" data-i18n="optMid">Mid Level (2-5 years)</option>
+                                <option value="senior" data-i18n="optSenior">Senior Level (5-8 years)</option>
+                                <option value="staff" data-i18n="optStaff">Staff/Principal (8+ years)</option>
+                                <option value="em" data-i18n="optEM">Engineering Manager</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <span class="field-label" data-i18n="labelTechnologies">Primary Technologies:</span>
+                            <input type="text" class="field-input" id="technologies" data-i18n-ph="phTechnologies" placeholder="e.g., React, Node.js, AWS, Kubernetes">
+                        </div>
+                        <div class="field">
+                            <span class="field-label" data-i18n="labelTeamDomain">Team/Domain:</span>
+                            <input type="text" class="field-input" id="team-domain" data-i18n-ph="phTeamDomain" placeholder="e.g., Frontend, Backend, Platform, Mobile">
+                        </div>
+                        <div class="field">
+                            <span class="field-label" data-i18n="labelCompanySize">Company Size:</span>
+                            <select class="field-select" id="company-size">
+                                <option value="" data-i18n="optSelectSize">Select size</option>
+                                <option value="startup" data-i18n="optStartup">Startup (1-50 employees)</option>
+                                <option value="midsize" data-i18n="optMidsize">Mid-size (50-500 employees)</option>
+                                <option value="large" data-i18n="optLarge">Large (500+ employees)</option>
+                                <option value="enterprise" data-i18n="optEnterprise">Enterprise (5000+ employees)</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <span class="field-label" data-i18n="labelInterviewType">Interview Type:</span>
+                            <select class="field-select" id="interview-type">
+                                <option value="" data-i18n="optSelectType">Select type</option>
+                                <option value="technical" data-i18n="optTechnicalScreen">Technical Screen</option>
+                                <option value="design" data-i18n="optSystemDesign">System Design</option>
+                                <option value="behavioral" data-i18n="optBehavioral">Behavioral</option>
+                                <option value="coding" data-i18n="optCodingChallenge">Coding Challenge</option>
+                                <option value="culture" data-i18n="optCultureFit">Culture Fit</option>
+                                <option value="comprehensive" data-i18n="optComprehensive">Comprehensive (All Areas)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Generated Prompt Section -->
+        <div class="prompt-section">
+            <div class="prompt-header" data-i18n="step2Header">Step 2: Generated AI Prompt</div>
+            <div class="prompt-content">
+                <div class="usage-steps">
+                    <h4 data-i18n="howToUseHeading">How to Use:</h4>
+                    <div class="step-item">
+                        <span class="step-number">1</span>
+                        <span data-i18n="usageStep1">Fill out the configuration fields above</span>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">2</span>
+                        <span data-i18n="usageStep2">Click "Generate Prompt" to create your customized prompt</span>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">3</span>
+                        <span data-i18n="usageStep3">Copy the generated prompt and paste into your preferred AI tool</span>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">4</span>
+                        <span data-i18n="usageStep4">Review and customize the generated questions as needed</span>
+                    </div>
+                </div>
+
+                <div class="prompt-box" id="generated-prompt" data-i18n="promptPlaceholder">
+Click "Generate Prompt" below to create your customized AI prompt based on your configuration above.
+                </div>
+                <button class="copy-button" id="copyBtn" onclick="copyPrompt()">Copy Prompt</button>
+            </div>
+        </div>
+
+        <!-- Example Outputs -->
+        <div class="prompt-section">
+            <div class="prompt-header" data-i18n="step3Header">Step 3: Example AI Outputs</div>
+            <div class="prompt-content">
+                <div class="examples-section">
+                    <h4 data-i18n="sampleHeading">Sample Generated Questions</h4>
+                    <p data-i18n="sampleIntro">Here's what the AI might generate for a "Senior Frontend Engineer" role:</p>
+
+                    <div class="example-output">
+                        <div class="question-category" data-i18n="catTechDepth">Technical Depth</div>
+                        <strong data-i18n="qLabel">Q:</strong> <span data-i18n="ex1Q">"Explain how React's virtual DOM works and describe a scenario where you might need to optimize re-renders in a complex component tree."</span>
+                        <br><br>
+                        <strong data-i18n="followUpLabel">Follow-up:</strong> <span data-i18n="ex1F">"Walk me through how you would debug performance issues in a React application."</span>
+                    </div>
+
+                    <div class="example-output">
+                        <div class="question-category" data-i18n="catSystemDesign">System Design</div>
+                        <strong data-i18n="qLabel">Q:</strong> <span data-i18n="ex2Q">"Design a real-time collaborative editing system like Google Docs. Focus on the frontend architecture and state synchronization."</span>
+                        <br><br>
+                        <strong data-i18n="followUpLabel">Follow-up:</strong> <span data-i18n="ex2F">"How would you handle conflict resolution when multiple users edit the same content simultaneously?"</span>
+                    </div>
+
+                    <div class="example-output">
+                        <div class="question-category" data-i18n="catProblemSolving">Problem Solving</div>
+                        <strong data-i18n="qLabel">Q:</strong> <span data-i18n="ex3Q">"You notice that your React application's bundle size has grown significantly, affecting load times. Walk me through your investigation and optimization approach."</span>
+                        <br><br>
+                        <strong data-i18n="followUpLabel">Follow-up:</strong> <span data-i18n="ex3F">"What tools and techniques would you use to monitor and maintain optimal bundle sizes?"</span>
+                    </div>
+
+                    <div class="example-output">
+                        <div class="question-category" data-i18n="catBehavioral">Behavioral</div>
+                        <strong data-i18n="qLabel">Q:</strong> <span data-i18n="ex4Q">"Describe a time when you had to make a technical decision that involved trade-offs between development speed and code maintainability."</span>
+                        <br><br>
+                        <strong data-i18n="followUpLabel">Follow-up:</strong> <span data-i18n="ex4F">"How do you typically communicate these trade-offs to product managers and stakeholders?"</span>
+                    </div>
+
+                    <div class="example-output">
+                        <div class="question-category" data-i18n="catCultureLeadership">Culture & Leadership</div>
+                        <strong data-i18n="qLabel">Q:</strong> <span data-i18n="ex5Q">"How do you approach code reviews? Can you share an example of a time when you provided constructive feedback to a junior developer?"</span>
+                        <br><br>
+                        <strong data-i18n="followUpLabel">Follow-up:</strong> <span data-i18n="ex5F">"What strategies do you use to stay current with frontend technologies and share knowledge with your team?"</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customization Tips -->
+        <div class="customization-tips">
+            <h4 data-i18n="tipsHeading">💡 Customization Tips</h4>
+
+            <div class="tip-item">
+                <div class="tip-icon">1</div>
+                <div>
+                    <strong data-i18n="tip1Label">Add Company Context:</strong> <span data-i18n="tip1Text">Include specific details about your company's tech stack, challenges, or culture in the prompt for more relevant questions.</span>
+                </div>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-icon">2</div>
+                <div>
+                    <strong data-i18n="tip2Label">Specify Question Format:</strong> <span data-i18n="tip2Text">Ask for specific formats like "scenario-based questions" or "questions with follow-ups" to match your interview style.</span>
+                </div>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-icon">3</div>
+                <div>
+                    <strong data-i18n="tip3Label">Request Difficulty Levels:</strong> <span data-i18n="tip3Text">Ask the AI to label questions as "Junior," "Mid," or "Senior" level to help calibrate expectations.</span>
+                </div>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-icon">4</div>
+                <div>
+                    <strong data-i18n="tip4Label">Include Evaluation Criteria:</strong> <span data-i18n="tip4Text">Request sample answers or evaluation criteria to help standardize your assessment process.</span>
+                </div>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-icon">5</div>
+                <div>
+                    <strong data-i18n="tip5Label">Iterate and Refine:</strong> <span data-i18n="tip5Text">After getting initial questions, ask the AI to "make these questions more challenging" or "add more behavioral questions."</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prompt Templates Library -->
+        <div class="prompt-section">
+            <div class="prompt-header" data-i18n="bonusHeader">Bonus: Specialized Prompt Templates</div>
+            <div class="prompt-content">
+                <div class="config-section">
+                    <h4 data-i18n="quickTemplatesHeading">Quick Templates for Common Scenarios</h4>
+
+                    <div class="field">
+                        <span class="field-label" data-i18n="tplSystemDesignLabel">System Design Focus:</span>
+                        <div class="prompt-box" data-i18n="tplSystemDesignText">Generate 5 system design questions for a [LEVEL] [ROLE] candidate specializing in [DOMAIN]. Include questions about scalability, reliability, and trade-offs. Each question should have 2-3 follow-up questions that dig deeper into specific technical decisions. Format each question with: 1) The main question, 2) Key areas to probe, 3) What good vs. great answers look like.</div>
+                    </div>
+
+                    <div class="field">
+                        <span class="field-label" data-i18n="tplCodingLabel">Coding Challenge Generator:</span>
+                        <div class="prompt-box" data-i18n="tplCodingText">Create 3 coding problems for a [LEVEL] [ROLE] interview, each taking 20-30 minutes. Problems should test: 1) Algorithm thinking, 2) Code quality and structure, 3) Edge case handling. For each problem provide: the problem statement, example inputs/outputs, optimal time/space complexity, and 2-3 follow-up variations to test deeper understanding.</div>
+                    </div>
+
+                    <div class="field">
+                        <span class="field-label" data-i18n="tplBehavioralLabel">Behavioral Questions:</span>
+                        <div class="prompt-box" data-i18n="tplBehavioralText">Generate 8 behavioral interview questions for a [LEVEL] [ROLE] position focusing on: leadership, conflict resolution, technical decision-making, and collaboration. Use the STAR method format. Each question should include: 1) The core question, 2) What you're assessing, 3) Follow-up questions to probe deeper, 4) Red flags to watch for in answers.</div>
+                    </div>
+
+                    <div class="field">
+                        <span class="field-label" data-i18n="tplCultureLabel">Culture Fit Assessment:</span>
+                        <div class="prompt-box" data-i18n="tplCultureText">Create 6 questions to assess culture fit for a [COMPANY_SIZE] [COMPANY_TYPE] hiring a [ROLE]. Focus on: work style preferences, communication approach, learning mindset, and handling of ambiguity. Include questions that reveal: 1) How they handle feedback, 2) Approach to collaboration, 3) Attitude toward continuous learning, 4) Response to changing priorities.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-success" id="btnGenerate" onclick="generatePrompt()">Generate Prompt</button>
+            <button class="btn" id="btnPrint" onclick="window.print()">Print Template</button>
+            <button class="btn btn-secondary" id="btnDownload" onclick="downloadTemplate()">Download Template</button>
+            <button class="btn btn-secondary" id="btnReset" onclick="resetForm()">Reset Form</button>
+        </div>
+    </div>
+
+    <script>
+        const I18N = {
+            en: {
+                pageTitle: 'AI Interview Question Generator Prompt Template',
+                mainTitle: 'AI Interview Question Generator',
+                descPurposeLabel: 'Purpose:',
+                descPurposeText: 'This template provides ready-to-use AI prompts that generate role-specific, high-quality interview questions for engineering positions. Simply customize the parameters and paste into any AI tool to get tailored questions for your interviews. Save hours of preparation time while ensuring comprehensive, relevant questions.',
+                aiToolsHeading: '🤖 Compatible AI Tools',
+                aiToolsIntro: 'This prompt works with any AI assistant or language model:',
+                aiToolCustom: 'Custom LLMs',
+                step1Header: 'Step 1: Configure Your Requirements',
+                configHeading: 'Interview Configuration',
+                labelJobTitle: 'Job Title:',
+                phJobTitle: 'e.g., Senior Software Engineer, DevOps Engineer',
+                labelExperienceLevel: 'Experience Level:',
+                optSelectLevel: 'Select level',
+                optEntry: 'Entry Level (0-2 years)',
+                optMid: 'Mid Level (2-5 years)',
+                optSenior: 'Senior Level (5-8 years)',
+                optStaff: 'Staff/Principal (8+ years)',
+                optEM: 'Engineering Manager',
+                labelTechnologies: 'Primary Technologies:',
+                phTechnologies: 'e.g., React, Node.js, AWS, Kubernetes',
+                labelTeamDomain: 'Team/Domain:',
+                phTeamDomain: 'e.g., Frontend, Backend, Platform, Mobile',
+                labelCompanySize: 'Company Size:',
+                optSelectSize: 'Select size',
+                optStartup: 'Startup (1-50 employees)',
+                optMidsize: 'Mid-size (50-500 employees)',
+                optLarge: 'Large (500+ employees)',
+                optEnterprise: 'Enterprise (5000+ employees)',
+                labelInterviewType: 'Interview Type:',
+                optSelectType: 'Select type',
+                optTechnicalScreen: 'Technical Screen',
+                optSystemDesign: 'System Design',
+                optBehavioral: 'Behavioral',
+                optCodingChallenge: 'Coding Challenge',
+                optCultureFit: 'Culture Fit',
+                optComprehensive: 'Comprehensive (All Areas)',
+                step2Header: 'Step 2: Generated AI Prompt',
+                howToUseHeading: 'How to Use:',
+                usageStep1: 'Fill out the configuration fields above',
+                usageStep2: 'Click "Generate Prompt" to create your customized prompt',
+                usageStep3: 'Copy the generated prompt and paste into your preferred AI tool',
+                usageStep4: 'Review and customize the generated questions as needed',
+                promptPlaceholder: 'Click "Generate Prompt" below to create your customized AI prompt based on your configuration above.',
+                copyBtn: 'Copy Prompt',
+                copiedBtn: 'Copied!',
+                step3Header: 'Step 3: Example AI Outputs',
+                sampleHeading: 'Sample Generated Questions',
+                sampleIntro: 'Here\'s what the AI might generate for a "Senior Frontend Engineer" role:',
+                catTechDepth: 'Technical Depth',
+                qLabel: 'Q:',
+                followUpLabel: 'Follow-up:',
+                ex1Q: '"Explain how React\'s virtual DOM works and describe a scenario where you might need to optimize re-renders in a complex component tree."',
+                ex1F: '"Walk me through how you would debug performance issues in a React application."',
+                catSystemDesign: 'System Design',
+                ex2Q: '"Design a real-time collaborative editing system like Google Docs. Focus on the frontend architecture and state synchronization."',
+                ex2F: '"How would you handle conflict resolution when multiple users edit the same content simultaneously?"',
+                catProblemSolving: 'Problem Solving',
+                ex3Q: '"You notice that your React application\'s bundle size has grown significantly, affecting load times. Walk me through your investigation and optimization approach."',
+                ex3F: '"What tools and techniques would you use to monitor and maintain optimal bundle sizes?"',
+                catBehavioral: 'Behavioral',
+                ex4Q: '"Describe a time when you had to make a technical decision that involved trade-offs between development speed and code maintainability."',
+                ex4F: '"How do you typically communicate these trade-offs to product managers and stakeholders?"',
+                catCultureLeadership: 'Culture & Leadership',
+                ex5Q: '"How do you approach code reviews? Can you share an example of a time when you provided constructive feedback to a junior developer?"',
+                ex5F: '"What strategies do you use to stay current with frontend technologies and share knowledge with your team?"',
+                tipsHeading: '💡 Customization Tips',
+                tip1Label: 'Add Company Context:',
+                tip1Text: "Include specific details about your company's tech stack, challenges, or culture in the prompt for more relevant questions.",
+                tip2Label: 'Specify Question Format:',
+                tip2Text: 'Ask for specific formats like "scenario-based questions" or "questions with follow-ups" to match your interview style.',
+                tip3Label: 'Request Difficulty Levels:',
+                tip3Text: 'Ask the AI to label questions as "Junior," "Mid," or "Senior" level to help calibrate expectations.',
+                tip4Label: 'Include Evaluation Criteria:',
+                tip4Text: 'Request sample answers or evaluation criteria to help standardize your assessment process.',
+                tip5Label: 'Iterate and Refine:',
+                tip5Text: 'After getting initial questions, ask the AI to "make these questions more challenging" or "add more behavioral questions."',
+                bonusHeader: 'Bonus: Specialized Prompt Templates',
+                quickTemplatesHeading: 'Quick Templates for Common Scenarios',
+                tplSystemDesignLabel: 'System Design Focus:',
+                tplSystemDesignText: 'Generate 5 system design questions for a [LEVEL] [ROLE] candidate specializing in [DOMAIN]. Include questions about scalability, reliability, and trade-offs. Each question should have 2-3 follow-up questions that dig deeper into specific technical decisions. Format each question with: 1) The main question, 2) Key areas to probe, 3) What good vs. great answers look like.',
+                tplCodingLabel: 'Coding Challenge Generator:',
+                tplCodingText: 'Create 3 coding problems for a [LEVEL] [ROLE] interview, each taking 20-30 minutes. Problems should test: 1) Algorithm thinking, 2) Code quality and structure, 3) Edge case handling. For each problem provide: the problem statement, example inputs/outputs, optimal time/space complexity, and 2-3 follow-up variations to test deeper understanding.',
+                tplBehavioralLabel: 'Behavioral Questions:',
+                tplBehavioralText: "Generate 8 behavioral interview questions for a [LEVEL] [ROLE] position focusing on: leadership, conflict resolution, technical decision-making, and collaboration. Use the STAR method format. Each question should include: 1) The core question, 2) What you're assessing, 3) Follow-up questions to probe deeper, 4) Red flags to watch for in answers.",
+                tplCultureLabel: 'Culture Fit Assessment:',
+                tplCultureText: 'Create 6 questions to assess culture fit for a [COMPANY_SIZE] [COMPANY_TYPE] hiring a [ROLE]. Focus on: work style preferences, communication approach, learning mindset, and handling of ambiguity. Include questions that reveal: 1) How they handle feedback, 2) Approach to collaboration, 3) Attitude toward continuous learning, 4) Response to changing priorities.',
+                btnGenerate: 'Generate Prompt',
+                btnPrint: 'Print Template',
+                btnDownload: 'Download Template',
+                btnReset: 'Reset Form',
+                resetConfirm: 'Are you sure you want to reset all fields? This will clear your current configuration.',
+                phJobTitleFallback: '[JOB_TITLE]',
+                phExpFallback: '[EXPERIENCE_LEVEL]',
+                phTechFallback: '[TECHNOLOGIES]',
+                phDomainFallback: '[TEAM/DOMAIN]',
+                phCompanyFallback: '[COMPANY_SIZE]',
+                interviewTypeDefault: 'Comprehensive',
+                promptIntro: 'You are an expert engineering interviewer creating questions for a',
+                promptPosition: 'position.',
+                promptRoleDetailsHeading: '**Role Details:**',
+                promptPositionLabel: '- Position:',
+                promptExpLabel: '- Experience Level:',
+                promptTechLabel: '- Key Technologies:',
+                promptDomainLabel: '- Team/Domain:',
+                promptCompanyLabel: '- Company Size:',
+                promptFocusLabel: '- Interview Focus:',
+                promptInstructionsHeading: '**Instructions:**',
+                promptGenerateIntro: 'Generate 8-10 high-quality interview questions that cover:',
+                promptCat1: '1. **Technical Depth** (2-3 questions): Test deep understanding of core technologies and concepts',
+                promptCat2: '2. **Problem Solving** (2-3 questions): Real-world scenarios they might face in this role',
+                promptCat3: '3. **System Design** (1-2 questions): Architecture thinking appropriate for the experience level',
+                promptCat4: '4. **Behavioral** (2-3 questions): Leadership, collaboration, and growth mindset',
+                promptCat5: '5. **Culture Fit** (1-2 questions): How they work and communicate',
+                promptFormatHeading: '**Question Format:**',
+                promptFormatIntro: 'For each question, provide:',
+                promptFormat1: '- The main question',
+                promptFormat2: '- 2-3 follow-up questions to probe deeper',
+                promptFormat3: "- What you're specifically assessing",
+                promptFormat4: '- Brief note on what good vs. excellent answers include',
+                promptReqHeading: '**Additional Requirements:**',
+                promptReq1Prefix: '- Questions should be appropriate for',
+                promptReq1Suffix: 'experience',
+                promptReq2: '- Include both technical and soft skills assessment',
+                promptReq3Prefix: '- Make questions specific to',
+                promptReq3Suffix: 'work when possible',
+                promptReq4: "- Ensure questions reveal problem-solving approach, not just knowledge",
+                promptReq5: '- Include at least one question about handling technical challenges or failures',
+                promptClosingPrefix: 'Please generate questions that will help identify strong candidates who can excel in this',
+                promptClosingMid: 'role at a',
+                promptClosingSuffix: 'company.'
+            },
+            zh: {
+                pageTitle: 'AI 面試問題產生器 Prompt 範本',
+                mainTitle: 'AI 面試問題產生器',
+                descPurposeLabel: '用途：',
+                descPurposeText: '這份範本提供即用型的 AI prompt，能為工程職缺產生針對該角色、高品質的面試問題。只要調整參數並貼到任何 AI 工具中，就能取得客製化的面試問題，省下大量準備時間，同時確保問題涵蓋完整、切題。',
+                aiToolsHeading: '🤖 相容的 AI 工具',
+                aiToolsIntro: '這個 prompt 可以搭配任何 AI 助理或語言模型使用：',
+                aiToolCustom: '自訂 LLM',
+                step1Header: '步驟 1：設定你的需求',
+                configHeading: '面試設定',
+                labelJobTitle: '職稱：',
+                phJobTitle: '例如：資深軟體工程師、DevOps 工程師',
+                labelExperienceLevel: '經驗等級：',
+                optSelectLevel: '選擇等級',
+                optEntry: '新鮮人/初階（0-2 年）',
+                optMid: '中階（2-5 年）',
+                optSenior: '資深（5-8 年）',
+                optStaff: 'Staff/Principal（8 年以上）',
+                optEM: '工程經理',
+                labelTechnologies: '主要技術：',
+                phTechnologies: '例如：React、Node.js、AWS、Kubernetes',
+                labelTeamDomain: '團隊/領域：',
+                phTeamDomain: '例如：前端、後端、平台、行動端',
+                labelCompanySize: '公司規模：',
+                optSelectSize: '選擇規模',
+                optStartup: '新創（1-50 人）',
+                optMidsize: '中型（50-500 人）',
+                optLarge: '大型（500 人以上）',
+                optEnterprise: '企業級（5000 人以上）',
+                labelInterviewType: '面試類型：',
+                optSelectType: '選擇類型',
+                optTechnicalScreen: '技術初篩',
+                optSystemDesign: '系統設計',
+                optBehavioral: '行為面試',
+                optCodingChallenge: '程式挑戰',
+                optCultureFit: '文化適配',
+                optComprehensive: '綜合（涵蓋所有面向）',
+                step2Header: '步驟 2：產生的 AI Prompt',
+                howToUseHeading: '使用方式：',
+                usageStep1: '填寫上方的設定欄位',
+                usageStep2: '點選「產生 Prompt」建立客製化 prompt',
+                usageStep3: '複製產生的 prompt，貼到你偏好的 AI 工具中',
+                usageStep4: '視需要檢視並調整產生的問題',
+                promptPlaceholder: '點選下方的「產生 Prompt」，依照上方的設定建立你的客製化 AI prompt。',
+                copyBtn: '複製 Prompt',
+                copiedBtn: '已複製！',
+                step3Header: '步驟 3：AI 輸出範例',
+                sampleHeading: '範例產生問題',
+                sampleIntro: '以下是 AI 針對「資深前端工程師」角色可能產生的內容：',
+                catTechDepth: '技術深度',
+                qLabel: '問：',
+                followUpLabel: '追問：',
+                ex1Q: '「請解釋 React 的 virtual DOM 如何運作，並描述一個在複雜元件樹中可能需要優化重新渲染的情境。」',
+                ex1F: '「請帶我了解你會如何除錯 React 應用程式的效能問題。」',
+                catSystemDesign: '系統設計',
+                ex2Q: '「設計一個像 Google Docs 一樣的即時協作編輯系統，聚焦在前端架構與狀態同步。」',
+                ex2F: '「當多位使用者同時編輯同一份內容時，你會如何處理衝突解決？」',
+                catProblemSolving: '問題解決',
+                ex3Q: '「你發現 React 應用程式的 bundle 大小明顯增加，影響了載入時間，請帶我了解你的調查與優化方式。」',
+                ex3F: '「你會用哪些工具與技巧來監控並維持最佳的 bundle 大小？」',
+                catBehavioral: '行為面試',
+                ex4Q: '「請描述一次你必須在開發速度與程式碼可維護性之間做技術取捨決策的經驗。」',
+                ex4F: '「你通常如何向產品經理與利害關係人溝通這些取捨？」',
+                catCultureLeadership: '文化與領導力',
+                ex5Q: '「你如何看待 code review？可以分享一次你給junior工程師建設性回饋的例子嗎？」',
+                ex5F: '「你用什麼策略讓自己跟上前端技術的發展，並與團隊分享知識？」',
+                tipsHeading: '💡 客製化小技巧',
+                tip1Label: '加入公司背景：',
+                tip1Text: '在 prompt 中加入你們公司技術堆疊、挑戰或文化的具體細節，讓問題更貼切。',
+                tip2Label: '指定問題格式：',
+                tip2Text: '要求特定格式，例如「情境式問題」或「附追問的問題」，以配合你的面試風格。',
+                tip3Label: '要求標示難度等級：',
+                tip3Text: '請 AI 把問題標示為「Junior」「Mid」或「Senior」等級，幫助校準期望值。',
+                tip4Label: '納入評分標準：',
+                tip4Text: '請求範例答案或評分標準，幫助你的評估流程更標準化。',
+                tip5Label: '反覆迭代與精修：',
+                tip5Text: '取得初版問題後，可以請 AI「讓這些問題更有挑戰性」或「加入更多行為面問題」。',
+                bonusHeader: '額外加碼：專用 Prompt 範本',
+                quickTemplatesHeading: '常見情境快速範本',
+                tplSystemDesignLabel: '系統設計聚焦：',
+                tplSystemDesignText: '為專精於 [DOMAIN] 的 [LEVEL] [ROLE] 候選人產生 5 個系統設計問題，包含可擴展性、可靠性與取捨相關的問題。每個問題應附 2-3 個深入探討具體技術決策的追問。每個問題請以下列格式呈現：1）主要問題，2）需要探究的重點領域，3）好答案與優秀答案的差別。',
+                tplCodingLabel: '程式挑戰產生器：',
+                tplCodingText: '為 [LEVEL] [ROLE] 面試建立 3 個程式題目，每題預計花費 20-30 分鐘。題目應測試：1）演算法思維，2）程式碼品質與結構，3）邊界案例處理。每個題目請提供：題目敘述、範例輸入/輸出、最佳時間/空間複雜度，以及 2-3 個用來測試更深入理解的追問變化題。',
+                tplBehavioralLabel: '行為面試問題：',
+                tplBehavioralText: '為 [LEVEL] [ROLE] 職位產生 8 個行為面試問題，聚焦在：領導力、衝突處理、技術決策、以及協作。請使用 STAR 方法格式。每個問題應包含：1）核心問題，2）你想評估的重點，3）用來深入探究的追問，4）答案中需要留意的警訊。',
+                tplCultureLabel: '文化適配評估：',
+                tplCultureText: '為 [COMPANY_SIZE] 的 [COMPANY_TYPE] 招募 [ROLE] 時，建立 6 個評估文化適配度的問題。聚焦在：工作風格偏好、溝通方式、學習心態、以及應對模糊情境的能力。問題應能揭露：1）他們如何處理回饋，2）協作方式，3）對持續學習的態度，4）面對優先順序變動時的反應。',
+                btnGenerate: '產生 Prompt',
+                btnPrint: '列印範本',
+                btnDownload: '下載範本',
+                btnReset: '重設表單',
+                resetConfirm: '確定要重設所有欄位嗎？這會清空你目前的設定。',
+                phJobTitleFallback: '[職稱]',
+                phExpFallback: '[經驗等級]',
+                phTechFallback: '[主要技術]',
+                phDomainFallback: '[團隊/領域]',
+                phCompanyFallback: '[公司規模]',
+                interviewTypeDefault: '綜合',
+                promptIntro: '你是一位資深工程面試官，正在為以下職位設計面試問題：',
+                promptPosition: '職位。',
+                promptRoleDetailsHeading: '**職位細節：**',
+                promptPositionLabel: '- 職位：',
+                promptExpLabel: '- 經驗等級：',
+                promptTechLabel: '- 關鍵技術：',
+                promptDomainLabel: '- 團隊/領域：',
+                promptCompanyLabel: '- 公司規模：',
+                promptFocusLabel: '- 面試重點：',
+                promptInstructionsHeading: '**指示：**',
+                promptGenerateIntro: '請產生 8-10 個高品質的面試問題，涵蓋以下面向：',
+                promptCat1: '1. **技術深度**（2-3 題）：測試對核心技術與概念的深入理解',
+                promptCat2: '2. **問題解決**（2-3 題）：這個角色實際可能遇到的真實情境',
+                promptCat3: '3. **系統設計**（1-2 題）：符合該經驗等級的架構思維',
+                promptCat4: '4. **行為面**（2-3 題）：領導力、協作、成長心態',
+                promptCat5: '5. **文化適配**（1-2 題）：他們的工作與溝通方式',
+                promptFormatHeading: '**問題格式：**',
+                promptFormatIntro: '每個問題請提供：',
+                promptFormat1: '- 主要問題',
+                promptFormat2: '- 2-3 個用來深入探究的追問',
+                promptFormat3: '- 你具體想評估的重點',
+                promptFormat4: '- 簡短說明好答案與優秀答案的差別',
+                promptReqHeading: '**額外要求：**',
+                promptReq1Prefix: '- 問題難度應符合',
+                promptReq1Suffix: '的經驗程度',
+                promptReq2: '- 同時涵蓋技術與軟實力的評估',
+                promptReq3Prefix: '- 盡可能讓問題貼近',
+                promptReq3Suffix: '的實際工作內容',
+                promptReq4: '- 確保問題能揭露問題解決的思考方式，而不只是知識量',
+                promptReq5: '- 至少納入一題關於處理技術挑戰或失敗經驗的問題',
+                promptClosingPrefix: '請產生能幫助找出真正能在這個',
+                promptClosingMid: '角色勝任愉快的優秀候選人的問題，這個職位屬於一家',
+                promptClosingSuffix: '公司。'
+            }
+        };
+
+        const OPT_LABEL_KEYS = {
+            experience: { entry: 'optEntry', mid: 'optMid', senior: 'optSenior', staff: 'optStaff', em: 'optEM' },
+            company: { startup: 'optStartup', midsize: 'optMidsize', large: 'optLarge', enterprise: 'optEnterprise' },
+            interviewType: { technical: 'optTechnicalScreen', design: 'optSystemDesign', behavioral: 'optBehavioral', coding: 'optCodingChallenge', culture: 'optCultureFit', comprehensive: 'optComprehensive' }
+        };
+
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+        let promptGenerated = false;
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (dict[key] !== undefined) el.textContent = dict[key];
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.dataset.i18nPh;
+                if (dict[key] !== undefined) el.placeholder = dict[key];
+            });
+
+            document.getElementById('copyBtn').textContent = dict.copyBtn;
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            if (!promptGenerated) {
+                document.getElementById('generated-prompt').textContent = dict.promptPlaceholder;
+            } else {
+                generatePrompt();
+            }
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        function generatePrompt() {
+            const dict = t();
+            const jobTitle = document.getElementById('job-title').value || dict.phJobTitleFallback;
+            const expValue = document.getElementById('experience-level').value;
+            const experienceLevel = expValue ? dict[OPT_LABEL_KEYS.experience[expValue]] : dict.phExpFallback;
+            const technologies = document.getElementById('technologies').value || dict.phTechFallback;
+            const teamDomain = document.getElementById('team-domain').value || dict.phDomainFallback;
+            const companyValue = document.getElementById('company-size').value;
+            const companySize = companyValue ? dict[OPT_LABEL_KEYS.company[companyValue]] : dict.phCompanyFallback;
+            const typeValue = document.getElementById('interview-type').value;
+            const interviewType = typeValue ? dict[OPT_LABEL_KEYS.interviewType[typeValue]] : dict.interviewTypeDefault;
+
+            const prompt = `${dict.promptIntro} ${jobTitle} ${dict.promptPosition}
+
+${dict.promptRoleDetailsHeading}
+${dict.promptPositionLabel} ${jobTitle}
+${dict.promptExpLabel} ${experienceLevel}
+${dict.promptTechLabel} ${technologies}
+${dict.promptDomainLabel} ${teamDomain}
+${dict.promptCompanyLabel} ${companySize}
+${dict.promptFocusLabel} ${interviewType}
+
+${dict.promptInstructionsHeading}
+${dict.promptGenerateIntro}
+
+${dict.promptCat1}
+${dict.promptCat2}
+${dict.promptCat3}
+${dict.promptCat4}
+${dict.promptCat5}
+
+${dict.promptFormatHeading}
+${dict.promptFormatIntro}
+${dict.promptFormat1}
+${dict.promptFormat2}
+${dict.promptFormat3}
+${dict.promptFormat4}
+
+${dict.promptReqHeading}
+${dict.promptReq1Prefix} ${experienceLevel} ${dict.promptReq1Suffix}
+${dict.promptReq2}
+${dict.promptReq3Prefix} ${teamDomain} ${dict.promptReq3Suffix}
+${dict.promptReq4}
+${dict.promptReq5}
+
+${dict.promptClosingPrefix} ${jobTitle} ${dict.promptClosingMid} ${companySize} ${dict.promptClosingSuffix}`;
+
+            document.getElementById('generated-prompt').textContent = prompt;
+            promptGenerated = true;
+            autoSave();
+        }
+
+        function copyPrompt() {
+            const dict = t();
+            const promptText = document.getElementById('generated-prompt').textContent;
+
+            const showCopied = () => {
+                const button = document.getElementById('copyBtn');
+                button.textContent = dict.copiedBtn;
+                button.style.background = '#38a169';
+                setTimeout(() => {
+                    button.textContent = dict.copyBtn;
+                    button.style.background = '#667eea';
+                }, 2000);
+            };
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(promptText).then(showCopied);
+            } else {
+                const textArea = document.createElement('textarea');
+                textArea.value = promptText;
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showCopied();
+                } catch (err) {
+                    console.error('Failed to copy text: ', err);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+        function autoSave() {
+            const data = {};
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach((input, index) => {
+                data[input.id || `field_${index}`] = input.value;
+            });
+            data['generated_prompt'] = document.getElementById('generated-prompt').textContent;
+            data['prompt_generated'] = promptGenerated;
+            localStorage.setItem('aiInterviewGenerator', JSON.stringify(data));
+        }
+
+        function loadSaved() {
+            const saved = localStorage.getItem('aiInterviewGenerator');
+            if (saved) {
+                const data = JSON.parse(saved);
+                const inputs = document.querySelectorAll('input, select');
+                inputs.forEach((input) => {
+                    if (data[input.id] !== undefined) {
+                        input.value = data[input.id];
+                    }
+                });
+                if (data['prompt_generated'] && data['generated_prompt']) {
+                    document.getElementById('generated-prompt').textContent = data['generated_prompt'];
+                    promptGenerated = true;
+                }
+            }
+        }
+
+        function downloadTemplate() {
+            const jobTitle = document.getElementById('job-title').value || 'interview_questions';
+            const fileName = `ai_interview_generator_${jobTitle.replace(/\s+/g, '_').toLowerCase()}.html`;
+
+            const element = document.createElement('a');
+            const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function resetForm() {
+            const dict = t();
+            if (confirm(dict.resetConfirm)) {
+                document.querySelectorAll('input, select').forEach(input => {
+                    input.value = '';
+                });
+                promptGenerated = false;
+                document.getElementById('generated-prompt').textContent = dict.promptPlaceholder;
+                localStorage.removeItem('aiInterviewGenerator');
+            }
+        }
+
+        window.onload = function() {
+            loadSaved();
+            renderLanguage();
+
+            document.addEventListener('input', autoSave);
+            document.addEventListener('change', autoSave);
+        };
+    </script>
+</body>
+</html>

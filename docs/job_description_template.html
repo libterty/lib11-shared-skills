@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Engineering Job Description Template</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-bar {
+            position: relative;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: white;
+            color: #3498db;
+            border: 2px solid #3498db;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { background: #e8f4f8; }
+        .lang-btn.active { background: #3498db; color: white; }
+
+        .description {
+            background: #e8f4f8;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #34495e;
+            color: white;
+            padding: 12px 15px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .section-content {
+            padding: 15px;
+        }
+
+        .field {
+            margin-bottom: 15px;
+        }
+
+        .field-label {
+            font-weight: bold;
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .field-input {
+            border: 1px solid #bdc3c7;
+            padding: 8px;
+            width: 100%;
+            border-radius: 4px;
+            background: #f8f9fa;
+            min-height: 20px;
+        }
+
+        .field-textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #ecf0f1;
+            font-weight: bold;
+        }
+
+        .requirements-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .requirements-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-left: 3px solid #27ae60;
+            border-radius: 3px;
+        }
+
+        .checkbox-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checkbox-list li {
+            margin: 8px 0;
+        }
+
+        .checkbox-list input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .note {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn {
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; padding: 0; }
+            .actions { display: none; }
+            .lang-switcher { display: none; }
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1 data-i18n="mainTitle">Engineering Job Description Template</h1>
+        </div>
+
+        <div class="description">
+            <strong data-i18n="descPurposeLabel">Purpose:</strong> <span data-i18n="descPurposeText">This template helps engineering managers create comprehensive, consistent job descriptions that attract the right candidates and set clear expectations. Complete each section with specific details for your role and organization.</span>
+        </div>
+
+        <!-- Basic Information -->
+        <div class="section">
+            <div class="section-header" data-i18n="secBasicInfo">Basic Information</div>
+            <div class="section-content">
+                <div class="field">
+                    <span class="field-label" data-i18n="labelJobTitle">Job Title:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phJobTitle" placeholder="e.g., Senior Software Engineer, DevOps Engineer, Frontend Developer">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelDeptTeam">Department/Team:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phDeptTeam" placeholder="e.g., Platform Engineering, Product Team, Infrastructure">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelReportsTo">Reports To:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phReportsTo" placeholder="e.g., Engineering Manager, Senior Engineering Manager, Director of Engineering">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelLocation">Location:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phLocation" placeholder="e.g., Remote, San Francisco CA, Hybrid - New York">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelEmploymentType">Employment Type:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phEmploymentType" placeholder="e.g., Full-time, Contract, Intern">
+                </div>
+            </div>
+        </div>
+
+        <!-- Company Overview -->
+        <div class="section">
+            <div class="section-header" data-i18n="secCompanyOverview">Company Overview</div>
+            <div class="section-content">
+                <div class="field">
+                    <span class="field-label" data-i18n="labelCompanyDesc">Brief Company Description:</span>
+                    <textarea class="field-input field-textarea" data-i18n-ph="phCompanyDesc" placeholder="Describe your company's mission, industry, and what makes it unique..."></textarea>
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelTeamContext">Team/Product Context:</span>
+                    <textarea class="field-input field-textarea" data-i18n-ph="phTeamContext" placeholder="Describe the specific team, product area, or system this role will work on..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Role Summary -->
+        <div class="section">
+            <div class="section-header" data-i18n="secRoleSummary">Role Summary</div>
+            <div class="section-content">
+                <div class="field">
+                    <span class="field-label" data-i18n="labelPositionOverview">Position Overview (2-3 sentences):</span>
+                    <textarea class="field-input field-textarea" data-i18n-ph="phPositionOverview" placeholder="Provide a compelling summary of what this role does and its impact..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Responsibilities -->
+        <div class="section">
+            <div class="section-header" data-i18n="secResponsibilities">Key Responsibilities</div>
+            <div class="section-content">
+                <ul class="requirements-list">
+                    <li><input type="text" class="field-input" data-i18n-ph="resp1" placeholder="Design and implement scalable backend systems..."></li>
+                    <li><input type="text" class="field-input" data-i18n-ph="resp2" placeholder="Collaborate with product managers and designers..."></li>
+                    <li><input type="text" class="field-input" data-i18n-ph="resp3" placeholder="Participate in code reviews and technical discussions..."></li>
+                    <li><input type="text" class="field-input" data-i18n-ph="resp4" placeholder="Mentor junior engineers and contribute to team growth..."></li>
+                    <li><input type="text" class="field-input" data-i18n-ph="resp5" placeholder="Add additional responsibilities as needed..."></li>
+                </ul>
+                <p class="note" data-i18n="noteResponsibilities">List 5-8 key responsibilities that define success in this role</p>
+            </div>
+        </div>
+
+        <!-- Required Qualifications -->
+        <div class="section">
+            <div class="section-header" data-i18n="secRequiredQuals">Required Qualifications</div>
+            <div class="section-content">
+                <ul class="requirements-list">
+                    <li><input type="text" class="field-input" data-i18n-ph="req1" placeholder="Bachelor's degree in Computer Science or equivalent experience"></li>
+                    <li><input type="text" class="field-input" data-i18n-ph="req2" placeholder="3+ years of professional software development experience"></li>
+                    <li><input type="text" class="field-input" data-i18n-ph="req3" placeholder="Proficiency in [specific languages/frameworks]"></li>
+                    <li><input type="text" class="field-input" data-i18n-ph="req4" placeholder="Experience with [specific technologies/tools]"></li>
+                    <li><input type="text" class="field-input" data-i18n-ph="req5" placeholder="Add additional requirements..."></li>
+                </ul>
+                <p class="note" data-i18n="noteRequired">Focus on must-have skills and experiences only</p>
+            </div>
+        </div>
+
+        <!-- Preferred Qualifications -->
+        <div class="section">
+            <div class="section-header" data-i18n="secPreferredQuals">Preferred Qualifications</div>
+            <div class="section-content">
+                <ul class="requirements-list">
+                    <li><input type="text" class="field-input" data-i18n-ph="pref1" placeholder="Experience with cloud platforms (AWS, GCP, Azure)"></li>
+                    <li><input type="text" class="field-input" data-i18n-ph="pref2" placeholder="Previous experience at high-growth startups"></li>
+                    <li><input type="text" class="field-input" data-i18n-ph="pref3" placeholder="Open source contributions or technical blog posts"></li>
+                    <li><input type="text" class="field-input" data-i18n-ph="pref4" placeholder="Add nice-to-have qualifications..."></li>
+                </ul>
+                <p class="note" data-i18n="notePreferred">These are bonus qualifications that would be helpful but not required</p>
+            </div>
+        </div>
+
+        <!-- Technical Skills Assessment -->
+        <div class="section">
+            <div class="section-header" data-i18n="secTechSkills">Technical Skills Checklist</div>
+            <div class="section-content">
+                <p data-i18n="techSkillsIntro">Check all that apply for this role:</p>
+                <ul class="checkbox-list">
+                    <li><input type="checkbox"> <span data-i18n="skill1">Frontend Development (React, Vue, Angular, etc.)</span></li>
+                    <li><input type="checkbox"> <span data-i18n="skill2">Backend Development (Node.js, Python, Java, Go, etc.)</span></li>
+                    <li><input type="checkbox"> <span data-i18n="skill3">Database Management (SQL, NoSQL, PostgreSQL, MongoDB, etc.)</span></li>
+                    <li><input type="checkbox"> <span data-i18n="skill4">Cloud Infrastructure (AWS, GCP, Azure)</span></li>
+                    <li><input type="checkbox"> <span data-i18n="skill5">DevOps/CI/CD (Docker, Kubernetes, Jenkins, GitHub Actions)</span></li>
+                    <li><input type="checkbox"> <span data-i18n="skill6">Mobile Development (iOS, Android, React Native, Flutter)</span></li>
+                    <li><input type="checkbox"> <span data-i18n="skill7">Data Engineering/Analytics</span></li>
+                    <li><input type="checkbox"> <span data-i18n="skill8">Security/Compliance</span></li>
+                    <li><input type="checkbox"> <span data-i18n="skill9">Machine Learning/AI</span></li>
+                    <li><input type="checkbox"> <span data-i18n="skill10">System Design/Architecture</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Compensation & Benefits -->
+        <div class="section">
+            <div class="section-header" data-i18n="secCompBenefits">Compensation & Benefits</div>
+            <div class="section-content">
+                <div class="field">
+                    <span class="field-label" data-i18n="labelSalaryRange">Salary Range:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phSalaryRange" placeholder="e.g., $120,000 - $160,000 (or as per company policy)">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelEquity">Equity/Stock Options:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phEquity" placeholder="Describe equity compensation if applicable">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelBenefits">Key Benefits:</span>
+                    <textarea class="field-input field-textarea" data-i18n-ph="phBenefits" placeholder="Health insurance, 401k, flexible PTO, professional development budget, etc."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interview Process -->
+        <div class="section">
+            <div class="section-header" data-i18n="secInterviewProcess">Interview Process Overview</div>
+            <div class="section-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="thStage">Stage</th>
+                            <th data-i18n="thFormat">Format</th>
+                            <th data-i18n="thDuration">Duration</th>
+                            <th data-i18n="thFocusArea">Focus Area</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-i18n="stage1Name">Initial Screening</td>
+                            <td data-i18n="stage1Format">Phone/Video</td>
+                            <td data-i18n="stage1Duration">30 min</td>
+                            <td data-i18n="stage1Focus">Background & culture fit</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="stage2Name">Technical Assessment</td>
+                            <td data-i18n="stage2Format">Coding challenge</td>
+                            <td data-i18n="stage2Duration">2-3 hours</td>
+                            <td data-i18n="stage2Focus">Technical skills</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="stage3Name">Technical Interview</td>
+                            <td data-i18n="stage3Format">Video call</td>
+                            <td data-i18n="stage3Duration">60 min</td>
+                            <td data-i18n="stage3Focus">Problem solving & code review</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="stage4Name">Team Interview</td>
+                            <td data-i18n="stage4Format">Video/In-person</td>
+                            <td data-i18n="stage4Duration">45 min</td>
+                            <td data-i18n="stage4Focus">Collaboration & communication</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="stage5Name">Final Interview</td>
+                            <td data-i18n="stage5Format">Manager/Leadership</td>
+                            <td data-i18n="stage5Duration">30 min</td>
+                            <td data-i18n="stage5Focus">Vision alignment & questions</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="note" data-i18n="noteInterviewProcess">Customize this process to match your actual interview stages</p>
+            </div>
+        </div>
+
+        <!-- Additional Notes -->
+        <div class="section">
+            <div class="section-header" data-i18n="secAdditionalInfo">Additional Information</div>
+            <div class="section-content">
+                <div class="field">
+                    <span class="field-label" data-i18n="labelDiversity">Diversity & Inclusion Statement:</span>
+                    <textarea class="field-input field-textarea" data-i18n-ph="phDiversity" placeholder="Include your company's commitment to diversity and equal opportunity..."></textarea>
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelApplicationInstructions">Application Instructions:</span>
+                    <textarea class="field-input field-textarea" data-i18n-ph="phApplicationInstructions" placeholder="How should candidates apply? What should they include with their application?"></textarea>
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelInternalNotes">Internal Notes (not for candidates):</span>
+                    <textarea class="field-input field-textarea" data-i18n-ph="phInternalNotes" placeholder="Budget constraints, hiring urgency, specific skills to focus on, etc."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn" id="btnPrint" onclick="window.print()">Print Job Description</button>
+            <button class="btn btn-secondary" id="btnDownload" onclick="downloadHTML()">Download Template</button>
+        </div>
+    </div>
+
+    <script>
+        const I18N = {
+            en: {
+                pageTitle: 'Engineering Job Description Template',
+                mainTitle: 'Engineering Job Description Template',
+                descPurposeLabel: 'Purpose:',
+                descPurposeText: 'This template helps engineering managers create comprehensive, consistent job descriptions that attract the right candidates and set clear expectations. Complete each section with specific details for your role and organization.',
+                secBasicInfo: 'Basic Information',
+                labelJobTitle: 'Job Title:',
+                phJobTitle: 'e.g., Senior Software Engineer, DevOps Engineer, Frontend Developer',
+                labelDeptTeam: 'Department/Team:',
+                phDeptTeam: 'e.g., Platform Engineering, Product Team, Infrastructure',
+                labelReportsTo: 'Reports To:',
+                phReportsTo: 'e.g., Engineering Manager, Senior Engineering Manager, Director of Engineering',
+                labelLocation: 'Location:',
+                phLocation: 'e.g., Remote, San Francisco CA, Hybrid - New York',
+                labelEmploymentType: 'Employment Type:',
+                phEmploymentType: 'e.g., Full-time, Contract, Intern',
+                secCompanyOverview: 'Company Overview',
+                labelCompanyDesc: 'Brief Company Description:',
+                phCompanyDesc: "Describe your company's mission, industry, and what makes it unique...",
+                labelTeamContext: 'Team/Product Context:',
+                phTeamContext: 'Describe the specific team, product area, or system this role will work on...',
+                secRoleSummary: 'Role Summary',
+                labelPositionOverview: 'Position Overview (2-3 sentences):',
+                phPositionOverview: 'Provide a compelling summary of what this role does and its impact...',
+                secResponsibilities: 'Key Responsibilities',
+                resp1: 'Design and implement scalable backend systems...',
+                resp2: 'Collaborate with product managers and designers...',
+                resp3: 'Participate in code reviews and technical discussions...',
+                resp4: 'Mentor junior engineers and contribute to team growth...',
+                resp5: 'Add additional responsibilities as needed...',
+                noteResponsibilities: 'List 5-8 key responsibilities that define success in this role',
+                secRequiredQuals: 'Required Qualifications',
+                req1: "Bachelor's degree in Computer Science or equivalent experience",
+                req2: '3+ years of professional software development experience',
+                req3: 'Proficiency in [specific languages/frameworks]',
+                req4: 'Experience with [specific technologies/tools]',
+                req5: 'Add additional requirements...',
+                noteRequired: 'Focus on must-have skills and experiences only',
+                secPreferredQuals: 'Preferred Qualifications',
+                pref1: 'Experience with cloud platforms (AWS, GCP, Azure)',
+                pref2: 'Previous experience at high-growth startups',
+                pref3: 'Open source contributions or technical blog posts',
+                pref4: 'Add nice-to-have qualifications...',
+                notePreferred: 'These are bonus qualifications that would be helpful but not required',
+                secTechSkills: 'Technical Skills Checklist',
+                techSkillsIntro: 'Check all that apply for this role:',
+                skill1: 'Frontend Development (React, Vue, Angular, etc.)',
+                skill2: 'Backend Development (Node.js, Python, Java, Go, etc.)',
+                skill3: 'Database Management (SQL, NoSQL, PostgreSQL, MongoDB, etc.)',
+                skill4: 'Cloud Infrastructure (AWS, GCP, Azure)',
+                skill5: 'DevOps/CI/CD (Docker, Kubernetes, Jenkins, GitHub Actions)',
+                skill6: 'Mobile Development (iOS, Android, React Native, Flutter)',
+                skill7: 'Data Engineering/Analytics',
+                skill8: 'Security/Compliance',
+                skill9: 'Machine Learning/AI',
+                skill10: 'System Design/Architecture',
+                secCompBenefits: 'Compensation & Benefits',
+                labelSalaryRange: 'Salary Range:',
+                phSalaryRange: 'e.g., $120,000 - $160,000 (or as per company policy)',
+                labelEquity: 'Equity/Stock Options:',
+                phEquity: 'Describe equity compensation if applicable',
+                labelBenefits: 'Key Benefits:',
+                phBenefits: 'Health insurance, 401k, flexible PTO, professional development budget, etc.',
+                secInterviewProcess: 'Interview Process Overview',
+                thStage: 'Stage',
+                thFormat: 'Format',
+                thDuration: 'Duration',
+                thFocusArea: 'Focus Area',
+                stage1Name: 'Initial Screening', stage1Format: 'Phone/Video', stage1Duration: '30 min', stage1Focus: 'Background & culture fit',
+                stage2Name: 'Technical Assessment', stage2Format: 'Coding challenge', stage2Duration: '2-3 hours', stage2Focus: 'Technical skills',
+                stage3Name: 'Technical Interview', stage3Format: 'Video call', stage3Duration: '60 min', stage3Focus: 'Problem solving & code review',
+                stage4Name: 'Team Interview', stage4Format: 'Video/In-person', stage4Duration: '45 min', stage4Focus: 'Collaboration & communication',
+                stage5Name: 'Final Interview', stage5Format: 'Manager/Leadership', stage5Duration: '30 min', stage5Focus: 'Vision alignment & questions',
+                noteInterviewProcess: 'Customize this process to match your actual interview stages',
+                secAdditionalInfo: 'Additional Information',
+                labelDiversity: 'Diversity & Inclusion Statement:',
+                phDiversity: "Include your company's commitment to diversity and equal opportunity...",
+                labelApplicationInstructions: 'Application Instructions:',
+                phApplicationInstructions: 'How should candidates apply? What should they include with their application?',
+                labelInternalNotes: 'Internal Notes (not for candidates):',
+                phInternalNotes: 'Budget constraints, hiring urgency, specific skills to focus on, etc.',
+                btnPrint: 'Print Job Description',
+                btnDownload: 'Download Template'
+            },
+            zh: {
+                pageTitle: '工程職缺說明範本',
+                mainTitle: '工程職缺說明範本',
+                descPurposeLabel: '用途：',
+                descPurposeText: '這份範本幫助工程主管建立完整、一致的職缺說明，吸引對的候選人並設定清楚的期待。請針對你的角色與組織填寫每個區塊的具體細節。',
+                secBasicInfo: '基本資訊',
+                labelJobTitle: '職稱：',
+                phJobTitle: '例如：資深軟體工程師、DevOps 工程師、前端工程師',
+                labelDeptTeam: '部門/團隊：',
+                phDeptTeam: '例如：Platform Engineering、產品團隊、基礎設施團隊',
+                labelReportsTo: '回報對象：',
+                phReportsTo: '例如：工程經理、資深工程經理、工程總監',
+                labelLocation: '地點：',
+                phLocation: '例如：遠端、舊金山、混合辦公——紐約',
+                labelEmploymentType: '雇用型態：',
+                phEmploymentType: '例如：全職、約聘、實習',
+                secCompanyOverview: '公司概覽',
+                labelCompanyDesc: '公司簡介：',
+                phCompanyDesc: '描述公司的使命、產業，以及與眾不同之處……',
+                labelTeamContext: '團隊/產品背景：',
+                phTeamContext: '描述這個角色會負責的具體團隊、產品領域或系統……',
+                secRoleSummary: '職位摘要',
+                labelPositionOverview: '職位概述（2-3 句話）：',
+                phPositionOverview: '提供一段有吸引力的摘要，說明這個角色的職責與影響力……',
+                secResponsibilities: '主要職責',
+                resp1: '設計並實作可擴展的後端系統……',
+                resp2: '與產品經理和設計師協作……',
+                resp3: '參與 code review 與技術討論……',
+                resp4: '指導junior工程師並協助團隊成長……',
+                resp5: '視需要新增其他職責……',
+                noteResponsibilities: '列出 5-8 項定義這個角色成功與否的關鍵職責',
+                secRequiredQuals: '必備資格',
+                req1: '資訊工程/相關科系學士學位或同等經驗',
+                req2: '3 年以上專業軟體開發經驗',
+                req3: '熟練 [特定程式語言/框架]',
+                req4: '具備 [特定技術/工具] 經驗',
+                req5: '新增其他必要條件……',
+                noteRequired: '只聚焦在必要的技能與經驗',
+                secPreferredQuals: '加分資格',
+                pref1: '具備雲端平台（AWS、GCP、Azure）經驗',
+                pref2: '曾在高成長新創公司工作的經驗',
+                pref3: '開源貢獻或技術部落格文章',
+                pref4: '新增其他加分條件……',
+                notePreferred: '這些是有幫助但非必要的加分項目',
+                secTechSkills: '技術技能檢核清單',
+                techSkillsIntro: '勾選這個角色適用的所有項目：',
+                skill1: '前端開發（React、Vue、Angular 等）',
+                skill2: '後端開發（Node.js、Python、Java、Go 等）',
+                skill3: '資料庫管理（SQL、NoSQL、PostgreSQL、MongoDB 等）',
+                skill4: '雲端基礎設施（AWS、GCP、Azure）',
+                skill5: 'DevOps/CI/CD（Docker、Kubernetes、Jenkins、GitHub Actions）',
+                skill6: '行動開發（iOS、Android、React Native、Flutter）',
+                skill7: '資料工程/分析',
+                skill8: '資安/合規',
+                skill9: '機器學習/AI',
+                skill10: '系統設計/架構',
+                secCompBenefits: '薪酬與福利',
+                labelSalaryRange: '薪資範圍：',
+                phSalaryRange: '例如：NT$1,200,000 - NT$1,600,000（或依公司政策）',
+                labelEquity: '股權/認股選擇權：',
+                phEquity: '如適用，描述股權相關的薪酬方案',
+                labelBenefits: '主要福利：',
+                phBenefits: '健康保險、勞退提撥、彈性休假、培訓進修預算等',
+                secInterviewProcess: '面試流程概覽',
+                thStage: '階段',
+                thFormat: '形式',
+                thDuration: '時長',
+                thFocusArea: '重點領域',
+                stage1Name: '初步篩選', stage1Format: '電話/視訊', stage1Duration: '30 分鐘', stage1Focus: '背景與文化適配（需附具體觀察行為，不能只憑感覺）',
+                stage2Name: '技術評估', stage2Format: '程式挑戰', stage2Duration: '2-3 小時', stage2Focus: '技術能力',
+                stage3Name: '技術面試', stage3Format: '視訊會議', stage3Duration: '60 分鐘', stage3Focus: '問題解決與 code review',
+                stage4Name: '團隊面試', stage4Format: '視訊/現場', stage4Duration: '45 分鐘', stage4Focus: '協作與溝通',
+                stage5Name: '最終面試', stage5Format: '主管/高階主管', stage5Duration: '30 分鐘', stage5Focus: '願景對齊與提問',
+                noteInterviewProcess: '請依照你實際的面試階段調整這個流程',
+                secAdditionalInfo: '其他資訊',
+                labelDiversity: '多元共融聲明：',
+                phDiversity: '納入公司對多元共融與平等機會的承諾……',
+                labelApplicationInstructions: '應徵說明：',
+                phApplicationInstructions: '候選人應該如何應徵？應徵時應該附上什麼資料？',
+                labelInternalNotes: '內部備註（不對候選人公開）：',
+                phInternalNotes: '預算限制、招募急迫性、需要聚焦的特定技能等',
+                btnPrint: '列印職缺說明',
+                btnDownload: '下載範本'
+            }
+        };
+
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (dict[key] !== undefined) el.textContent = dict[key];
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.dataset.i18nPh;
+                if (dict[key] !== undefined) el.placeholder = dict[key];
+            });
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        function downloadHTML() {
+            const element = document.createElement('a');
+            const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+            element.href = URL.createObjectURL(file);
+            element.download = 'job_description_template.html';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        // Auto-save functionality (saves to localStorage)
+        function autoSave() {
+            const inputs = document.querySelectorAll('input[type="text"], textarea');
+            const data = {};
+            inputs.forEach((input, index) => {
+                data[`field_${index}`] = input.value;
+            });
+            localStorage.setItem('jobDescriptionTemplate', JSON.stringify(data));
+        }
+
+        function loadSaved() {
+            const saved = localStorage.getItem('jobDescriptionTemplate');
+            if (saved) {
+                const data = JSON.parse(saved);
+                const inputs = document.querySelectorAll('input[type="text"], textarea');
+                inputs.forEach((input, index) => {
+                    if (data[`field_${index}`]) {
+                        input.value = data[`field_${index}`];
+                    }
+                });
+            }
+        }
+
+        window.onload = function() {
+            renderLanguage();
+            loadSaved();
+            document.addEventListener('input', autoSave);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Engineering Interview Scorecard Template</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.5;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .header-bar {
+            position: relative;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: white;
+            color: #3498db;
+            border: 2px solid #3498db;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { background: #e8f4f8; }
+        .lang-btn.active { background: #3498db; color: white; }
+
+        .description {
+            background: #e3f2fd;
+            padding: 15px;
+            border-left: 4px solid #2196f3;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+
+        .candidate-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .field {
+            margin-bottom: 12px;
+        }
+
+        .field-label {
+            font-weight: bold;
+            color: #495057;
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .field-input {
+            border: 1px solid #ced4da;
+            padding: 8px;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #495057;
+            color: white;
+            padding: 12px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-content {
+            padding: 15px;
+        }
+
+        .scoring-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 3fr;
+            gap: 15px;
+            align-items: start;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .scoring-grid:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .criteria {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .rating-buttons {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .rating-btn {
+            width: 35px;
+            height: 35px;
+            border: 2px solid #dee2e6;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rating-btn:hover {
+            border-color: #3498db;
+        }
+
+        .rating-btn.selected {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        .rating-btn.rating-1 { border-color: #e74c3c; }
+        .rating-btn.rating-1.selected { background: #e74c3c; border-color: #e74c3c; }
+        .rating-btn.rating-2 { border-color: #f39c12; }
+        .rating-btn.rating-2.selected { background: #f39c12; border-color: #f39c12; }
+        .rating-btn.rating-3 { border-color: #f1c40f; }
+        .rating-btn.rating-3.selected { background: #f1c40f; border-color: #f1c40f; color: #333; }
+        .rating-btn.rating-4 { border-color: #2ecc71; }
+        .rating-btn.rating-4.selected { background: #2ecc71; border-color: #2ecc71; }
+        .rating-btn.rating-5 { border-color: #27ae60; }
+        .rating-btn.rating-5.selected { background: #27ae60; border-color: #27ae60; }
+
+        .notes-area {
+            width: 100%;
+            min-height: 60px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 8px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .rating-legend {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        .rating-legend-item {
+            display: inline-block;
+            margin: 0 15px 5px 0;
+        }
+
+        .rating-legend-circle {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        .overall-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .overall-rating {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .overall-rating .rating-btn {
+            width: 45px;
+            height: 45px;
+            font-size: 16px;
+        }
+
+        .recommendation {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .recommendation label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .recommendation input[type="radio"] {
+            margin: 0;
+        }
+
+        .strong-hire { background: #d4edda; }
+        .hire { background: #cce5ff; }
+        .no-hire { background: #f8d7da; }
+        .strong-no-hire { background: #f5c6cb; }
+
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .btn {
+            background: #3498db;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        .score-summary {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; padding: 0; }
+            .actions { display: none; }
+            .lang-switcher { display: none; }
+            .rating-btn { border: 1px solid #333 !important; }
+        }
+
+        @media (max-width: 700px) {
+            .scoring-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .rating-buttons {
+                justify-content: center;
+            }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1 data-i18n="mainTitle">Engineering Interview Scorecard</h1>
+        </div>
+
+        <div class="description">
+            <strong data-i18n="descPurposeLabel">Purpose:</strong> <span data-i18n="descPurposeText">Use this scorecard to conduct structured, consistent interviews. Rate each candidate on the same criteria to enable fair comparisons and reduce bias. Complete during or immediately after the interview for best accuracy.</span>
+        </div>
+
+        <!-- Candidate Information -->
+        <div class="candidate-info">
+            <h3 data-i18n="candidateInfoHeading">Candidate Information</h3>
+            <div class="info-grid">
+                <div class="field">
+                    <span class="field-label" data-i18n="labelCandidateName">Candidate Name:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phFullName" placeholder="Full name">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelPosition">Position:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phPosition" placeholder="e.g., Senior Software Engineer">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelInterviewer">Interviewer:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phYourName" placeholder="Your name">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelDate">Date:</span>
+                    <input type="date" class="field-input">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelInterviewType">Interview Type:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phInterviewType" placeholder="e.g., Technical, Behavioral, System Design">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelDuration">Duration:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phDuration" placeholder="e.g., 60 minutes">
+                </div>
+            </div>
+        </div>
+
+        <!-- Rating Legend -->
+        <div class="rating-legend">
+            <strong data-i18n="ratingScaleLabel">Rating Scale:</strong>
+            <div class="rating-legend-item">
+                <span class="rating-legend-circle" style="background: #e74c3c;"></span><span data-i18n="scale1">1 - Poor</span>
+            </div>
+            <div class="rating-legend-item">
+                <span class="rating-legend-circle" style="background: #f39c12;"></span><span data-i18n="scale2">2 - Below Average</span>
+            </div>
+            <div class="rating-legend-item">
+                <span class="rating-legend-circle" style="background: #f1c40f;"></span><span data-i18n="scale3">3 - Average</span>
+            </div>
+            <div class="rating-legend-item">
+                <span class="rating-legend-circle" style="background: #2ecc71;"></span><span data-i18n="scale4">4 - Good</span>
+            </div>
+            <div class="rating-legend-item">
+                <span class="rating-legend-circle" style="background: #27ae60;"></span><span data-i18n="scale5">5 - Excellent</span>
+            </div>
+        </div>
+
+        <!-- Technical Skills -->
+        <div class="section">
+            <div class="section-header">
+                <span data-i18n="secTechnical">Technical Skills</span>
+                <span id="tech-avg" data-avg-label="avgLabel">Average: --</span>
+            </div>
+            <div class="section-content">
+                <div class="scoring-grid" data-crit-id="tech1">
+                    <div class="criteria"><span data-i18n="critTech1Title">Coding Proficiency</span><br><small data-i18n="critTech1Sub">Clean, efficient, bug-free code</small></div>
+                    <div class="rating-buttons" data-category="technical">
+                        <button class="rating-btn rating-1" data-rating="1">1</button>
+                        <button class="rating-btn rating-2" data-rating="2">2</button>
+                        <button class="rating-btn rating-3" data-rating="3">3</button>
+                        <button class="rating-btn rating-4" data-rating="4">4</button>
+                        <button class="rating-btn rating-5" data-rating="5">5</button>
+                    </div>
+                    <textarea class="notes-area" data-i18n-ph="notesGeneric">Specific examples and observations...</textarea>
+                </div>
+
+                <div class="scoring-grid" data-crit-id="tech2">
+                    <div class="criteria"><span data-i18n="critTech2Title">Problem Solving</span><br><small data-i18n="critTech2Sub">Approach to breaking down complex problems</small></div>
+                    <div class="rating-buttons" data-category="technical">
+                        <button class="rating-btn rating-1" data-rating="1">1</button>
+                        <button class="rating-btn rating-2" data-rating="2">2</button>
+                        <button class="rating-btn rating-3" data-rating="3">3</button>
+                        <button class="rating-btn rating-4" data-rating="4">4</button>
+                        <button class="rating-btn rating-5" data-rating="5">5</button>
+                    </div>
+                    <textarea class="notes-area" data-i18n-ph="notesTech2">How did they approach the problem? Did they ask clarifying questions?</textarea>
+                </div>
+
+                <div class="scoring-grid" data-crit-id="tech3">
+                    <div class="criteria"><span data-i18n="critTech3Title">System Design</span><br><small data-i18n="critTech3Sub">Architecture thinking and scalability</small></div>
+                    <div class="rating-buttons" data-category="technical">
+                        <button class="rating-btn rating-1" data-rating="1">1</button>
+                        <button class="rating-btn rating-2" data-rating="2">2</button>
+                        <button class="rating-btn rating-3" data-rating="3">3</button>
+                        <button class="rating-btn rating-4" data-rating="4">4</button>
+                        <button class="rating-btn rating-5" data-rating="5">5</button>
+                    </div>
+                    <textarea class="notes-area" data-i18n-ph="notesTech3">Understanding of distributed systems, databases, caching, etc.</textarea>
+                </div>
+
+                <div class="scoring-grid" data-crit-id="tech4">
+                    <div class="criteria"><span data-i18n="critTech4Title">Technology Knowledge</span><br><small data-i18n="critTech4Sub">Depth in relevant tech stack</small></div>
+                    <div class="rating-buttons" data-category="technical">
+                        <button class="rating-btn rating-1" data-rating="1">1</button>
+                        <button class="rating-btn rating-2" data-rating="2">2</button>
+                        <button class="rating-btn rating-3" data-rating="3">3</button>
+                        <button class="rating-btn rating-4" data-rating="4">4</button>
+                        <button class="rating-btn rating-5" data-rating="5">5</button>
+                    </div>
+                    <textarea class="notes-area" data-i18n-ph="notesTech4">Knowledge of frameworks, tools, and best practices</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Communication & Collaboration -->
+        <div class="section">
+            <div class="section-header">
+                <span data-i18n="secCommunication">Communication & Collaboration</span>
+                <span id="comm-avg" data-avg-label="avgLabel">Average: --</span>
+            </div>
+            <div class="section-content">
+                <div class="scoring-grid" data-crit-id="comm1">
+                    <div class="criteria"><span data-i18n="critComm1Title">Communication Skills</span><br><small data-i18n="critComm1Sub">Clarity in explaining technical concepts</small></div>
+                    <div class="rating-buttons" data-category="communication">
+                        <button class="rating-btn rating-1" data-rating="1">1</button>
+                        <button class="rating-btn rating-2" data-rating="2">2</button>
+                        <button class="rating-btn rating-3" data-rating="3">3</button>
+                        <button class="rating-btn rating-4" data-rating="4">4</button>
+                        <button class="rating-btn rating-5" data-rating="5">5</button>
+                    </div>
+                    <textarea class="notes-area" data-i18n-ph="notesComm1">How well did they explain their thought process?</textarea>
+                </div>
+
+                <div class="scoring-grid" data-crit-id="comm2">
+                    <div class="criteria"><span data-i18n="critComm2Title">Collaboration Experience</span><br><small data-i18n="critComm2Sub">Working effectively with teams</small></div>
+                    <div class="rating-buttons" data-category="communication">
+                        <button class="rating-btn rating-1" data-rating="1">1</button>
+                        <button class="rating-btn rating-2" data-rating="2">2</button>
+                        <button class="rating-btn rating-3" data-rating="3">3</button>
+                        <button class="rating-btn rating-4" data-rating="4">4</button>
+                        <button class="rating-btn rating-5" data-rating="5">5</button>
+                    </div>
+                    <textarea class="notes-area" data-i18n-ph="notesComm2">Examples of cross-functional work, conflict resolution</textarea>
+                </div>
+
+                <div class="scoring-grid" data-crit-id="comm3">
+                    <div class="criteria"><span data-i18n="critComm3Title">Feedback Reception</span><br><small data-i18n="critComm3Sub">How they handle suggestions and criticism</small></div>
+                    <div class="rating-buttons" data-category="communication">
+                        <button class="rating-btn rating-1" data-rating="1">1</button>
+                        <button class="rating-btn rating-2" data-rating="2">2</button>
+                        <button class="rating-btn rating-3" data-rating="3">3</button>
+                        <button class="rating-btn rating-4" data-rating="4">4</button>
+                        <button class="rating-btn rating-5" data-rating="5">5</button>
+                    </div>
+                    <textarea class="notes-area" data-i18n-ph="notesComm3">Did they adapt their approach based on hints or feedback?</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Culture & Leadership -->
+        <div class="section">
+            <div class="section-header">
+                <span data-i18n="secCulture">Culture & Leadership</span>
+                <span id="culture-avg" data-avg-label="avgLabel">Average: --</span>
+            </div>
+            <div class="section-content">
+                <div class="scoring-grid" data-crit-id="culture1">
+                    <div class="criteria"><span data-i18n="critCulture1Title">Cultural Fit</span><br><small data-i18n="critCulture1Sub">Alignment with company values — must be backed by specific, observable behavior noted below, not a general impression</small></div>
+                    <div class="rating-buttons" data-category="culture">
+                        <button class="rating-btn rating-1" data-rating="1">1</button>
+                        <button class="rating-btn rating-2" data-rating="2">2</button>
+                        <button class="rating-btn rating-3" data-rating="3">3</button>
+                        <button class="rating-btn rating-4" data-rating="4">4</button>
+                        <button class="rating-btn rating-5" data-rating="5">5</button>
+                    </div>
+                    <textarea class="notes-area" data-i18n-ph="notesCulture1">How do they approach teamwork, learning, innovation? Cite specific examples, not a general feeling.</textarea>
+                </div>
+
+                <div class="scoring-grid" data-crit-id="culture2">
+                    <div class="criteria"><span data-i18n="critCulture2Title">Growth Mindset</span><br><small data-i18n="critCulture2Sub">Learning and development orientation</small></div>
+                    <div class="rating-buttons" data-category="culture">
+                        <button class="rating-btn rating-1" data-rating="1">1</button>
+                        <button class="rating-btn rating-2" data-rating="2">2</button>
+                        <button class="rating-btn rating-3" data-rating="3">3</button>
+                        <button class="rating-btn rating-4" data-rating="4">4</button>
+                        <button class="rating-btn rating-5" data-rating="5">5</button>
+                    </div>
+                    <textarea class="notes-area" data-i18n-ph="notesCulture2">Examples of learning from failure, skill development</textarea>
+                </div>
+
+                <div class="scoring-grid" data-crit-id="culture3">
+                    <div class="criteria"><span data-i18n="critCulture3Title">Initiative & Ownership</span><br><small data-i18n="critCulture3Sub">Proactive approach to problems</small></div>
+                    <div class="rating-buttons" data-category="culture">
+                        <button class="rating-btn rating-1" data-rating="1">1</button>
+                        <button class="rating-btn rating-2" data-rating="2">2</button>
+                        <button class="rating-btn rating-3" data-rating="3">3</button>
+                        <button class="rating-btn rating-4" data-rating="4">4</button>
+                        <button class="rating-btn rating-5" data-rating="5">5</button>
+                    </div>
+                    <textarea class="notes-area" data-i18n-ph="notesCulture3">Examples of going above and beyond, taking responsibility</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overall Assessment -->
+        <div class="overall-section">
+            <h3 data-i18n="overallHeading">Overall Assessment</h3>
+
+            <div class="score-summary" id="score-summary" data-score-template="scoreSummaryTemplate">
+                Overall Score: -- / 5.0
+            </div>
+
+            <div class="overall-rating">
+                <strong data-i18n="overallRatingLabel">Overall Rating:</strong>
+                <div class="rating-buttons" data-category="overall">
+                    <button class="rating-btn rating-1" data-rating="1">1</button>
+                    <button class="rating-btn rating-2" data-rating="2">2</button>
+                    <button class="rating-btn rating-3" data-rating="3">3</button>
+                    <button class="rating-btn rating-4" data-rating="4">4</button>
+                    <button class="rating-btn rating-5" data-rating="5">5</button>
+                </div>
+            </div>
+
+            <div class="field">
+                <span class="field-label" data-i18n="labelKeyStrengths">Key Strengths:</span>
+                <textarea class="notes-area" data-i18n-ph="phKeyStrengths" placeholder="What were the candidate's top 2-3 strengths?"></textarea>
+            </div>
+
+            <div class="field">
+                <span class="field-label" data-i18n="labelAreasImprovement">Areas for Improvement:</span>
+                <textarea class="notes-area" data-i18n-ph="phAreasImprovement" placeholder="What areas need development?"></textarea>
+            </div>
+
+            <div class="field">
+                <span class="field-label" data-i18n="labelRecommendation">Recommendation:</span>
+                <div class="recommendation">
+                    <label class="strong-hire">
+                        <input type="radio" name="recommendation" value="strong-hire">
+                        <span data-i18n="recStrongHire">Strong Hire</span>
+                    </label>
+                    <label class="hire">
+                        <input type="radio" name="recommendation" value="hire">
+                        <span data-i18n="recHire">Hire</span>
+                    </label>
+                    <label class="no-hire">
+                        <input type="radio" name="recommendation" value="no-hire">
+                        <span data-i18n="recNoHire">No Hire</span>
+                    </label>
+                    <label class="strong-no-hire">
+                        <input type="radio" name="recommendation" value="strong-no-hire">
+                        <span data-i18n="recStrongNoHire">Strong No Hire</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="field">
+                <span class="field-label" data-i18n="labelAdditionalComments">Additional Comments:</span>
+                <textarea class="notes-area" data-i18n-ph="phAdditionalComments" placeholder="Any other observations, concerns, or questions for follow-up interviews?"></textarea>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn" id="btnPrint" onclick="window.print()">Print Scorecard</button>
+            <button class="btn btn-secondary" id="btnDownload" onclick="downloadScorecard()">Download Scorecard</button>
+            <button class="btn btn-secondary" id="btnClear" onclick="clearScorecard()">Clear & Reset</button>
+        </div>
+    </div>
+
+    <script>
+        const I18N = {
+            en: {
+                pageTitle: 'Engineering Interview Scorecard Template',
+                mainTitle: 'Engineering Interview Scorecard',
+                descPurposeLabel: 'Purpose:',
+                descPurposeText: 'Use this scorecard to conduct structured, consistent interviews. Rate each candidate on the same criteria to enable fair comparisons and reduce bias. Complete during or immediately after the interview for best accuracy.',
+                candidateInfoHeading: 'Candidate Information',
+                labelCandidateName: 'Candidate Name:',
+                phFullName: 'Full name',
+                labelPosition: 'Position:',
+                phPosition: 'e.g., Senior Software Engineer',
+                labelInterviewer: 'Interviewer:',
+                phYourName: 'Your name',
+                labelDate: 'Date:',
+                labelInterviewType: 'Interview Type:',
+                phInterviewType: 'e.g., Technical, Behavioral, System Design',
+                labelDuration: 'Duration:',
+                phDuration: 'e.g., 60 minutes',
+                ratingScaleLabel: 'Rating Scale:',
+                scale1: '1 - Poor', scale2: '2 - Below Average', scale3: '3 - Average', scale4: '4 - Good', scale5: '5 - Excellent',
+                secTechnical: 'Technical Skills',
+                critTech1Title: 'Coding Proficiency', critTech1Sub: 'Clean, efficient, bug-free code',
+                critTech2Title: 'Problem Solving', critTech2Sub: 'Approach to breaking down complex problems',
+                critTech3Title: 'System Design', critTech3Sub: 'Architecture thinking and scalability',
+                critTech4Title: 'Technology Knowledge', critTech4Sub: 'Depth in relevant tech stack',
+                notesGeneric: 'Specific examples and observations...',
+                notesTech2: 'How did they approach the problem? Did they ask clarifying questions?',
+                notesTech3: 'Understanding of distributed systems, databases, caching, etc.',
+                notesTech4: 'Knowledge of frameworks, tools, and best practices',
+                secCommunication: 'Communication & Collaboration',
+                critComm1Title: 'Communication Skills', critComm1Sub: 'Clarity in explaining technical concepts',
+                critComm2Title: 'Collaboration Experience', critComm2Sub: 'Working effectively with teams',
+                critComm3Title: 'Feedback Reception', critComm3Sub: 'How they handle suggestions and criticism',
+                notesComm1: 'How well did they explain their thought process?',
+                notesComm2: 'Examples of cross-functional work, conflict resolution',
+                notesComm3: 'Did they adapt their approach based on hints or feedback?',
+                secCulture: 'Culture & Leadership',
+                critCulture1Title: 'Cultural Fit', critCulture1Sub: 'Alignment with company values — must be backed by specific, observable behavior noted below, not a general impression',
+                critCulture2Title: 'Growth Mindset', critCulture2Sub: 'Learning and development orientation',
+                critCulture3Title: 'Initiative & Ownership', critCulture3Sub: 'Proactive approach to problems',
+                notesCulture1: 'How do they approach teamwork, learning, innovation? Cite specific examples, not a general feeling.',
+                notesCulture2: 'Examples of learning from failure, skill development',
+                notesCulture3: 'Examples of going above and beyond, taking responsibility',
+                overallHeading: 'Overall Assessment',
+                overallRatingLabel: 'Overall Rating:',
+                labelKeyStrengths: 'Key Strengths:',
+                phKeyStrengths: "What were the candidate's top 2-3 strengths?",
+                labelAreasImprovement: 'Areas for Improvement:',
+                phAreasImprovement: 'What areas need development?',
+                labelRecommendation: 'Recommendation:',
+                recStrongHire: 'Strong Hire', recHire: 'Hire', recNoHire: 'No Hire', recStrongNoHire: 'Strong No Hire',
+                labelAdditionalComments: 'Additional Comments:',
+                phAdditionalComments: 'Any other observations, concerns, or questions for follow-up interviews?',
+                btnPrint: 'Print Scorecard',
+                btnDownload: 'Download Scorecard',
+                btnClear: 'Clear & Reset',
+                avgLabel: 'Average',
+                avgNone: '--',
+                scoreSummaryLabel: 'Overall Score',
+                clearConfirm: 'Are you sure you want to clear all data? This cannot be undone.'
+            },
+            zh: {
+                pageTitle: '工程面試評分卡範本',
+                mainTitle: '工程面試評分卡',
+                descPurposeLabel: '用途：',
+                descPurposeText: '使用這份評分卡進行結構化、一致的面試。以相同標準為每位候選人評分，讓比較更公平、降低偏見。建議在面試中或面試結束後立即填寫，準確度最高。',
+                candidateInfoHeading: '候選人資訊',
+                labelCandidateName: '候選人姓名：',
+                phFullName: '全名',
+                labelPosition: '職位：',
+                phPosition: '例如：資深軟體工程師',
+                labelInterviewer: '面試官：',
+                phYourName: '你的名字',
+                labelDate: '日期：',
+                labelInterviewType: '面試類型：',
+                phInterviewType: '例如：技術面、行為面、系統設計面',
+                labelDuration: '時長：',
+                phDuration: '例如：60 分鐘',
+                ratingScaleLabel: '評分標準：',
+                scale1: '1 - 差', scale2: '2 - 低於平均', scale3: '3 - 平均', scale4: '4 - 良好', scale5: '5 - 優秀',
+                secTechnical: '技術能力',
+                critTech1Title: '程式撰寫能力', critTech1Sub: '乾淨、有效率、沒有 bug 的程式碼',
+                critTech2Title: '問題解決', critTech2Sub: '拆解複雜問題的方式',
+                critTech3Title: '系統設計', critTech3Sub: '架構思維與可擴展性',
+                critTech4Title: '技術知識深度', critTech4Sub: '相關技術堆疊的深度',
+                notesGeneric: '具體範例與觀察……',
+                notesTech2: '他們如何切入這個問題？有沒有先問釐清性問題？',
+                notesTech3: '對分散式系統、資料庫、快取等的理解程度',
+                notesTech4: '對框架、工具與最佳實務的了解',
+                secCommunication: '溝通與協作',
+                critComm1Title: '溝通能力', critComm1Sub: '解釋技術概念時是否清楚',
+                critComm2Title: '協作經驗', critComm2Sub: '與團隊有效合作的能力',
+                critComm3Title: '接受回饋的態度', critComm3Sub: '面對建議與批評時的反應',
+                notesComm1: '他們解釋思考過程的清楚程度如何？',
+                notesComm2: '跨職能合作、衝突處理的具體例子',
+                notesComm3: '有沒有根據提示或回饋調整自己的做法？',
+                secCulture: '文化與領導力',
+                critCulture1Title: '文化適配度', critCulture1Sub: '與公司價值觀的一致性——必須附下方欄位裡具體、可觀察的行為佐證，不能只是籠統的感覺',
+                critCulture2Title: '成長心態', critCulture2Sub: '學習與自我發展的傾向',
+                critCulture3Title: '主動性與當責', critCulture3Sub: '面對問題時的主動程度',
+                notesCulture1: '他們如何看待團隊合作、學習、創新？請引用具體例子，不要只寫籠統的感覺。',
+                notesCulture2: '從失敗中學習、技能發展的具體例子',
+                notesCulture3: '超越份內工作、承擔責任的具體例子',
+                overallHeading: '整體評估',
+                overallRatingLabel: '整體評分：',
+                labelKeyStrengths: '主要優勢：',
+                phKeyStrengths: '候選人最突出的 2-3 個優勢是什麼？',
+                labelAreasImprovement: '待加強領域：',
+                phAreasImprovement: '哪些領域還需要發展？',
+                labelRecommendation: '建議：',
+                recStrongHire: '強烈建議錄用', recHire: '建議錄用', recNoHire: '不建議錄用', recStrongNoHire: '強烈不建議錄用',
+                labelAdditionalComments: '其他備註：',
+                phAdditionalComments: '還有其他觀察、疑慮，或後續面試需要釐清的問題嗎？',
+                btnPrint: '列印評分卡',
+                btnDownload: '下載評分卡',
+                btnClear: '清空並重設',
+                avgLabel: '平均',
+                avgNone: '--',
+                scoreSummaryLabel: '整體分數',
+                clearConfirm: '確定要清空所有資料嗎？此動作無法復原。'
+            }
+        };
+
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (dict[key] !== undefined) el.textContent = dict[key];
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.dataset.i18nPh;
+                if (dict[key] !== undefined) el.placeholder = dict[key];
+            });
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+
+            updateAverages();
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        // Rating button functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('rating-btn')) {
+                const buttons = e.target.parentElement.children;
+                for (let btn of buttons) {
+                    btn.classList.remove('selected');
+                }
+                e.target.classList.add('selected');
+                updateAverages();
+                autoSave();
+            }
+        });
+
+        // Calculate and display averages
+        function updateAverages() {
+            const dict = t();
+            const categories = ['technical', 'communication', 'culture'];
+            let totalScore = 0;
+            let totalRatings = 0;
+
+            categories.forEach(category => {
+                const buttons = document.querySelectorAll(`[data-category="${category}"] .rating-btn.selected`);
+                let categorySum = 0;
+                let categoryCount = 0;
+
+                buttons.forEach(btn => {
+                    categorySum += parseInt(btn.dataset.rating);
+                    categoryCount++;
+                });
+
+                const elId = category === 'technical' ? 'tech-avg' :
+                             category === 'communication' ? 'comm-avg' : 'culture-avg';
+                const avgText = categoryCount > 0 ? (categorySum / categoryCount).toFixed(1) : dict.avgNone;
+                document.getElementById(elId).textContent = `${dict.avgLabel}: ${avgText}`;
+
+                if (categoryCount > 0) {
+                    totalScore += categorySum;
+                    totalRatings += categoryCount;
+                }
+            });
+
+            const overallAvg = totalRatings > 0 ? (totalScore / totalRatings).toFixed(1) : dict.avgNone;
+            document.getElementById('score-summary').textContent = `${dict.scoreSummaryLabel}: ${overallAvg} / 5.0`;
+        }
+
+        // Auto-save functionality
+        function autoSave() {
+            const data = {};
+
+            document.querySelectorAll('input, textarea').forEach((input, index) => {
+                if (input.type === 'radio') {
+                    if (input.checked) data[`radio_${input.name}`] = input.value;
+                } else {
+                    data[`field_${index}`] = input.value;
+                }
+            });
+
+            document.querySelectorAll('.rating-btn.selected').forEach(btn => {
+                const category = btn.parentElement.dataset.category;
+                const critId = btn.closest('.scoring-grid')?.dataset.critId || 'overall';
+                data[`rating_${category}_${critId}`] = btn.dataset.rating;
+            });
+
+            localStorage.setItem('interviewScorecard', JSON.stringify(data));
+        }
+
+        // Load saved data
+        function loadSaved() {
+            const saved = localStorage.getItem('interviewScorecard');
+            if (saved) {
+                const data = JSON.parse(saved);
+
+                document.querySelectorAll('input, textarea').forEach((input, index) => {
+                    if (input.type === 'radio') {
+                        const radioValue = data[`radio_${input.name}`];
+                        if (radioValue === input.value) {
+                            input.checked = true;
+                        }
+                    } else if (data[`field_${index}`]) {
+                        input.value = data[`field_${index}`];
+                    }
+                });
+
+                Object.keys(data).forEach(key => {
+                    if (key.startsWith('rating_')) {
+                        const parts = key.split('_');
+                        const category = parts[1];
+                        const critId = parts.slice(2).join('_');
+                        const rating = data[key];
+                        const scope = critId === 'overall'
+                            ? document.querySelector('[data-category="overall"]')
+                            : document.querySelector(`.scoring-grid[data-crit-id="${critId}"] [data-category="${category}"]`);
+                        if (scope) {
+                            const ratingBtn = scope.querySelector(`[data-rating="${rating}"]`);
+                            if (ratingBtn) {
+                                ratingBtn.classList.add('selected');
+                            }
+                        }
+                    }
+                });
+
+                updateAverages();
+            }
+        }
+
+        // Download functionality
+        function downloadScorecard() {
+            const candidateName = document.querySelector('input[type="text"]').value || 'candidate';
+            const fileName = `interview_scorecard_${candidateName.replace(/\s+/g, '_').toLowerCase()}.html`;
+
+            const element = document.createElement('a');
+            const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        // Clear scorecard
+        function clearScorecard() {
+            const dict = t();
+            if (confirm(dict.clearConfirm)) {
+                document.querySelectorAll('input, textarea').forEach(input => {
+                    if (input.type === 'radio') {
+                        input.checked = false;
+                    } else {
+                        input.value = '';
+                    }
+                });
+
+                document.querySelectorAll('.rating-btn.selected').forEach(btn => {
+                    btn.classList.remove('selected');
+                });
+
+                localStorage.removeItem('interviewScorecard');
+                updateAverages();
+            }
+        }
+
+        // Initialize
+        window.onload = function() {
+            renderLanguage();
+            loadSaved();
+
+            document.addEventListener('input', autoSave);
+            document.addEventListener('change', autoSave);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Engineering Interview Red Flags Checklist</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fafbfc;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-bar {
+            position: relative;
+            text-align: center;
+            border-bottom: 4px solid #e74c3c;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 2.2em;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: white;
+            color: #c0392b;
+            border: 2px solid #c0392b;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { background: #fdecea; }
+        .lang-btn.active { background: #c0392b; color: white; }
+
+        .description {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .warning-note {
+            background: #fff3cd;
+            border: 2px solid #ffeaa7;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 5px solid #f39c12;
+        }
+
+        .candidate-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border: 2px solid #dee2e6;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .field {
+            margin-bottom: 12px;
+        }
+
+        .field-label {
+            font-weight: 600;
+            color: #495057;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .field-input {
+            border: 1px solid #ced4da;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .field-input:focus {
+            outline: none;
+            border-color: #e74c3c;
+            box-shadow: 0 0 5px rgba(231, 76, 60, 0.3);
+        }
+
+        .red-flag-category {
+            margin-bottom: 30px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 18px 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .severity-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .category-content {
+            padding: 25px;
+        }
+
+        .red-flag-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            transition: all 0.2s;
+        }
+
+        .red-flag-item:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-color: #e74c3c;
+        }
+
+        .flag-checkbox {
+            margin-right: 15px;
+            margin-top: 4px;
+            transform: scale(1.3);
+            cursor: pointer;
+        }
+
+        .flag-content {
+            flex: 1;
+        }
+
+        .flag-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .flag-description {
+            color: #6c757d;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .flag-example {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            border-left: 3px solid #e74c3c;
+            font-style: italic;
+            font-size: 13px;
+            color: #495057;
+        }
+
+        .severity-critical {
+            border-left-color: #dc3545;
+            background: #fff5f5;
+        }
+
+        .severity-high {
+            border-left-color: #fd7e14;
+            background: #fff9f5;
+        }
+
+        .severity-medium {
+            border-left-color: #ffc107;
+            background: #fffbf0;
+        }
+
+        .severity-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .critical { background: #dc3545; }
+        .high { background: #fd7e14; }
+        .medium { background: #ffc107; }
+
+        .summary-section {
+            background: #fff3cd;
+            border: 2px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+        }
+
+        .summary-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .summary-label {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .critical-count { color: #dc3545; }
+        .high-count { color: #fd7e14; }
+        .medium-count { color: #ffc107; }
+        .total-count { color: #6c757d; }
+
+        .notes-section {
+            margin-top: 25px;
+        }
+
+        .notes-textarea {
+            width: 100%;
+            min-height: 100px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 12px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .decision-section {
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #17a2b8;
+            margin: 20px 0;
+        }
+
+        .decision-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .decision-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .decision-option:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .proceed { background: #d4edda; border: 1px solid #c3e6cb; }
+        .caution { background: #fff3cd; border: 1px solid #ffeaa7; }
+        .no-hire { background: #f8d7da; border: 1px solid #f5c6cb; }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #dee2e6;
+        }
+
+        .btn {
+            background: #e74c3c;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background: #c0392b;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .legend {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+        }
+
+        .legend-item {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 20px 8px 0;
+            font-size: 14px;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; padding: 0; }
+            .actions { display: none; }
+            .lang-switcher { display: none; }
+            .red-flag-category { break-inside: avoid; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .summary-grid { grid-template-columns: repeat(2, 1fr); }
+            .decision-options { grid-template-columns: 1fr; }
+            .lang-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="langBtnZh" onclick="setLanguage('zh')">中文</button>
+            </div>
+            <h1 data-i18n="mainTitle">🚩 Candidate Red Flags Checklist</h1>
+        </div>
+
+        <div class="description">
+            <strong data-i18n="descPurposeLabel">Purpose:</strong> <span data-i18n="descPurposeText">This checklist helps engineering managers quickly identify potential warning signs during interviews. Use this as a reference guide during or immediately after interviews to spot concerning behaviors, attitudes, or responses that may indicate poor cultural fit or performance risks. Not every flag is disqualifying, but multiple flags warrant careful consideration.</span>
+        </div>
+
+        <div class="warning-note">
+            <strong data-i18n="warningLabel">⚠️ Important Note:</strong> <span data-i18n="warningText">Red flags should be considered in context and alongside positive indicators. A single flag may not be disqualifying, but patterns of concerning behavior deserve attention. Always document specific examples and avoid bias by focusing on objective observations. Every flag below is defined by what you directly observe in the interview — not by inference from a candidate's résumé, career history, or background.</span>
+        </div>
+
+        <!-- Candidate Information -->
+        <div class="candidate-info">
+            <h3 data-i18n="candidateInfoHeading">Candidate Information</h3>
+            <div class="info-grid">
+                <div class="field">
+                    <span class="field-label" data-i18n="labelCandidateName">Candidate Name:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phFullName" placeholder="Full name">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelPosition">Position:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phPosition" placeholder="e.g., Senior Software Engineer">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelInterviewer">Interviewer:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phYourName" placeholder="Your name">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelDate">Date:</span>
+                    <input type="date" class="field-input">
+                </div>
+                <div class="field">
+                    <span class="field-label" data-i18n="labelInterviewType">Interview Type:</span>
+                    <input type="text" class="field-input" data-i18n-ph="phInterviewType" placeholder="e.g., Technical, Behavioral, Final">
+                </div>
+            </div>
+        </div>
+
+        <!-- Severity Legend -->
+        <div class="legend">
+            <strong data-i18n="severityLevelsLabel">Severity Levels:</strong>
+            <div class="legend-item">
+                <span class="severity-indicator critical"></span><span data-i18n="legendCritical">Critical - Strong indicator to reconsider</span>
+            </div>
+            <div class="legend-item">
+                <span class="severity-indicator high"></span><span data-i18n="legendHigh">High - Significant concern, investigate further</span>
+            </div>
+            <div class="legend-item">
+                <span class="severity-indicator medium"></span><span data-i18n="legendMedium">Medium - Worth noting, consider in context</span>
+            </div>
+        </div>
+
+        <!-- Technical Competence Red Flags -->
+        <div class="red-flag-category">
+            <div class="category-header">
+                <span data-i18n="catTechnical">🔧 Technical Competence</span>
+                <span class="severity-badge" data-i18n="badgeCoreSkills">Core Skills Assessment</span>
+            </div>
+            <div class="category-content">
+                <div class="red-flag-item severity-critical">
+                    <input type="checkbox" class="flag-checkbox" data-severity="critical">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="tc1Title">Cannot explain their own code or projects</div>
+                        <div class="flag-description" data-i18n="tc1Desc">Unable to articulate design decisions or walk through code they claim to have written</div>
+                        <div class="flag-example" data-i18n="tc1Ex">Example: "I don't really remember how I implemented that feature" when asked about a recent project</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-critical">
+                    <input type="checkbox" class="flag-checkbox" data-severity="critical">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="tc2Title">Fundamental knowledge gaps for their experience level</div>
+                        <div class="flag-description" data-i18n="tc2Desc">Missing basic concepts that should be well-understood at their claimed experience level</div>
+                        <div class="flag-example" data-i18n="tc2Ex">Example: Senior engineer unable to explain basic OOP concepts or REST principles</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-high">
+                    <input type="checkbox" class="flag-checkbox" data-severity="high">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="tc3Title">Unwilling to admit knowledge limitations</div>
+                        <div class="flag-description" data-i18n="tc3Desc">Makes up answers or refuses to acknowledge when they don't know something</div>
+                        <div class="flag-example" data-i18n="tc3Ex">Example: Provides confident but incorrect technical explanations rather than saying "I'm not sure"</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-high">
+                    <input type="checkbox" class="flag-checkbox" data-severity="high">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="tc4Title">No understanding of trade-offs</div>
+                        <div class="flag-description" data-i18n="tc4Desc">Cannot discuss pros and cons of technical decisions or different approaches</div>
+                        <div class="flag-example" data-i18n="tc4Ex">Example: "This is the only way to do it" without considering alternatives or context</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-medium">
+                    <input type="checkbox" class="flag-checkbox" data-severity="medium">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="tc5Title">Overly focused on specific tools/frameworks</div>
+                        <div class="flag-description" data-i18n="tc5Desc">Cannot think beyond their preferred technology stack or adapt to new tools</div>
+                        <div class="flag-example" data-i18n="tc5Ex">Example: "I only work with React" when asked about other frontend approaches</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-medium">
+                    <input type="checkbox" class="flag-checkbox" data-severity="medium">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="tc6Title">No curiosity about learning</div>
+                        <div class="flag-description" data-i18n="tc6Desc">Shows no interest in new technologies, industry trends, or professional development</div>
+                        <div class="flag-example" data-i18n="tc6Ex">Example: "I don't need to learn anything new, I know enough already"</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Communication & Collaboration Red Flags -->
+        <div class="red-flag-category">
+            <div class="category-header">
+                <span data-i18n="catCommunication">💬 Communication & Collaboration</span>
+                <span class="severity-badge" data-i18n="badgeTeamFit">Team Fit Assessment</span>
+            </div>
+            <div class="category-content">
+                <div class="red-flag-item severity-critical">
+                    <input type="checkbox" class="flag-checkbox" data-severity="critical">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="cc1Title">Disparages previous teams or colleagues</div>
+                        <div class="flag-description" data-i18n="cc1Desc">Speaks negatively about former teammates, managers, or companies without professional context</div>
+                        <div class="flag-example" data-i18n="cc1Ex">Example: "My last team was full of idiots" or "Management never understood anything"</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-critical">
+                    <input type="checkbox" class="flag-checkbox" data-severity="critical">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="cc2Title">Unable to accept feedback or criticism</div>
+                        <div class="flag-description" data-i18n="cc2Desc">Defensive when receiving suggestions or becomes argumentative about alternative approaches</div>
+                        <div class="flag-example" data-i18n="cc2Ex">Example: Gets visibly upset when interviewer suggests improvements to their code</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-high">
+                    <input type="checkbox" class="flag-checkbox" data-severity="high">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="cc3Title">Poor communication skills</div>
+                        <div class="flag-description" data-i18n="cc3Desc">Cannot clearly explain technical concepts or struggles with basic professional communication</div>
+                        <div class="flag-example" data-i18n="cc3Ex">Example: Rambling, unclear explanations that don't address the question asked</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-high">
+                    <input type="checkbox" class="flag-checkbox" data-severity="high">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="cc4Title">Takes all credit, avoids responsibility</div>
+                        <div class="flag-description" data-i18n="cc4Desc">Claims sole credit for team successes but blames others for failures</div>
+                        <div class="flag-example" data-i18n="cc4Ex">Example: "I built that entire system myself" or "That failure wasn't my fault"</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-high">
+                    <input type="checkbox" class="flag-checkbox" data-severity="high">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="cc5Title">Dismissive of non-technical colleagues</div>
+                        <div class="flag-description" data-i18n="cc5Desc">Shows disrespect or condescension toward product managers, designers, or other roles</div>
+                        <div class="flag-example" data-i18n="cc5Ex">Example: "Product managers don't understand anything technical"</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-medium">
+                    <input type="checkbox" class="flag-checkbox" data-severity="medium">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="cc6Title">No examples of collaboration</div>
+                        <div class="flag-description" data-i18n="cc6Desc">Cannot provide concrete examples of working effectively with others</div>
+                        <div class="flag-example" data-i18n="cc6Ex">Example: All stories are about individual work with no mention of teamwork</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Work Ethic & Attitude Red Flags -->
+        <div class="red-flag-category">
+            <div class="category-header">
+                <span data-i18n="catWorkEthic">⚡ Work Ethic & Attitude</span>
+                <span class="severity-badge" data-i18n="badgeMotivation">Motivation Assessment</span>
+            </div>
+            <div class="category-content">
+                <div class="red-flag-item severity-critical">
+                    <input type="checkbox" class="flag-checkbox" data-severity="critical">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="wa1Title">Shows up unprepared or late</div>
+                        <div class="flag-description" data-i18n="wa1Desc">Late to interview, hasn't researched the company, or unprepared for basic questions</div>
+                        <div class="flag-example" data-i18n="wa1Ex">Example: "I didn't have time to look at your website" or arrives 15+ minutes late without explanation</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-high">
+                    <input type="checkbox" class="flag-checkbox" data-severity="high">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="wa2Title">Vague or evasive when asked about role transitions</div>
+                        <div class="flag-description" data-i18n="wa2Desc">When asked directly why they left a previous role, cannot give a clear, specific answer even after a follow-up. This flags the clarity of their answer in the interview — not the number of past role changes, since transition patterns often reflect circumstances (layoffs, caregiving, relocation, health, visa status) unrelated to job performance.</div>
+                        <div class="flag-example" data-i18n="wa2Ex">Example: Repeats "it just didn't work out" for multiple roles with no concrete detail, even when asked to elaborate</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-high">
+                    <input type="checkbox" class="flag-checkbox" data-severity="high">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="wa3Title">No expressed interest in the work itself when asked directly</div>
+                        <div class="flag-description" data-i18n="wa3Desc">When directly asked what interests them about the role or team, cannot articulate anything beyond compensation — even after being given room to elaborate. This flags what they say when prompted, not an assumption about their financial priorities.</div>
+                        <div class="flag-example" data-i18n="wa3Ex">Example: When asked "what excites you about this role," says only "the pay is good" and has nothing further to add despite a follow-up prompt</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-medium">
+                    <input type="checkbox" class="flag-checkbox" data-severity="medium">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="wa4Title">Unrealistic expectations</div>
+                        <div class="flag-description" data-i18n="wa4Desc">Expects immediate senior role, full remote work, or other demands that don't match their experience</div>
+                        <div class="flag-example" data-i18n="wa4Ex">Example: Junior developer expecting staff engineer title and responsibilities</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-medium">
+                    <input type="checkbox" class="flag-checkbox" data-severity="medium">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="wa5Title">No questions about the role or company</div>
+                        <div class="flag-description" data-i18n="wa5Desc">Shows no curiosity about the work, team dynamics, or company culture</div>
+                        <div class="flag-example" data-i18n="wa5Ex">Example: "No, I don't have any questions" when given the opportunity</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-medium">
+                    <input type="checkbox" class="flag-checkbox" data-severity="medium">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="wa6Title">Rigid about processes and methodologies</div>
+                        <div class="flag-description" data-i18n="wa6Desc">Insists their way is the only correct approach, unwilling to adapt to team practices</div>
+                        <div class="flag-example" data-i18n="wa6Ex">Example: "If you don't do TDD, you're doing it wrong" without considering context</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Problem-Solving & Growth Red Flags -->
+        <div class="red-flag-category">
+            <div class="category-header">
+                <span data-i18n="catProblemSolving">🧠 Problem-Solving & Growth</span>
+                <span class="severity-badge" data-i18n="badgeCapability">Capability Assessment</span>
+            </div>
+            <div class="category-content">
+                <div class="red-flag-item severity-critical">
+                    <input type="checkbox" class="flag-checkbox" data-severity="critical">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="pg1Title">Cannot think through problems systematically</div>
+                        <div class="flag-description" data-i18n="pg1Desc">Jumps to solutions without understanding the problem or considering edge cases</div>
+                        <div class="flag-example" data-i18n="pg1Ex">Example: Starts coding immediately without asking clarifying questions</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-high">
+                    <input type="checkbox" class="flag-checkbox" data-severity="high">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="pg2Title">No examples of learning from failures</div>
+                        <div class="flag-description" data-i18n="pg2Desc">Cannot discuss mistakes they've made or how they've grown from challenges</div>
+                        <div class="flag-example" data-i18n="pg2Ex">Example: "I don't make mistakes" or cannot think of any professional failures</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-high">
+                    <input type="checkbox" class="flag-checkbox" data-severity="high">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="pg3Title">Gives up too easily on problems</div>
+                        <div class="flag-description" data-i18n="pg3Desc">Doesn't persist when facing difficult questions or coding challenges</div>
+                        <div class="flag-example" data-i18n="pg3Ex">Example: "I don't know" without attempting to reason through the problem</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-medium">
+                    <input type="checkbox" class="flag-checkbox" data-severity="medium">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="pg4Title">Fixed mindset about abilities</div>
+                        <div class="flag-description" data-i18n="pg4Desc">Believes skills are innate rather than developed, shows no growth orientation</div>
+                        <div class="flag-example" data-i18n="pg4Ex">Example: "I'm just not good at algorithms" without showing effort to improve</div>
+                    </div>
+                </div>
+
+                <div class="red-flag-item severity-medium">
+                    <input type="checkbox" class="flag-checkbox" data-severity="medium">
+                    <div class="flag-content">
+                        <div class="flag-title" data-i18n="pg5Title">Cannot handle ambiguity</div>
+                        <div class="flag-description" data-i18n="pg5Desc">Needs very specific requirements and cannot work with incomplete or changing information</div>
+                        <div class="flag-example" data-i18n="pg5Ex">Example: Gets frustrated when problem requirements aren't perfectly specified</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <h3 data-i18n="summaryHeading">Red Flags Summary</h3>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="summary-number critical-count" id="critical-count">0</div>
+                    <div class="summary-label" data-i18n="labelCriticalFlags">Critical Flags</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number high-count" id="high-count">0</div>
+                    <div class="summary-label" data-i18n="labelHighFlags">High Flags</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number medium-count" id="medium-count">0</div>
+                    <div class="summary-label" data-i18n="labelMediumFlags">Medium Flags</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number total-count" id="total-count">0</div>
+                    <div class="summary-label" data-i18n="labelTotalFlags">Total Flags</div>
+                </div>
+            </div>
+
+            <div class="notes-section">
+                <h4 data-i18n="specificExamplesHeading">Specific Examples & Context</h4>
+                <textarea class="notes-textarea" data-i18n-ph="phSpecificExamples" placeholder="Document specific examples of concerning behaviors, exact quotes, or situations that raised red flags. Include context that might mitigate or amplify concerns..."></textarea>
+            </div>
+        </div>
+
+        <!-- Decision Section -->
+        <div class="decision-section">
+            <h4 data-i18n="recommendationHeading">Recommendation Based on Red Flags</h4>
+            <div class="decision-options">
+                <label class="decision-option proceed">
+                    <input type="radio" name="decision" value="proceed">
+                    <span data-i18n="decProceed">Proceed - Minor or no significant flags</span>
+                </label>
+                <label class="decision-option caution">
+                    <input type="radio" name="decision" value="caution">
+                    <span data-i18n="decCaution">Proceed with Caution - Notable concerns</span>
+                </label>
+                <label class="decision-option no-hire">
+                    <input type="radio" name="decision" value="no-hire">
+                    <span data-i18n="decNoHire">Do Not Hire - Multiple critical flags</span>
+                </label>
+            </div>
+
+            <div class="notes-section" style="margin-top: 15px;">
+                <span class="field-label" data-i18n="labelDecisionRationale">Decision Rationale:</span>
+                <textarea class="notes-textarea" data-i18n-ph="phDecisionRationale" placeholder="Explain your recommendation and the key factors that influenced your decision..."></textarea>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-success" id="btnUpdate" onclick="calculateSummary()">Update Summary</button>
+            <button class="btn" id="btnPrint" onclick="window.print()">Print Checklist</button>
+            <button class="btn btn-secondary" id="btnDownload" onclick="downloadChecklist()">Download Checklist</button>
+            <button class="btn btn-secondary" id="btnReset" onclick="resetChecklist()">Reset Checklist</button>
+        </div>
+    </div>
+
+    <script>
+        const I18N = {
+            en: {
+                pageTitle: 'Engineering Interview Red Flags Checklist',
+                mainTitle: '🚩 Candidate Red Flags Checklist',
+                descPurposeLabel: 'Purpose:',
+                descPurposeText: 'This checklist helps engineering managers quickly identify potential warning signs during interviews. Use this as a reference guide during or immediately after interviews to spot concerning behaviors, attitudes, or responses that may indicate poor cultural fit or performance risks. Not every flag is disqualifying, but multiple flags warrant careful consideration.',
+                warningLabel: '⚠️ Important Note:',
+                warningText: "Red flags should be considered in context and alongside positive indicators. A single flag may not be disqualifying, but patterns of concerning behavior deserve attention. Always document specific examples and avoid bias by focusing on objective observations. Every flag below is defined by what you directly observe in the interview — not by inference from a candidate's résumé, career history, or background.",
+                candidateInfoHeading: 'Candidate Information',
+                labelCandidateName: 'Candidate Name:',
+                phFullName: 'Full name',
+                labelPosition: 'Position:',
+                phPosition: 'e.g., Senior Software Engineer',
+                labelInterviewer: 'Interviewer:',
+                phYourName: 'Your name',
+                labelDate: 'Date:',
+                labelInterviewType: 'Interview Type:',
+                phInterviewType: 'e.g., Technical, Behavioral, Final',
+                severityLevelsLabel: 'Severity Levels:',
+                legendCritical: 'Critical - Strong indicator to reconsider',
+                legendHigh: 'High - Significant concern, investigate further',
+                legendMedium: 'Medium - Worth noting, consider in context',
+                catTechnical: '🔧 Technical Competence',
+                badgeCoreSkills: 'Core Skills Assessment',
+                tc1Title: 'Cannot explain their own code or projects',
+                tc1Desc: 'Unable to articulate design decisions or walk through code they claim to have written',
+                tc1Ex: 'Example: "I don\'t really remember how I implemented that feature" when asked about a recent project',
+                tc2Title: 'Fundamental knowledge gaps for their experience level',
+                tc2Desc: 'Missing basic concepts that should be well-understood at their claimed experience level',
+                tc2Ex: 'Example: Senior engineer unable to explain basic OOP concepts or REST principles',
+                tc3Title: 'Unwilling to admit knowledge limitations',
+                tc3Desc: "Makes up answers or refuses to acknowledge when they don't know something",
+                tc3Ex: 'Example: Provides confident but incorrect technical explanations rather than saying "I\'m not sure"',
+                tc4Title: 'No understanding of trade-offs',
+                tc4Desc: 'Cannot discuss pros and cons of technical decisions or different approaches',
+                tc4Ex: 'Example: "This is the only way to do it" without considering alternatives or context',
+                tc5Title: 'Overly focused on specific tools/frameworks',
+                tc5Desc: 'Cannot think beyond their preferred technology stack or adapt to new tools',
+                tc5Ex: 'Example: "I only work with React" when asked about other frontend approaches',
+                tc6Title: 'No curiosity about learning',
+                tc6Desc: 'Shows no interest in new technologies, industry trends, or professional development',
+                tc6Ex: 'Example: "I don\'t need to learn anything new, I know enough already"',
+                catCommunication: '💬 Communication & Collaboration',
+                badgeTeamFit: 'Team Fit Assessment',
+                cc1Title: 'Disparages previous teams or colleagues',
+                cc1Desc: 'Speaks negatively about former teammates, managers, or companies without professional context',
+                cc1Ex: 'Example: "My last team was full of idiots" or "Management never understood anything"',
+                cc2Title: 'Unable to accept feedback or criticism',
+                cc2Desc: 'Defensive when receiving suggestions or becomes argumentative about alternative approaches',
+                cc2Ex: 'Example: Gets visibly upset when interviewer suggests improvements to their code',
+                cc3Title: 'Poor communication skills',
+                cc3Desc: 'Cannot clearly explain technical concepts or struggles with basic professional communication',
+                cc3Ex: "Example: Rambling, unclear explanations that don't address the question asked",
+                cc4Title: 'Takes all credit, avoids responsibility',
+                cc4Desc: 'Claims sole credit for team successes but blames others for failures',
+                cc4Ex: 'Example: "I built that entire system myself" or "That failure wasn\'t my fault"',
+                cc5Title: 'Dismissive of non-technical colleagues',
+                cc5Desc: 'Shows disrespect or condescension toward product managers, designers, or other roles',
+                cc5Ex: 'Example: "Product managers don\'t understand anything technical"',
+                cc6Title: 'No examples of collaboration',
+                cc6Desc: 'Cannot provide concrete examples of working effectively with others',
+                cc6Ex: 'Example: All stories are about individual work with no mention of teamwork',
+                catWorkEthic: '⚡ Work Ethic & Attitude',
+                badgeMotivation: 'Motivation Assessment',
+                wa1Title: 'Shows up unprepared or late',
+                wa1Desc: "Late to interview, hasn't researched the company, or unprepared for basic questions",
+                wa1Ex: 'Example: "I didn\'t have time to look at your website" or arrives 15+ minutes late without explanation',
+                wa2Title: 'Vague or evasive when asked about role transitions',
+                wa2Desc: 'When asked directly why they left a previous role, cannot give a clear, specific answer even after a follow-up. This flags the clarity of their answer in the interview — not the number of past role changes, since transition patterns often reflect circumstances (layoffs, caregiving, relocation, health, visa status) unrelated to job performance.',
+                wa2Ex: 'Example: Repeats "it just didn\'t work out" for multiple roles with no concrete detail, even when asked to elaborate',
+                wa3Title: 'No expressed interest in the work itself when asked directly',
+                wa3Desc: 'When directly asked what interests them about the role or team, cannot articulate anything beyond compensation — even after being given room to elaborate. This flags what they say when prompted, not an assumption about their financial priorities.',
+                wa3Ex: 'Example: When asked "what excites you about this role," says only "the pay is good" and has nothing further to add despite a follow-up prompt',
+                wa4Title: 'Unrealistic expectations',
+                wa4Desc: "Expects immediate senior role, full remote work, or other demands that don't match their experience",
+                wa4Ex: 'Example: Junior developer expecting staff engineer title and responsibilities',
+                wa5Title: 'No questions about the role or company',
+                wa5Desc: 'Shows no curiosity about the work, team dynamics, or company culture',
+                wa5Ex: 'Example: "No, I don\'t have any questions" when given the opportunity',
+                wa6Title: 'Rigid about processes and methodologies',
+                wa6Desc: 'Insists their way is the only correct approach, unwilling to adapt to team practices',
+                wa6Ex: 'Example: "If you don\'t do TDD, you\'re doing it wrong" without considering context',
+                catProblemSolving: '🧠 Problem-Solving & Growth',
+                badgeCapability: 'Capability Assessment',
+                pg1Title: 'Cannot think through problems systematically',
+                pg1Desc: 'Jumps to solutions without understanding the problem or considering edge cases',
+                pg1Ex: 'Example: Starts coding immediately without asking clarifying questions',
+                pg2Title: 'No examples of learning from failures',
+                pg2Desc: "Cannot discuss mistakes they've made or how they've grown from challenges",
+                pg2Ex: 'Example: "I don\'t make mistakes" or cannot think of any professional failures',
+                pg3Title: 'Gives up too easily on problems',
+                pg3Desc: "Doesn't persist when facing difficult questions or coding challenges",
+                pg3Ex: 'Example: "I don\'t know" without attempting to reason through the problem',
+                pg4Title: 'Fixed mindset about abilities',
+                pg4Desc: 'Believes skills are innate rather than developed, shows no growth orientation',
+                pg4Ex: 'Example: "I\'m just not good at algorithms" without showing effort to improve',
+                pg5Title: 'Cannot handle ambiguity',
+                pg5Desc: 'Needs very specific requirements and cannot work with incomplete or changing information',
+                pg5Ex: "Example: Gets frustrated when problem requirements aren't perfectly specified",
+                summaryHeading: 'Red Flags Summary',
+                labelCriticalFlags: 'Critical Flags',
+                labelHighFlags: 'High Flags',
+                labelMediumFlags: 'Medium Flags',
+                labelTotalFlags: 'Total Flags',
+                specificExamplesHeading: 'Specific Examples & Context',
+                phSpecificExamples: 'Document specific examples of concerning behaviors, exact quotes, or situations that raised red flags. Include context that might mitigate or amplify concerns...',
+                recommendationHeading: 'Recommendation Based on Red Flags',
+                decProceed: 'Proceed - Minor or no significant flags',
+                decCaution: 'Proceed with Caution - Notable concerns',
+                decNoHire: 'Do Not Hire - Multiple critical flags',
+                labelDecisionRationale: 'Decision Rationale:',
+                phDecisionRationale: 'Explain your recommendation and the key factors that influenced your decision...',
+                btnUpdate: 'Update Summary',
+                btnPrint: 'Print Checklist',
+                btnDownload: 'Download Checklist',
+                btnReset: 'Reset Checklist',
+                resetConfirm: 'Are you sure you want to reset all flags and notes? This cannot be undone.'
+            },
+            zh: {
+                pageTitle: '工程面試紅旗警訊檢核清單',
+                mainTitle: '🚩 候選人紅旗警訊檢核清單',
+                descPurposeLabel: '用途：',
+                descPurposeText: '這份檢核清單幫助工程主管在面試過程中快速找出潛在的警訊。可以在面試中或面試結束後立即當作參考指引，用來留意可能顯示文化適配度不佳或績效風險的令人擔憂的行為、態度或回答。並非每個警訊都代表淘汰，但多個警訊同時出現時值得謹慎考量。',
+                warningLabel: '⚠️ 重要提醒：',
+                warningText: '紅旗警訊應該放在脈絡中考量，並搭配正面指標一併評估。單一警訊不代表淘汰，但令人擔憂的行為若形成模式就值得留意。請務必記錄具體例子，並聚焦在客觀觀察上以避免偏見。以下每一項警訊的定義，都是你在面試中直接觀察到的行為——不是從候選人的履歷、職涯歷程或背景推論出來的。',
+                candidateInfoHeading: '候選人資訊',
+                labelCandidateName: '候選人姓名：',
+                phFullName: '全名',
+                labelPosition: '職位：',
+                phPosition: '例如：資深軟體工程師',
+                labelInterviewer: '面試官：',
+                phYourName: '你的名字',
+                labelDate: '日期：',
+                labelInterviewType: '面試類型：',
+                phInterviewType: '例如：技術面、行為面、最終面',
+                severityLevelsLabel: '嚴重程度：',
+                legendCritical: '嚴重 - 強烈建議重新考慮',
+                legendHigh: '高 - 重大疑慮，需要進一步了解',
+                legendMedium: '中 - 值得記錄，需放在脈絡中考量',
+                catTechnical: '🔧 技術能力',
+                badgeCoreSkills: '核心技能評估',
+                tc1Title: '無法解釋自己寫過的程式碼或專案',
+                tc1Desc: '無法說明設計決策，或無法帶你看過他們宣稱自己寫的程式碼',
+                tc1Ex: '例如：被問到近期專案時說「我不太記得那個功能是怎麼實作的」',
+                tc2Title: '以其經驗等級而言，有基礎知識缺口',
+                tc2Desc: '缺乏在宣稱的經驗等級下應該熟悉的基本概念',
+                tc2Ex: '例如：資深工程師無法解釋基本的 OOP 概念或 REST 原則',
+                tc3Title: '不願承認知識的極限',
+                tc3Desc: '編造答案，或拒絕承認自己不知道某件事',
+                tc3Ex: '例如：給出自信但錯誤的技術解釋，而不是說「我不確定」',
+                tc4Title: '不理解取捨',
+                tc4Desc: '無法討論技術決策或不同做法的優缺點',
+                tc4Ex: '例如：「這是唯一的做法」，沒有考慮替代方案或情境脈絡',
+                tc5Title: '過度侷限於特定工具/框架',
+                tc5Desc: '無法跳脫偏好的技術堆疊思考，或無法適應新工具',
+                tc5Ex: '例如：被問到其他前端做法時說「我只用 React」',
+                tc6Title: '對學習沒有好奇心',
+                tc6Desc: '對新技術、產業趨勢或專業發展沒有任何興趣',
+                tc6Ex: '例如：「我不需要學新東西，我知道的已經夠多了」',
+                catCommunication: '💬 溝通與協作',
+                badgeTeamFit: '團隊適配評估',
+                cc1Title: '貶低前團隊或前同事',
+                cc1Desc: '在沒有專業脈絡的情況下，負面談論前同事、前主管或前公司',
+                cc1Ex: '例如：「我前一個團隊都是笨蛋」或「主管從來都搞不清楚狀況」',
+                cc2Title: '無法接受回饋或批評',
+                cc2Desc: '收到建議時表現防禦，或對不同做法變得爭辯不休',
+                cc2Ex: '例如：面試官建議改進他們的程式碼時，明顯表現出不悅',
+                cc3Title: '溝通能力不佳',
+                cc3Desc: '無法清楚解釋技術概念，或在基本的專業溝通上有困難',
+                cc3Ex: '例如：解釋冗長、含糊，沒有回應到實際被問的問題',
+                cc4Title: '獨攬功勞、迴避責任',
+                cc4Desc: '宣稱團隊成功完全歸功於自己，但失敗時歸咎他人',
+                cc4Ex: '例如：「那整個系統是我一個人做的」或「那次失敗不是我的錯」',
+                cc5Title: '輕視非技術同事',
+                cc5Desc: '對產品經理、設計師或其他角色表現出不尊重或高高在上的態度',
+                cc5Ex: '例如：「產品經理什麼技術的東西都不懂」',
+                cc6Title: '沒有協作的具體例子',
+                cc6Desc: '無法提供與他人有效合作的具體例子',
+                cc6Ex: '例如：所有故事都是個人的工作成果，完全沒提到團隊合作',
+                catWorkEthic: '⚡ 工作態度',
+                badgeMotivation: '動機評估',
+                wa1Title: '出席時沒有準備或遲到',
+                wa1Desc: '面試遲到、沒有事先研究公司，或對基本問題毫無準備',
+                wa1Ex: '例如：「我沒時間看你們的網站」，或遲到 15 分鐘以上且沒有說明原因',
+                wa2Title: '被問到職涯轉換時回答含糊或迴避',
+                wa2Desc: '直接被問到為什麼離開前一份工作時，即使追問也無法給出清楚、具體的答案。這裡標記的是他們在面試中回答的清楚程度——不是過去換工作的次數，因為職涯轉換的模式常常反映了與工作表現無關的個人狀況（例如裁員、照顧責任、搬遷、健康因素、簽證狀況）。',
+                wa2Ex: '例如：針對多份工作都只重複「就是不太適合」，即使被要求進一步說明也講不出具體細節',
+                wa3Title: '被直接詢問時，沒有表達出對工作本身的興趣',
+                wa3Desc: '被直接問到這個角色或團隊哪裡吸引他們時，除了薪酬之外講不出任何內容——即使給了機會讓他們進一步說明。這裡標記的是他們被問到時實際說了什麼，而不是對他們財務優先順序的假設。',
+                wa3Ex: '例如：被問「這個角色哪裡讓你興奮」時，只回答「薪水不錯」，追問後也講不出其他內容',
+                wa4Title: '不切實際的期待',
+                wa4Desc: '期望立即獲得資深職位、完全遠端工作，或其他與其經驗不符的要求',
+                wa4Ex: '例如：junior工程師期望獲得 staff engineer 的職稱與職責',
+                wa5Title: '對這個角色或公司沒有任何提問',
+                wa5Desc: '對工作內容、團隊動態或公司文化完全沒有好奇心',
+                wa5Ex: '例如：有機會提問時說「不用了，我沒有問題」',
+                wa6Title: '對流程與方法論過於堅持己見',
+                wa6Desc: '堅持自己的做法是唯一正確的方式，不願配合團隊既有的做法',
+                wa6Ex: '例如：「不做 TDD 就是做錯了」，完全不考慮情境脈絡',
+                catProblemSolving: '🧠 問題解決與成長',
+                badgeCapability: '能力評估',
+                pg1Title: '無法有系統地思考問題',
+                pg1Desc: '在還沒理解問題或考慮邊界案例前就急著提出解法',
+                pg1Ex: '例如：不先問釐清性問題就直接開始寫程式',
+                pg2Title: '沒有從失敗中學習的例子',
+                pg2Desc: '無法談論自己犯過的錯誤，或如何從挑戰中成長',
+                pg2Ex: '例如：「我不會犯錯」，或想不出任何專業上的失敗經驗',
+                pg3Title: '面對問題太容易放棄',
+                pg3Desc: '面對困難問題或程式挑戰時無法堅持下去',
+                pg3Ex: '例如：直接說「我不知道」，沒有嘗試推理這個問題',
+                pg4Title: '對能力抱持固定心態',
+                pg4Desc: '認為技能是天生的而非後天培養，看不出成長導向',
+                pg4Ex: '例如：「我就是不擅長演算法」，卻沒有展現任何想改善的努力',
+                pg5Title: '無法處理模糊情境',
+                pg5Desc: '需要非常明確的需求，無法處理不完整或變動中的資訊',
+                pg5Ex: '例如：當題目需求沒有被完美定義清楚時就感到挫折',
+                summaryHeading: '紅旗警訊摘要',
+                labelCriticalFlags: '嚴重警訊',
+                labelHighFlags: '高度警訊',
+                labelMediumFlags: '中度警訊',
+                labelTotalFlags: '總警訊數',
+                specificExamplesHeading: '具體例子與脈絡',
+                phSpecificExamples: '記錄令人擔憂行為的具體例子、確切引述，或引發紅旗警訊的情境。同時記錄可能減緩或加重疑慮的脈絡……',
+                recommendationHeading: '根據紅旗警訊的建議',
+                decProceed: '可以繼續 - 沒有或只有輕微警訊',
+                decCaution: '謹慎繼續 - 有值得留意的疑慮',
+                decNoHire: '不建議錄用 - 多個嚴重警訊',
+                labelDecisionRationale: '決策理由：',
+                phDecisionRationale: '說明你的建議，以及影響這個決定的關鍵因素……',
+                btnUpdate: '更新摘要',
+                btnPrint: '列印檢核清單',
+                btnDownload: '下載檢核清單',
+                btnReset: '重設檢核清單',
+                resetConfirm: '確定要重設所有警訊與備註嗎？此動作無法復原。'
+            }
+        };
+
+        let currentLang = localStorage.getItem('emToolsLang') || 'en';
+
+        function t() {
+            return I18N[currentLang];
+        }
+
+        function renderLanguage() {
+            const dict = t();
+            document.getElementById('htmlRoot').lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (dict[key] !== undefined) el.textContent = dict[key];
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.dataset.i18nPh;
+                if (dict[key] !== undefined) el.placeholder = dict[key];
+            });
+
+            document.getElementById('langBtnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('langBtnZh').classList.toggle('active', currentLang === 'zh');
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('emToolsLang', lang);
+            renderLanguage();
+        }
+
+        function calculateSummary() {
+            const criticalChecked = document.querySelectorAll('input[data-severity="critical"]:checked').length;
+            const highChecked = document.querySelectorAll('input[data-severity="high"]:checked').length;
+            const mediumChecked = document.querySelectorAll('input[data-severity="medium"]:checked').length;
+            const totalChecked = criticalChecked + highChecked + mediumChecked;
+
+            document.getElementById('critical-count').textContent = criticalChecked;
+            document.getElementById('high-count').textContent = highChecked;
+            document.getElementById('medium-count').textContent = mediumChecked;
+            document.getElementById('total-count').textContent = totalChecked;
+
+            // Auto-suggest decision based on flags
+            if (criticalChecked >= 2 || (criticalChecked >= 1 && highChecked >= 2)) {
+                document.querySelector('input[value="no-hire"]').checked = true;
+            } else if (criticalChecked >= 1 || highChecked >= 2) {
+                document.querySelector('input[value="caution"]').checked = true;
+            } else if (totalChecked <= 2) {
+                document.querySelector('input[value="proceed"]').checked = true;
+            }
+
+            autoSave();
+        }
+
+        function autoSave() {
+            const data = {};
+
+            document.querySelectorAll('input, textarea').forEach((input, index) => {
+                if (input.type === 'checkbox') {
+                    data[`checkbox_${index}`] = input.checked;
+                } else if (input.type === 'radio') {
+                    if (input.checked) {
+                        data[`radio_${input.name}`] = input.value;
+                    }
+                } else {
+                    data[`field_${index}`] = input.value;
+                }
+            });
+
+            localStorage.setItem('candidateRedFlags', JSON.stringify(data));
+        }
+
+        function loadSaved() {
+            const saved = localStorage.getItem('candidateRedFlags');
+            if (saved) {
+                const data = JSON.parse(saved);
+
+                document.querySelectorAll('input, textarea').forEach((input, index) => {
+                    if (input.type === 'checkbox') {
+                        if (data[`checkbox_${index}`]) {
+                            input.checked = true;
+                        }
+                    } else if (input.type === 'radio') {
+                        const radioValue = data[`radio_${input.name}`];
+                        if (radioValue === input.value) {
+                            input.checked = true;
+                        }
+                    } else if (data[`field_${index}`]) {
+                        input.value = data[`field_${index}`];
+                    }
+                });
+
+                calculateSummary();
+            }
+        }
+
+        function downloadChecklist() {
+            const candidateName = document.querySelector('input[type="text"]').value || 'candidate';
+            const fileName = `red_flags_checklist_${candidateName.replace(/\s+/g, '_').toLowerCase()}.html`;
+
+            const element = document.createElement('a');
+            const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function resetChecklist() {
+            const dict = t();
+            if (confirm(dict.resetConfirm)) {
+                document.querySelectorAll('input, textarea').forEach(input => {
+                    if (input.type === 'checkbox' || input.type === 'radio') {
+                        input.checked = false;
+                    } else {
+                        input.value = '';
+                    }
+                });
+
+                localStorage.removeItem('candidateRedFlags');
+                calculateSummary();
+            }
+        }
+
+        // Initialize
+        window.onload = function() {
+            renderLanguage();
+            loadSaved();
+
+            document.addEventListener('change', function(e) {
+                if (e.target.type === 'checkbox' && e.target.hasAttribute('data-severity')) {
+                    calculateSummary();
+                } else {
+                    autoSave();
+                }
+            });
+
+            document.addEventListener('input', autoSave);
+
+            const dateInput = document.querySelector('input[type="date"]');
+            if (dateInput && !dateInput.value) {
+                dateInput.value = new Date().toISOString().split('T')[0];
+            }
+        };
+    </script>
+</body>
+</html>
