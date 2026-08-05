@@ -86,11 +86,11 @@ Claude 會讀取該 `SKILL.md`，照 Required Input 檢查有沒有給夠資料�
 
 ### 方式二：Claude Code 原生發現
 
-Claude Code 的 Skill 工具是從 `.claude/skills/<name>/SKILL.md` 探索 skill 的，不是這裡的 `shared-skills/`。如果把這個 repo 掛成某個專案的 submodule，可以在該專案寫一支安裝腳本，把 `shared-skills/<name>/` symlink 到 `.claude/skills/<name>/`，讓 Claude Code 原生列出並主動提議使用這些 skill。
+Claude Code 的 Skill 工具是從 `~/.claude/skills/<name>/SKILL.md` 探索 skill 的，不是這裡的 `shared-skills/`。跑 `shared-skills/install-claude-tools.sh`（見「方式四」）會把 `shared-skills/<name>/` symlink 到那個位置，全域生效——不限這個 repo 掛成 submodule 的那個專案，同一台機器上任何專案都能讓 Claude Code 原生列出並主動提議使用這些 skill。
 
 ### 方式三：Codex
 
-Codex 沒有原生 skill 探索機制，但 `SKILL.md` 只是純 markdown，一樣可以「指名檔案＋照著執行」，或去掉 YAML frontmatter 後存成 Codex 的 custom prompt（`~/.codex/prompts/*.md`），用 `/<skill-name>` 呼叫。
+Codex 會從 `~/.codex/skills/<name>/SKILL.md` 探索 global skills。這個 repo 的安裝腳本會把 `shared-skills/<name>/` symlink 到那個位置，讓 Codex 能把它們當成原生 skill；同時也會把 `SKILL.md` 去掉 YAML frontmatter 後存成 Codex 的 custom prompt（`~/.codex/prompts/*.md`），作為 `/<skill-name>` 手動呼叫的 fallback。
 
 ### 方式四：全域自動套用（跨機器、跨 CLI，不用手動呼叫）
 
@@ -99,9 +99,9 @@ Codex 沒有原生 skill 探索機制，但 `SKILL.md` 只是純 markdown，一�
 在任何一台機器上，clone 這個 repo（或它所在的父 repo）之後執行：
 
 ```bash
-shared-skills/install-global-policies.sh         # 把所有全域強制規則寫進兩個 CLI 的全域設定
-shared-skills/install-claude-skills-global.sh    # 讓 Claude Code 全域都能發現這些 skill
-shared-skills/install-codex-prompts.sh           # 讓 Codex 能用 /<skill-name> 呼叫
+shared-skills/install-global-policies.sh  # 把所有全域強制規則寫進兩個 CLI 的全域設定
+shared-skills/install-claude-tools.sh     # 讓 Claude Code 全域都能發現這些 skill
+shared-skills/install-codex-tools.sh      # 讓 Codex 註冊 global skills，並安裝 /<skill-name> fallback
 ```
 
 第一支腳本是**冪等**的，而且**會自動發現新的全域規則**：任何 `shared-skills/<skill-name>/global-policy-snippet.md` 都會被當成一份獨立來源，包在各自的註解標記區塊裡寫進兩個全域設定檔——新增一個要全域套用的 skill，只要幫它加一份 `global-policy-snippet.md`，不用改這支腳本。之後改了某個規則、`git pull`，重跑一次腳本就會**只更新那個 skill 對應的區塊**，不會動到你在 `CLAUDE.md`/`AGENTS.md` 裡自己加的其他個人設定，也不會動到別的 skill 的區塊。

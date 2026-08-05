@@ -3,13 +3,11 @@
 # skill-discovery path (~/.claude/skills/) via absolute symlinks, so every
 # project on this machine sees these skills, not just this repo's checkout.
 #
-# For project-local discovery instead, use install-claude-skills.sh.
-#
 # Symlinks (not copies) mean edits to shared-skills/*/SKILL.md are picked up
 # immediately — this script only needs to be re-run when a *new* skill
 # directory is added, not after every edit to an existing one.
 #
-# Usage: shared-skills/install-claude-skills-global.sh
+# Usage: shared-skills/install-claude-tools.sh
 
 set -euo pipefail
 

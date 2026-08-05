@@ -25,8 +25,8 @@
 #
 # Also run these so the skills themselves are discoverable, not just the
 # rules that point to them:
-#   shared-skills/install-claude-skills-global.sh
-#   shared-skills/install-codex-prompts.sh
+#   shared-skills/install-claude-tools.sh
+#   shared-skills/install-codex-tools.sh
 
 set -euo pipefail
 
@@ -91,8 +91,8 @@ main() {
   echo ""
   echo "Installed $count global polic$([ "$count" = 1 ] && echo y || echo ies) to $claude_target and $codex_target."
   echo "Now run (if you haven't already, or after adding new skills):"
-  echo "  shared-skills/install-claude-skills-global.sh"
-  echo "  shared-skills/install-codex-prompts.sh"
+  echo "  shared-skills/install-claude-tools.sh"
+  echo "  shared-skills/install-codex-tools.sh  # registers Codex global skills and prompt fallbacks"
 }
 
 main "$@"
