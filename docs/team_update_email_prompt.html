@@ -1672,6 +1672,13 @@ ${metrics.length > 0 ? metrics.map(item => `• ${item}`).join('\n') : '• [未
 - 把關鍵資訊加粗
 - 段落保持精簡、聚焦
 
+**寫作品質原則（改編自 David Ogilvy〈How to Write〉）：**
+- 用平常說話的方式寫，不要因為是 email 就自動切換成生硬、正式的語氣
+- 結論/重點放最前面，讓讀者一兩秒內就能掌握你想說什麼
+- 短句、短段落，能刪就刪——精簡不等於資訊不足
+- 不用刻意複雜的術語顯得專業；能把事情講清楚才是真正的專業
+- 如果這封 email 是要促成某個行動或決定，明確寫出：誰需要行動、要做什麼、何時完成、怎麼回覆
+
 請產生一封完整、可直接寄出的 email，讓${senderInfo}能寄給${dict.audienceTabs[selectedAudience] || selectedAudience}，作為他們的${updateFrequency}團隊更新。`;
             } else {
                 prompt = `You are writing a professional team update email for ${audienceDescriptions[selectedAudience]}. Create a well-structured, clear, and engaging email using a ${styleDescriptions[selectedEmailStyle]}.
@@ -1721,6 +1728,13 @@ ${metrics.length > 0 ? metrics.map(item => `• ${item}`).join('\n') : '• [No 
 - Bullet points for easy scanning
 - Bold key information
 - Keep paragraphs short and focused
+
+**Writing Quality Principles (adapted from David Ogilvy's "How to Write"):**
+- Write the way you'd actually talk — don't switch into a stiff, formal voice just because it's an email
+- Lead with the conclusion/ask so the reader gets the point in a couple of seconds
+- Short sentences, short paragraphs — cut anything that isn't earning its place
+- Clarity beats sounding sophisticated; using complex jargon to seem professional just distances the reader
+- If this email needs to drive an action or decision, spell out exactly who needs to act, on what, by when, and how to respond
 
 Please generate a complete, ready-to-send email that ${senderInfo} can send to ${selectedAudience} as their ${updateFrequency.toLowerCase()} team update.`;
             }

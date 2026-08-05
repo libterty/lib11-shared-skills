@@ -4,6 +4,12 @@
 
 這個 repo 可以獨立使用，也可以當作 git submodule 掛在其他專案下使用。
 
+> **兩個跨領域的最高優先 skill，自動套用、不用使用者明確要求：**
+> - **`communication-writing`**：只要輸出包含要送給別人看的文字（email、工作訊息、向上報告、客戶/HR 溝通、任何 skill 產出的溝通草案），管**怎麼寫**。細節見 [`communication-writing/SKILL.md`](communication-writing/SKILL.md) 與 `_shared/conventions.md` §10。
+> - **`communication-riqc`**：只要是工作進度回報、對上回報、或回應主管/客戶的提問與臨時任務指派，管**講什麼、怎麼排**（R-I-Q-C 四段結構）。細節見 [`communication-riqc/SKILL.md`](communication-riqc/SKILL.md) 與 `_shared/conventions.md` §11。
+>
+> 兩者同時適用時，先用 `communication-riqc` 排結構，再用 `communication-writing` 把每段寫清楚。要讓這兩條規則在每次啟動、任何專案、任何機器都自動載入（不用手動呼叫），見下方「方式四」。
+
 ---
 
 ## 目錄結構
@@ -27,6 +33,13 @@ shared-skills/
 │   └── docs/
 │       └── example-scenarios.md   # 每個 skill 附一段可以直接貼給 Claude 的範例輸入
 ├── validate-skills.sh          # 結構與安全啟發式驗證腳本
+├── install-global-policies.sh  # 把任何有 global-policy-snippet.md 的 skill 設成全域自動套用（見「方式四」）
+├── communication-writing/      # 跨領域最高優先寫作標準：怎麼寫（不是某個領域的 skill，任何寫作任務都套用）
+│   ├── SKILL.md
+│   └── global-policy-snippet.md      # 全域強制規則的唯一來源，安裝腳本會讀這份
+├── communication-riqc/         # 跨領域最高優先回報結構標準：講什麼、怎麼排（工作回報/被提問/臨時任務）
+│   ├── SKILL.md
+│   └── global-policy-snippet.md
 └── <skill-name>/SKILL.md       # 每個 skill 一個資料夾
 ```
 
@@ -79,6 +92,25 @@ Claude Code 的 Skill 工具是從 `.claude/skills/<name>/SKILL.md` 探索 skill
 
 Codex 沒有原生 skill 探索機制，但 `SKILL.md` 只是純 markdown，一樣可以「指名檔案＋照著執行」，或去掉 YAML frontmatter 後存成 Codex 的 custom prompt（`~/.codex/prompts/*.md`），用 `/<skill-name>` 呼叫。
 
+### 方式四：全域自動套用（跨機器、跨 CLI，不用手動呼叫）
+
+方式一到三都需要你手動指名檔案、或 Claude 自己判斷任務相關才會套用某個 skill。`communication-writing`、`communication-riqc` 這種「不用等使用者要求就要套用」的規則，光靠這樣不夠可靠——所以額外多一層：把精簡的強制規則，寫進 Claude Code 跟 Codex **每次啟動都會讀取**的全域設定檔（`~/.claude/CLAUDE.md`、`~/.codex/AGENTS.md`）。
+
+在任何一台機器上，clone 這個 repo（或它所在的父 repo）之後執行：
+
+```bash
+shared-skills/install-global-policies.sh         # 把所有全域強制規則寫進兩個 CLI 的全域設定
+shared-skills/install-claude-skills-global.sh    # 讓 Claude Code 全域都能發現這些 skill
+shared-skills/install-codex-prompts.sh           # 讓 Codex 能用 /<skill-name> 呼叫
+```
+
+第一支腳本是**冪等**的，而且**會自動發現新的全域規則**：任何 `shared-skills/<skill-name>/global-policy-snippet.md` 都會被當成一份獨立來源，包在各自的註解標記區塊裡寫進兩個全域設定檔——新增一個要全域套用的 skill，只要幫它加一份 `global-policy-snippet.md`，不用改這支腳本。之後改了某個規則、`git pull`，重跑一次腳本就會**只更新那個 skill 對應的區塊**，不會動到你在 `CLAUDE.md`/`AGENTS.md` 裡自己加的其他個人設定，也不會動到別的 skill 的區塊。
+
+驗證有沒有生效：
+
+- Claude Code：新開一個 session，輸入 `/context` 確認有載入 `~/.claude/CLAUDE.md`；或直接問「List the communication rules you must apply when drafting an email.」
+- Codex：`codex --ask-for-approval never "Summarize the instructions you must follow when writing an email."`
+
 ### 驗證
 
 新增/修改 skill 後執行：
@@ -92,6 +124,13 @@ bash validate-skills.sh
 ---
 
 ## Skill 分類索引
+
+### 跨領域（自動套用，不算某個分類）
+
+| Skill | 什麼時候用 |
+|---|---|
+| `communication-writing` | 任何要撰寫/回覆/改寫的 email、工作訊息、商業文件、向上報告、HR/招募溝通、客戶溝通——管**怎麼寫**，自動套用，優先權高於下面所有 skill 各自的語氣/格式慣例；跨機器/跨 CLI 自動載入見上方「方式四」 |
+| `communication-riqc` | 工作進度回報、對上回報、回應主管/客戶提問（「最近怎麼樣」「為什麼還沒完成」）、或臨時任務指派——管**講什麼、怎麼排**（Question Behind the Question + R/I/Q/C 四段結構），自動套用；跟 `communication-writing` 是互補關係，先排結構再寫清楚 |
 
 ### A. 交付與專案管理
 
