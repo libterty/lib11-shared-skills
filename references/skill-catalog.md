@@ -4,6 +4,13 @@ Index of skills defined in this repo. This repo is the single source of truth �
 
 Validate structure/safety heuristics with `validate-skills.sh`. Spot-check semantic quality with a review pass against each skill's Anonymized Eval Case and Self-Review Checklist (or your own review agent, if you have one set up).
 
+## Cross-cutting (auto-applied, not a category)
+
+| Skill | Path | Use when |
+|---|---|---|
+| `communication-writing` | `communication-writing/SKILL.md` | Any email/message/report/upward-report/HR-recruiting/customer text is being drafted, replied to, or edited — governs **how to write it**, auto-applied, takes precedence over other skills' tone/format conventions. |
+| `communication-riqc` | `communication-riqc/SKILL.md` | Work-status reporting or responding to questions/ad-hoc task assignment — not upward-only, applies to manager/GM/board/customer, peers/other teams, and reports too. Governs **what to say and how to order it** (Question Behind the Question + R/I/Q/C). Complementary to `communication-writing`: structure first, then wording. |
+
 ## A. Delivery & Project Management
 
 | Skill | Path | Use when |

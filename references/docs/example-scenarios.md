@@ -109,3 +109,63 @@
 
 **role-clarity-decision-rights**
 > 「Tech Lead 跟 PM 對『技術債要不要排進這個 sprint』常常各說各話,幫我設計一份決策權責提案。」
+
+## Day-to-day 使用時機
+
+| 時機 | Skill |
+|---|---|
+| 上班前 | `daily-priority-briefing` |
+| 開完任何會議 | `notes-to-action-digest` |
+| 1-1 開始前幾分鐘 | `one-on-one-prep-briefing` |
+| 查看團隊 async standup 回報 | `team-standup-digest` |
+| 週五收尾 | `weekly-wrapup-focus` |
+| Retro 結束後 | `retro-synthesis` |
+| 定期專案健康度檢視 | `delivery-health-review` |
+| 跨團隊依賴檢查 | `cross-team-dependency-log` |
+
+## 跨 skill 串接情境
+
+單一 skill 通常只處理一段輸入到一份輸出；以下是常見的「上一個 skill 的輸出，餵給下一個 skill 當輸入」串接方式。
+
+**會議 → 拆待辦 → 跨週期追蹤**
+1. `notes-to-action-digest` 拆解會議逐字稿 → 待辦清單（含負責人/截止日期）
+2. 把清單連同 `docs/ar/<檔名>.md` 現有內容一起餵給 `action-register-maintainer` → 建議異動，自己確認後套用
+
+**Retro → Action item → 追蹤**
+1. `retro-synthesis` 整理 sticky notes → 主題分群 + 排序過的 action item 草案
+2. 團隊確認負責人/截止日期後，同一批 action item 餵給 `action-register-maintainer`
+
+**專案出狀況 → 健康度檢視 → 復原計畫**
+1. `delivery-health-review` → 事實表格與各維度狀態
+2. 狀態明顯偏紅時，把同一份事實表格餵給 `project-recovery-plan`（它的 Required Input 直接沿用，不用重新蒐集）
+
+**責任歸屬不清 → 提案 → 定案維護**
+1. `role-clarity-decision-rights` 針對具體事件設計待確認的 DRI/Approver/Consulted/Informed 提案
+2. 相關人員確認後，手動填進 `docs/raci/<檔名>.md` 長期維護（不是每次都重跑 skill）
+
+**多次零散會議 → 主題演變／知識文件**
+- 想知道「同一主題現在講到哪」：`cross-meeting-topic-tracker`
+- 想要一份長期可查的知識文件：`meeting-notes-to-structured-doc`
+
+**Incident 結束 → Postmortem → 改善行動追蹤**
+1. `postmortem-facilitator` → 時間軸、促成因素、改善行動（附負責人/截止日期）
+2. 改善行動清單餵給 `action-register-maintainer`，跨週期追蹤到真正完成
+
+**Fireflies.ai 等會議轉錄工具 → 多個 skill**
+Fireflies 一次會產出好幾種輸出，各自對應不同 skill：逐字稿/AI 摘要 → `notes-to-action-digest`；Analytics 參與度數據 → `meeting-participation-balance-review`；跨會議關鍵字搜尋結果 → `cross-meeting-topic-tracker`。細節見 `references/fireflies-setup.md`。
+
+**模糊的核心問題 → 拆解子問題 → 產出聚焦議程**
+1. `meeting-question-decomposer` 拆解核心問題 → 今天要討論的／需要會前準備的／parking lot 的子問題
+2. 把「今天要討論的」子問題餵給 `meeting-agenda-draft` → 附時間分配、必要性提醒、48 小時檢查的完整議程
+
+**成果發表會議前 → 利害關係人預先對齊**
+`stakeholder-pre-brief-for-results-meeting`：結論裡有對某部門/專案/個人不利的內容時，先規劃該跟誰單獨溝通、講什麼、什麼時候，避免對方在正式會議上第一次聽到而當場防衛。
+
+**模糊策略方向 → 落地風險檢查 → 每週假設回顧 → 成果報告前先對齊**
+1. `strategy-execution-mbto-check` → 策略精確化建議、MBTO 四面向風險診斷、Pilot 假設清單
+2. 每週用 `strategy-execution-review` 回顧：原始假設 vs. 本週新證據 → 維持/調整/停止建議
+3. 結論不理想需要對外說明時，把建議與理由餵給 `stakeholder-pre-brief-for-results-meeting`（MBTO 歸因沿用，不會把結構性問題講成執行力不足）
+
+**週期性狀態 + 多場會議摘要 → 收斂成向上報告草稿**
+1. 用瀏覽器把 `docs/stakeholder_update_template.html`（現況）填好，期間每場會議用 `docs/ai_meeting_summary_template.html` 產生摘要
+2. 把現況 + 多份會議摘要餵給 `weekly-upward-report-draft` → 依固定上限篩選過的狀態/成果/風險/待決事項草稿，超過上限的項目列在「本次未收錄項目」
