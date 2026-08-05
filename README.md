@@ -6,7 +6,7 @@
 
 > **兩個跨領域的最高優先 skill，自動套用、不用使用者明確要求：**
 > - **`communication-writing`**：只要輸出包含要送給別人看的文字（email、工作訊息、向上報告、客戶/HR 溝通、任何 skill 產出的溝通草案），管**怎麼寫**。細節見 [`communication-writing/SKILL.md`](communication-writing/SKILL.md) 與 `_shared/conventions.md` §10。
-> - **`communication-riqc`**：只要是工作進度回報、對上回報、或回應主管/客戶的提問與臨時任務指派，管**講什麼、怎麼排**（R-I-Q-C 四段結構）。細節見 [`communication-riqc/SKILL.md`](communication-riqc/SKILL.md) 與 `_shared/conventions.md` §11。
+> - **`communication-riqc`**：只要是工作進度回報、或回應提問與臨時任務指派，管**講什麼、怎麼排**（R-I-Q-C 四段結構）——不限對上，對主管/GM/董事長/客戶、平行同事或其他團隊、下屬都適用。細節見 [`communication-riqc/SKILL.md`](communication-riqc/SKILL.md) 與 `_shared/conventions.md` §11。
 >
 > 兩者同時適用時，先用 `communication-riqc` 排結構，再用 `communication-writing` 把每段寫清楚。要讓這兩條規則在每次啟動、任何專案、任何機器都自動載入（不用手動呼叫），見下方「方式四」。
 
@@ -37,7 +37,7 @@ shared-skills/
 ├── communication-writing/      # 跨領域最高優先寫作標準：怎麼寫（不是某個領域的 skill，任何寫作任務都套用）
 │   ├── SKILL.md
 │   └── global-policy-snippet.md      # 全域強制規則的唯一來源，安裝腳本會讀這份
-├── communication-riqc/         # 跨領域最高優先回報結構標準：講什麼、怎麼排（工作回報/被提問/臨時任務）
+├── communication-riqc/         # 跨領域最高優先回報結構標準：講什麼、怎麼排（工作回報/被提問/臨時任務；對上、平行、對下都適用）
 │   ├── SKILL.md
 │   └── global-policy-snippet.md
 └── <skill-name>/SKILL.md       # 每個 skill 一個資料夾
@@ -130,7 +130,7 @@ bash validate-skills.sh
 | Skill | 什麼時候用 |
 |---|---|
 | `communication-writing` | 任何要撰寫/回覆/改寫的 email、工作訊息、商業文件、向上報告、HR/招募溝通、客戶溝通——管**怎麼寫**，自動套用，優先權高於下面所有 skill 各自的語氣/格式慣例；跨機器/跨 CLI 自動載入見上方「方式四」 |
-| `communication-riqc` | 工作進度回報、對上回報、回應主管/客戶提問（「最近怎麼樣」「為什麼還沒完成」）、或臨時任務指派——管**講什麼、怎麼排**（Question Behind the Question + R/I/Q/C 四段結構），自動套用；跟 `communication-writing` 是互補關係，先排結構再寫清楚 |
+| `communication-riqc` | 工作進度回報、回應提問（「最近怎麼樣」「為什麼還沒完成」）、或臨時任務指派——不限對上，對主管/GM/董事長/客戶、平行同事或其他團隊、下屬都適用；管**講什麼、怎麼排**（Question Behind the Question + R/I/Q/C 四段結構），自動套用；跟 `communication-writing` 是互補關係，先排結構再寫清楚 |
 
 ### A. 交付與專案管理
 
